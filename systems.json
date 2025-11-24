@@ -1,0 +1,12 @@
+{
+    "systems":[
+        {
+            "name":"pathfinder",
+            "path":"./creatureCreation.html"
+        },
+        {
+            "name":"5e",
+            "path":"./creatureCreation.html"
+        }
+    ]
+}

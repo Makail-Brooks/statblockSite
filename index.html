@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Home Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <script src="script.js" defer></script>
+    <script src="forumFunctions.js" defer></script>
+    <script src="functions.js" defer></script>
+</head>
+<body class = "dark_mode">
+<div id="sideNav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <div class="barSearch">
+    <input type="text" class="searchBar" id="entrySearch" onkeyup="search()" placeholder="Search.." title="Creature Name">
+  </div>
+  <div class="container">
+      <div id ="cols" class = "col row-col-1"></div>
+  </div>
+
+</div>
+<button class="button" onclick="openNav()">&#9776; Navigation</button>
+<button class="button" onclick="goToInformation()">Page Information</button>
+<div  id="offClick" class="closeNav" onclick="closeNav()">
+  <div></div>
+</div>
+<div>
+<h1 class ="LastVisit">Home Page</h1>
+<div>
+  <button class="button" onclick="create()">Create New Entry!</button>
+</div>
+<div class="contain">
+<div class="container">
+<h2 class ="LastVisit">Last Visited Pages</h2>
+<div id="jsonManipulation" class="visit">
+  <div class="container">
+    <div id ="rows" class = "LastVisitList"></div>
+  </div>
+</div>
+</div>
+
+<div class="container">
+<h2 class ="LastVisit">Plans</h2>
+<h1>add feats, enchantments, etc. as they are needed</h1>
+<h1>Have the inputs for things such dodge to ac or enhance to saving throws be apart of a 4 part infinite creation input. Name of source, value, where value goes, value type(enhance,misc,temp,etc.)</h1>
+<h1>missing ability score and racial notes, conditions and misc tracker, skills, armor check penalty, maximum dex, spell failure, feats,features, armor,weapons, equipment and items list with weight and uses, spells, magic items and encumbrance</h1>
+</div>
+</div>
+</div>
+</body>
+</html>

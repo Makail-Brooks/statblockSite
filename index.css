@@ -1,0 +1,265 @@
+.sidenav {
+  height: 100%; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color: #111; /* Black*/
+  overflow-x:auto; /* Disable horizontal scroll */
+  padding-top: 20px; /* Place content 60px from the top */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+.closeNav{
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 300px;
+  opacity: 0;
+  background-color: #111;
+  overflow-x:auto;
+}
+
+/* The navigation menu links */
+.sidenav a {
+  padding: 0px 4px 0px 32px;
+  text-decoration: none;
+  font-size: 35px;
+  color: #960606;
+  display: block;
+  transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+  color: #e20000;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+  transition: margin-left .5s;
+  padding: 20px;
+}
+
+.button {
+  background-color: black; /* Green */
+  border: 1px solid black;
+  color: rgb(124, 4, 204);
+  padding: 15px -1000px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 40px;
+  cursor: pointer;
+  
+}
+
+.title{
+    font-size: 35px;
+    font-weight: bold;
+    background-color:rgb(90, 12, 129);
+    padding: 3px;
+}
+
+.pageTitle{
+    font-size: 35px;
+    font-weight: bold;
+    padding: 3px;
+}
+
+.divider{
+  font-size: 15px;
+  border-top: solid thin;
+  border-bottom: solid thin;
+  text-transform: uppercase;
+  overflow: hidden;
+}
+.level{
+  float: right;
+}
+.dark_mode{
+  background-color: black;
+  color: gray;
+}
+.information{
+  font-size: 25px;
+}
+.information5e{
+  font-size: 20px;
+}
+.title5e{
+  font-size: 30px;
+  font-weight: bold;
+}
+.boldInformation{
+  font-size: 30px;
+  font-weight: bold;
+}
+.spells{
+  font-size: 25px;
+  margin-left: 40px;
+}
+.LastVisit{
+  font-size: 40px;
+}
+.plansText{
+  font-size: 40px;
+}
+.contain{
+  display: flex;
+  justify-content:space-between;
+  margin-left: 10px;
+}
+.navBar{
+  display: flex;
+  justify-content: space-between;
+}
+.searchBar{
+  background-color: black;
+  border-bottom: #111;
+  border-right: #111;
+  border-top: #111;
+  border-left: #111;
+  font-size: 20px;
+  color:grey
+}
+.barSearch{
+  padding: 30px;
+}
+
+.taper{
+  border-top: solid 3px transparent;
+  border-left: solid 315px #a52a8a;
+  border-bottom: solid 3px #a52a8a;
+  border-right: solid 315px transparent;
+  margin: 5px 0px 5px 0px;
+}
+.flex-container {
+  display: flex;
+  justify-content: space-evenly;
+
+}
+.flexRight{
+  display: flex;
+  gap: 15px;
+  
+}
+hr{
+  height: 1px;
+  background-color: #a52a8a;
+  border: none;
+  margin: 10px 0px 5px 0px;
+}
+
+.system{
+  font-size: 40px;
+}
+.searchBarCreation{
+  background-color: black;
+  font-size: 20px;
+  color:grey;
+}
+
+.characterSheetInputs{
+  background-color: black;
+  font-size: 20px;
+  color:grey;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  outline: none;
+}
+
+
+.characterSheetInputsNumber{
+  background-color: black;
+  font-size: 20px;
+  color:grey;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  outline: none;
+  width: 48px;
+}
+
+.characterSheetInputsShorter{
+  background-color: black;
+  font-size: 18px;
+  color:grey;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  outline: none;
+  width: 90px;
+}
+
+.characterSheetInputsLongBar{
+  background-color: black;
+  font-size: 20px;
+  color:grey;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  outline: none;
+  width: 790px;
+}
+
+.trained{
+  font-size: 20px;
+  vertical-align: bottom;
+}
+
+.inputName{
+  font-size: 25px;
+}
+
+.infoTitle{
+  font-size: 15px;
+}
+
+.Title{
+  font-size: 30px;
+}
+
+.formButton {
+  background-color: black; /* Green */
+  color: rgb(100, 99, 99);
+  padding: 15px -1000px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  cursor: pointer;
+  
+}
+.leveler{
+  display: flex;
+  justify-content: space-between;
+}
+.creationSetup{
+  display: flex;
+  gap:150px;
+}
+.stairCase{
+  margin-left: 50px;
+}
+
+.smallGap{
+  margin-left: 10px;
+}
+
+.largeGap{
+  margin-left: 100px;
+}

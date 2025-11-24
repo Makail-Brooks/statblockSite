@@ -1,0 +1,4015 @@
+{
+  "creatures": [
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Pathfinder Template",
+      "title": "Example",
+      "cr": "?",
+      "alignment": "?",
+      "size": "Fine",
+      "type": "Custom",
+      "customType": "?",
+      "senses": [
+        "seperate_sense1 ?",
+        "Perception 0"
+      ],
+      "aura": [
+        "?"
+      ],
+      "ac": {
+        "armor": "18",
+        "touch": "18",
+        "flat_foot": "18",
+        "bonuses": {
+          "extra": [
+            {
+              "rage": "-2",
+              "insight": "1"
+            }
+          ]
+        }
+      },
+      "level": "1",
+      "hitDice": "d4",
+      "rate": "Monster",
+      "hp_traits": "effect",
+      "fort": "Bad",
+      "ref": "Bad",
+      "will": "Bad",
+      "weaknesses": "?",
+      "speed": "0",
+      "melee": [
+        {
+          "name": "All",
+          "diceCount": 1,
+          "damageDice": "d4"
+        }
+      ],
+      "ranged": [
+        {
+          "name": "bow",
+          "diceCount": 1,
+          "damageDice": "d4"
+        }
+      ],
+      "special_attacks": "?",
+      "str": "10",
+      "dex": "10",
+      "con": "10",
+      "int": "10",
+      "wis": "10",
+      "cha": "10",
+      "bab": "Slow",
+      "skillProgression": "Low",
+      "cmb": "-8",
+      "cmd": "2",
+      "feats": [
+        "?",
+        "?",
+        "a"
+      ],
+      "skills": {
+        "Acrobatics": "0",
+        "Appraise": "0",
+        "Bluff": "0",
+        "Climb": "0",
+        "Diplomacy": "0",
+        "DisableDevice": "0",
+        "Disguise": "0",
+        "EscapeArtist": "0",
+        "Fly": "0",
+        "HandleAnimal": "0",
+        "Heal": "0",
+        "Intimidate": "0"
+      },
+      "gear": "?"
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "5e",
+      "name": "5e Template",
+      "size": "Medium",
+      "type": "type",
+      "alignment": "N",
+      "level": "1",
+      "hitDice": "d8",
+      "ac": "?",
+      "speed": "",
+      "str": "",
+      "dex": "",
+      "con": "",
+      "int": "",
+      "wis": "",
+      "cha": "",
+      "proficiency": "0",
+      "saving_throws": {
+        "str": -5,
+        "dex": -5,
+        "con": -5,
+        "int": -5,
+        "wis": -5,
+        "cha": -5
+      },
+      "skillsProf": {
+        "Acrobatics": false,
+        "AnimalHandling": false,
+        "Arcana": true,
+        "Athletics": false,
+        "Deception": false,
+        "History": true,
+        "Insight": false,
+        "Intimidation": true,
+        "Investigation": true,
+        "Medicine": false,
+        "Nature": false,
+        "Perception": true,
+        "Performance": false,
+        "Persuasion": false,
+        "Religion": true,
+        "SleightofHand": false,
+        "Stealth": false,
+        "Survival": false
+      },
+      "damage_vulnerabilities": "?",
+      "damage_resistances": "?",
+      "damage_immunities": "?",
+      "condition_immunities": "?",
+      "senses": "?",
+      "cr": "?",
+      "xp": "1200",
+      "ability": [
+        {
+          "abilityName": "abilty1.",
+          "ability_desc": "desc1."
+        },
+        {
+          "abilityName": "abilty2.",
+          "ability_desc": "desc2."
+        }
+      ],
+      "actions": [
+        {
+          "actionName": "action1",
+          "action_desc": "actiondesc1"
+        },
+        {
+          "actionName": "action2",
+          "action_desc": "actiondesc2"
+        }
+      ],
+      "legendaryAbilities": {
+        "legendary_details": "description.",
+        "legendaryActions": [
+          {
+            "legendaryName": "legAbility1.",
+            "legendary_desc": "legdesc1."
+          },
+          {
+            "legendaryName": "legAbility2.",
+            "legendary_desc": "legdesc2."
+          }
+        ]
+      }
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Bandit",
+      "title": "Bandit",
+      "cr": "1/2",
+      "alignment": "CN",
+      "size": "Medium",
+      "type": "Humanoid",
+      "senses": [
+        "Perception -1"
+      ],
+      "ac": {
+        "armor": "12",
+        "touch": "12",
+        "flat_foot": "10",
+        "bonuses": {
+          "dex": "2"
+        }
+      },
+      "level": "2",
+      "hitDice": "d10",
+      "rate": "Monster",
+      "fort": "Good",
+      "ref": "Bad",
+      "will": "Bad",
+      "speed": "30",
+      "melee": [
+        {
+          "name": "rapier",
+          "diceCount": "1",
+          "damageDice": "d6",
+          "critRange": "18",
+          "isAlternative": false
+        },
+        {
+          "name": "sap",
+          "diceCount": "1",
+          "damageDice": "d6",
+          "isAlternative": true
+        }
+      ],
+      "ranged": [
+        {
+          "name": "composite longbow",
+          "diceCount": "1",
+          "damageDice": "d8",
+          "critMultiplier": "3",
+          "isAlternative": false
+        }
+      ],
+      "str": "13",
+      "dex": "14",
+      "con": "11",
+      "int": "10",
+      "wis": "8",
+      "cha": "9",
+      "bab": "Fast",
+      "skillProgression": "Low",
+      "cmb": "3",
+      "cmd": "15",
+      "feats": [
+        "Dodge",
+        "Point Blank Shot"
+      ],
+      "skills": {
+        "Climb": "3",
+        "HandleAnimal": "3",
+        "Intimidate": "4",
+        "Ride": "3",
+        "Stealth": "0"
+      },
+      "languages": [
+        "common"
+      ],
+      "gear": " studded leather, buckler, composite longbow (+1 Str) with 20 arrows, rapier, sap, light horse (combat trained), blue dot is Void Remnant(\"scale\" or some other kind of Armor or information detailing the void) Green Dot is general alternative loot"
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Void Envoy",
+      "title": "Envoy",
+      "cr": "18",
+      "alignment": "CN",
+      "size": "Large",
+      "type": "Aberration",
+      "subtype": "Void",
+      "senses": [
+        "blindsight 60ft",
+        "darkvision 60 ft",
+        "Perception +18"
+      ],
+      "ac": {
+        "armor": "30",
+        "touch": "18",
+        "flat_foot": "26",
+        "bonuses": {
+          "deflection": "5",
+          "dex": "4",
+          "natural": "12"
+        }
+      },
+      "level": "24",
+      "hitDice": "d10",
+      "rate": "Monster",
+      "hp_traits": "Regeneration 5(Sonic)",
+      "fort": "Good",
+      "ref": "Bad",
+      "will": "Good",
+      "save_bonuses": [
+        "4(Mental effects)"
+      ],
+      "defensive_traits": {
+        "Defensive_Abilities": "Void Shield",
+        "DR": "15/magic",
+        "Immune": "Nauseated, Sickened, Asleep, Drowsy, Petrified",
+        "Resist": "Cold 10",
+        "SR": "28"
+      },
+      "speed": "40",
+      "melee": [
+        {
+          "name": "2 claws",
+          "diceCount": "2",
+          "damageDice": "d10",
+          "critRange": "19",
+          "isAlternative": false,
+          "isAdditive": false
+        }
+      ],
+      "space": "10 ft",
+      "reach": "10 ft",
+      "special_attacks": "Oblivion Wail",
+      "str": "34",
+      "dex": "18",
+      "con": "28",
+      "int": "12",
+      "wis": "18",
+      "cha": "20",
+      "bab": "Fast",
+      "skillProgression": "Middle",
+      "cmb": "37",
+      "cmd": "51",
+      "cmdMod": [
+        {
+          "CMDBonusDetails": "vs. bull rush and trip",
+          "CMDBonus": "4"
+        }
+      ],
+      "feats": [
+        "Aquatic Combatant",
+        "Improved Initiative",
+        "Intimidating Prowess",
+        "Stealthy",
+        "Toughness",
+        "Eldritch Claws",
+        "Blind-Fight",
+        "Improved Blind-Fight",
+        "Cleave",
+        "Cleave, Great",
+        "Critical Focus",
+        "Critical, Bleeding"
+      ],
+      "skills": {
+        "Acrobatics": "12",
+        "Climb": "12",
+        "EscapeArtist": "12",
+        "Fly": "8",
+        "Intimidate": "20",
+        "Knowledge(Planes)": "8",
+        "Perception": "14",
+        "Spellcraft": "0",
+        "Stealth": "14",
+        "Survival": "10",
+        "Swim": "10"
+      },
+      "racialModifiers": [
+        "+6 Intimidate",
+        "+4 Stealth"
+      ],
+      "languages": [
+        "Aboleth"
+      ],
+      "special_abilities": [
+        {
+          "abilityName": "Immortality",
+          "ability_desc": "An Envoy of The Void does not age, nor does it need to eat or breathe. Only violence can bring about the death of one of these creatures.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Void Shield",
+          "ability_desc": "An Envoy of The Void gains +5 deflection bonus from it's protection given by the void.",
+          "abilityType": "Su(Supernatural)"
+        },
+        {
+          "abilityName": "Insanity",
+          "ability_desc": "A creature that starts it's turn within the aura must make a [saveDC] save or take 1d4 Wisdom damage. The save DC is Constitution-based.",
+          "dcStat": "Con",
+          "saveType": "Will",
+          "abilityType": "Ex(Extraordinary)",
+          "auraRadius": "10"
+        },
+        {
+          "abilityName": "Starflight",
+          "ability_desc": "The eldritch can survive in the void of outer space and does not need to breathe when in the void. It fly through space at an incredible speed. Although exact travel times vary, a trip within a single solar system normally takes 3d20 months, while a trip beyond should take 3d20 years (or more, at the GM's discretion).",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Oblivion Wail",
+          "ability_desc": "As a free action every 1d6 rounds, the Void Envoy may open it's 'mouth' to open a portal to the void projecting images to creatures in a 25-foot sphere. Creatures in the sphere take 5d6 Psychic damage and gain a level of madness. A [saveDC] save halves the damage and negates the madness increment effect. This is a Psychic mind affecting effect. The save DC is Charisma-based.",
+          "dcStat": "Cha",
+          "saveType": "Will",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Void Warp",
+          "ability_desc": "As a move action every 1d6 rounds, the Void Envoy may open a portal to another location within 500ft. This does not cause AOO.",
+          "abilityType": "Su(Supernatural)"
+        },
+        {
+          "abilityName": "Eternal Entity",
+          "ability_desc": "This Creature does not get exhausted or fatigued.",
+          "abilityType": "Ex(Extraordinary)"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Acolyte of False God",
+      "title": "Acolyte",
+      "cr": "1/2",
+      "alignment": "LE",
+      "size": "Medium",
+      "type": "Humanoid",
+      "senses": [
+        "Perception +1"
+      ],
+      "ac": {
+        "armor": "15",
+        "touch": "10",
+        "flat_foot": "15",
+        "bonuses": {
+          "armor": "3",
+          "shield": "2"
+        }
+      },
+      "level": "2",
+      "hitDice": "d10",
+      "rate": "Monster",
+      "fort": "Good",
+      "ref": "Bad",
+      "will": "Bad",
+      "speed": "30",
+      "melee": [
+        {
+          "name": "short sword",
+          "diceCount": "1",
+          "damageDice": "d6",
+          "isAlternative": false
+        },
+        {
+          "name": "sap",
+          "diceCount": "1",
+          "damageDice": "d6",
+          "uniqueDamage": "nonlethal",
+          "isAlternative": true
+        }
+      ],
+      "ranged": [
+        {
+          "name": "dagger",
+          "diceCount": "1",
+          "damageDice": "d4",
+          "critRange": "19",
+          "isAlternative": false
+        }
+      ],
+      "str": "14",
+      "dex": "11",
+      "con": "12",
+      "int": "8",
+      "wis": "9",
+      "cha": "10",
+      "bab": "Fast",
+      "skillProgression": "Low",
+      "cmb": "4",
+      "cmd": "14",
+      "feats": [
+        "Shield Focus",
+        " Weapon Focus (short sword)"
+      ],
+      "skills": {
+        "Intimidate": "5",
+        "Perception": "2",
+        "Ride": "3"
+      },
+      "languages": [
+        "Common"
+      ],
+      "gear": "studded leather armor, light wooden shield, daggers (2), sap, short sword, white robes, iron mask, 2d10 gp each"
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Null Hound",
+      "title": "Null Hound",
+      "cr": "5",
+      "alignment": "LN",
+      "size": "Large",
+      "type": "Aberration",
+      "senses": [
+        "blindsight 60ft",
+        "scent",
+        "Perception +7"
+      ],
+      "ac": {
+        "armor": "20",
+        "touch": "11",
+        "flat_foot": "17",
+        "bonuses": {
+          "dex": "1",
+          "dodge": "1",
+          "natural": "9"
+        }
+      },
+      "level": "14",
+      "hitDice": "d8",
+      "rate": "Monster",
+      "fort": "Bad",
+      "ref": "Bad",
+      "will": "Good",
+      "save_bonuses": [
+        "4(vs. Poison)"
+      ],
+      "defensive_traits": {
+        "Immune": "petrification",
+        "SR": "10"
+      },
+      "speed": "40",
+      "melee": [
+        {
+          "name": "2 claws",
+          "diceCount": "1",
+          "damageDice": "d6",
+          "isAlternative": false
+        },
+        {
+          "name": "bite",
+          "diceCount": "1",
+          "damageDice": "d8",
+          "isAlternative": false
+        }
+      ],
+      "str": "20",
+      "dex": "13",
+      "con": "14",
+      "int": "8",
+      "wis": "13",
+      "cha": "14",
+      "bab": "Medium",
+      "skillProgression": "Middle",
+      "cmb": "16",
+      "cmd": "27",
+      "feats": [
+        "Lightning Reflexes",
+        "Dodge",
+        "Alertness",
+        "Ambush Awareness",
+        "Toughness"
+      ],
+      "skills": {
+        "Acrobatics": "6",
+        "Climb": "4",
+        "Diplomacy": "8",
+        "Disguise": "10",
+        "EscapeArtist": "1",
+        "Fly": "1",
+        "Intimidate": "2",
+        "Perception": "4",
+        "SenseMotive": "2",
+        "Stealth": "2",
+        "Survival": "1",
+        "Swim": "1"
+      },
+      "racialModifiers": [
+        "+20 Disguise when mimicking other creatures",
+        "+10 Survival when using scent"
+      ],
+      "languages": [
+        "Celestial",
+        "Aboleth"
+      ],
+      "special_qualities": [
+        "Change Shape(Polymorph)"
+      ],
+      "special_abilities": [
+        {
+          "abilityName": "Change Shape (Su)",
+          "ability_desc": "A hound archon can assume any canine form of Small to Large size, as if using polymorph. While not in hound form it replaces its bite and claw attacks with the stat block it transformed into.",
+          "abilityType": "Su(Supernatural)"
+        },
+        {
+          "abilityName": "Immortality (Ex)",
+          "ability_desc": "A Null Hound does not age, nor does it need to eat or breathe. Only violence can bring about the death of one of these creatures.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Null Entity (EX)",
+          "ability_desc": "This Creature does not need to breath, or eat and does not get exhausted but can become fatigued.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Warleader(SM)",
+          "ability_desc": "Has Warleader Sphere",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Fierce Shout(SM)",
+          "ability_desc": "When you use this shout, you and all affected allies gain a +1 morale bonus on damage rolls on their first attack each turn. For every 2 ranks in Diplomacy you possess, this morale bonus to damage is increased by +1. This is a mind-affecting emotion effect.(Bonus +4)",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Aggressive Flanking(SM)",
+          "ability_desc": "While within the affected area of this tactic, allied creatures are considered to be flanking as long as they both threaten the same creature, regardless of their comparative positioning.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Triumph [Conq. HB](SMT)",
+          "ability_desc": "Whenever you succeed on an attack action, you may shout as a swift action. You may expend martial focus to make this shout as a free action.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Protective Warning (shout) [Conq. HB](SMT)",
+          "ability_desc": "You can warn your allies to protect themselves better against an enemy’s specific attack. When you use this shout, choose one specific ability you know an enemy possesses (such as a dragon’s breath weapon, a practitioner ogre’s brutal strike (exertion), or a specific spell or magical sphere effect an enemy uses, but not all spellcasting). All allies in the radius of this shout gain a +2 competence bonus to saving throws against that specific ability, increasing by +1 for every 5 ranks in Diplomacy you possess. You may expend martial focus to use this shout as an immediate action, but the bonuses from this shout end after one round.  You must know about the ability to warn against it, such as having succeeded a Knowledge check and learned about that ability, witnessing the ability from the enemy, or learning about the ability from another source (such as an ally informing you).  For spherecasting effects, which can be highly mutable, the bonus from this shout applies to the base ability used rather than an exact combination of talents. For example, this shout can be used in reaction to a destructive blast, and would apply to an unmodified Destruction sphere’s destructive blast or a destructive blast modified by the Energy Strike or Chain Blast talents.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Focusing Tactics(SMT)",
+          "ability_desc": "Any ally currently affected by one of your shouts or tactics may spend a move action to restore your martial focus. The creature spending a move action must have an Intelligence of at least 3 and possess a number of Hit Dice at least equal to 1/2 your total Hit Dice.",
+          "abilityType": "Ex(Extraordinary)"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Yelfen",
+      "title": "Yelfen",
+      "cr": "8",
+      "alignment": "N",
+      "size": "Medium",
+      "type": "Humanoid",
+      "subtype": "Elf",
+      "senses": [
+        "Low-Light Vision",
+        "Perception +21"
+      ],
+      "ac": {
+        "armor": "28",
+        "touch": "24",
+        "flat_foot": "20",
+        "bonuses": {
+          "armor": "4",
+          "deflection": "6",
+          "dex": "7",
+          "dodge": "1"
+        }
+      },
+      "level": "14",
+      "hitDice": "d10",
+      "rate": "Monster",
+      "fort": "Good",
+      "ref": "Good",
+      "will": "Bad",
+      "defensive_traits": {
+        "DR": "4/bludgeoning"
+      },
+      "speed": "30",
+      "melee": [
+        {
+          "name": "rapier",
+          "diceCount": "1",
+          "damageDice": "d6",
+          "critRange": "18",
+          "multiAttack": "2",
+          "enchantments": [
+            "Agile",
+            "Keen"
+          ],
+          "isAlternative": false,
+          "isAdditive": false
+        }
+      ],
+      "ranged": [
+        {
+          "name": "+3 Arcane Rifle(300 ft)",
+          "diceCount": "1",
+          "damageDice": "d10",
+          "critMultiplier": "4",
+          "isAlternative": false,
+          "isAdditive": false
+        }
+      ],
+      "special_attacks": "Deadly Shot",
+      "str": "16",
+      "dex": "24",
+      "con": "14",
+      "int": "16",
+      "wis": "20",
+      "cha": "18",
+      "bab": "Fast",
+      "skillProgression": "Middle",
+      "cmb": "17",
+      "cmd": "34",
+      "feats": [
+        "Stealthy",
+        "Skill Focus(Stealth)",
+        "Dodge",
+        "Improved Initiative",
+        "Tough",
+        "",
+        ""
+      ],
+      "skills": {
+        "Acrobatics": "14",
+        "Bluff": "14",
+        "Climb": "4",
+        "Craft": [
+          {
+            "Name": "Alchemy",
+            "Ranks": "8"
+          }
+        ],
+        "HandleAnimal": "1",
+        "Heal": "4",
+        "Knowledge(Local)": "8",
+        "Perception": "14",
+        "Profession": [
+          {
+            "Name": "Herbalism",
+            "Ranks": "8"
+          }
+        ],
+        "Ride": "0",
+        "Stealth": "14",
+        "Survival": "8",
+        "Swim": "1"
+      },
+      "racialModifiers": [
+        "+2 against Enchantment",
+        "+2 perception checks"
+      ],
+      "languages": [
+        "Common",
+        "Elven",
+        "Sylvan"
+      ],
+      "gear": "Composite Long Bow, Clothing, Arrows, sheet of paper with orders",
+      "special_qualities": [
+        "Silent Hunter(Replaces Elven Magic)",
+        "Dedicated Duelist(Martial Tradition)"
+      ],
+      "special_abilities": [
+        {
+          "abilityName": "Sphere Specializations(Sniper)",
+          "ability_desc": "The conscript specializes in a combat sphere of his choice. When specializing in a sphere, the conscript gains that sphere as a bonus sphere at 1st level (or a combat talent belonging to that sphere if he already possesses that base sphere) and may treat his base attack bonus as being equal to his conscript level +1 when determining the benefits and effects of that sphere1; if a sphere would grant effects based on the user’s Hit Dice instead of their base attack bonus, the conscript may treat his total Hit Dice as being equal to his conscript level +1 for the purposes of determining what benefits he receives. In addition, he gains a series of abilities associated with that sphere as detailed at the end of the class.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Precision Shots",
+          "ability_desc": "Yelfen may use a move action to aim her weapon, gaining a competence bonus on damage rolls with her next ranged attack equal to 1/2 his base attack bonus (rounded down, minimum 1)(equaling to 5).",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Uncanny Accuracy",
+          "ability_desc": "Whenever Yelfen makes a successful attack while using the deadly shot ability, she treats any weapon damage dice roll of 1 or 2 as 3.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Evasion",
+          "ability_desc": "Yelfen can avoid magical and unusual attacks with great agility. If she succeeds at a Reflex saving throw against an attack that normally deals half damage on a successful save, she instead takes no damage. Evasion can be used only if Yelfen is wearing light armor or no armor.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Deadly Shot",
+          "ability_desc": "As a special attack action, you may make an attack with a ranged weapon. You may add any one (snipe) talent you know to this attack.  In addition, you may expend your martial focus to increase the damage dealt by the attack by 1d10, or 1d6 if the attack targets touch AC or is made with a scatter weapon. You must choose whether or not to use this ability before making your attack roll. These extra damage dice are not multiplied on a critical hit, but are added to the total. For every 4 points of base attack bonus you possess, You deal an additional 1d10 damage, or an additional 1d6 if the attack targets touch AC or is made with a scatter weapon.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Sniper Sphere",
+          "ability_desc": "Snipers specialize in making single, deadly shots, often over great distances. Practitioners of the Sniper sphere can shoot or throw ranged weapons at a creature engaged in melee without taking the standard –4 penalty on their attack roll. Associated Feat: Precise Shot.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Focusing Reload",
+          "ability_desc": "You may regain martial focus whenever you use a move, standard, or full-round action to reload a weapon you are wielding (including nocking an arrow to a bow). If you can normally reload your weapon faster than a move action, you may choose to reload as a move action to gain this benefit.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Lethal Precision [Conq. HB]",
+          "ability_desc": "After performing a deadly shot made while hiding, you may use the Stealth skill’s sniping function as a swift action. You may expend martial focus to reduce this to a free action. In addition, when making a deadly shot, you can deal Fencing sphere precision damage, sneak attack damage, or damage from other similar effects and abilities at any distance.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Perfect Shot",
+          "ability_desc": "As long as you have martial focus, whenever you would suffer a miss chance due to concealment, roll the miss chance twice and take the most favorable result. In addition, as long as you have martial focus, you no longer automatically miss when rolling a natural 1 on a ranged attack roll; your attack must still hit the target’s AC as normal. At +10 base attack bonus, you can reroll a result of 1 on a ranged attack roll once per round.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Unblockable",
+          "ability_desc": "Your ranged attacks are launched with devastating accuracy; whenever you make a ranged attack using the attack action and a spell or ability (such as wind wall or the Deflect Arrows feat) would allow a creature to prevent or deflect it, that creature must succeed at a caster level check (if the blocking effect is a spell or supernatural ability) or a combat maneuver check against your attack roll. Failure on this check means that your attack is not impeded by the ability.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Head Shot (snipe)",
+          "ability_desc": "If your deadly shot deals damage equal to at least 50% of the target’s current hit points, the target must make a successful Fortitude saving throw or die. Constructs, elementals, swarms, and oozes are immune to this ability. This is a death effect.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Steady Shot (snipe)",
+          "ability_desc": "When performing a deadly shot, you may ignore the cover bonus to AC granted to targets by anything less than total cover, and the miss chance granted to targets by anything less than total concealment. Total cover and total concealment provide their normal benefits against your ranged attacks. At +10 base attack bonus, you also ignore total concealment.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Unarmored Training",
+          "ability_desc": "Your deft movements, physical conditioning, and expert use of your chosen weapons allow you to create a protective barrier around yourself as effective as any true suit of armor. When unarmored and unencumbered, you gain a +3 armor bonus to your AC. This bonus increases by +1 for every 3 points of base attack bonus you possess. Characters who gain Acrobatics as a class skill may instead choose to have the armor bonus increase by +1 for every 3 ranks in the Acrobatics skill they possess.  This bonus to AC applies even against touch attacks or when you are flat-footed. You lose these bonuses when you are immobilized or helpless, when you wear any armor, or when you carry a medium or heavy load. These bonuses do not stack with the AC bonus class feature of the monk or similar abilities.  This bonus depends on an intricate awareness of the practitioner's body and balance, and as such is lost when the target is under any shapeshift other than blank form, or is polymorphed into a creature of the animal, dragon, elemental, magical beast, plant, or vermin type.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Blooded Strike",
+          "ability_desc": "Whenever you use the attack action or an attack of opportunity to attack or disarm a creature, you deal an additional 1 point of bleed damage to the target on a successful attempt, +1 for every 3 points of base attack bonus you possess; this stacks with any other bleed damage you are capable of dealing. Practitioners of the Duelist sphere never provoke attacks of opportunity when attempting combat maneuvers against a target currently taking bleed damage.  Bleed: Some talents have the (bleed) descriptor; these talents are triggered when you deal bleed damage to a creature using your blooded strike. You may only apply the effects of a single (bleed) talent to a given attack. A target that is immune to bleed damage is also immune to all other effects of talents with this descriptor. For the purpose of these talents, only bleed damage you deal with your blooded strike is considered when determining their effects.  Disarm: Some talents have the (disarm) descriptor; these talents trigger whenever you succeed at a disarm attempt against a creature. You may only apply the effects of a single (disarm) talent to a given disarm attempt. (Disarm) talents cannot be applied to maneuvers performed as a free action.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Focusing Bloodshed [CrimDan]",
+          "ability_desc": "After causing a creature to begin bleeding, you may spend a move action to regain your martial focus. As part of this move action, you may make a melee touch attack as a free action against a non-bleeding creature within reach. This attack deals no damage, but causes that creature to begin bleeding as per your blooded strike. (This does not allow you to apply a (bleed) talent.) Additionally, when an enemy causes you to begin bleeding, you may spend an immediate action to regain your martial focus.  Author's Note: For the intents of this talent, \"begin bleeding\" refers to any application of a new source of bleed damage that the creature did not already suffer from, rather than causing a creature to begin bleeding for the first time.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Open Vein [CrimDan]",
+          "ability_desc": "As a special attack action, you may expend your martial focus to deal an additional 1d4 bleed damage to your target, +1d4 for every 3 points of base attack bonus you possess. This stacks with other bleed damage granted by the Duelist sphere.  Author's Note: Open Vein \"stacks\" with other sources of duelist bleed, but only with other Duelist sphere bleeds (such as blooded strike and Finger Cutter).",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Debilitating Injuries (bleed)",
+          "ability_desc": "Whenever you deal bleed damage to a creature, you may cause them to take a penalty on all weapon attack rolls equal to the amount of bonus bleed damage granted to you by blooded strike for as long as the bleed is in effect. Any healing or other ability that ends the bleed also ends this penalty.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Perforating Wounds (bleed) [CrimDan]",
+          "ability_desc": "Whenever you deal bleed damage as part of an attack action to a creature who is already suffering bleed damage from your blooded strike, you deal an amount of bleed damage equal to 1 + 1 for every 3 points of base attack bonus you possess. This bleed damage stacks with other bleed damage granted by the Duelist sphere. You can stack this bleed damage with itself once for every 6 points of base attack bonus you possess. This bleed damage is separate from your blooded strike, and does not affect other abilities that scale off of your blooded strike’s bleed damage.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Deft Agility",
+          "ability_desc": "Upon being hit by an attack, Yelfen makes a 10+half of the cumulative damage about to be dealt reflex save. If she succeeds she takes half of the cumulative damage.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Hand Slasher",
+          "ability_desc": "As long as a creature is currently taking bleed damage, their disarm and sunder attempts always provoke attacks of opportunity from you, even if they have an ability that would normally prevent them from doing so.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Scar Tissue",
+          "ability_desc": "Your countless Duelist practices have built up thick scar tissue and callouses that provide you protection from bleeding wounds. You gain DR 2 / bludgeoning and reduce all bleed damage you take by 1; bleed damage cannot be reduced below 0 by this ability. For every 5 points of base attack bonus you possess, the damage reduction granted by this ability increases by 2 points and you reduce any bleed damage you take by an additional 1 point.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Ooze Ichor",
+          "ability_desc": "You are able to deal bleed damage to behemoths, constructs, elementals, and undead, bypassing their normal immunity, though all bleed damage you deal to such creatures is reduced to half of what it would normally be, to a minimum of 1 point of bleed damage whenever you would successfully deal bleed damage to such a creature.\n\nBlood Sphere note: The Duelist sphere Ooze Ichor talent allows the user to deal bleed damage to creature types that are normally immune, but does not by itself make them",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Gear Training (Ex) (1 point)",
+          "ability_desc": "At 1st level, a conscript gains proficiency with all martial weapons, and with medium armor and shields (except tower shields). At 6th level, the conscript also gains proficiency with heavy armor and tower shields.",
+          "abilityType": "Su(Supernatural)"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "5e",
+      "name": "Emilia Nelythes",
+      "size": "Medium",
+      "type": "Humanoid",
+      "alignment": "CE",
+      "level": "17",
+      "hitDice": "d8",
+      "ac": "18(Robe of the Abyss)",
+      "speed": "30ft,. 40ft Swim",
+      "str": "12",
+      "dex": "16",
+      "con": "30",
+      "int": "14",
+      "wis": "12",
+      "cha": "22",
+      "proficiency": "6",
+      "saving_throws": {
+        "con": 16,
+        "wis": 7,
+        "cha": 12
+      },
+      "skillsProf": {
+        "Acrobatics": false,
+        "AnimalHandling": false,
+        "Arcana": true,
+        "Athletics": false,
+        "Deception": false,
+        "History": true,
+        "Insight": false,
+        "Intimidation": true,
+        "Investigation": true,
+        "Medicine": false,
+        "Nature": false,
+        "Perception": true,
+        "Performance": false,
+        "Persuasion": false,
+        "Religion": true,
+        "SleightofHand": false,
+        "Stealth": false,
+        "Survival": false
+      },
+      "damage_resistances": "Cold, Force",
+      "damage_immunities": "Poison",
+      "condition_immunities": " Disease, Poisoned",
+      "senses": "Darkvision 120 ft.,120 ft true sight",
+      "cr": "23",
+      "actions": [
+        {
+          "actionName": "Null Coil",
+          "action_desc": "Emilia can use her reaction to have the tentacle take the hit for her reducing the damage she would take equal to it's hp + damage it would normally deal(4d8)"
+        },
+        {
+          "actionName": "Null Coil",
+          "action_desc": "Emilia can use her reaction to have the tentacle take the hit for her reducing the damage she would take equal to it's hp + damage it would normally deal(4d8)"
+        },
+        {
+          "actionName": "Null Coil",
+          "action_desc": "Emilia can use her reaction to have the tentacle take the hit for her reducing the damage she would take equal to it's hp + damage it would normally deal(4d8)"
+        },
+        {
+          "actionName": "Null Coil",
+          "action_desc": "Emilia can use her reaction to have the tentacle take the hit for her reducing the damage she would take equal to it's hp + damage it would normally deal(4d8)"
+        }
+      ],
+      "legendaryAbilities": {
+        "legendary_details": "The Emilia Nyarlathotep can take 3 legendary actions, choosing from the options below. Only one legendary option can be used at a time and only at the end of another creature's turn. The Emilia Nyarlathotep regains spent legendary actions at the start of its turn.",
+        "legendaryActions": [
+          {
+            "legendaryName": "Attack of the Deep(cost 1)",
+            "legendary_desc": "Emilia makes a tentacle attack"
+          },
+          {
+            "legendaryName": "Attack of the Deep(cost 1)",
+            "legendary_desc": "Emilia makes a tentacle attack"
+          }
+        ]
+      }
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Paraselene",
+      "title": "Paraselene",
+      "cr": "2",
+      "alignment": "N",
+      "size": "Medium",
+      "type": "Magical Beast",
+      "subtype": "Construct",
+      "senses": [
+        "Darkvision 60ft. ",
+        "Low-light vision",
+        "Perception +8"
+      ],
+      "ac": {
+        "armor": "17",
+        "touch": "12",
+        "flat_foot": "15",
+        "bonuses": {
+          "dex": "2",
+          "natural": "5"
+        }
+      },
+      "level": "4",
+      "hitDice": "d10",
+      "rate": "Monster",
+      "fort": "Good",
+      "ref": "Good",
+      "will": "Bad",
+      "speed": "40",
+      "melee": [
+        {
+          "name": "Bite",
+          "diceCount": "1",
+          "damageDice": "d8",
+          "isAlternative": false
+        },
+        {
+          "name": "2 Claw",
+          "diceCount": "1",
+          "damageDice": "d6",
+          "isAlternative": false
+        }
+      ],
+      "str": "16",
+      "dex": "14",
+      "con": "16",
+      "int": "2",
+      "wis": "12",
+      "cha": "10",
+      "bab": "Fast",
+      "skillProgression": "Low",
+      "cmb": "7",
+      "cmd": "19",
+      "feats": [
+        "Skill Focus(Perception)",
+        "Outflank"
+      ],
+      "skills": {
+        "Acrobatics": "4",
+        "Climb": "0",
+        "Fly": "1",
+        "Perception": "4",
+        "Stealth": "2",
+        "Swim": "1"
+      },
+      "special_abilities": [
+        {
+          "abilityName": "Construct Like Nature",
+          "ability_desc": "Immunity to bleed, disease, death effects, necromancy effects, poison, does not need to breathe or eat. Cannot be raised or resurrected.",
+          "abilityType": "Su(Supernatural)"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Parhelion",
+      "title": "Parhelion",
+      "cr": "2",
+      "alignment": "N",
+      "size": "Medium",
+      "type": "Magical Beast",
+      "subtype": "Construct",
+      "senses": [
+        "Perception +4"
+      ],
+      "ac": {
+        "armor": "14",
+        "touch": "14",
+        "flat_foot": "10",
+        "bonuses": {
+          "dex": "4"
+        }
+      },
+      "level": "3",
+      "hitDice": "d10",
+      "rate": "Monster",
+      "fort": "Good",
+      "ref": "Good",
+      "will": "Bad",
+      "speed": "40",
+      "melee": [
+        {
+          "name": "Bite",
+          "diceCount": "1",
+          "damageDice": "d6",
+          "isAlternative": false
+        },
+        {
+          "name": "2 Claws",
+          "diceCount": "1",
+          "damageDice": "d4",
+          "isAlternative": false
+        }
+      ],
+      "str": "15",
+      "dex": "18",
+      "con": "17",
+      "int": "2",
+      "wis": "13",
+      "cha": "10",
+      "bab": "Fast",
+      "skillProgression": "Low",
+      "cmb": "5",
+      "cmd": "19",
+      "feats": [
+        "Lookout",
+        "Stick Together"
+      ],
+      "skills": {
+        "Acrobatics": "3",
+        "Climb": "0",
+        "Fly": "0",
+        "Perception": "3",
+        "Stealth": "2",
+        "Swim": "1"
+      },
+      "special_qualities": [
+        "All Allies are under the effects of Pack tactics"
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Slime",
+      "title": "Generic",
+      "cr": "1/4",
+      "alignment": "N",
+      "size": "Medium",
+      "type": "Ooze",
+      "senses": [
+        "Blindsight 60ft.",
+        "Perception -3"
+      ],
+      "ac": {
+        "armor": "12",
+        "touch": "12",
+        "flat_foot": "10",
+        "bonuses": {
+          "dex": "2"
+        }
+      },
+      "level": "2",
+      "hitDice": "d8",
+      "rate": "Monster",
+      "fort": "Bad",
+      "ref": "Bad",
+      "will": "Bad",
+      "defensive_traits": {
+        "Immune": "Poison, Sleep effects, Paralysis, Polymorph, and Stunning"
+      },
+      "speed": "30",
+      "melee": [
+        {
+          "name": "Slam",
+          "diceCount": "1",
+          "damageDice": "d4",
+          "isAlternative": false
+        }
+      ],
+      "ranged": [
+        {
+          "name": "Acid Spit",
+          "diceCount": "2",
+          "damageDice": "d4",
+          "uniqueDamage": "does acid",
+          "isAlternative": false
+        }
+      ],
+      "str": "10",
+      "dex": "14",
+      "con": "12",
+      "int": "-",
+      "wis": "5",
+      "cha": "6",
+      "bab": "Medium",
+      "skillProgression": "Middle",
+      "cmb": "1",
+      "cmd": "13",
+      "cmdMod": [
+        {
+          "CMDBonusDetails": "can't be tripped",
+          "CMDBonus": ""
+        }
+      ],
+      "special_qualities": [
+        "No breath"
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Goblin",
+      "title": "Goblin",
+      "cr": "1/3",
+      "alignment": "NE",
+      "size": "Small",
+      "type": "humanoid (goblinoid)",
+      "senses": [
+        "Darkvision 60ft.",
+        "Perception -1"
+      ],
+      "ac": {
+        "armor": "16",
+        "touch": "13",
+        "flat_foot": "14",
+        "bonuses": {
+          "armor": "2",
+          "dex": "2",
+          "shield": "1"
+        }
+      },
+      "level": "1",
+      "hitDice": "d10",
+      "rate": "Monster",
+      "fort": "Good",
+      "ref": "Bad",
+      "will": "Bad",
+      "speed": "30",
+      "melee": [
+        {
+          "name": "short sword",
+          "diceCount": "1",
+          "damageDice": "d4",
+          "critRange": "19",
+          "isAlternative": false,
+          "isAdditive": false
+        }
+      ],
+      "ranged": [
+        {
+          "name": "short bow",
+          "diceCount": "1",
+          "damageDice": "d4",
+          "critMultiplier": "3",
+          "isAlternative": false,
+          "isAdditive": false
+        }
+      ],
+      "str": "11",
+      "dex": "15",
+      "con": "12",
+      "int": "10",
+      "wis": "9",
+      "cha": "6",
+      "bab": "Fast",
+      "skillProgression": "High",
+      "cmb": "0",
+      "cmd": "12",
+      "feats": [
+        "Improved Initiative"
+      ],
+      "skills": {
+        "Ride": "4",
+        "Stealth": "4",
+        "Swim": "4"
+      },
+      "racialModifiers": [
+        "+4 Ride",
+        "+4 Stealth"
+      ],
+      "languages": [
+        "Goblin"
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Skeleton",
+      "title": "Medium Skeleton",
+      "cr": "1/3",
+      "alignment": "NE",
+      "size": "Medium",
+      "type": "Undead",
+      "senses": [
+        "darkvision 60ft.",
+        "Perception 0"
+      ],
+      "ac": {
+        "armor": "16",
+        "touch": "12",
+        "flat_foot": "14",
+        "bonuses": {
+          "armor": "2",
+          "dex": "2",
+          "natural": "2"
+        }
+      },
+      "level": "1",
+      "hitDice": "d8",
+      "rate": "Monster",
+      "fort": "Bad",
+      "ref": "Good",
+      "will": "Good",
+      "defensive_traits": {
+        "DR": "5/blugeoning",
+        "Immune": "cold, undead traits"
+      },
+      "speed": "30",
+      "melee": [
+        {
+          "name": "broken scimitar",
+          "diceCount": "1",
+          "damageDice": "d6",
+          "toHitModifier": "-2",
+          "isAlternative": false
+        },
+        {
+          "name": "claw",
+          "diceCount": "1",
+          "damageDice": "d4",
+          "toHitModifier": "-5",
+          "isAlternative": false
+        },
+        {
+          "name": "2 claw",
+          "diceCount": "1",
+          "damageDice": "d4",
+          "isAlternative": true
+        }
+      ],
+      "str": "15",
+      "dex": "14",
+      "con": "-",
+      "int": "-",
+      "wis": "10",
+      "cha": "10",
+      "bab": "Slow",
+      "skillProgression": "Middle",
+      "cmb": "2",
+      "cmd": "14",
+      "feats": [
+        "Improved Initiative"
+      ],
+      "gear": "broken chain shirt, broken scimitar"
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Zombie, Fast",
+      "title": "Fast Zombie",
+      "cr": "1/2",
+      "alignment": "NE",
+      "size": "Medium",
+      "type": "Undead",
+      "senses": [
+        "darkvision 60 ft.",
+        "Perception 0"
+      ],
+      "ac": {
+        "armor": "14",
+        "touch": "12",
+        "flat_foot": "12",
+        "bonuses": {
+          "dex": "2",
+          "natural": "2"
+        }
+      },
+      "level": "2",
+      "hitDice": "d8",
+      "rate": "Monster",
+      "fort": "Bad",
+      "ref": "Bad",
+      "will": "Good",
+      "defensive_traits": {
+        "Immune": "undead traits"
+      },
+      "speed": "40",
+      "melee": [
+        {
+          "name": "2 slams",
+          "diceCount": "1",
+          "damageDice": "d6",
+          "isAlternative": false
+        }
+      ],
+      "special_attacks": "quick strikes",
+      "str": "17",
+      "dex": "14",
+      "con": "-",
+      "int": "-",
+      "wis": "10",
+      "cha": "10",
+      "bab": "Medium",
+      "skillProgression": "Middle",
+      "cmb": "4",
+      "cmd": "16",
+      "feats": [
+        "Toughness"
+      ],
+      "special_abilities": [
+        {
+          "abilityName": "Quick Strikes",
+          "ability_desc": "Whenever a fast zombie takes a full-attack action, it can make one additional slam attack at its highest base attack bonus.",
+          "abilityType": "Ex(Extraordinary)"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "System Corrupted Minotaur",
+      "title": "Minotaur",
+      "cr": "12",
+      "alignment": "LE",
+      "size": "Colossal",
+      "type": "Monstrous Humanoid",
+      "subtype": "System Corrupted",
+      "senses": [
+        "darkvision 60ft.",
+        "Blind Sense 120ft.",
+        "Perception +22"
+      ],
+      "ac": {
+        "armor": "22",
+        "touch": "9",
+        "flat_foot": "19",
+        "bonuses": {
+          "armor": "3",
+          "deflection": "4",
+          "dex": "3",
+          "natural": "10"
+        }
+      },
+      "level": "16",
+      "hitDice": "d10",
+      "rate": "Monster",
+      "fort": "Bad",
+      "ref": "Good",
+      "will": "Good",
+      "defensive_traits": {
+        "Defensive_Abilities": "natural cunning",
+        "SR": "10"
+      },
+      "speed": "50",
+      "melee": [
+        {
+          "name": "greataxe",
+          "diceCount": "1",
+          "damageDice": "d10",
+          "critMultiplier": "3",
+          "multiAttack": "2",
+          "isAlternative": false,
+          "isAdditive": false
+        },
+        {
+          "name": "gore",
+          "diceCount": "1",
+          "damageDice": "d8",
+          "isAlternative": false,
+          "isAdditive": true
+        },
+        {
+          "name": "Unarmed Strike",
+          "diceCount": "1",
+          "damageDice": "d8",
+          "isAlternative": true,
+          "isAdditive": false
+        }
+      ],
+      "ranged": [
+        {
+          "name": "Throw Greataxe",
+          "diceCount": "1",
+          "damageDice": "d12",
+          "isAlternative": false,
+          "isAdditive": false
+        }
+      ],
+      "space": "30 ft",
+      "reach": "30 ft",
+      "special_attacks": "powerful charge (gore +17, 2d6+6)",
+      "str": "24",
+      "dex": "16",
+      "con": "26",
+      "int": "6",
+      "wis": "14",
+      "cha": "12",
+      "bab": "Fast",
+      "skillProgression": "Middle",
+      "cmb": "31",
+      "cmd": "44",
+      "feats": [
+        "Great Fortitude",
+        "Toughness",
+        "Improved Bull Rush",
+        "Power Attack",
+        "Cleave",
+        "Improved Initiative",
+        "Intimidating Prowess",
+        "Martial Dominance"
+      ],
+      "skills": {
+        "Acrobatics": "0",
+        "Climb": "12",
+        "Fly": "0",
+        "Intimidate": "16",
+        "Perception": "16",
+        "Stealth": "6",
+        "Survival": "15",
+        "Swim": "15"
+      },
+      "racialModifiers": [
+        "+4 Perception",
+        "+4 Survival"
+      ],
+      "languages": [
+        "Giant",
+        "Xarvric"
+      ],
+      "special_abilities": [
+        {
+          "abilityName": "Natural Cunning",
+          "ability_desc": "Although minotaurs are not especially intelligent, they possess innate cunning and logical ability. This gives them immunity to maze spells and prevents them from ever becoming lost. Further, they are never caught flat-footed.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Ravenous Fury",
+          "ability_desc": "For every 100 HP missing make an additional attack without multi-attack penalty and gains 5 DR",
+          "abilityType": "Su(Supernatural)"
+        },
+        {
+          "abilityName": "System Corruption",
+          "ability_desc": "Due to the corruption of the System this creature gains a +4 deflection bonus. It also has -10 to Crit Confirms as it is unable to strike true as well.",
+          "abilityType": "Su(Supernatural)"
+        },
+        {
+          "abilityName": "Goblin's Abound",
+          "ability_desc": "At start of Combat spawn 2d6 Corrupt Goblins.",
+          "abilityType": "Su(Supernatural)"
+        },
+        {
+          "abilityName": "Gravities Strength",
+          "ability_desc": "Once per round when a creature is hit with the greataxe they must make a [saveDC] saving throw or become staggered for 1 round if the failed save total was less 10 than then creature become stunned instead. A creature can only be stunned by this effect once every 2d6 turns.",
+          "dcStat": "Str",
+          "saveType": "Fort",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Corruption Roar",
+          "ability_desc": "The System Corrupted Minotaur can make a roar as a free action, each creature within 40ft. of it must make a [saveDC] saving throw or be Deafened for 1d4+1 rounds. This creature can take this action every 1d6 rounds.",
+          "dcStat": "Cha",
+          "saveType": "Fort",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Mountain Mover",
+          "ability_desc": "As part of an attack you may make a CMB check against target creatures CMD, on a success move them 10 ft. in a chosen direction, for every extra 5 past the target creatures CMD move target creature an extra 5 ft. If total movement is greater than 30ft. the creature is considered launched(Flat-footed until start of their turn) if target creature hits an obstacle without expending all remaining movement they take 1d6 for each 5ft of movement remaining.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Corrupt Axes Return",
+          "ability_desc": "Is able to as a free action return their thrown axe to their hand after having thrown it.",
+          "abilityType": "Su(Supernatural)"
+        },
+        {
+          "abilityName": "Great Strength",
+          "ability_desc": "Can hurl it's Greataxe(Range 60 increment) as a Standard action.",
+          "abilityType": "Ex(Extraordinary)"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Kora",
+      "title": "Kora",
+      "cr": "1/8",
+      "alignment": "N",
+      "size": "Medium",
+      "type": "Custom",
+      "customType": "System Avatar",
+      "senses": [
+        "Perception 1"
+      ],
+      "ac": {
+        "armor": "14",
+        "touch": "14",
+        "flat_foot": "12",
+        "bonuses": {
+          "deflection": "2",
+          "dex": "2"
+        }
+      },
+      "level": "3",
+      "hitDice": "d6",
+      "rate": "Player",
+      "fort": "Bad",
+      "ref": "Bad",
+      "will": "Good",
+      "speed": "30",
+      "melee": [
+        {
+          "name": "Touch Attack",
+          "diceCount": "1",
+          "damageDice": "d4",
+          "isAlternative": false,
+          "isAdditive": false
+        }
+      ],
+      "ranged": [
+        {
+          "name": "Ranged Touch",
+          "diceCount": "1",
+          "damageDice": "d4",
+          "isAlternative": false,
+          "isAdditive": false
+        }
+      ],
+      "str": "12",
+      "dex": "14",
+      "con": "12",
+      "int": "16",
+      "wis": "12",
+      "cha": "12",
+      "bab": "Slow",
+      "skillProgression": "Middle",
+      "cmb": "2",
+      "cmd": "14",
+      "feats": [
+        "Bonus Magic Talent",
+        "Bonus Magic Talent"
+      ],
+      "skills": {
+        "Appraise": "3",
+        "Craft": [
+          {
+            "Name": "Rock",
+            "Ranks": "3"
+          }
+        ],
+        "Fly": "3",
+        "Knowledge(All)": "3",
+        "Linguistics": "3",
+        "Profession": [
+          {
+            "Name": "System",
+            "Ranks": "3"
+          }
+        ],
+        "Spellcraft": "3"
+      },
+      "special_qualities": [
+        "All Hostile Enemies ignore her",
+        "Casting Drawbacks(Focus Casting(Ring), Verbal Casting",
+        "Boon(Alien Source)",
+        "Limited Protection:\nChoose either aegis or ward. You lose the other ability and cannot take talents that only grant or alter the lost ability.(Ward Lost)",
+        "Give allies +2 to AC"
+      ],
+      "special_abilities": [
+        {
+          "abilityName": "Systems Administrator Self-Imposed Limitation",
+          "ability_desc": "Has an \"Spell pool\" equal to her [level + max health / 5]. This pool is how many entropy charges she can have before she starts taking damage. For each entropy charge beyond her pool she takes 1 damage. At the start of her turn if she did not spend a spell point within the last minute she loses 1 entropy charge and heals any damage done by an entropy charge. Entropy Damage can not be healed through the means of the System(Magic, potions, class abilities), something that increases natural healing will bypass this limitation. Each point increase reduces time required by 1 round. Upon gaining a level of Entropy every 5 already acquired causes Kora to take another charge, this only applies to health charges.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Systems Administrator",
+          "ability_desc": "Has access to every sphere effect, advanced and not. Kora is able to give an ally a none advanced sphere effect as an action, if the sphere effect has a cost to activate such as a spell point or martial focus she uses one spell point or gains a stack of entropy as per Systems Administrator Self-Imposed Limitation. While not in combat Kora may give multiple sphere effects at the same time as a free action but inquiring all the costs for doing so, during this time she may also hold concentration to keep the effects going indefinitely but only for one target a time. At 5th level she make give herself a sphere effect as a free action.",
+          "abilityType": "Ex(Extraordinary)"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Corrupted Goblin",
+      "title": "Goblin",
+      "cr": "2",
+      "alignment": "CE",
+      "size": "Small",
+      "type": "Custom",
+      "customType": "Goblin Corrupted",
+      "senses": [
+        "darkvision 60 ft.",
+        "Perception -1"
+      ],
+      "ac": {
+        "armor": "19",
+        "touch": "15",
+        "flat_foot": "18",
+        "bonuses": {
+          "armor": "2",
+          "deflection": "3",
+          "dex": "1",
+          "natural": "2"
+        }
+      },
+      "level": "4",
+      "hitDice": "d10",
+      "rate": "Monster",
+      "fort": "Good",
+      "ref": "Bad",
+      "will": "Bad",
+      "defensive_traits": {
+        "DR": "1",
+        "SR": "1"
+      },
+      "speed": "40",
+      "melee": [
+        {
+          "name": "2 Corrupted Claws",
+          "diceCount": "3",
+          "damageDice": "d6",
+          "critRange": "18",
+          "critMultiplier": "2",
+          "uniqueDamage": "plus corruption",
+          "toHitModifier": "-3",
+          "isAlternative": false,
+          "isAdditive": false
+        },
+        {
+          "name": "Bite",
+          "diceCount": "1",
+          "damageDice": "d4",
+          "isAlternative": false,
+          "isAdditive": true
+        }
+      ],
+      "str": "16",
+      "dex": "12",
+      "con": "14",
+      "int": "4",
+      "wis": "8",
+      "cha": "6",
+      "bab": "Fast",
+      "skillProgression": "Low",
+      "cmb": "6",
+      "cmd": "17",
+      "feats": [
+        "Improved Initiative",
+        "Ankle Biter"
+      ],
+      "skills": {
+        "EscapeArtist": "4",
+        "Ride": "4",
+        "Stealth": "4"
+      },
+      "racialModifiers": [
+        "+4 Ride"
+      ],
+      "languages": [
+        "Goblin"
+      ],
+      "special_abilities": [
+        {
+          "abilityName": "Corruption",
+          "ability_desc": "Deals 1d4 non-lethal psychic damage",
+          "abilityType": "Su(Supernatural)"
+        },
+        {
+          "abilityName": "System Corruption",
+          "ability_desc": "Due to the corruption of the System this creature has a harder time hitting creatures giving it a -3 to hit, however it gains a +3 deflection bonus",
+          "abilityType": "Su(Supernatural)"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Spider, Giant (Medium)",
+      "title": "Giant Spider",
+      "cr": "1",
+      "alignment": "N",
+      "size": "Medium",
+      "type": "vermin",
+      "senses": [
+        "darkvision 60ft.",
+        "Perception +4"
+      ],
+      "ac": {
+        "armor": "14",
+        "touch": "13",
+        "flat_foot": "11",
+        "bonuses": {
+          "dex": "3",
+          "natural": "1"
+        }
+      },
+      "level": "3",
+      "hitDice": "d8",
+      "rate": "Monster",
+      "fort": "Good",
+      "ref": "Bad",
+      "will": "Bad",
+      "defensive_traits": {
+        "Immune": "mind-affecting effects"
+      },
+      "speed": "30 ft.,climb 30",
+      "melee": [
+        {
+          "name": "bite",
+          "diceCount": "1",
+          "damageDice": "d6",
+          "uniqueDamage": "plus poison",
+          "isAlternative": false,
+          "isAdditive": false
+        }
+      ],
+      "space": "10 ft",
+      "special_attacks": "web (+5 ranged, DC 12, hp 2)",
+      "str": "11",
+      "dex": "17",
+      "con": "12",
+      "int": "-",
+      "wis": "10",
+      "cha": "2",
+      "bab": "Slow",
+      "skillProgression": "Middle",
+      "cmb": "1",
+      "cmd": "14",
+      "skills": {
+        "Climb": "0",
+        "Perception": "0",
+        "Stealth": "0"
+      },
+      "racialModifiers": [
+        "+16 climb",
+        "+4 Perception",
+        "+4 stealth"
+      ],
+      "special_abilities": [
+        {
+          "abilityName": "Poison",
+          "ability_desc": "Bite—injury; save Fort DC 14; frequency 1/round for 4 rounds; effect 1d2 Strength damage; cure 1 save.",
+          "abilityType": "Ex(Extraordinary)"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Corrupted Skeleton",
+      "title": "Medium Skeleton",
+      "cr": "1",
+      "alignment": "N",
+      "size": "Medium",
+      "type": "Custom",
+      "customType": "System Corrupted Undead",
+      "senses": [
+        "Perception -1"
+      ],
+      "ac": {
+        "armor": "18",
+        "touch": "14",
+        "flat_foot": "17",
+        "bonuses": {
+          "armor": "2",
+          "deflection": "3",
+          "dex": "1",
+          "natural": "2"
+        }
+      },
+      "level": "3",
+      "hitDice": "d8",
+      "rate": "Monster",
+      "fort": "Bad",
+      "ref": "Good",
+      "will": "Good",
+      "defensive_traits": {
+        "DR": "5/bludgeoning, 2",
+        "Immune": "cold, undead traits"
+      },
+      "speed": "30",
+      "melee": [
+        {
+          "name": "2 claws",
+          "diceCount": "2",
+          "damageDice": "d4",
+          "uniqueDamage": "plus corruption",
+          "toHitModifier": "-5",
+          "isAlternative": false,
+          "isAdditive": false
+        }
+      ],
+      "ranged": [
+        {
+          "name": "Bone Blaster",
+          "diceCount": "2",
+          "damageDice": "d10",
+          "isAlternative": true,
+          "isAdditive": false
+        }
+      ],
+      "str": "19",
+      "dex": "12",
+      "con": "-",
+      "int": "-",
+      "wis": "8",
+      "cha": "6",
+      "bab": "Medium",
+      "skillProgression": "Middle",
+      "cmb": "6",
+      "cmd": "17",
+      "feats": [
+        "Improved Initiative"
+      ],
+      "special_abilities": [
+        {
+          "abilityName": "Corruption",
+          "ability_desc": "Deals 1d4 non-lethal psychic damage",
+          "abilityType": "Su(Supernatural)"
+        },
+        {
+          "abilityName": "System Corruption",
+          "ability_desc": "Due to the corruption of the System this creature has a harder time hitting creatures giving it a -2 to hit, however it gains a +3 deflection bonus",
+          "abilityType": "Su(Supernatural)"
+        },
+        {
+          "abilityName": "Corrupted Betrayal",
+          "ability_desc": "At the start of each of it's turns it must make a DC 15 will save or attack the closest creature.",
+          "abilityType": "Su(Supernatural)"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Spider, Giant(Corrupted)",
+      "title": "Corrupted Giant Spider",
+      "cr": "3",
+      "alignment": "N",
+      "size": "Medium",
+      "type": "Custom",
+      "customType": "System Corrupted",
+      "senses": [
+        "darkvision 60ft. tremorsense 60ft.",
+        "Perception +3"
+      ],
+      "ac": {
+        "armor": "16",
+        "touch": "15",
+        "flat_foot": "14",
+        "bonuses": {
+          "deflection": "3",
+          "dex": "2",
+          "natural": "1"
+        }
+      },
+      "level": "5",
+      "hitDice": "d8",
+      "rate": "Monster",
+      "fort": "Good",
+      "ref": "Good",
+      "will": "Bad",
+      "defensive_traits": {
+        "DR": "5",
+        "Immune": "mind-affecting effects"
+      },
+      "speed": "30",
+      "melee": [
+        {
+          "name": "bite",
+          "diceCount": "2",
+          "damageDice": "d6",
+          "uniqueDamage": "plus corruption",
+          "isAlternative": false,
+          "isAdditive": false
+        }
+      ],
+      "str": "16",
+      "dex": "14",
+      "con": "14",
+      "int": "-",
+      "wis": "8",
+      "cha": "1",
+      "bab": "Medium",
+      "skillProgression": "Middle",
+      "cmb": "6",
+      "cmd": "18",
+      "skills": {
+        "Climb": "0",
+        "Perception": "0",
+        "Stealth": "0"
+      },
+      "racialModifiers": [
+        "+4 perception",
+        "+4 stealth",
+        "+16 climb"
+      ],
+      "special_abilities": [
+        {
+          "abilityName": "Corruption",
+          "ability_desc": "Deals 1d4 non-lethal psychic damage",
+          "abilityType": "Su(Supernatural)"
+        },
+        {
+          "abilityName": "System Corruption",
+          "ability_desc": "Due to the corruption of the System this creature gains a +3 deflection bonus",
+          "abilityType": "Su(Supernatural)"
+        },
+        {
+          "abilityName": "Corrupted Betrayal",
+          "ability_desc": "At the start of each of it's turns it must make a DC 15 will save or attack the closest creature.",
+          "abilityType": "Su(Supernatural)"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Cockroach, Giant",
+      "title": "Cockroach, Giant",
+      "cr": "1/2",
+      "alignment": "N",
+      "size": "Small",
+      "type": "Vermin",
+      "senses": [
+        "Perception +4"
+      ],
+      "ac": {
+        "armor": "14",
+        "touch": "12",
+        "flat_foot": "13",
+        "bonuses": {
+          "dex": "1",
+          "natural": "2"
+        }
+      },
+      "level": "1",
+      "hitDice": "d8",
+      "rate": "Monster",
+      "fort": "Good",
+      "ref": "Bad",
+      "will": "Bad",
+      "weaknesses": "light sensitivity",
+      "speed": "30",
+      "melee": [
+        {
+          "name": "bite",
+          "diceCount": "1",
+          "damageDice": "d4",
+          "toHitModifier": "1",
+          "isAlternative": false,
+          "isAdditive": false
+        }
+      ],
+      "str": "11",
+      "dex": "12",
+      "con": "19",
+      "int": "-",
+      "wis": "11",
+      "cha": "2",
+      "bab": "Slow",
+      "skillProgression": "Middle",
+      "cmb": "-1",
+      "cmd": "10",
+      "feats": [
+        "Diehard",
+        "Endurance"
+      ],
+      "skills": {
+        "Climb": "0",
+        "Fly": "-4",
+        "Perception": "0",
+        "Stealth": "0"
+      },
+      "racialModifiers": [
+        "+8 climb",
+        "+4 perception",
+        "+4 stealth"
+      ],
+      "special_qualities": [
+        "hold breath"
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Randaz Gylus",
+      "title": "\"Theoros\"",
+      "cr": "8",
+      "alignment": "LE",
+      "size": "Medium",
+      "type": "Construct",
+      "senses": [
+        "darkvision 60 ft., low-light vision, System sense 120 ft.",
+        "Perception 4"
+      ],
+      "ac": {
+        "armor": "24",
+        "touch": "24",
+        "flat_foot": "22",
+        "bonuses": {
+          "deflection": "12",
+          "dex": "2"
+        }
+      },
+      "level": "8",
+      "hitDice": "d10",
+      "rate": "Monster",
+      "fort": "Bad",
+      "ref": "Bad",
+      "will": "Bad",
+      "defensive_traits": {
+        "Immune": "construct traits",
+        "SR": "15"
+      },
+      "speed": "30",
+      "ranged": [
+        {
+          "name": "DEL Invasion_Variable",
+          "diceCount": "2",
+          "damageDice": "d6",
+          "critMultiplier": "1",
+          "uniqueDamage": "plus corruption",
+          "multiAttack": "3",
+          "toHitModifier": "8",
+          "isAlternative": false,
+          "isAdditive": false
+        },
+        {
+          "name": "Antinomy of Erudition",
+          "diceCount": "3",
+          "damageDice": "d4",
+          "uniqueDamage": "plus Mythos Axiom(When recharged)",
+          "multiAttack": "1",
+          "toHitModifier": "8",
+          "isAlternative": false,
+          "isAdditive": true
+        }
+      ],
+      "special_attacks": "FORMAT Malfunction_Zone",
+      "str": "14",
+      "dex": "14",
+      "con": "10",
+      "int": "17",
+      "wis": "18",
+      "cha": "20",
+      "bab": "Fast",
+      "skillProgression": "Low",
+      "cmb": "10",
+      "cmd": "22",
+      "feats": [
+        "Toughness",
+        "Critical Focus",
+        "Artful Dodge",
+        "Vital Strike"
+      ],
+      "special_qualities": [
+        "Construct Traits"
+      ],
+      "special_abilities": [
+        {
+          "abilityName": "corruption",
+          "ability_desc": "Deals 1d4 non-lethal psychic damage",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "FORMAT Malfunction_Zone",
+          "ability_desc": "Every Enemy Creature within a 20ft cube must make a [saveDC] ref or take 2d6 force damage. For each 60 dmg taken this ability is used automatically.",
+          "dcStat": "Cha",
+          "saveType": "Ref",
+          "abilityType": "Sp(Spell-Like)"
+        },
+        {
+          "abilityName": "Mythos Axiom",
+          "ability_desc": "Creature effected by this must make a [saveDC] fort taking 3d6 force damage, half on a success. This effect has a recharge trait of 6.",
+          "dcStat": "Cha",
+          "saveType": "Fort",
+          "abilityType": "Su(Supernatural)"
+        },
+        {
+          "abilityName": "Origination & Destruction",
+          "ability_desc": "Is able to use both DEL Invasion_Variable and Antinomy of Erudition even after moving and having attacked. However, if Randaz Gylus did not move last turn add one more attack at max BAB.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Rules of the Theoros",
+          "ability_desc": "Randaz does not have his own initiative, instead he goes after another players turn.",
+          "abilityType": "Su(Supernatural)"
+        },
+        {
+          "abilityName": "My Analysis is Absolute",
+          "ability_desc": "Gain 1.5 round up caster modifier(Cha) to attacks for enemies he has gathered information on.",
+          "abilityType": "Su(Supernatural)"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Nullites",
+      "title": "Nullites",
+      "cr": "9",
+      "alignment": "N",
+      "size": "Small",
+      "type": "Aberration",
+      "senses": [
+        "Borrowed Sight",
+        "Perception +13"
+      ],
+      "ac": {
+        "armor": "18",
+        "touch": "13",
+        "flat_foot": "20",
+        "bonuses": {
+          "deflection": "4",
+          "dex": "-2",
+          "natural": "5"
+        }
+      },
+      "level": "10",
+      "hitDice": "d8",
+      "rate": "Monster",
+      "fort": "Bad",
+      "ref": "Bad",
+      "will": "Good",
+      "defensive_traits": {
+        "DR": "2/Slashing",
+        "SR": "10"
+      },
+      "weaknesses": "Force vulnerability, Slashing vulnerability",
+      "speed": "30",
+      "str": "18",
+      "dex": "6",
+      "con": "20",
+      "int": "14",
+      "wis": "16",
+      "cha": "12",
+      "bab": "Medium",
+      "skillProgression": "Middle",
+      "cmb": "10",
+      "cmd": "18",
+      "feats": [
+        "Blind-Fight",
+        "Defensive Combat Training",
+        "Advanced Defensive Combat Training",
+        "Low Profile",
+        "Toughness"
+      ],
+      "skills": {
+        "Acrobatics": "5",
+        "Climb": "5",
+        "EscapeArtist": "10",
+        "Fly": "5",
+        "Intimidate": "0",
+        "Knowledge(Planes)": "10",
+        "Perception": "10",
+        "Spellcraft": "0",
+        "Stealth": "10",
+        "Survival": "5",
+        "Swim": "0"
+      },
+      "special_abilities": [
+        {
+          "abilityName": "Drain Host",
+          "ability_desc": "Deal the host 2d4 force damage and heal for 2d8.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "False Armor",
+          "ability_desc": "Replace host creatures natural armor with 2 natural armor and remove spell resistance.",
+          "abilityType": "Su(Supernatural)"
+        },
+        {
+          "abilityName": "Borrowed Sight",
+          "ability_desc": "Uses the host creatures sight.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Control Body",
+          "ability_desc": "When making attacks using the host body all feats from this creature are active.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Fake Initative",
+          "ability_desc": "Pretends to be the creature but has it's own initative",
+          "abilityType": "Ex(Extraordinary)"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Singularity Destroyer",
+      "title": "Null Sentinel",
+      "cr": "15",
+      "alignment": "LE",
+      "size": "Colossal",
+      "type": "Aberration",
+      "senses": [
+        "Perception +17"
+      ],
+      "ac": {
+        "armor": "19",
+        "touch": "10",
+        "flat_foot": "19",
+        "bonuses": {
+          "armor": "3",
+          "deflection": "9",
+          "dex": "-1",
+          "natural": "6"
+        }
+      },
+      "level": "20",
+      "hitDice": "d8",
+      "rate": "Monster",
+      "fort": "Bad",
+      "ref": "Bad",
+      "will": "Good",
+      "speed": "10",
+      "melee": [
+        {
+          "name": "Slash of Null",
+          "diceCount": "1",
+          "damageDice": "d10",
+          "isAlternative": false,
+          "isAdditive": false
+        },
+        {
+          "name": "Oblivions Edge(Only at 10% or less health)",
+          "diceCount": "2",
+          "damageDice": "d12",
+          "critRange": "18",
+          "critMultiplier": "3",
+          "toHitModifier": "-8",
+          "isAlternative": false,
+          "isAdditive": false
+        }
+      ],
+      "str": "24",
+      "dex": "8",
+      "con": "30",
+      "int": "22",
+      "wis": "20",
+      "cha": "16",
+      "bab": "Medium",
+      "skillProgression": "Middle",
+      "cmb": "30",
+      "cmd": "39",
+      "feats": [
+        "Toughness",
+        "Power Attack",
+        "Critical Focus",
+        "Critical, Bleeding",
+        "Weapon Focus(Slash of Null)",
+        "Defensive Combat Training",
+        "Iron Will",
+        "Improved Natural Armor",
+        "Great Fortitude",
+        "Improved Initiative"
+      ],
+      "skills": {
+        "Acrobatics": "12",
+        "Climb": "12",
+        "EscapeArtist": "12",
+        "Fly": "12",
+        "Intimidate": "12",
+        "Knowledge(All)": "12",
+        "Perception": "12",
+        "Spellcraft": "12",
+        "Stealth": "12",
+        "Survival": "12",
+        "Swim": "0"
+      },
+      "special_qualities": [
+        "Null Traits"
+      ],
+      "special_abilities": [
+        {
+          "abilityName": "Summon Eruditions Black Hole",
+          "ability_desc": "All Creatures minus [creatureName] within 30 ft. of the a point(100 ft. range) of [creatureName]'s choice must make a [saveDC] save or take 2d10 force damage as they are pulled by a black hole. Where the black hole was placed a 3x3 square of Void Tiles is created. This can be done every 1d6 turns.",
+          "dcStat": "Cha",
+          "saveType": "Fort",
+          "abilityType": "Sp(Spell-Like)"
+        },
+        {
+          "abilityName": "Resolute Will(Phase 2)",
+          "ability_desc": "Gains Resistance to all damage.",
+          "abilityType": "Su(Supernatural)"
+        },
+        {
+          "abilityName": "Genesis Warp(Phase 1)",
+          "ability_desc": "Singularity Destroyer can as a move action move to a location within 100 ft. This is a teleport.",
+          "abilityType": "Su(Supernatural)"
+        },
+        {
+          "abilityName": "Collapse",
+          "ability_desc": "Collapse detonates at the start of the afflicted targets turn. For each stack of Collapse the target takes 5% max hp damage.",
+          "abilityType": "Su(Supernatural)"
+        },
+        {
+          "abilityName": "Great Null Slam(Phase 2)",
+          "ability_desc": "When Singularity Destroyer uses Slash of Null this hits targets within a 30 ft. cube but the overall attack is considered single attacks towards each target for AoO triggers. All creatures within the 30ft. cube and 15 ft. beyond that must make a [saveDC] save or take 3d6 fire damage as the ground cracks beneath them. All tiles hit by this are transformed into Void Tiles.",
+          "dcStat": "Str",
+          "saveType": "Ref",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Break the barrier of the Layer!",
+          "ability_desc": "This ability can only be used once per round. As a free action make Kora do a DC 15(18 phase 2) Fort save, on a failure she takes 1 point of damage.",
+          "abilityType": "Su(Supernatural)"
+        },
+        {
+          "abilityName": "Suns Descent",
+          "ability_desc": "Grab the sun that resides in this layer and slam it into the ground. All creatures within 50 ft. of the epicenter, except the user of this skill, must make a [saveDC] save or take 2d10 fire damage.",
+          "dcStat": "Str",
+          "saveType": "Ref",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Forced Evolution",
+          "ability_desc": "Enter phase 2 upon reaching half health and Automatically use Suns Descent. While in phase 2 movement is set to 0.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Void Tiles",
+          "ability_desc": "A tile that is considered difficult terrain if a creature begins their turn in it. These tiles inflict one stack of collapse when passed through. Once you leave the area and re-enter it is no longer considered difficult terrain.",
+          "abilityType": "Su(Supernatural)"
+        },
+        {
+          "abilityName": "Stars Cataclysm(Phase 2)",
+          "ability_desc": "Send an shower of stars at the targets. Each target within a 50 ft. radius must make a [saveDC] save or take 2d6+4 fire damage as a rain of stars crash into the earth. This can be done every 1d4 turns.",
+          "dcStat": "Cha",
+          "saveType": "Ref",
+          "abilityType": "Sp(Spell-Like)"
+        },
+        {
+          "abilityName": "The Corrosion Vortex(Phase 2)",
+          "ability_desc": "At the start of a creatures if it is within the range of this aura it takes 1d4 piercing damage as a dust and debris is spun around Singularity Destroyer's massive body.",
+          "abilityType": "Su(Supernatural)",
+          "auraRadius": "20"
+        },
+        {
+          "abilityName": "Immolate the Heavens, Abandon the World of all Causality",
+          "ability_desc": "This ability activates immediately once [creatureName] reaches 10% health and forces all creatures to make a [saveDC] save or takes 4d10+12 force damage as they summon their null blade from the void and force it into the ground causing all tiles within 120 ft. to be converted into void tiles.",
+          "dcStat": "Str",
+          "saveType": "Fort",
+          "abilityType": "Ex(Extraordinary)"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "5e",
+      "name": "Sinulence Drone",
+      "size": "Small",
+      "type": "Aberration",
+      "alignment": "LE",
+      "level": "3",
+      "hitDice": "d8",
+      "ac": "14(natural)",
+      "speed": "30ft,. 40ft Swim",
+      "str": "14",
+      "dex": "12",
+      "con": "18",
+      "int": "10",
+      "wis": "12",
+      "cha": "8",
+      "proficiency": "2",
+      "saving_throws": {
+        "dex": 3,
+        "con": 6
+      },
+      "skillsProf": {
+        "Acrobatics": true,
+        "AnimalHandling": false,
+        "Arcana": true,
+        "Athletics": true,
+        "Deception": false,
+        "History": false,
+        "Insight": false,
+        "Intimidation": false,
+        "Investigation": false,
+        "Medicine": false,
+        "Nature": false,
+        "Perception": false,
+        "Performance": false,
+        "Persuasion": false,
+        "Religion": false,
+        "SleightofHand": false,
+        "Stealth": true,
+        "Survival": false
+      },
+      "damage_vulnerabilities": "Force",
+      "damage_resistances": "Cold",
+      "senses": "Darkvision 60ft.",
+      "cr": "1",
+      "xp": "1200",
+      "ability": [
+        {
+          "abilityName": "Lunge",
+          "ability_desc": "Lunges itself at a target within 30 ft. of it, if a target is within this line would be hit use Slam ability"
+        },
+        {
+          "abilityName": "Group Tactics",
+          "ability_desc": "When two allies of the same creature are threatening the same threat gain advantage."
+        }
+      ],
+      "actions": [
+        {
+          "actionName": "Slam",
+          "action_desc": "+4 to hit, 1d8+2 bludgeoning."
+        },
+        {
+          "actionName": "Consumption",
+          "action_desc": "Consume a killed creature and absorb part of it's essence taking 1 point of their highest stat and adding it to the Sinulence collective or healing all present allies by 2d4+1."
+        },
+        {
+          "actionName": "Explode",
+          "action_desc": "As an action this creature explodes causing all creatures within 10 ft. to make a 13 Ref or take 2d6 Cold damage on a fail, nothing on a success. Spreads Cerulean Veins in a 3x3 area centered on point of explosion. This action counts as the creature dying."
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "5e",
+      "name": "Sinulence Runner",
+      "size": "Medium",
+      "type": "Aberration",
+      "alignment": "LE",
+      "level": "5",
+      "hitDice": "d8",
+      "ac": "16(natural)",
+      "speed": "40ft,. 60ft Swim",
+      "str": "16",
+      "dex": "18",
+      "con": "12",
+      "int": "10",
+      "wis": "11",
+      "cha": "10",
+      "proficiency": "3",
+      "saving_throws": {
+        "str": 6,
+        "dex": 7
+      },
+      "skillsProf": {
+        "Acrobatics": true,
+        "AnimalHandling": false,
+        "Arcana": false,
+        "Athletics": true,
+        "Deception": false,
+        "History": false,
+        "Insight": false,
+        "Intimidation": false,
+        "Investigation": false,
+        "Medicine": false,
+        "Nature": false,
+        "Perception": false,
+        "Performance": false,
+        "Persuasion": false,
+        "Religion": false,
+        "SleightofHand": false,
+        "Stealth": false,
+        "Survival": false
+      },
+      "damage_vulnerabilities": "Force",
+      "damage_resistances": "Cold",
+      "senses": "30 ft. Darkvision",
+      "cr": "1",
+      "xp": "1200",
+      "ability": [
+        {
+          "abilityName": "Sprint",
+          "ability_desc": "Change use it's bonus action to sprint, this also allows it to run on water for a short time"
+        },
+        {
+          "abilityName": "Nourished Enhancement",
+          "ability_desc": "Upon dealing damage to a creature it gains +2 damage and an extra claw attack when it attacks, this state only lasts 2 rounds and can not be used for 1 once over."
+        }
+      ],
+      "actions": [
+        {
+          "actionName": "Bite",
+          "action_desc": "+6 1d6+3"
+        },
+        {
+          "actionName": "Claw",
+          "action_desc": "+6 1d4+3"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "5e",
+      "name": "Sinulence Stormcaller",
+      "size": "Medium",
+      "type": "Aberration",
+      "alignment": "LE",
+      "level": "3",
+      "hitDice": "d10",
+      "ac": "12",
+      "speed": "15ft,. 30ft Swim",
+      "str": "12",
+      "dex": "14",
+      "con": "12",
+      "int": "16",
+      "wis": "14",
+      "cha": "12",
+      "proficiency": "4",
+      "saving_throws": {
+        "int": 7,
+        "cha": 5
+      },
+      "skillsProf": {
+        "Acrobatics": false,
+        "AnimalHandling": false,
+        "Arcana": true,
+        "Athletics": false,
+        "Deception": false,
+        "History": false,
+        "Insight": false,
+        "Intimidation": false,
+        "Investigation": false,
+        "Medicine": false,
+        "Nature": false,
+        "Perception": false,
+        "Performance": false,
+        "Persuasion": false,
+        "Religion": false,
+        "SleightofHand": false,
+        "Stealth": false,
+        "Survival": false
+      },
+      "damage_vulnerabilities": "Force",
+      "damage_resistances": "Cold, Lightning",
+      "senses": "Senses",
+      "cr": "2",
+      "xp": "1200",
+      "ability": [
+        {
+          "abilityName": "Lightning Rod",
+          "ability_desc": "When dealing or taking Lightning damage heal for damage taken  and half of damage dealt."
+        }
+      ],
+      "actions": [
+        {
+          "actionName": "Call Lightning",
+          "action_desc": "Ranged Spell Attack +7 2d6 lightning"
+        },
+        {
+          "actionName": "Thunders Grasp",
+          "action_desc": "Melee Spell attack +7 2d8 thunder"
+        },
+        {
+          "actionName": "Cast Lightning",
+          "action_desc": "Cast Lightning Bolt with save DC of 20"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "5e",
+      "name": "Sinulence Absolver",
+      "size": "Large",
+      "type": "Aberration",
+      "alignment": "LE",
+      "level": "12",
+      "hitDice": "d8",
+      "ac": "20",
+      "speed": "25ft,. 50ft Swim",
+      "str": "22",
+      "dex": "18",
+      "con": "24",
+      "int": "14",
+      "wis": "13",
+      "cha": "16",
+      "proficiency": "3",
+      "saving_throws": {
+        "str": 9,
+        "con": 10
+      },
+      "skillsProf": {
+        "Acrobatics": true,
+        "AnimalHandling": false,
+        "Arcana": false,
+        "Athletics": true,
+        "Deception": false,
+        "History": false,
+        "Insight": false,
+        "Intimidation": true,
+        "Investigation": false,
+        "Medicine": false,
+        "Nature": false,
+        "Perception": true,
+        "Performance": false,
+        "Persuasion": false,
+        "Religion": true,
+        "SleightofHand": false,
+        "Stealth": false,
+        "Survival": true
+      },
+      "damage_resistances": "Cold",
+      "senses": "Darkvision 60ft., Blindsight 40ft.",
+      "cr": "3",
+      "xp": "1200",
+      "ability": [
+        {
+          "abilityName": "Sea Warp",
+          "ability_desc": "Can move to a location within 100 ft. as a bonus action."
+        },
+        {
+          "abilityName": "Seaborn Consumption.",
+          "ability_desc": "Whenever a Sinulence creature uses the consume action or dies Sinulence Absolver heals 1d6+7"
+        }
+      ],
+      "actions": [
+        {
+          "actionName": "Multi-Attack",
+          "action_desc": "Make 2 Silence Claws attacks and Bite of the Depths"
+        },
+        {
+          "actionName": "Absolver's Will(Recharge 4-6)",
+          "action_desc": "Creatures within 30 ft. must make a DC 14 wisdom saving throw or take 2d6 psychic damage, half on a success as the Absolver forces their will onto them."
+        },
+        {
+          "actionName": "Silence Claws",
+          "action_desc": "Melee Natural Attack +9 1d10+6"
+        },
+        {
+          "actionName": "Beam of Sinulence",
+          "action_desc": "All creatures within a line 100 feet long and 10 feet wide must make a DC 14 Dex saving throw or take 2d10 thunder damage and are deafened. Half on a success and not deafened."
+        },
+        {
+          "actionName": "Bite of the Depths",
+          "action_desc": "Melee Natural Attack +9 1d12+6"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Sinulence Drone",
+      "title": "Drone",
+      "cr": "5",
+      "alignment": "N",
+      "size": "Small",
+      "type": "Aberration",
+      "subtype": "Sinulence",
+      "senses": [
+        "Darkvision 30 ft.",
+        "Perception +4"
+      ],
+      "ac": {
+        "armor": "14",
+        "touch": "14",
+        "flat_foot": "11",
+        "bonuses": {
+          "dex": "1",
+          "dodge": "2"
+        }
+      },
+      "level": "5",
+      "hitDice": "d8",
+      "rate": "Monster",
+      "fort": "Bad",
+      "ref": "Bad",
+      "will": "Good",
+      "defensive_traits": {
+        "Resist": "Cold 10"
+      },
+      "weaknesses": "Force vulnerability",
+      "speed": "30ft,. 40ft Swim",
+      "melee": [
+        {
+          "name": "Slam",
+          "diceCount": "1",
+          "damageDice": "d8",
+          "isAlternative": false,
+          "isAdditive": false
+        }
+      ],
+      "special_attacks": "Lunge, Explode",
+      "str": "16",
+      "dex": "12",
+      "con": "14",
+      "int": "13",
+      "wis": "12",
+      "cha": "8",
+      "bab": "Medium",
+      "skillProgression": "Middle",
+      "cmb": "5",
+      "cmd": "16",
+      "feats": [
+        "Bonded Mind",
+        "Combat Expertise",
+        "Gang Up"
+      ],
+      "skills": {
+        "Acrobatics": "5",
+        "Climb": "2",
+        "EscapeArtist": "0",
+        "Fly": "3",
+        "Intimidate": "0",
+        "Perception": "3",
+        "Spellcraft": "0",
+        "Stealth": "4",
+        "Survival": "3",
+        "Swim": "5"
+      },
+      "special_abilities": [
+        {
+          "abilityName": "Lunge",
+          "ability_desc": "[creatureName] lunges itself at a target within it's movement as a move action and can make a Slam attack action once this movement completes.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Consume",
+          "ability_desc": "Consume a killed creature and absorb part of it's essence healing all allies within 20ft. by 2d4+1.",
+          "abilityType": "Su(Supernatural)"
+        },
+        {
+          "abilityName": "Explode",
+          "ability_desc": "As an action this creature explodes causing all creatures within 10 ft. to make a [saveDC] or take 2d6 Cold damage on a fail, nothing on a success. Spreads Cerulean Veins in a 3x3 area centered on point of explosion. This action counts as the creature dying.",
+          "dcStat": "Dex",
+          "saveType": "Ref",
+          "abilityType": "Ex(Extraordinary)"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Sinulence Runner",
+      "title": "Runner",
+      "cr": "6",
+      "alignment": "N",
+      "size": "Medium",
+      "type": "Aberration",
+      "subtype": "Sinulence",
+      "senses": [
+        "Darkvision 60 ft.",
+        "Perception +1"
+      ],
+      "ac": {
+        "armor": "15",
+        "touch": "15",
+        "flat_foot": "10",
+        "bonuses": {
+          "dex": "5"
+        }
+      },
+      "level": "5",
+      "hitDice": "d8",
+      "rate": "Monster",
+      "fort": "Bad",
+      "ref": "Bad",
+      "will": "Good",
+      "defensive_traits": {
+        "Resist": "Cold 10"
+      },
+      "weaknesses": "Force vulnerability",
+      "speed": "40ft,. 60ft Swim",
+      "melee": [
+        {
+          "name": "Bite",
+          "diceCount": "1",
+          "damageDice": "d6",
+          "toHitModifier": "3",
+          "isAlternative": false,
+          "isAdditive": false
+        },
+        {
+          "name": "2 Claws",
+          "diceCount": "1",
+          "damageDice": "d4",
+          "toHitModifier": "3",
+          "isAlternative": false,
+          "isAdditive": true
+        }
+      ],
+      "str": "14",
+      "dex": "20",
+      "con": "12",
+      "int": "10",
+      "wis": "11",
+      "cha": "10",
+      "bab": "Medium",
+      "skillProgression": "Middle",
+      "cmb": "5",
+      "cmd": "20",
+      "feats": [
+        "Power Attack",
+        "Improved Initiative",
+        "Lightning Reflexes"
+      ],
+      "skills": {
+        "Acrobatics": "5",
+        "Climb": "3",
+        "EscapeArtist": "1",
+        "Fly": "1",
+        "Intimidate": "2",
+        "Perception": "1",
+        "Spellcraft": "0",
+        "Stealth": "2",
+        "Survival": "5",
+        "Swim": "5"
+      },
+      "racialModifiers": [
+        "+5 Acrobatics"
+      ],
+      "special_abilities": [
+        {
+          "abilityName": "Sprint",
+          "ability_desc": "All of it's movement is treated as if it was sprinting and never gets exhausted from this.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Nourished Enhancement",
+          "ability_desc": "Upon dealing damage to a creature it gains +2 damage to it's attacks, this state only lasts 2 rounds and can not be used for 1 once over.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Seeking Nourishment",
+          "ability_desc": "When not in the Nourished Enhanced state, [creatureName] gains a +3 to hit on it's attacks.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Swift Strike",
+          "ability_desc": "Gains a +3 on all attacks.",
+          "abilityType": "Su(Supernatural)"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Sinulence Stormcaller",
+      "title": "Stormcaller",
+      "cr": "4",
+      "alignment": "N",
+      "size": "Medium",
+      "type": "Aberration",
+      "subtype": "Sinulence",
+      "senses": [
+        "Darkvision 60ft.",
+        "Perception +5"
+      ],
+      "ac": {
+        "armor": "12",
+        "touch": "12",
+        "flat_foot": "10",
+        "bonuses": {
+          "dex": "2"
+        }
+      },
+      "level": "6",
+      "hitDice": "d8",
+      "rate": "Monster",
+      "fort": "Bad",
+      "ref": "Bad",
+      "will": "Good",
+      "defensive_traits": {
+        "Immune": "Lightning",
+        "Resist": "Cold 10"
+      },
+      "speed": "30",
+      "melee": [
+        {
+          "name": "Melee Spell Touch Attack",
+          "diceCount": "1",
+          "damageDice": "d4",
+          "isAlternative": false,
+          "isAdditive": false
+        }
+      ],
+      "spell_abilities": {
+        "innate": {
+          "constant": "Shocking Grasp",
+          "atWill": "Lightning Bolt(DC 16)",
+          "casterMod": "Int"
+        }
+      },
+      "str": "10",
+      "dex": "14",
+      "con": "12",
+      "int": "16",
+      "wis": "14",
+      "cha": "12",
+      "bab": "Medium",
+      "skillProgression": "Middle",
+      "cmb": "4",
+      "cmd": "16",
+      "feats": [
+        "Bonded Mind",
+        "Toughness",
+        "Great Fortitude"
+      ],
+      "skills": {
+        "Acrobatics": "2",
+        "Climb": "3",
+        "EscapeArtist": "0",
+        "Fly": "3",
+        "Intimidate": "0",
+        "Knowledge(Arcana)": "4",
+        "Perception": "3",
+        "Spellcraft": "4",
+        "Stealth": "1",
+        "Survival": "4",
+        "Swim": "4"
+      },
+      "special_abilities": [
+        {
+          "abilityName": "Weather Control",
+          "ability_desc": "All Stormcallers control the same storm allowing for Severity to reach 7th level without being of required level. This is a spheres of power effect.",
+          "abilityType": "Sp(Spell-Like)"
+        },
+        {
+          "abilityName": "Lightning Rod",
+          "ability_desc": "Half the lightning damage that would have been taken is converted into healing. All lightning damage done heals [creatureName].",
+          "abilityType": "Su(Supernatural)"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Sinulence Absolver",
+      "title": "Absolver",
+      "cr": "10",
+      "alignment": "N",
+      "size": "Large",
+      "type": "Aberration",
+      "subtype": "Sinulence",
+      "senses": [
+        "Darkvision 60ft., Blindsight 40ft.",
+        "Perception +9"
+      ],
+      "ac": {
+        "armor": "22",
+        "touch": "17",
+        "flat_foot": "18",
+        "bonuses": {
+          "deflection": "4",
+          "dex": "4",
+          "natural": "5"
+        }
+      },
+      "level": "10",
+      "hitDice": "d8",
+      "rate": "Monster",
+      "fort": "Bad",
+      "ref": "Bad",
+      "will": "Good",
+      "defensive_traits": {
+        "Resist": "Cold 15"
+      },
+      "speed": "25ft,. 50ft Swim",
+      "melee": [
+        {
+          "name": "Silence Claws",
+          "diceCount": "1",
+          "damageDice": "d10",
+          "isAlternative": false,
+          "isAdditive": false
+        },
+        {
+          "name": "Bite of the Depths",
+          "diceCount": "1",
+          "damageDice": "d12",
+          "isAlternative": false,
+          "isAdditive": true
+        }
+      ],
+      "special_attacks": "Absolver's Will, Beam of Sinulence",
+      "str": "22",
+      "dex": "18",
+      "con": "24",
+      "int": "14",
+      "wis": "13",
+      "cha": "16",
+      "bab": "Medium",
+      "skillProgression": "Middle",
+      "cmb": "14",
+      "cmd": "28",
+      "feats": [
+        "Iron Will",
+        "Lightning Reflexes",
+        "Toughness",
+        "Great Fortitude",
+        "Bonded Mind"
+      ],
+      "skills": {
+        "Acrobatics": "8",
+        "Climb": "3",
+        "EscapeArtist": "2",
+        "Fly": "8",
+        "Intimidate": "5",
+        "Knowledge(Religion)": "10",
+        "Perception": "8",
+        "Spellcraft": "1",
+        "Stealth": "1",
+        "Survival": "8",
+        "Swim": "6"
+      },
+      "special_abilities": [
+        {
+          "abilityName": "Sea Warp",
+          "ability_desc": "Can move to a location within 100 ft. as a move action.",
+          "abilityType": "Su(Supernatural)"
+        },
+        {
+          "abilityName": "Seaborn Consumption",
+          "ability_desc": "Whenever a Sinulence creature uses the consume action or dies Sinulence Absolver heals 1d6+7",
+          "abilityType": "Su(Supernatural)"
+        },
+        {
+          "abilityName": "Absolver's Will(Recharge 5-6)",
+          "ability_desc": "Creatures within 30 ft. must make a [saveDC] saving throw or take 2d6 psychic damage, half on a success as the Absolver forces their will onto them.",
+          "dcStat": "Cha",
+          "saveType": "Will",
+          "abilityType": "Su(Supernatural)"
+        },
+        {
+          "abilityName": "Beam of Sinulence(4-6)",
+          "ability_desc": "All creatures within a line 100 feet long and 10 feet wide must make a [saveDC] or take 2d10 thunder damage and are deafened. Half on a success and not deafened.",
+          "dcStat": "Con",
+          "saveType": "Ref",
+          "abilityType": "Su(Supernatural)"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Sinulence Leviathan",
+      "title": "Leviathan",
+      "cr": "12",
+      "alignment": "N",
+      "size": "Gargantuan",
+      "type": "Dragon",
+      "subtype": "Sinulence",
+      "senses": [
+        "Darkvision 120 ft. Blindsight 60 ft.",
+        "Perception +9"
+      ],
+      "aura": [
+        {
+          "name": "Depths Aura",
+          "radius": "10",
+          "auraDmg": "1d6 Cold"
+        }
+      ],
+      "ac": {
+        "armor": "25",
+        "touch": "10",
+        "flat_foot": "23",
+        "bonuses": {
+          "deflection": "2",
+          "dex": "2",
+          "natural": "15"
+        }
+      },
+      "level": "14",
+      "hitDice": "d12",
+      "rate": "Monster",
+      "fort": "Good",
+      "ref": "Good",
+      "will": "Good",
+      "defensive_traits": {
+        "DR": "5/magic",
+        "Resist": "Cold 25",
+        "SR": "20"
+      },
+      "speed": "30",
+      "melee": [
+        {
+          "name": "Bite",
+          "diceCount": "2",
+          "damageDice": "d8",
+          "isAlternative": false,
+          "isAdditive": false
+        },
+        {
+          "name": "2 Claws",
+          "diceCount": "2",
+          "damageDice": "d6",
+          "isAlternative": false,
+          "isAdditive": false
+        },
+        {
+          "name": "2 wings",
+          "diceCount": "1",
+          "damageDice": "d8",
+          "isAlternative": false,
+          "isAdditive": false
+        },
+        {
+          "name": "tail slap",
+          "diceCount": "2",
+          "damageDice": "d6",
+          "isAlternative": false,
+          "isAdditive": false
+        }
+      ],
+      "special_attacks": "Breath Weapon (170-ft. cone, DC 26, 10d10 sonic)(Recharge 6)",
+      "str": "25",
+      "dex": "14",
+      "con": "28",
+      "int": "18",
+      "wis": "14",
+      "cha": "16",
+      "bab": "Fast",
+      "skillProgression": "High",
+      "cmb": "25",
+      "cmd": "37",
+      "feats": [
+        "Power Attack",
+        "Improved Initiative",
+        "Iron Will",
+        "Multiattack",
+        "Bonded Mind",
+        "Aquatic Combat",
+        "Toughness"
+      ],
+      "skills": {
+        "Appraise": "12",
+        "Bluff": "4",
+        "Climb": "14",
+        "Craft": [
+          {
+            "Name": "Weapon",
+            "Ranks": ""
+          }
+        ],
+        "Diplomacy": "14",
+        "Fly": "14",
+        "Heal": "12",
+        "Intimidate": "14",
+        "Knowledge(All)": "14",
+        "Perception": "7",
+        "SenseMotive": "7",
+        "Spellcraft": "0",
+        "Stealth": "0",
+        "Survival": "14",
+        "Swim": "14",
+        "UseMagicDevice": "0"
+      },
+      "special_qualities": [
+        "Is considered as Aberration creature type"
+      ],
+      "special_abilities": [
+        {
+          "abilityName": "Inspiring Presence",
+          "ability_desc": "As Long as [creatureName] is on the battle field all creatures gain +2 damage +1 to attack and +1 deflection bonus",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Depths Aura",
+          "ability_desc": "All creatures within the aura take 1d6 cold damage.",
+          "abilityType": "Su(Supernatural)"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Sinulenece Shellherald",
+      "title": "Shellherald",
+      "cr": "8",
+      "alignment": "N",
+      "size": "Large",
+      "type": "Aberration",
+      "subtype": "Sinulence",
+      "senses": [
+        "Darkvision 60 ft.",
+        "Perception +1"
+      ],
+      "ac": {
+        "armor": "34",
+        "touch": "7",
+        "flat_foot": "34",
+        "bonuses": {
+          "armor": "20",
+          "dex": "-2",
+          "shield": "2",
+          "natural": "5"
+        }
+      },
+      "level": "8",
+      "hitDice": "d8",
+      "rate": "Monster",
+      "fort": "Bad",
+      "ref": "Bad",
+      "will": "Good",
+      "save_bonuses": [
+        "4 Fort"
+      ],
+      "defensive_traits": {
+        "Resist": "Cold 10"
+      },
+      "weaknesses": "Force vulnerability",
+      "speed": "20ft. 30 ft. Swim",
+      "melee": [
+        {
+          "name": "Bite",
+          "diceCount": "1",
+          "damageDice": "d4",
+          "isAlternative": false,
+          "isAdditive": false
+        },
+        {
+          "name": "2 Pincer",
+          "diceCount": "2",
+          "damageDice": "d8",
+          "isAlternative": false,
+          "isAdditive": false
+        }
+      ],
+      "special_attacks": "Fiddler Crab Strike(+7 3d12+9)x3",
+      "str": "20",
+      "dex": "6",
+      "con": "26",
+      "int": "14",
+      "wis": "13",
+      "cha": "10",
+      "bab": "Medium",
+      "skillProgression": "Middle",
+      "cmb": "12",
+      "cmd": "20",
+      "feats": [
+        "Toughness",
+        "Great Fortitude",
+        "Shield Wall",
+        "Bonded Mind"
+      ],
+      "skills": {
+        "Acrobatics": "0",
+        "Climb": "0",
+        "EscapeArtist": "0",
+        "Fly": "0",
+        "Intimidate": "0",
+        "Perception": "0",
+        "Spellcraft": "0",
+        "Stealth": "0",
+        "Survival": "0",
+        "Swim": "0"
+      },
+      "special_abilities": [
+        {
+          "abilityName": "Shield Shell",
+          "ability_desc": "Shell counts as always wielding a Tower shield for purposes of effects and feats. This shell has 10 health(tracked as temporary hp) but is resistant to all damage unless a sundered strike is used. Once this shell is gone or is attacked from behind this creatures AC becomes it's touch. If an attack would miss the creature then if the attack is greater than or equal to the armor of this creature than deal half the damage that would be dealt to the shell instead(this stacks with it's normal resistance).",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Block Projectile",
+          "ability_desc": "As a reaction this creature may block a projectile that would strike an ally within 10 ft. of it. It may do this 3 times per round, damage will still apply if the attack would hit under normal circumstances.",
+          "abilityType": "Ex(Extraordinary)"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Sinulence Envisel",
+      "title": "Envisel",
+      "cr": "4",
+      "alignment": "N",
+      "size": "Medium",
+      "type": "Aberration",
+      "subtype": "Sinulence",
+      "senses": [
+        "Perception +9"
+      ],
+      "ac": {
+        "armor": "19",
+        "touch": "14",
+        "flat_foot": "17",
+        "bonuses": {
+          "armor": "2",
+          "deflection": "2",
+          "dex": "2",
+          "natural": "3"
+        }
+      },
+      "level": "8",
+      "hitDice": "d8",
+      "rate": "Monster",
+      "fort": "Bad",
+      "ref": "Bad",
+      "will": "Good",
+      "defensive_traits": {
+        "DR": "10/magic",
+        "Resist": "Cold 10"
+      },
+      "speed": "40ft,. 60ft Swim",
+      "melee": [
+        {
+          "name": "Halberd Strike",
+          "diceCount": "1",
+          "damageDice": "d10",
+          "critMultiplier": "3",
+          "isAlternative": false,
+          "isAdditive": false
+        }
+      ],
+      "special_attacks": "Aircannon",
+      "str": "25",
+      "dex": "14",
+      "con": "22",
+      "int": "14",
+      "wis": "12",
+      "cha": "8",
+      "bab": "Medium",
+      "skillProgression": "Middle",
+      "cmb": "13",
+      "cmd": "25",
+      "feats": [
+        "Power Attack",
+        "Toughness",
+        "Aquatic Combat",
+        "Bonded Mind"
+      ],
+      "skills": {
+        "Acrobatics": "3",
+        "Climb": "3",
+        "EscapeArtist": "0",
+        "Fly": "2",
+        "Intimidate": "8",
+        "Knowledge(Planes)": "0",
+        "Perception": "8",
+        "Spellcraft": "0",
+        "Stealth": "0",
+        "Survival": "8",
+        "Swim": "8"
+      },
+      "special_abilities": [
+        {
+          "abilityName": "Heralds Shield",
+          "ability_desc": "As an action a [creatureName] can tear off the shell of a Shellherald within reach. Doing so gives this creature the effects of a towershield and causes the Shellherald to take half of it's max health as damage and loses it's shell effects.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Aircannon",
+          "ability_desc": "All creatures with a 125ft. cone must make a [saveDC] save. Depending on the distance from the source different effects transpire, those within 20 ft. and fail are deafened, knocked prone, dazed and take 2d12 force damage. Within 60 ft. those that fail are knocked prone and take 2d10 force damage. Within 120 ft. those that fail take 2d6 force damage. For all of the above, on a success take half damage and avoid all negative effects.\n\nThis ability has a recharge of 2d4 rounds. After using this [creatureName] is unable to use it's natural Halberd for 1 round.",
+          "dcStat": "Str",
+          "saveType": "Ref",
+          "abilityType": "Ex(Extraordinary)"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Cerulean Vein",
+      "title": "Cerulean Vein",
+      "cr": "4",
+      "alignment": "N",
+      "size": "Medium",
+      "type": "Construct",
+      "subtype": "Sinulence",
+      "senses": [
+        "Perception 0"
+      ],
+      "ac": {
+        "armor": "9",
+        "touch": "9",
+        "flat_foot": "9",
+        "bonuses": {
+          "dex": "-1"
+        }
+      },
+      "level": "1",
+      "hitDice": "d10",
+      "rate": "Monster",
+      "fort": "Bad",
+      "ref": "Bad",
+      "will": "Bad",
+      "defensive_traits": {
+        "Immune": "All Conditions, Piercing Damage, Precision Damage"
+      },
+      "weaknesses": "Fire, Cold, Lightning, Thunder",
+      "speed": "30",
+      "str": "-",
+      "dex": "8",
+      "con": "20",
+      "int": "-",
+      "wis": "-",
+      "cha": "-",
+      "bab": "Slow",
+      "skillProgression": "Low",
+      "cmb": "0",
+      "cmd": "9",
+      "special_abilities": [
+        {
+          "abilityName": "Deceit of the Depths",
+          "ability_desc": "A creature within 5ft. of this creature at the start of it's turn must make a [saveDC] save or be afflicted with Deceit until the start of their next turn. Those inflicted with Deceit gain 20% mischance on attacks against Sinulence creatures and are considered flat-footed for them. this is a mind-altering effect.",
+          "dcStat": "Con",
+          "saveType": "Will",
+          "abilityType": "Su(Supernatural)"
+        },
+        {
+          "abilityName": "Resistant Core",
+          "ability_desc": "This creature gains resistance to all physical damage dealt to it",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Spread Silence",
+          "ability_desc": "At the start of it's turn roll 1d6 on a 6 a Sinulence Flowenec is created. Spread by to one adjacent tile if possible.",
+          "abilityType": "Ex(Extraordinary)"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Sinulence Flowenec",
+      "title": "Flowenec",
+      "cr": "5",
+      "alignment": "N",
+      "size": "Medium",
+      "type": "Aberration",
+      "subtype": "Sinulence",
+      "senses": [
+        "Perception 0"
+      ],
+      "ac": {
+        "armor": "15",
+        "touch": "15",
+        "flat_foot": "10",
+        "bonuses": {
+          "dex": "5"
+        }
+      },
+      "level": "4",
+      "hitDice": "d8",
+      "rate": "Monster",
+      "fort": "Bad",
+      "ref": "Bad",
+      "will": "Good",
+      "defensive_traits": {
+        "Immune": "mind-affecting effects",
+        "Resist": "Cold 10"
+      },
+      "weaknesses": "Force vulnerability, Fire vulnerability, Slashing vulnerability",
+      "speed": "60 ft., 120 ft.",
+      "melee": [
+        {
+          "name": "Mindless Barrage",
+          "diceCount": "1",
+          "damageDice": "d8",
+          "multiAttack": "2",
+          "isAlternative": false,
+          "isAdditive": false
+        }
+      ],
+      "str": "26",
+      "dex": "20",
+      "con": "16",
+      "int": "2",
+      "wis": "2",
+      "cha": "2",
+      "bab": "Medium",
+      "skillProgression": "Middle",
+      "cmb": "11",
+      "cmd": "26",
+      "feats": [
+        "Power Attack",
+        "Toughness"
+      ],
+      "skills": {
+        "Acrobatics": "4",
+        "Climb": "0",
+        "EscapeArtist": "0",
+        "Fly": "0",
+        "Intimidate": "0",
+        "Knowledge(Nature)": "4",
+        "Perception": "4",
+        "Spellcraft": "0",
+        "Stealth": "0",
+        "Survival": "4",
+        "Swim": "4"
+      },
+      "special_abilities": [
+        {
+          "abilityName": "Apart of a whole",
+          "ability_desc": "As long as the [creatureName] is connected to a Cerulean Vein it gains 1d4+3(minus 1 per [creatureName] on the same branch minimum 1) and has it's movements set to 0. Also gains resistance to all damages it is not weak too.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Reapers call",
+          "ability_desc": "Once [creatureName] reaches at or below half health(17) or the Vein it is on is destroyed this creature gains it's movement speeds and gains the melee attack Mindless Barrage.",
+          "abilityType": "Su(Supernatural)"
+        },
+        {
+          "abilityName": "Blooming Flower",
+          "ability_desc": "While connected to a Cerulean Vein fire one projectile at a target within 10 ft. of this creature. with a +10 attack bonus, on hit deal 1d10 force damage.",
+          "abilityType": "Su(Supernatural)"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Sinulence Ceralence",
+      "title": "Ceralence",
+      "cr": "4",
+      "alignment": "N",
+      "size": "Medium",
+      "type": "Aberration",
+      "subtype": "Sinulence",
+      "senses": [
+        "Perception +11"
+      ],
+      "ac": {
+        "armor": "13",
+        "touch": "13",
+        "flat_foot": "10",
+        "bonuses": {
+          "dex": "3"
+        }
+      },
+      "level": "7",
+      "hitDice": "d8",
+      "rate": "Monster",
+      "fort": "Bad",
+      "ref": "Bad",
+      "will": "Good",
+      "speed": "20ft,. 40ft Swim",
+      "special_attacks": "Contaminate Mind +9",
+      "str": "14",
+      "dex": "16",
+      "con": "16",
+      "int": "16",
+      "wis": "18",
+      "cha": "14",
+      "bab": "Medium",
+      "skillProgression": "Middle",
+      "cmb": "7",
+      "cmd": "20",
+      "feats": [
+        "Improved Initiative",
+        "Bonded Mind",
+        "Dodge ",
+        "Toughness"
+      ],
+      "skills": {
+        "Acrobatics": "5",
+        "Climb": "3",
+        "EscapeArtist": "2",
+        "Fly": "1",
+        "Intimidate": "1",
+        "Knowledge(All)": "7",
+        "Perception": "7",
+        "Spellcraft": "7",
+        "Stealth": "2",
+        "Survival": "7",
+        "Swim": "7"
+      },
+      "special_abilities": [
+        {
+          "abilityName": "Veins of the Depths",
+          "ability_desc": "As a full round action [creatureName] accelerates the growth of a Cerulean Vein and either causes it to spread early or makes it grow a Sinulence Flowenec.",
+          "abilityType": "Su(Supernatural)"
+        },
+        {
+          "abilityName": "Contaminate Mind",
+          "ability_desc": "Make a ranged(60 ft.) touch attack(using widsom instead of dex). On hit force the hit creature must make a [saveDC] save or be effected by Deceit of the Depths.",
+          "dcStat": "Wis",
+          "saveType": "Will",
+          "abilityType": "Su(Supernatural)"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "5e",
+      "name": "Sinulenece Shellherald",
+      "size": "Medium",
+      "type": "Aberration(Sinulence)",
+      "alignment": "N",
+      "level": "6",
+      "hitDice": "d8",
+      "ac": "30",
+      "speed": "20ft,. 40ft Swim",
+      "str": "20",
+      "dex": "8",
+      "con": "24",
+      "int": "10",
+      "wis": "12",
+      "cha": "10",
+      "proficiency": "4",
+      "saving_throws": {
+        "str": 9,
+        "con": 11
+      },
+      "skillsProf": {
+        "Acrobatics": false,
+        "AnimalHandling": false,
+        "Arcana": false,
+        "Athletics": false,
+        "Deception": false,
+        "History": false,
+        "Insight": false,
+        "Intimidation": false,
+        "Investigation": false,
+        "Medicine": false,
+        "Nature": false,
+        "Perception": false,
+        "Performance": false,
+        "Persuasion": false,
+        "Religion": false,
+        "SleightofHand": false,
+        "Stealth": false,
+        "Survival": false
+      },
+      "damage_vulnerabilities": "Force",
+      "damage_resistances": "Cold",
+      "senses": "Senses",
+      "cr": "3",
+      "xp": "1200",
+      "ability": [
+        {
+          "abilityName": "Shield Shell",
+          "ability_desc": "Shell counts as shield This shell has 10 temporary health but is resistant to all damage. Once this shell is gone or is attacked from behind this creatures AC is -15."
+        }
+      ],
+      "actions": [
+        {
+          "actionName": "Block Projectile",
+          "action_desc": "As a reaction this creature may block a projectile that would strike an ally within 10 ft. of it. It may do this 3 times per round, damage will still apply if the attack would hit under normal circumstances."
+        },
+        {
+          "actionName": "Bite",
+          "action_desc": "+9 1d4+5"
+        },
+        {
+          "actionName": "pincer",
+          "action_desc": "+9 2d8+5"
+        },
+        {
+          "actionName": "Fiddler Crab Strike",
+          "action_desc": "+7 3d12+9, on crit triple damage"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "5e",
+      "name": "Sinulence Envisel",
+      "size": "Medium",
+      "type": "Aberration(Sinulence )",
+      "alignment": "N",
+      "level": "7",
+      "hitDice": "d8",
+      "ac": "18",
+      "speed": "30",
+      "str": "28",
+      "dex": "16",
+      "con": "16",
+      "int": "10",
+      "wis": "13",
+      "cha": "10",
+      "proficiency": "4",
+      "saving_throws": {
+        "str": 13,
+        "dex": 7
+      },
+      "skillsProf": {
+        "Acrobatics": false,
+        "AnimalHandling": false,
+        "Arcana": false,
+        "Athletics": false,
+        "Deception": false,
+        "History": false,
+        "Insight": false,
+        "Intimidation": false,
+        "Investigation": false,
+        "Medicine": false,
+        "Nature": false,
+        "Perception": false,
+        "Performance": false,
+        "Persuasion": false,
+        "Religion": false,
+        "SleightofHand": false,
+        "Stealth": false,
+        "Survival": false
+      },
+      "senses": "Blindsight 60ft.",
+      "cr": "4",
+      "xp": "1200",
+      "ability": [
+        {
+          "abilityName": "Heralds Shield",
+          "ability_desc": "As an action a Sinulence Envisel can tear off the shell of a Shellherald within reach. Doing so gives this creature the effects of a towershield and causes the Shellherald to take half of it's max health as damage and loses it's shell effects."
+        },
+        {
+          "abilityName": "Aircannon",
+          "ability_desc": "All creatures with a 125ft. cone must make a 18 Dex save. Depending on the distance from the source different effects transpire, those within 20 ft. and fail are deafened, knocked prone, dazed and take 2d12 force damage. Within 60 ft. those that fail are knocked prone and take 2d10 force damage. Within 120 ft. those that fail take 2d6 force damage. For all of the above, on a success take half damage and avoid all negative effects. This ability has a recharge of 2d4 rounds. After using this Sinulence Envisel is unable to use it's natural Halberd for 1 round."
+        }
+      ],
+      "actions": [
+        {
+          "actionName": "Halberd Strike",
+          "action_desc": "+13 1d10+9"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "5e",
+      "name": "Sinulence Flowenec",
+      "size": "Medium",
+      "type": "Aberration(Sinulence)",
+      "alignment": "N",
+      "level": "4",
+      "hitDice": "d8",
+      "ac": "0",
+      "speed": "30",
+      "str": "26",
+      "dex": "20",
+      "con": "16",
+      "int": "2",
+      "wis": "2",
+      "cha": "2",
+      "proficiency": "4",
+      "saving_throws": {
+        "con": 7
+      },
+      "skillsProf": {
+        "Acrobatics": false,
+        "AnimalHandling": false,
+        "Arcana": false,
+        "Athletics": false,
+        "Deception": false,
+        "History": false,
+        "Insight": false,
+        "Intimidation": false,
+        "Investigation": false,
+        "Medicine": false,
+        "Nature": false,
+        "Perception": false,
+        "Performance": false,
+        "Persuasion": false,
+        "Religion": false,
+        "SleightofHand": false,
+        "Stealth": false,
+        "Survival": false
+      },
+      "damage_vulnerabilities": "Force vulnerability, Fire vulnerability, Slashing vulnerability",
+      "damage_resistances": "Cold",
+      "condition_immunities": "mind-affecting effects",
+      "senses": "Senses",
+      "cr": "3",
+      "xp": "1200",
+      "ability": [
+        {
+          "abilityName": "Apart of a whole",
+          "ability_desc": "As long as the Sinulence Flowenec is connected to a Cerulean Vein it gains 1d4+3(minus 1 per Sinulence Flowenec on the same branch minimum 1) and has it's movements set to 0. Also gains resistance to all damages it is not weak too."
+        },
+        {
+          "abilityName": "Reapers call ",
+          "ability_desc": "Once Sinulence Flowenec reaches at or below half health or the Vein it is on is destroyed this creature gains it's movement speeds and gains the melee attack Mindless Barrage."
+        },
+        {
+          "abilityName": "Blooming Flower",
+          "ability_desc": "While connected to a Cerulean Vein fire one projectile at a target within 10 ft. of this creature. with a +10 attack bonus, on hit deal 1d10 force damage."
+        }
+      ],
+      "actions": [
+        {
+          "actionName": "Multiattack",
+          "action_desc": "Use Mindless Barrage 4 times"
+        },
+        {
+          "actionName": "Mindless Barrage",
+          "action_desc": "+10 to hit 1d8+8 slashing"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "5e",
+      "name": "Sinulence Ceralence",
+      "size": "Medium",
+      "type": "Aberration(Sinulence)",
+      "alignment": "N",
+      "level": "6",
+      "hitDice": "d8",
+      "ac": "13",
+      "speed": "20ft,. 40ft Swim ft.",
+      "str": "14",
+      "dex": "16",
+      "con": "16",
+      "int": "16",
+      "wis": "18",
+      "cha": "14",
+      "proficiency": "4",
+      "saving_throws": {
+        "wis": 8,
+        "cha": 6
+      },
+      "skillsProf": {
+        "Acrobatics": false,
+        "AnimalHandling": false,
+        "Arcana": false,
+        "Athletics": false,
+        "Deception": false,
+        "History": false,
+        "Insight": false,
+        "Intimidation": false,
+        "Investigation": false,
+        "Medicine": false,
+        "Nature": false,
+        "Perception": false,
+        "Performance": false,
+        "Persuasion": false,
+        "Religion": false,
+        "SleightofHand": false,
+        "Stealth": false,
+        "Survival": false
+      },
+      "senses": "Senses",
+      "cr": "3",
+      "xp": "1200",
+      "ability": [
+        {
+          "abilityName": "Veins of the Depths",
+          "ability_desc": "As a full round action Sinulence Ceralence accelerates the growth of a Cerulean Vein and either causes it to spread early or makes it grow a Sinulence Flowenec."
+        },
+        {
+          "abilityName": "Contaminate Mind",
+          "ability_desc": "Make a ranged(60 ft.) touch attack(using widsom instead of dex). On hit force the hit creature must make a 17 Will save or be effected by Deceit of the Depths."
+        }
+      ],
+      "actions": [
+        {
+          "actionName": "Contaminate Mind",
+          "action_desc": "+9 to hit"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "5e",
+      "name": "Cerulean Vein",
+      "size": "Medium",
+      "type": "Construct(Sinulence)",
+      "alignment": "N",
+      "level": "2",
+      "hitDice": "d10",
+      "ac": "9",
+      "speed": "30",
+      "str": "",
+      "dex": "8",
+      "con": "20",
+      "int": "",
+      "wis": "",
+      "cha": "",
+      "proficiency": "3",
+      "saving_throws": {},
+      "skillsProf": {
+        "Acrobatics": false,
+        "AnimalHandling": false,
+        "Arcana": false,
+        "Athletics": false,
+        "Deception": false,
+        "History": false,
+        "Insight": false,
+        "Intimidation": false,
+        "Investigation": false,
+        "Medicine": false,
+        "Nature": false,
+        "Perception": false,
+        "Performance": false,
+        "Persuasion": false,
+        "Religion": false,
+        "SleightofHand": false,
+        "Stealth": false,
+        "Survival": false
+      },
+      "senses": "Senses",
+      "cr": "4",
+      "xp": "1200",
+      "ability": [
+        {
+          "abilityName": "Deceit of the Depths",
+          "ability_desc": "A creature within 5ft. of this creature at the start of it's turn must make a 15 Wis save or be afflicted with Deceit until the start of their next turn. Those inflicted with Deceit gain 20% mischance on attacks against Sinulence creatures and are considered flat-footed for them. this is a mind-altering effect."
+        },
+        {
+          "abilityName": "Resistant Core",
+          "ability_desc": "This creature gains resistance to all physical damage dealt to it"
+        },
+        {
+          "abilityName": "Spread Silence",
+          "ability_desc": "At the start of it's turn roll 1d6 on a 6 a Sinulence Flowenec is created. Spread by to one adjacent tile if possible."
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "5e",
+      "name": "Sinulence Leviathan",
+      "size": "Medium",
+      "type": "Dragon(Sinulence)",
+      "alignment": "N",
+      "level": "14",
+      "hitDice": "d20",
+      "ac": "22",
+      "speed": "40ft.,80 ft. swim, 60 ft. fly",
+      "str": "26",
+      "dex": "10",
+      "con": "24",
+      "int": "14",
+      "wis": "16",
+      "cha": "12",
+      "proficiency": "5",
+      "saving_throws": {
+        "str": 13,
+        "dex": 5,
+        "wis": 8,
+        "cha": 6
+      },
+      "skillsProf": {
+        "Acrobatics": false,
+        "AnimalHandling": false,
+        "Arcana": false,
+        "Athletics": false,
+        "Deception": false,
+        "History": false,
+        "Insight": false,
+        "Intimidation": false,
+        "Investigation": false,
+        "Medicine": false,
+        "Nature": false,
+        "Perception": false,
+        "Performance": false,
+        "Persuasion": false,
+        "Religion": false,
+        "SleightofHand": false,
+        "Stealth": false,
+        "Survival": false
+      },
+      "damage_resistances": "Cold",
+      "senses": "Senses",
+      "cr": "8",
+      "xp": "1200",
+      "ability": [
+        {
+          "abilityName": "Inspiring Presence",
+          "ability_desc": "As Long as Sinulence Leviathan is on the battle field all creatures gain +2 damage +1 to attack and +1 ac bonus"
+        }
+      ],
+      "actions": [
+        {
+          "actionName": "Multiattack",
+          "action_desc": " makes three attacks: one with its bite and two with its claws."
+        },
+        {
+          "actionName": "Claw",
+          "action_desc": "+11 to hit, reach 10 ft. 2d6+6 slashing"
+        },
+        {
+          "actionName": "bite",
+          "action_desc": "+11 to hit, reach 15ft. 2d10+6 piercing + 2d6 cold"
+        },
+        {
+          "actionName": "tail",
+          "action_desc": "+11 to hit, reach 15ft. 2d6+6 bludgeoning"
+        },
+        {
+          "actionName": "Breath Weapon(Recharge 6)",
+          "action_desc": "DC 20, 6d10 sonic, half as much damage on a successful one"
+        }
+      ]
+    }
+  ]
+}

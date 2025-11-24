@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "concurrently": "^9.2.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0"
+  },
+  "scripts": {"program":"concurrently \"http-server . -c-1\" \"node jsonManipulation.js\""}
+}

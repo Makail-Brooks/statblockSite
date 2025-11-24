@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Character</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <script src="script.js" defer></script>
+    <script src="forumFunctions.js" defer></script>
+    <script src="functions.js" defer></script>
+    <!-- <script src="creatureDisplay.js" defer></script> -->
+</head>
+<body class = "dark_mode">
+<div class="sidenav">
+    <div id="sideNav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <div class="barSearch">
+            <input type="text" class="searchBar" id="entrySearch" onkeyup="search()" placeholder="Search.." title="Creature Name">
+        </div>
+        <div class="container">
+            <div id ="cols" class = "col row-col-1"></div>
+        </div>
+    </div>
+</div>
+
+<div class="navBar">
+<div class="container">
+    <button class="button" onclick="openNav()">&#9776; Navigation</button>
+    <div  id="offClick" class="closeNav" onclick="closeNav()">
+    <div></div>
+    </div>
+    <button class="button" onclick="goHome()"> Home</button>
+</div>
+<!-- <div class="container">
+    <button class="button" onclick="deleteEntry()"> Delete Character</button>
+</div> -->
+</div>
+<div>
+    <div class="flexRight">
+    <div>
+        <input type="text" class="characterSheetInputsLongBar" name="characterName" id="characterName" title="Character Name" value=""><br>
+        <label class="infoTitle" for="characterName">Character</label><br>
+        <div class="flexRight">
+            <div>
+            <input type="text" class="characterSheetInputs" name="characterRace" id="characterRace"  title="Character Race" value=""><br>
+            <label class="infoTitle" for="characterRace">Race</label>
+        </div>
+        <div>
+            <input type="text" class="characterSheetInputs" name="characterSize" id="characterSize" title="Character Size" value=""><br>
+            <label class="infoTitle" for="characterSize">Size</label>
+        </div>
+        <div>
+            <input type="text" class="characterSheetInputs" name="characterGender" id="characterGender" title="Character Gender" value=""><br>
+            <label class="infoTitle" for="characterGender">Gender</label>            
+        </div>
+        </div>
+        <div class="flexRight">
+            <div>
+                <input type="Number" class="characterSheetInputs" name="characterAge" id="characterAge" title="Character Age" value=""><br>
+                <label class="infoTitle" for="characterAge">Age</label><br>
+            </div>
+            <div>
+                <input type="text" class="characterSheetInputs" name="characterAlignment" id="characterAlignment" title="Character Alignment" value=""><br>
+                <label class="infoTitle" for="characterAlignment">Alignment</label>
+            </div>
+            <div>
+                <input type="text" class="characterSheetInputs" name="characterDeity" id="characterDeity" title="Character Deity" value=""><br>
+                <label class="infoTitle" for="characterDeity">Deity</label>
+            </div>
+        </div>
+    </div>
+        <div>
+        <input type="text" class="characterSheetInputs" name="characterPlayer" id="characterPlayer" title="Character Player" value=""><br>
+        <label class="infoTitle" for="characterPlayer">Player</label>
+        <div class="flexRight">
+            <div>
+                <input type="Number" class="characterSheetInputs" name="characterHeight" id="characterAge" title="Character Height" value=""><br>
+                <label class="infoTitle" for="characterHeight">Height</label><br>
+            </div>
+            <div>
+                <input type="text" class="characterSheetInputs" name="characterWeight" id="characterWeight" title="Character Weight" value=""><br>
+                <label class="infoTitle" for="characterWeight">Weight</label>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="flexRight">
+    <div>
+        <input type="text" class="characterSheetInputs" name="characterLanguage" id="characterLanguage" title="Character Language" value=""><br>
+        <label class="infoTitle" for="characterLanguage">Language</label><br>
+    </div>
+    <div>
+        <input type="text" class="characterSheetInputs" name="characterRacial" id="characterRacial" title="Character Racial Bonuses" value=""><br>
+        <label class="infoTitle" for="characterLanguage">Racial Bonuses</label><br>
+    </div>
+    </div><br>
+    <div class="flexRight">
+    <div>
+    <div class="flexRight">
+        <label class="infoTitle">Ability Score</label>
+        <label class="infoTitle">Total</label>
+        <label class="infoTitle">Modifier</label>
+        <label class="infoTitle">Base</label>
+    </div>
+    <div class="flexRight">
+        <div>
+            <label class="infoTitle">STR</label>
+        </div>
+        <label class="stairCase"></label>
+        <div>
+            <label class="infoTitle">0</label>
+        </div>
+        <div class="smallGap">
+            <label class="infoTitle">Score</label>
+        </div>
+        <div class="smallGap">
+            <input type="Number" class="characterSheetInputsNumber" name="characterBase" id="characterBase" title="Character Base Bonuses" value=""><br>
+        </div>
+    </div>
+    <div>
+        <label class="infoTitle">DEX</label>
+    </div>
+    <div>
+        <label class="infoTitle">CON</label>
+    </div>
+    <div>
+        <label class="infoTitle">INT</label>
+    </div>
+    <div>
+        <label class="infoTitle">WIS</label>
+    </div>
+    <div>
+        <label class="infoTitle">CHA</label>
+    </div>
+    <br>
+        <div>
+            <label class="infoTitle">Armor</label>
+            <label class="infoTitle"> Shield</label>
+            <label class="infoTitle">Dex</label>
+        <div>
+            <label class="infoTitle">AC</label>
+        </div>
+        <div>
+            <label class="infoTitle">Touch</label>
+        </div>
+        <div>
+            <label class="infoTitle">Flat Foot</label>
+        </div>
+    </div>
+    <div>
+        <div>
+            <label class="infoTitle">Fort</label>
+        </div>
+        <div>
+            <label class="infoTitle">Ref</label>
+        </div>
+        <div>
+            <label class="infoTitle">Will</label>
+        </div>
+    </div>
+        <div>
+        <div>
+            <label class="infoTitle">Melee</label>
+        </div>
+        <div>
+            <label class="infoTitle">Ranged</label>
+        </div>
+        <div>
+            <label class="infoTitle">CMD</label>
+        </div>
+        <div>
+            <label class="infoTitle">CMD</label>
+        </div>
+    </div>
+    </div>
+    <div>
+    <div>
+        <div class="flexRight">
+            <label class="infoTitle">HITPOINTS</label>
+            <div class="largeGap">
+                <label class="infoTitle">Init</label>
+                <input type="Number" class="characterSheetInputsNumber" name="Init" id="Init" title="Init">
+            </div>
+            <div>
+                <label class="infoTitle">Speed</label>
+                <input type="Number" class="characterSheetInputsNumber" name="Speed" id="Speed" title="Speed">
+            </div>
+        </div>
+    </div>
+    <div>
+        <label class="infoTitle">Current HP</label>
+    </div>
+    <div class="flexRight">
+        <div>
+            <label class="infoTitle" for="damageTaken">Damage Taken</label>
+            <input type="Number" class="characterSheetInputsNumber" name="damageTaken" id="damageTaken" title="damageTaken">
+        </div>
+                <div class="largeGap">
+                    <label class="infoTitle">SR</label>
+                    <input type="Text" class="characterSheetInputsNumber" name="SR" id="SR" title="SR">
+                </div>
+                <div>
+                    <label class="infoTitle">DR</label>
+                    <input type="Text" class="characterSheetInputsNumber" name="DR" id="DR" title="DR">
+                </div>
+                <div>
+                    <label class="infoTitle">Resistances</label>
+                    <input type="Text" class="characterSheetInputsNumber" name="Resistances" id="Resistances" title="Resistances">
+                </div>
+        </div>
+    <div>
+        <label class="infoTitle" for="nonLethal">Nonlethal HP Damage</label>
+        <input type="Number" class="characterSheetInputsNumber" name="nonLethal" id="nonLethal" title="nonLethal">
+    </div>
+    <div>
+        <label class="infoTitle">Temporary HP</label>
+        <input type="Number" class="characterSheetInputsNumber" name="tempHP" id="tempHP" title="tempHP">
+    </div>
+    <div>
+        <label class="infoTitle">Total Max HP</label>
+    </div><br>
+    <div class="flexRight">
+        <div>
+            <div>
+                <label class="infoTitle">Class Name</label>
+            </div>
+            <div>
+                <input type="Text" class="characterSheetInputsShorter" name="className0" id="className0" title="className0">
+            </div>
+        </div>
+
+        <div>
+            <div>
+                <label class="infoTitle">Level</label>
+            </div>
+            <div>
+                <input type="Number" class="characterSheetInputsNumber" name="classLevel0" id="classLevel0" title="classLevel0">
+            </div>
+        </div>
+
+
+
+        <div>
+            <div>
+                <label class="infoTitle" for="HitDice">HitDice</label>
+            </div>
+            <div>
+                <select class="searchBarCreation" name="HitDice" id="HitDice">
+                <option>d4</option>
+                <option>d6</option>
+                <option selected>d8</option>
+                <option>d10</option>
+                <option>d12</option>
+                </select><br>
+            </div>
+        </div>
+        <div>
+            <div>
+                <label class="infoTitle" for="bab">BAB</label>
+            </div>
+            <div>
+                <select class="searchBarCreation" name="bab" id="bab">
+                <option>Fast</option>
+                <option Selected>Medium</option>
+                <option>Slow</option>
+                </select>
+            </div>
+        </div>
+
+        <div>
+            <div>
+                <label class="infoTitle" for="SkillProgression">Skill Amount</label>
+            </div>
+            <div>
+            <select class="searchBarCreation" name="SkillProgression" id="SkillProgression">
+            <option>High</option>
+            <option Selected>Middle</option>
+            <option>Low</option>
+            </select><br>
+            </div>
+        </div>
+
+        <div>
+            <div>
+                <label class="infoTitle" for="Fort">Fort</label>
+            </div>
+            <div>
+            <select class="searchBarCreation" name="Fort" id="Fort">
+            <option>Good</option>
+            <option>Bad</option>
+            </select><br>
+            </div>
+        </div>
+
+    <div>
+        <div>
+            <label class="infoTitle" for="Ref">Ref</label>
+        </div>
+        <div>
+            <select class="searchBarCreation" name="Ref" id="Ref">
+            <option>Good</option>
+            <option>Bad</option>
+            </select><br>
+        </div>
+        
+    </div>
+
+
+
+    <div>
+            <div>
+                <label class="infoTitle" for="Will">Will</label>
+            </div>
+            <div>
+            <select class="searchBarCreation" name="Will" id="Will">
+            <option>Good</option>
+            <option>Bad</option>
+            </select><br>
+            </div>
+        </div>
+
+    </div>
+    </div>
+    <div>
+        Skills
+        <div>
+            <label class="trained">*</label>
+            <input type="Checkbox" class="characterSheetInputs" name="AcrobaticsTrained" id="AcrobaticsTrained" title="AcrobaticsTrained">
+            <label class="infoTitle">Acrobatics</label>
+            <input type="Number" class="characterSheetInputs" name="Acrobatics" id="Acrobatics" title="Acrobatics">
+        </div>
+    </div>
+    </div>
+<label class="infoTitle">Add modifiers</label>
+    </div>
+<!-- <div class="container">
+    <div class="mainpage" id="display"></div>
+</div> -->
+</body>
+</html>

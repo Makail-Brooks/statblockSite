@@ -1,8 +1,18 @@
 {
   "pages": [
     {
-      "name": "Void Envoy Corrupted",
-      "index": "44",
+      "name": "Mimic",
+      "index": "49",
+      "system": "pathfinder"
+    },
+    {
+      "name": "Mimic",
+      "index": "48",
+      "system": "pathfinder"
+    },
+    {
+      "name": "Null Hound",
+      "index": "4",
       "system": "pathfinder"
     },
     {
@@ -11,18 +21,23 @@
       "system": "pathfinder"
     },
     {
-      "name": "Sinulence Leviathan",
-      "index": "31",
+      "name": "Sinulence Envisel",
+      "index": "33",
       "system": "pathfinder"
     },
     {
-      "name": "Mimic",
-      "index": "45",
+      "name": "Slime",
+      "index": "9",
       "system": "pathfinder"
     },
     {
-      "name": "Bandit",
-      "index": "1",
+      "name": "Sinulence Absolver",
+      "index": "30",
+      "system": "pathfinder"
+    },
+    {
+      "name": "Sinulence Stormcaller",
+      "index": "29",
       "system": "pathfinder"
     }
   ]

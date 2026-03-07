@@ -128,14 +128,9 @@ function focusBonus(val){
 function getRacialBonus(racialBonusArray,skill){
     let returnedBonus = 0;
     if(racialBonusArray!=null){
-        racialBonusArray.forEach(bonus=>{
+        Object.keys(racialBonusArray).forEach(bonus=>{
             if(bonus.toLowerCase().includes(skill.toLowerCase())){
-               returnedBonus = bonus.replace(/[^0-9]/g, '');
-               if(bonus.includes("-")){
-                   returnedBonus = returnedBonus*-1;
-               }else{
-                returnedBonus = returnedBonus*1;
-               }
+              return racialBonusArray[bonus];
             }
         })
     }
@@ -600,39 +595,43 @@ function checkStatVal(stat){
  */
 function getFeatBonuses(skill,feats,ranks,creature,extra=""){
   let totalBonuses = 0;
-  let focusedSkill = "";
-  let focusedWeapon = "";
-  value = skill.replace(/[0-9] /g, '')
-if(feats){
-feats.forEach(feat=>{
-  if(feat.includes("Skill Focus")){
-    feat = feat.replace(/\s/g,"");
-    focusedSkill = feat.replace("SkillFocus(","");
-    focusedSkill = focusedSkill.replace(")","");
-    if(focusedSkill.includes("Profession")||focusedSkill.includes("Craft")){
-      focusedSkill=focusedSkill.replace("Profession(","");
-      focusedSkill=focusedSkill.replace("Craft(","");  
-      focusedSkill = focusedSkill.replace(")","");
+  let value = skill.replace(/[0-9] /g, '')
+  let arr = []
+  if(feats){
+    if(extra!="forum"){
+      arr = Object.keys(feats)
+    }else{
+      arr = feats;
     }
-    feat = "Skill Focus";
-  }
-  if(feat.includes("Weapon Focus")){
-  //  console.log(feat);
-    feat = feat.replace(/\s/g,"");
-//    console.log(feat);
-    focusedWeapon = feat.replace("WeaponFocus(","");
-    focusedWeapon = focusedWeapon.replace(")","");
-    feat = "Weapon Focus";
+    arr.forEach(feat=>{
+//   if(feat.includes("Skill Focus")){
+//     feat = feat.replace(/\s/g,"");
+//     focusedSkill = feat.replace("SkillFocus(","");
+//     focusedSkill = focusedSkill.replace(")","");
+//     if(focusedSkill.includes("Profession")||focusedSkill.includes("Craft")){
+//       focusedSkill=focusedSkill.replace("Profession(","");
+//       focusedSkill=focusedSkill.replace("Craft(","");  
+//       focusedSkill = focusedSkill.replace(")","");
+//     }
+//     feat = "Skill Focus";
+//   }
+//   if(feat.includes("Weapon Focus")){
+//   //  console.log(feat);
+//     feat = feat.replace(/\s/g,"");
+// //    console.log(feat);
+//     focusedWeapon = feat.replace("WeaponFocus(","");
+//     focusedWeapon = focusedWeapon.replace(")","");
+//     feat = "Weapon Focus";
 
-  }
+//   }
   switch(feat){
     case "Improved Initiative":
-      if(value==="init"){
+      if(skill==="init"){
         totalBonuses += 4;
       }
       break;
     case "Stealthy":
-      if(value==="Stealth"||value==="EscapeArtist"){
+      if(skill==="Stealth"||skill==="EscapeArtist"){
         totalBonuses += 2;
         if(ranks>=10){
           totalBonuses+=2;
@@ -640,12 +639,12 @@ feats.forEach(feat=>{
       }
       break;
     case "Skill Focus":
-      if(value.toLowerCase()===focusedSkill.toLowerCase()){
+      if(value.toLowerCase()===feats[feat].toLowerCase()){
         totalBonuses+= focusBonus(ranks);
       }
       break;
     case "Alertness":
-      if(value==="SenseMotive"||value==="Perception"){
+      if(skill==="SenseMotive"||skill==="Perception"){
         totalBonuses += 2;
         
         if(ranks>=10){
@@ -653,13 +652,25 @@ feats.forEach(feat=>{
         }
       }
       break;
+    case "Persuasive":
+      if(skill==="Diplomacy"||skill==="Intimidate"){
+        totalBonuses += 2;
+        if(ranks>=10){
+          totalBonuses+=2;
+        }
+      }
+      break;
+    case "Animal Affinity":
+      if(skill==="HandleAnimal"||skill==="Ride"){
+        totalBonuses+=2;
+      }
     case "Intimidating Prowess":
-      if(value==="Intimidate"){
+      if(skill==="Intimidate"){
         totalBonuses += getModifier(creature.str);
       }
       break;
     case "Martial Dominance":
-      if(value==="Intimidate"){
+      if(skill==="Intimidate"){
         let bab=getBaB(creature.bab,creature.level);
         if(bab>ranks){
           totalBonuses+=bab-ranks;
@@ -667,12 +678,12 @@ feats.forEach(feat=>{
       }
       break;
     case "Lightning Reflexes":
-      if(value=== "Reflex"){
+      if(skill=== "Reflex"){
         totalBonuses += 2;
       }
       break;
     case "Toughness":
-      if(value==="con"){
+      if(skill==="con"){
         totalBonuses +=3;
         if(ranks-3>0){
           totalBonuses+= ranks-3;
@@ -681,63 +692,71 @@ feats.forEach(feat=>{
         break;
     case "Weapon Focus":
       value = value.replace(/\s/g,"");
-      if(extra.replace(/\s/g,"").toLowerCase()===focusedWeapon.toLowerCase()){
+      if(extra.replace(/\s/g,"").toLowerCase()===feats[feat].replace(/\s/g,"").toLowerCase()){
           totalBonuses+=1;
       }
       break;
     case "Great Fortitude":
-      if(value==="Fort"){
+      if(skill==="Fort"){
         totalBonuses+=2;
       }
       break;
     case "Iron Will":
-      if(value==="Will"){
+      if(skill==="Will"){
         totalBonuses+=2;
       }
       break;
+    case "Acrobatic":
+      if(skill==="Acrobatics"||skill=="Fly"){
+        totalBonuses+=2;
+      }
     case "Power Attack":
-      let val = Math.floor(ranks/4)+1;
-      if(value==="meleeattack"||value==="CMB"){
+      let val = Math.floor((ranks-4)/4)+1;
+      if(skill==="meleeattack"||skill==="CMB"){
         if(val<1){
           val=1;
         }
         totalBonuses-=val;
       }
-      if(value==="meleedamage"){
+      if(skill==="meleedamage"){
         val*=2;
         totalBonuses+=val;
       }
     case "Low Profile":
-      if(value==="armor"||value==="touch"||value==="dodge")
+      if(skill==="armor"||skill==="touch"||skill==="dodge")
         totalBonuses+=1;
       break;
     case "Defensive Combat Training":
-        if(value==="CMD"){
+        if(skill==="CMD"){
           if(creature.level>getBaB(creature.bab,creature.level)){
             totalBonuses+=creature.level-getBaB(creature.bab,creature.level);
           }
         }
         break;
     case "Advanced Defensive Combat Training":
-        if(value==="CMD"){
+        if(skill==="CMD"){
         totalBonuses+=4;
       }
       break;
     case "Artful Dodge":
-      if(value==="armor"||value==="touch"||value==="dodge")
+      if(skill==="armor"||skill==="touch"||skill==="dodge")
         totalBonuses+=1;
       break;
-    case "Gain Con":
-      if(value==="con"){
-        totalBonuses+=getModifier(creature.con)*Number(creature.level);
+    case "Athletic":
+      if(skill==="Climb"||skill==="Swim"){
+        totalBonuses+=2;
       }
-      break;
+    // case "Gain Con":
+    //   if(skill==="con"){
+    //     totalBonuses+=getModifier(creature.con)*Number(creature.level);
+    //   }
+    //   break;
     case "Improved Natural Armor":
-      if(value==="natural")
+      if(skill==="natural")
         totalBonuses+=1;
       break;
     case "Aquatic Combatant":
-      if(value==="Swim"){
+      if(skill==="Swim"){
         totalBonuses+=2;        
       }
     default:

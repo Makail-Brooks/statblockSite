@@ -17,12 +17,16 @@ function loadsData(list){
     switch(sys){
     case "pathfinder":
         if(creatureInfo.senses!=null){
-            creatureInfo.senses.forEach(senses=>{
-                senseString+=senses;
-                if(!senses.includes("Perception")){
-                    senseString+=", ";
+            Object.keys(creatureInfo.senses).forEach(senses=>{
+                if(creatureInfo.senses[senses]!=""){
+                    senseString+=`${senses} ${Number(creatureInfo.senses[senses])} ft.`;
+                }else{
+                    senseString+=`${senses}`;
                 }
+                senseString+=", ";
             })
+            }
+            senseString+= `Perception ${getSkill(creatureInfo,'Perception')}`;
             let senseTitle = " <b>Sense</b>";
             if(senseString!=''){
                 senseString=senseTitle.concat(" ",senseString);
@@ -72,7 +76,7 @@ function loadsData(list){
                 });
 
             }
-        }
+        
         let creatureAcBonus = creatureInfo.ac.bonuses;
         let acBonuses = "";
         let sign="";
@@ -248,12 +252,17 @@ function loadsData(list){
         let featsList="";
         length =0;
         if(creatureInfo.feats){
-            creatureInfo.feats.forEach(element=>{
+            Object.keys(creatureInfo.feats).forEach(element=>{
                 length++;
                 if(length>1){
                     featsList+=", "
                 }
-                featsList+=element;
+                let extraData = "";
+//                console.log(creatureInfo.feats);
+                if(creatureInfo.feats[element]!=""){
+                    extraData = `(${creatureInfo.feats[element]})`;
+                }
+                featsList+=element+extraData;
             })
         }
         let skillsList="";
@@ -289,19 +298,26 @@ function loadsData(list){
                     if(skillValue>=0){
                         skillValue = "+" + skillValue;
                     }
-                   skillsList+= element + profInfo + " "  + skillValue;
-            //     skillsList+=element;
+                    element = element.split(/(?=[A-Z])/).join(' ').trim();
+                    
+                    skillsList+= element + profInfo + " "  + skillValue;
+            //      skillsList+=element;
              })
         }
         length =0;
         if(creatureInfo.racialModifiers){
-            skillsList+="; Racial Modifiers ";
-            creatureInfo.racialModifiers.forEach(element=>{
+            skillsList+=";<b> Racial Modifiers </b>";
+            let racialBonus = "";
+            Object.keys(creatureInfo.racialModifiers).forEach(element=>{
+                let value = creatureInfo.racialModifiers[element];
+                if(value>0){
+                    racialBonus=`+${value}`;
+                }
                             length++;
             if(length>1){
                 skillsList+=", "
             }
-            skillsList+=element;
+            skillsList+=`${racialBonus} ${element}`;
             })
         }
         let languageList="";
@@ -389,12 +405,25 @@ function loadsData(list){
         if(creatureInfo.subtype!=null){
             creatureTypeInformation+=`(${creatureInfo.subtype})`;
         }
+        let speed = "";
+        speed += `${creatureInfo.speed['walk']} ft.`
+        i=1;
+        Object.keys(creatureInfo.speed).forEach(speedVal=>{
+            if(i>1){
+                speed+=", "
+            }
+            if(speedVal!="walk"){
+                speed += `${speedVal} ${creatureInfo.speed[speedVal]} ft.`
+
+            }-
+            i++;
+        })
         let init = getModifier(creatureInfo.dex);
         init = init+getFeatBonuses("init",creatureInfo.feats,creatureInfo.dex);
         creature.innerHTML = `<h1>${creatureInfo.name}</h1> <p class ="title">${creatureInfo.title} <span class="level">CR ${creatureInfo.cr}</span></p>
         <p class="information"><b>XP ${getEXP(creatureInfo.cr)}</b></p>
         <p class="information">${creatureInfo.alignment} ${creatureInfo.size} ${creatureTypeInformation}</p>
-        <p class="information"><b>init</b> ${init}; ${senseString}</p>
+        <p class="information"><b>Init</b> ${init}; ${senseString}</p>
         <p class = "divider">DEFENSE</p>
         <p class="information"><b>AC</b> ${Number(creatureInfo.ac.armor)+getFeatBonuses("armor",creatureInfo.feats,0,creatureInfo)}, touch ${Number(creatureInfo.ac.touch)+getFeatBonuses("touch",creatureInfo.feats,0,creatureInfo)}, flat-footed ${Number(creatureInfo.ac.flat_foot)+getFeatBonuses("flatfoot",creatureInfo.feats,0,creatureInfo)}(${acBonuses}) </p>
         <p class="information"><b>hp</b> ${hpNode}</p>
@@ -406,7 +435,7 @@ function loadsData(list){
             creature.innerHTML+=`<p class="information"><b>Weaknesses</b> ${creatureInfo.weaknesses}</p>`
         }
         creature.innerHTML+=`<p class = "divider">OFFENSE</p>
-        <p class="information"><b>Speed</b> ${creatureInfo.speed} ft.</p>`
+        <p class="information"><b>Speed</b> ${speed}</p>`
         let j =0;
         let enchantedGear = [];
         if(creatureInfo.melee){
@@ -421,15 +450,11 @@ function loadsData(list){
         if(creatureInfo.reach_bonus_effects){
             reachBonusEffect = `(${creatureInfo.reach_bonus_effects})`;
         }
-        let reach ="";
-        if(creatureInfo.reach){
-            reach = "<b>Reach</b> "+creatureInfo.reach;
+        let reach =getReachOrSpace(creatureInfo,'reach');
+        let space =getReachOrSpace(creatureInfo,'space');
+        if(reach!=""){
+            creature.innerHTML+=`<p class="information"><b>Space</b> ${space} <b>Reach</b> ${reach} ${reachBonusEffect}</p>`
         }
-        let space ="";
-        if(creatureInfo.space){
-            space = `<b>Space</b> ${creatureInfo.space};`;
-        }
-        creature.innerHTML+=`<p class="information">${space} ${reach} ${reachBonusEffect}</p>`
         if(creatureInfo.special_attacks){
             creature.innerHTML+=`<p class="information"><b>Special Attacks</b> ${creatureInfo.special_attacks}</p>`
         }
@@ -746,4 +771,117 @@ function loadsData(list){
 creatureDisplay.appendChild(creature);
 }
 
+function getReachOrSpace(creatureInfo,obtain){
+    let isLong = creatureInfo.sizeType;
+    switch(creatureInfo.size.toLowerCase()){
+            case "fine":
+                switch(obtain){
+                    case "reach":
+                        return "0";
+                    case "space":
+                        return "1/2 ft.";
+                }
+                break;
+            case "diminutive":
+                switch(obtain){
+                    case "reach":
+                        return "0";
+                    case "space":
+                        return "1 ft.";
+                }
+                break;
+            case "tiny":
+                switch(obtain){
+                    case "reach":
+                        return "0";
+                    case "space":
+                        return "2-1/2 ft.";
+                }
+                break;
+            case "small":
+                switch(obtain){
+                    case "reach":
+                        return "5 ft.";
+                    case "space":
+                        return "5 ft.";
+                }
+                break;
+            case "medium":
+                switch(obtain){
+                    case "reach":
+                        return "5 ft.";
+                    case "space":
+                        return "5 ft.";
+                }
+                break;
+            case "large":
+                switch(obtain){
+                    case "reach":
+                        if(isLong){
+                            return "5 ft."
+                        }else{
+                            return "10 ft."
+                        }
+                    case "space":
+                        return "10 ft."
+                }
+                break;
+            case "huge":
+                switch(obtain){
+                    case "reach":
+                        if(isLong){
+                            return "10 ft."
+                        }else{
+                            return "15 ft."
+                        }
+                    case "space":
+                        return "15 ft."
+                }
+                break;
+            case "gargantuan":
+                switch(obtain){
+                    case "reach":
+                        if(isLong){
+                            return "15 ft."
+                        }else{
+                            return "20 ft."
+                        }
+                    case "space":
+                        return "20 ft."
+                }
+                break;
+            case "colossal":
+                switch(obtain){
+                    case "reach":
+                        if(isLong){
+                            return "20 ft."
+                        }else{
+                            return "30 ft."
+                        }
+                    case "space":
+                        return "30 ft."
+                }
+                break;
+            default:
+                return "";
+    }
+}
 
+function getSkill(creatureInfo,skillToGet){
+        let skillValue = 0;
+        let skills = creatureInfo.skills;
+        if(creatureInfo.skills){
+            let cSkills = Object.keys(creatureInfo.skills);
+             cSkills.forEach(element=>{
+                 if (element==skillToGet){
+                     skillValue = Number(skills[element]) + skillModifier(element,creatureInfo)+getFeatBonuses(element,creatureInfo.feats,Number(skills[element]),creatureInfo);
+                     skillValue = skillValue+getRacialBonus(creatureInfo.racialModifiers,element);
+                    }
+                })
+            }
+        if(skillValue>-1){
+            return `+${skillValue}`
+        }else{
+            return skillValue;
+        }
+}

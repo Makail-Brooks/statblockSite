@@ -266,8 +266,6 @@ function loadsData(list){
                      if(length>1){
                             skillsList+=", "
                         }
-                    // console.log(element);
-                    // console.log(skills[element]);
                     let skillValue = ""
                     let profInfo = "";
                     if(element!="Profession"&&element!="Craft"){
@@ -394,7 +392,7 @@ function loadsData(list){
         character.innerHTML = `<h1>${characterInfo.name}</h1> <p class ="title">${characterInfo.title} <span class="level">CR ${characterInfo.cr}</span></p>
         <p class="information"><b>XP ${getEXP(characterInfo.cr)}</b></p>
         <p class="information">${characterInfo.alignment} ${characterInfo.size} ${characterTypeInformation}</p>
-        <p class="information"><b>init</b> ${init}; ${senseString}</p>
+        <p class="information"><b>Init</b> ${init}; ${senseString}</p>
         <p class = "divider">DEFENSE</p>
         <p class="information"><b>AC</b> ${Number(characterInfo.ac.armor)+getFeatBonuses("armor",characterInfo.feats,0,characterInfo)}, touch ${Number(characterInfo.ac.touch)+getFeatBonuses("touch",characterInfo.feats,0,characterInfo)}, flat-footed ${Number(characterInfo.ac.flat_foot)+getFeatBonuses("flatfoot",characterInfo.feats,0,characterInfo)}(${acBonuses}) </p>
         <p class="information"><b>hp</b> ${hpNode}</p>
@@ -494,9 +492,6 @@ function loadsData(list){
                 character.innerHTML+=`<p class="information"><b>Gear</b> ${gear}</p>`
             }
         }
-        // if(characterInfo.melee.enchantments||characterInfo.ranged.enchantments){
-        //     console.log("hi");
-        // }
         if(characterInfo.special_qualities){
             character.innerHTML+=`<p class="information"><b>SQ</b> ${SQlist}</p>`
         }
@@ -505,17 +500,12 @@ function loadsData(list){
             characterInfo.special_abilities.forEach(element => {
                 let special_abilities_desc = element.ability_desc;
                 if(element.dcStat){
-//                    console.log(element.ability_desc.indexOf(findSaveType(element.ability_desc)));
                     let trueSaveType=""
                     let trueSave = 10+Math.floor(characterInfo.level/2)+getSaveMod(element.dcStat,characterInfo);
                     let condensedString = special_abilities_desc;
                     while(special_abilities_desc.includes("[saveDC]")){
                         special_abilities_desc = special_abilities_desc.replace("[saveDC]",`${trueSave} ${element.saveType}`)
-                        // condensedString = condensedString.substring().toLowerCase();
-                        // condensedString = condensedString.replace("save","");
-                        // condensedString = condensedString.replace("dc","");
                         if(condensedString!=""){
-//                            console.log(condensedString);
                         }
                         if(!element.dcStat){
                         }

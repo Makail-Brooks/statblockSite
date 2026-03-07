@@ -2,100 +2,18 @@
   "creatures": [
     {
       "path": "./creatureDisplay.html",
-      "system": "pathfinder",
-      "name": "Pathfinder Template",
-      "title": "Example",
-      "cr": "?",
-      "alignment": "?",
-      "size": "Fine",
-      "type": "Custom",
-      "customType": "?",
-      "senses": [
-        "seperate_sense1 ?",
-        "Perception 0"
-      ],
-      "aura": [
-        "?"
-      ],
-      "ac": {
-        "armor": "18",
-        "touch": "18",
-        "flat_foot": "18",
-        "bonuses": {
-          "extra": [
-            {
-              "rage": "-2",
-              "insight": "1"
-            }
-          ]
-        }
-      },
-      "level": "1",
-      "hitDice": "d4",
-      "rate": "Monster",
-      "hp_traits": "effect",
-      "fort": "Bad",
-      "ref": "Bad",
-      "will": "Bad",
-      "weaknesses": "?",
-      "speed": "0",
-      "melee": [
-        {
-          "name": "All",
-          "diceCount": 1,
-          "damageDice": "d4"
-        }
-      ],
-      "ranged": [
-        {
-          "name": "bow",
-          "diceCount": 1,
-          "damageDice": "d4"
-        }
-      ],
-      "special_attacks": "?",
-      "str": "10",
-      "dex": "10",
-      "con": "10",
-      "int": "10",
-      "wis": "10",
-      "cha": "10",
-      "bab": "Slow",
-      "skillProgression": "Low",
-      "cmb": "-8",
-      "cmd": "2",
-      "feats": [
-        "?",
-        "?",
-        "a"
-      ],
-      "skills": {
-        "Acrobatics": "0",
-        "Appraise": "0",
-        "Bluff": "0",
-        "Climb": "0",
-        "Diplomacy": "0",
-        "DisableDevice": "0",
-        "Disguise": "0",
-        "EscapeArtist": "0",
-        "Fly": "0",
-        "HandleAnimal": "0",
-        "Heal": "0",
-        "Intimidate": "0"
-      },
-      "gear": "?"
-    },
-    {
-      "path": "./creatureDisplay.html",
       "system": "5e",
       "name": "5e Template",
       "size": "Medium",
+      "sizeType": false,
       "type": "type",
       "alignment": "N",
       "level": "1",
       "hitDice": "d8",
       "ac": "?",
-      "speed": "",
+      "speed": {
+        "custom": "0"
+      },
       "str": "",
       "dex": "",
       "con": "",
@@ -180,10 +98,8 @@
       "cr": "1/2",
       "alignment": "CN",
       "size": "Medium",
+      "sizeType": false,
       "type": "Humanoid",
-      "senses": [
-        "Perception -1"
-      ],
       "ac": {
         "armor": "12",
         "touch": "12",
@@ -198,7 +114,9 @@
       "fort": "Good",
       "ref": "Bad",
       "will": "Bad",
-      "speed": "30",
+      "speed": {
+        "walk": "30"
+      },
       "melee": [
         {
           "name": "rapier",
@@ -233,10 +151,10 @@
       "skillProgression": "Low",
       "cmb": "3",
       "cmd": "15",
-      "feats": [
-        "Dodge",
-        "Point Blank Shot"
-      ],
+      "feats": {
+        "Dodge": "",
+        "Point Blank Shot": ""
+      },
       "skills": {
         "Climb": "3",
         "HandleAnimal": "3",
@@ -247,7 +165,7 @@
       "languages": [
         "common"
       ],
-      "gear": " studded leather, buckler, composite longbow (+1 Str) with 20 arrows, rapier, sap, light horse (combat trained), blue dot is Void Remnant(\"scale\" or some other kind of Armor or information detailing the void) Green Dot is general alternative loot"
+      "gear": "studded leather, buckler, composite longbow (+1 Str) with 20 arrows, rapier, sap, light horse (combat trained), blue dot is Void Remnant(\"scale\" or some other kind of Armor or information detailing the void) Green Dot is general alternative loot"
     },
     {
       "path": "./creatureDisplay.html",
@@ -257,13 +175,13 @@
       "cr": "18",
       "alignment": "CN",
       "size": "Large",
+      "sizeType": false,
       "type": "Aberration",
       "subtype": "Void",
-      "senses": [
-        "blindsight 60ft",
-        "darkvision 60 ft",
-        "Perception +18"
-      ],
+      "senses": {
+        "blindsight": "60",
+        "darkvision": "60"
+      },
       "ac": {
         "armor": "30",
         "touch": "18",
@@ -277,7 +195,7 @@
       "level": "24",
       "hitDice": "d10",
       "rate": "Monster",
-      "hp_traits": "Regeneration 5(Sonic)",
+      "hp_traits": "Regeneration 5(Force)",
       "fort": "Good",
       "ref": "Bad",
       "will": "Good",
@@ -286,12 +204,15 @@
       ],
       "defensive_traits": {
         "Defensive_Abilities": "Void Shield",
-        "DR": "15/magic",
+        "DR": "10",
         "Immune": "Nauseated, Sickened, Asleep, Drowsy, Petrified",
         "Resist": "Cold 10",
         "SR": "28"
       },
-      "speed": "40",
+      "speed": {
+        "walk": "40",
+        "swim": "60"
+      },
       "melee": [
         {
           "name": "2 claws",
@@ -321,20 +242,21 @@
           "CMDBonus": "4"
         }
       ],
-      "feats": [
-        "Aquatic Combatant",
-        "Improved Initiative",
-        "Intimidating Prowess",
-        "Stealthy",
-        "Toughness",
-        "Eldritch Claws",
-        "Blind-Fight",
-        "Improved Blind-Fight",
-        "Cleave",
-        "Cleave, Great",
-        "Critical Focus",
-        "Critical, Bleeding"
-      ],
+      "feats": {
+        "Aquatic Combatant": "",
+        "Improved Initiative": "",
+        "Intimidating Prowess": "",
+        "Stealthy": "",
+        "Toughness": "",
+        "Eldritch Claws": "",
+        "Blind-Fight": "",
+        "Improved Blind-Fight": "",
+        "Cleave": "",
+        "Great Cleave": "",
+        "Critical Focus": "",
+        "Bleeding Critical": "",
+        "Power Attack": ""
+      },
       "skills": {
         "Acrobatics": "12",
         "Climb": "12",
@@ -406,10 +328,8 @@
       "cr": "1/2",
       "alignment": "LE",
       "size": "Medium",
+      "sizeType": false,
       "type": "Humanoid",
-      "senses": [
-        "Perception +1"
-      ],
       "ac": {
         "armor": "15",
         "touch": "10",
@@ -425,7 +345,9 @@
       "fort": "Good",
       "ref": "Bad",
       "will": "Bad",
-      "speed": "30",
+      "speed": {
+        "walk": "30"
+      },
       "melee": [
         {
           "name": "short sword",
@@ -460,10 +382,10 @@
       "skillProgression": "Low",
       "cmb": "4",
       "cmd": "14",
-      "feats": [
-        "Shield Focus",
-        " Weapon Focus (short sword)"
-      ],
+      "feats": {
+        "Shield Focus": "",
+        "Weapon Focus": "short sword"
+      },
       "skills": {
         "Intimidate": "5",
         "Perception": "2",
@@ -482,16 +404,16 @@
       "cr": "5",
       "alignment": "LN",
       "size": "Large",
+      "sizeType": false,
       "type": "Aberration",
-      "senses": [
-        "blindsight 60ft",
-        "scent",
-        "Perception +7"
-      ],
+      "senses": {
+        "blindsight": "60",
+        "scent": ""
+      },
       "ac": {
         "armor": "20",
         "touch": "11",
-        "flat_foot": "17",
+        "flat_foot": "18",
         "bonuses": {
           "dex": "1",
           "dodge": "1",
@@ -511,19 +433,23 @@
         "Immune": "petrification",
         "SR": "10"
       },
-      "speed": "40",
+      "speed": {
+        "walk": "40"
+      },
       "melee": [
         {
           "name": "2 claws",
           "diceCount": "1",
           "damageDice": "d6",
-          "isAlternative": false
+          "isAlternative": false,
+          "isAdditive": false
         },
         {
           "name": "bite",
           "diceCount": "1",
           "damageDice": "d8",
-          "isAlternative": false
+          "isAlternative": false,
+          "isAdditive": false
         }
       ],
       "str": "20",
@@ -536,13 +462,13 @@
       "skillProgression": "Middle",
       "cmb": "16",
       "cmd": "27",
-      "feats": [
-        "Lightning Reflexes",
-        "Dodge",
-        "Alertness",
-        "Ambush Awareness",
-        "Toughness"
-      ],
+      "feats": {
+        "Lightning Reflexes": "",
+        "Dodge": "",
+        "Alertness": "",
+        "Ambush Awareness": "",
+        "Toughness": ""
+      },
       "skills": {
         "Acrobatics": "6",
         "Climb": "4",
@@ -553,6 +479,7 @@
         "Intimidate": "2",
         "Perception": "4",
         "SenseMotive": "2",
+        "Spellcraft": "",
         "Stealth": "2",
         "Survival": "1",
         "Swim": "1"
@@ -570,17 +497,17 @@
       ],
       "special_abilities": [
         {
-          "abilityName": "Change Shape (Su)",
+          "abilityName": "Change Shape",
           "ability_desc": "A hound archon can assume any canine form of Small to Large size, as if using polymorph. While not in hound form it replaces its bite and claw attacks with the stat block it transformed into.",
           "abilityType": "Su(Supernatural)"
         },
         {
-          "abilityName": "Immortality (Ex)",
+          "abilityName": "Immortality",
           "ability_desc": "A Null Hound does not age, nor does it need to eat or breathe. Only violence can bring about the death of one of these creatures.",
           "abilityType": "Ex(Extraordinary)"
         },
         {
-          "abilityName": "Null Entity (EX)",
+          "abilityName": "Null Entity",
           "ability_desc": "This Creature does not need to breath, or eat and does not get exhausted but can become fatigued.",
           "abilityType": "Ex(Extraordinary)"
         },
@@ -624,12 +551,12 @@
       "cr": "8",
       "alignment": "N",
       "size": "Medium",
+      "sizeType": false,
       "type": "Humanoid",
       "subtype": "Elf",
-      "senses": [
-        "Low-Light Vision",
-        "Perception +21"
-      ],
+      "senses": {
+        "Low-Light Vision": ""
+      },
       "ac": {
         "armor": "28",
         "touch": "24",
@@ -650,7 +577,9 @@
       "defensive_traits": {
         "DR": "4/bludgeoning"
       },
-      "speed": "30",
+      "speed": {
+        "walk": "30"
+      },
       "melee": [
         {
           "name": "rapier",
@@ -687,15 +616,13 @@
       "skillProgression": "Middle",
       "cmb": "17",
       "cmd": "34",
-      "feats": [
-        "Stealthy",
-        "Skill Focus(Stealth)",
-        "Dodge",
-        "Improved Initiative",
-        "Tough",
-        "",
-        ""
-      ],
+      "feats": {
+        "Stealthy": "",
+        "Skill Focus": "",
+        "Dodge": "",
+        "Improved Initiative": "",
+        "Tough": ""
+      },
       "skills": {
         "Acrobatics": "14",
         "Bluff": "14",
@@ -828,7 +755,7 @@
         },
         {
           "abilityName": "Deft Agility",
-          "ability_desc": "Upon being hit by an attack, Yelfen makes a 10+half of the cumulative damage about to be dealt reflex save. If she succeeds she takes half of the cumulative damage.",
+          "ability_desc": "Upon being hit by an attack, Yelfen makes a half of the cumulative damage about to be dealt reflex save. If she succeeds she takes half of the cumulative damage.",
           "abilityType": "Ex(Extraordinary)"
         },
         {
@@ -898,8 +825,8 @@
       },
       "damage_resistances": "Cold, Force",
       "damage_immunities": "Poison",
-      "condition_immunities": " Disease, Poisoned",
-      "senses": "Darkvision 120 ft.,120 ft true sight",
+      "condition_immunities": "Disease, Poisoned",
+      "senses": "darkvision 120 ft.,120 ft true sight",
       "cr": "23",
       "actions": [
         {
@@ -941,13 +868,13 @@
       "cr": "2",
       "alignment": "N",
       "size": "Medium",
+      "sizeType": false,
       "type": "Magical Beast",
       "subtype": "Construct",
-      "senses": [
-        "Darkvision 60ft. ",
-        "Low-light vision",
-        "Perception +8"
-      ],
+      "senses": {
+        "darkvision": "60",
+        "Low-light vision": ""
+      },
       "ac": {
         "armor": "17",
         "touch": "12",
@@ -963,7 +890,9 @@
       "fort": "Good",
       "ref": "Good",
       "will": "Bad",
-      "speed": "40",
+      "speed": {
+        "walk": "40"
+      },
       "melee": [
         {
           "name": "Bite",
@@ -988,10 +917,10 @@
       "skillProgression": "Low",
       "cmb": "7",
       "cmd": "19",
-      "feats": [
-        "Skill Focus(Perception)",
-        "Outflank"
-      ],
+      "feats": {
+        "Skill Focus": "Perception",
+        "Outflank": ""
+      },
       "skills": {
         "Acrobatics": "4",
         "Climb": "0",
@@ -1016,11 +945,9 @@
       "cr": "2",
       "alignment": "N",
       "size": "Medium",
+      "sizeType": false,
       "type": "Magical Beast",
       "subtype": "Construct",
-      "senses": [
-        "Perception +4"
-      ],
       "ac": {
         "armor": "14",
         "touch": "14",
@@ -1035,7 +962,9 @@
       "fort": "Good",
       "ref": "Good",
       "will": "Bad",
-      "speed": "40",
+      "speed": {
+        "walk": "40"
+      },
       "melee": [
         {
           "name": "Bite",
@@ -1060,10 +989,10 @@
       "skillProgression": "Low",
       "cmb": "5",
       "cmd": "19",
-      "feats": [
-        "Lookout",
-        "Stick Together"
-      ],
+      "feats": {
+        "Lookout": "",
+        "Stick Together": ""
+      },
       "skills": {
         "Acrobatics": "3",
         "Climb": "0",
@@ -1084,11 +1013,11 @@
       "cr": "1/4",
       "alignment": "N",
       "size": "Medium",
+      "sizeType": false,
       "type": "Ooze",
-      "senses": [
-        "Blindsight 60ft.",
-        "Perception -3"
-      ],
+      "senses": {
+        "Blindsight": "60"
+      },
       "ac": {
         "armor": "12",
         "touch": "12",
@@ -1106,7 +1035,9 @@
       "defensive_traits": {
         "Immune": "Poison, Sleep effects, Paralysis, Polymorph, and Stunning"
       },
-      "speed": "30",
+      "speed": {
+        "walk": "30"
+      },
       "melee": [
         {
           "name": "Slam",
@@ -1152,11 +1083,12 @@
       "cr": "1/3",
       "alignment": "NE",
       "size": "Small",
-      "type": "humanoid (goblinoid)",
-      "senses": [
-        "Darkvision 60ft.",
-        "Perception -1"
-      ],
+      "sizeType": false,
+      "type": "Humanoid",
+      "subtype": "goblinoid",
+      "senses": {
+        "darkvision": "60"
+      },
       "ac": {
         "armor": "16",
         "touch": "13",
@@ -1173,7 +1105,9 @@
       "fort": "Good",
       "ref": "Bad",
       "will": "Bad",
-      "speed": "30",
+      "speed": {
+        "walk": "30"
+      },
       "melee": [
         {
           "name": "short sword",
@@ -1204,12 +1138,12 @@
       "skillProgression": "High",
       "cmb": "0",
       "cmd": "12",
-      "feats": [
-        "Improved Initiative"
-      ],
+      "feats": {
+        "Improved Initiative": ""
+      },
       "skills": {
         "Ride": "4",
-        "Stealth": "4",
+        "Stealth": "0",
         "Swim": "4"
       },
       "racialModifiers": [
@@ -1228,11 +1162,11 @@
       "cr": "1/3",
       "alignment": "NE",
       "size": "Medium",
+      "sizeType": false,
       "type": "Undead",
-      "senses": [
-        "darkvision 60ft.",
-        "Perception 0"
-      ],
+      "senses": {
+        "darkvision": "60"
+      },
       "ac": {
         "armor": "16",
         "touch": "12",
@@ -1253,7 +1187,9 @@
         "DR": "5/blugeoning",
         "Immune": "cold, undead traits"
       },
-      "speed": "30",
+      "speed": {
+        "walk": "30"
+      },
       "melee": [
         {
           "name": "broken scimitar",
@@ -1286,9 +1222,9 @@
       "skillProgression": "Middle",
       "cmb": "2",
       "cmd": "14",
-      "feats": [
-        "Improved Initiative"
-      ],
+      "feats": {
+        "Improved Initiative": ""
+      },
       "gear": "broken chain shirt, broken scimitar"
     },
     {
@@ -1299,11 +1235,11 @@
       "cr": "1/2",
       "alignment": "NE",
       "size": "Medium",
+      "sizeType": false,
       "type": "Undead",
-      "senses": [
-        "darkvision 60 ft.",
-        "Perception 0"
-      ],
+      "senses": {
+        "darkvision": "60"
+      },
       "ac": {
         "armor": "14",
         "touch": "12",
@@ -1322,7 +1258,9 @@
       "defensive_traits": {
         "Immune": "undead traits"
       },
-      "speed": "40",
+      "speed": {
+        "walk": "40"
+      },
       "melee": [
         {
           "name": "2 slams",
@@ -1342,9 +1280,9 @@
       "skillProgression": "Middle",
       "cmb": "4",
       "cmd": "16",
-      "feats": [
-        "Toughness"
-      ],
+      "feats": {
+        "Toughness": ""
+      },
       "special_abilities": [
         {
           "abilityName": "Quick Strikes",
@@ -1361,13 +1299,13 @@
       "cr": "12",
       "alignment": "LE",
       "size": "Colossal",
+      "sizeType": false,
       "type": "Monstrous Humanoid",
       "subtype": "System Corrupted",
-      "senses": [
-        "darkvision 60ft.",
-        "Blind Sense 120ft.",
-        "Perception +22"
-      ],
+      "senses": {
+        "darkvision": "60",
+        "Blind Sense": "120"
+      },
       "ac": {
         "armor": "22",
         "touch": "9",
@@ -1389,7 +1327,9 @@
         "Defensive_Abilities": "natural cunning",
         "SR": "10"
       },
-      "speed": "50",
+      "speed": {
+        "walk": "50"
+      },
       "melee": [
         {
           "name": "greataxe",
@@ -1437,16 +1377,16 @@
       "skillProgression": "Middle",
       "cmb": "31",
       "cmd": "44",
-      "feats": [
-        "Great Fortitude",
-        "Toughness",
-        "Improved Bull Rush",
-        "Power Attack",
-        "Cleave",
-        "Improved Initiative",
-        "Intimidating Prowess",
-        "Martial Dominance"
-      ],
+      "feats": {
+        "Great Fortitude": "",
+        "Toughness": "",
+        "Improved Bull Rush": "",
+        "Power Attack": "",
+        "Cleave": "",
+        "Improved Initiative": "",
+        "Intimidating Prowess": "",
+        "Martial Dominance": ""
+      },
       "skills": {
         "Acrobatics": "0",
         "Climb": "12",
@@ -1525,11 +1465,9 @@
       "cr": "1/8",
       "alignment": "N",
       "size": "Medium",
+      "sizeType": false,
       "type": "Custom",
       "customType": "System Avatar",
-      "senses": [
-        "Perception 1"
-      ],
       "ac": {
         "armor": "14",
         "touch": "14",
@@ -1545,7 +1483,9 @@
       "fort": "Bad",
       "ref": "Bad",
       "will": "Good",
-      "speed": "30",
+      "speed": {
+        "walk": "30"
+      },
       "melee": [
         {
           "name": "Touch Attack",
@@ -1574,10 +1514,6 @@
       "skillProgression": "Middle",
       "cmb": "2",
       "cmd": "14",
-      "feats": [
-        "Bonus Magic Talent",
-        "Bonus Magic Talent"
-      ],
       "skills": {
         "Appraise": "3",
         "Craft": [
@@ -1625,12 +1561,12 @@
       "cr": "2",
       "alignment": "CE",
       "size": "Small",
+      "sizeType": false,
       "type": "Custom",
       "customType": "Goblin Corrupted",
-      "senses": [
-        "darkvision 60 ft.",
-        "Perception -1"
-      ],
+      "senses": {
+        "darkvision": "60"
+      },
       "ac": {
         "armor": "19",
         "touch": "15",
@@ -1652,7 +1588,9 @@
         "DR": "1",
         "SR": "1"
       },
-      "speed": "40",
+      "speed": {
+        "walk": "40"
+      },
       "melee": [
         {
           "name": "2 Corrupted Claws",
@@ -1683,10 +1621,10 @@
       "skillProgression": "Low",
       "cmb": "6",
       "cmd": "17",
-      "feats": [
-        "Improved Initiative",
-        "Ankle Biter"
-      ],
+      "feats": {
+        "Improved Initiative": "",
+        "Ankle Biter": ""
+      },
       "skills": {
         "EscapeArtist": "4",
         "Ride": "4",
@@ -1719,11 +1657,11 @@
       "cr": "1",
       "alignment": "N",
       "size": "Medium",
+      "sizeType": false,
       "type": "vermin",
-      "senses": [
-        "darkvision 60ft.",
-        "Perception +4"
-      ],
+      "senses": {
+        "darkvision": "60"
+      },
       "ac": {
         "armor": "14",
         "touch": "13",
@@ -1742,7 +1680,10 @@
       "defensive_traits": {
         "Immune": "mind-affecting effects"
       },
-      "speed": "30 ft.,climb 30",
+      "speed": {
+        "walk": "30",
+        "climb": "30"
+      },
       "melee": [
         {
           "name": "bite",
@@ -1791,11 +1732,9 @@
       "cr": "1",
       "alignment": "N",
       "size": "Medium",
+      "sizeType": false,
       "type": "Custom",
       "customType": "System Corrupted Undead",
-      "senses": [
-        "Perception -1"
-      ],
       "ac": {
         "armor": "18",
         "touch": "14",
@@ -1817,7 +1756,9 @@
         "DR": "5/bludgeoning, 2",
         "Immune": "cold, undead traits"
       },
-      "speed": "30",
+      "speed": {
+        "walk": "30"
+      },
       "melee": [
         {
           "name": "2 claws",
@@ -1848,9 +1789,9 @@
       "skillProgression": "Middle",
       "cmb": "6",
       "cmd": "17",
-      "feats": [
-        "Improved Initiative"
-      ],
+      "feats": {
+        "Improved Initiative": ""
+      },
       "special_abilities": [
         {
           "abilityName": "Corruption",
@@ -1877,12 +1818,13 @@
       "cr": "3",
       "alignment": "N",
       "size": "Medium",
+      "sizeType": false,
       "type": "Custom",
       "customType": "System Corrupted",
-      "senses": [
-        "darkvision 60ft. tremorsense 60ft.",
-        "Perception +3"
-      ],
+      "senses": {
+        "darkvision": "60",
+        "tremorsense": "60"
+      },
       "ac": {
         "armor": "16",
         "touch": "15",
@@ -1903,7 +1845,9 @@
         "DR": "5",
         "Immune": "mind-affecting effects"
       },
-      "speed": "30",
+      "speed": {
+        "walk": "30"
+      },
       "melee": [
         {
           "name": "bite",
@@ -1960,10 +1904,8 @@
       "cr": "1/2",
       "alignment": "N",
       "size": "Small",
+      "sizeType": false,
       "type": "Vermin",
-      "senses": [
-        "Perception +4"
-      ],
       "ac": {
         "armor": "14",
         "touch": "12",
@@ -1980,7 +1922,9 @@
       "ref": "Bad",
       "will": "Bad",
       "weaknesses": "light sensitivity",
-      "speed": "30",
+      "speed": {
+        "walk": "30"
+      },
       "melee": [
         {
           "name": "bite",
@@ -2001,10 +1945,10 @@
       "skillProgression": "Middle",
       "cmb": "-1",
       "cmd": "10",
-      "feats": [
-        "Diehard",
-        "Endurance"
-      ],
+      "feats": {
+        "Diehard": "",
+        "Endurance": ""
+      },
       "skills": {
         "Climb": "0",
         "Fly": "-4",
@@ -2028,11 +1972,13 @@
       "cr": "8",
       "alignment": "LE",
       "size": "Medium",
+      "sizeType": false,
       "type": "Construct",
-      "senses": [
-        "darkvision 60 ft., low-light vision, System sense 120 ft.",
-        "Perception 4"
-      ],
+      "senses": {
+        "darkvision": "60",
+        "low-light vision": "",
+        "System sense": "120"
+      },
       "ac": {
         "armor": "24",
         "touch": "24",
@@ -2052,7 +1998,9 @@
         "Immune": "construct traits",
         "SR": "15"
       },
-      "speed": "30",
+      "speed": {
+        "walk": "30"
+      },
       "ranged": [
         {
           "name": "DEL Invasion_Variable",
@@ -2087,12 +2035,12 @@
       "skillProgression": "Low",
       "cmb": "10",
       "cmd": "22",
-      "feats": [
-        "Toughness",
-        "Critical Focus",
-        "Artful Dodge",
-        "Vital Strike"
-      ],
+      "feats": {
+        "Toughness": "",
+        "Critical Focus": "",
+        "Artful Dodge": "",
+        "Vital Strike": ""
+      },
       "special_qualities": [
         "Construct Traits"
       ],
@@ -2104,7 +2052,7 @@
         },
         {
           "abilityName": "FORMAT Malfunction_Zone",
-          "ability_desc": "Every Enemy Creature within a 20ft cube must make a [saveDC] ref or take 2d6 force damage. For each 60 dmg taken this ability is used automatically.",
+          "ability_desc": "Every Enemy Creature within a 20ft cube must make a [saveDC] ref or take 2d6 force damage. For each 20 dmg taken this ability is used automatically.",
           "dcStat": "Cha",
           "saveType": "Ref",
           "abilityType": "Sp(Spell-Like)"
@@ -2136,23 +2084,22 @@
     {
       "path": "./creatureDisplay.html",
       "system": "pathfinder",
-      "name": "Nullites",
+      "name": "Nullite",
       "title": "Nullites",
       "cr": "9",
       "alignment": "N",
       "size": "Small",
+      "sizeType": false,
       "type": "Aberration",
-      "senses": [
-        "Borrowed Sight",
-        "Perception +13"
-      ],
+      "senses": {
+        "Borrowed Sight": ""
+      },
       "ac": {
-        "armor": "18",
-        "touch": "13",
+        "armor": "20",
+        "touch": "15",
         "flat_foot": "20",
         "bonuses": {
           "deflection": "4",
-          "dex": "-2",
           "natural": "5"
         }
       },
@@ -2167,9 +2114,11 @@
         "SR": "10"
       },
       "weaknesses": "Force vulnerability, Slashing vulnerability",
-      "speed": "30",
+      "speed": {
+        "walk": "30"
+      },
       "str": "18",
-      "dex": "6",
+      "dex": "10",
       "con": "20",
       "int": "14",
       "wis": "16",
@@ -2177,14 +2126,14 @@
       "bab": "Medium",
       "skillProgression": "Middle",
       "cmb": "10",
-      "cmd": "18",
-      "feats": [
-        "Blind-Fight",
-        "Defensive Combat Training",
-        "Advanced Defensive Combat Training",
-        "Low Profile",
-        "Toughness"
-      ],
+      "cmd": "20",
+      "feats": {
+        "Blind-Fight": "",
+        "Defensive Combat Training": "",
+        "Advanced Defensive Combat Training": "",
+        "Low Profile": "",
+        "Toughness": ""
+      },
       "skills": {
         "Acrobatics": "5",
         "Climb": "5",
@@ -2201,7 +2150,7 @@
       "special_abilities": [
         {
           "abilityName": "Drain Host",
-          "ability_desc": "Deal the host 2d4 force damage and heal for 2d8.",
+          "ability_desc": "Deal the host 2d4 Sonic damage and heal for 2d8.",
           "abilityType": "Ex(Extraordinary)"
         },
         {
@@ -2234,10 +2183,8 @@
       "cr": "15",
       "alignment": "LE",
       "size": "Colossal",
+      "sizeType": false,
       "type": "Aberration",
-      "senses": [
-        "Perception +17"
-      ],
       "ac": {
         "armor": "19",
         "touch": "10",
@@ -2255,7 +2202,9 @@
       "fort": "Bad",
       "ref": "Bad",
       "will": "Good",
-      "speed": "10",
+      "speed": {
+        "walk": "10"
+      },
       "melee": [
         {
           "name": "Slash of Null",
@@ -2270,7 +2219,7 @@
           "damageDice": "d12",
           "critRange": "18",
           "critMultiplier": "3",
-          "toHitModifier": "-8",
+          "toHitModifier": "-2",
           "isAlternative": false,
           "isAdditive": false
         }
@@ -2285,18 +2234,18 @@
       "skillProgression": "Middle",
       "cmb": "30",
       "cmd": "39",
-      "feats": [
-        "Toughness",
-        "Power Attack",
-        "Critical Focus",
-        "Critical, Bleeding",
-        "Weapon Focus(Slash of Null)",
-        "Defensive Combat Training",
-        "Iron Will",
-        "Improved Natural Armor",
-        "Great Fortitude",
-        "Improved Initiative"
-      ],
+      "feats": {
+        "Toughness": "",
+        "Power Attack": "",
+        "Critical Focus": "",
+        "Critical, Bleeding": "",
+        "Weapon Focus": "Slash of Null",
+        "Defensive Combat Training": "",
+        "Iron Will": "",
+        "Improved Natural Armor": "",
+        "Great Fortitude": "",
+        "Improved Initiative": ""
+      },
       "skills": {
         "Acrobatics": "12",
         "Climb": "12",
@@ -2350,7 +2299,7 @@
         },
         {
           "abilityName": "Suns Descent",
-          "ability_desc": "Grab the sun that resides in this layer and slam it into the ground. All creatures within 50 ft. of the epicenter, except the user of this skill, must make a [saveDC] save or take 2d10 fire damage.",
+          "ability_desc": "Grab the sun that resides in this layer and slam it into the ground. All creatures within 50 ft. of the epicenter, except the user of this skill, must make a [saveDC] save or take 2d10 fire damage. Advance closest turn to below current turn, unless what causes this is an action from it's own turn then have the current turn again.",
           "dcStat": "Str",
           "saveType": "Ref",
           "abilityType": "Ex(Extraordinary)"
@@ -2362,7 +2311,7 @@
         },
         {
           "abilityName": "Void Tiles",
-          "ability_desc": "A tile that is considered difficult terrain if a creature begins their turn in it. These tiles inflict one stack of collapse when passed through. Once you leave the area and re-enter it is no longer considered difficult terrain.",
+          "ability_desc": "A tile that is considered difficult terrain if a creature begins their turn in it. These tiles inflict one stack of collapse when passed through. Once you leave the area and re-enter it is no longer considered difficult terrain. Start of [creatureName]'s turns roll 1d6 on a 4-6 creature 1 Empty Shade on an empty Void Tile. For every 5 tiles add 1d6 to the pool.",
           "abilityType": "Su(Supernatural)"
         },
         {
@@ -2380,10 +2329,17 @@
         },
         {
           "abilityName": "Immolate the Heavens, Abandon the World of all Causality",
-          "ability_desc": "This ability activates immediately once [creatureName] reaches 10% health and forces all creatures to make a [saveDC] save or takes 4d10+12 force damage as they summon their null blade from the void and force it into the ground causing all tiles within 120 ft. to be converted into void tiles.",
+          "ability_desc": "This ability activates immediately once [creatureName] reaches 10% health and forces all creatures to make a [saveDC] save or takes 4d10+12 force damage as they summon their Oblivions Edge from the void and force it into the ground causing all tiles within 120 ft. to be converted into void tiles. Gain a 3rd turn that is after the current turn.",
           "dcStat": "Str",
           "saveType": "Fort",
           "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Null Beam",
+          "ability_desc": "All Creatures in a 100 ft. Wide Mile long line must make a [saveDC] or take 10d6 force damage. Half on a success. Useable every 1d6 rounds.",
+          "dcStat": "Cha",
+          "saveType": "Ref",
+          "abilityType": "Su(Supernatural)"
         }
       ]
     },
@@ -2431,7 +2387,7 @@
       },
       "damage_vulnerabilities": "Force",
       "damage_resistances": "Cold",
-      "senses": "Darkvision 60ft.",
+      "senses": "darkvision 60ft.",
       "cr": "1",
       "xp": "1200",
       "ability": [
@@ -2503,7 +2459,7 @@
       },
       "damage_vulnerabilities": "Force",
       "damage_resistances": "Cold",
-      "senses": "30 ft. Darkvision",
+      "senses": "30 ft. darkvision",
       "cr": "1",
       "xp": "1200",
       "ability": [
@@ -2638,7 +2594,7 @@
         "Survival": true
       },
       "damage_resistances": "Cold",
-      "senses": "Darkvision 60ft., Blindsight 40ft.",
+      "senses": "darkvision 60ft., Blindsight 40ft.",
       "cr": "3",
       "xp": "1200",
       "ability": [
@@ -2682,12 +2638,12 @@
       "cr": "5",
       "alignment": "N",
       "size": "Small",
+      "sizeType": false,
       "type": "Aberration",
       "subtype": "Sinulence",
-      "senses": [
-        "Darkvision 30 ft.",
-        "Perception +4"
-      ],
+      "senses": {
+        "darkvision": "30"
+      },
       "ac": {
         "armor": "14",
         "touch": "14",
@@ -2707,7 +2663,10 @@
         "Resist": "Cold 10"
       },
       "weaknesses": "Force vulnerability",
-      "speed": "30ft,. 40ft Swim",
+      "speed": {
+        "walk": "30",
+        "Swim": "40"
+      },
       "melee": [
         {
           "name": "Slam",
@@ -2728,11 +2687,11 @@
       "skillProgression": "Middle",
       "cmb": "5",
       "cmd": "16",
-      "feats": [
-        "Bonded Mind",
-        "Combat Expertise",
-        "Gang Up"
-      ],
+      "feats": {
+        "Bonded Mind": "",
+        "Combat Expertise": "",
+        "Gang Up": ""
+      },
       "skills": {
         "Acrobatics": "5",
         "Climb": "2",
@@ -2758,7 +2717,7 @@
         },
         {
           "abilityName": "Explode",
-          "ability_desc": "As an action this creature explodes causing all creatures within 10 ft. to make a [saveDC] or take 2d6 Cold damage on a fail, nothing on a success. Spreads Cerulean Veins in a 3x3 area centered on point of explosion. This action counts as the creature dying.",
+          "ability_desc": "As an action or on death(roll 1d4 on a 4 they explode) this creature explodes causing all creatures within 10 ft. to make a [saveDC] or take 2d6 Cold damage on a fail, nothing on a success. Spreads Cerulean Veins in a 3x3 area centered on point of explosion. This action counts as the creature dying.",
           "dcStat": "Dex",
           "saveType": "Ref",
           "abilityType": "Ex(Extraordinary)"
@@ -2773,12 +2732,12 @@
       "cr": "6",
       "alignment": "N",
       "size": "Medium",
+      "sizeType": false,
       "type": "Aberration",
       "subtype": "Sinulence",
-      "senses": [
-        "Darkvision 60 ft.",
-        "Perception +1"
-      ],
+      "senses": {
+        "darkvision": "60"
+      },
       "ac": {
         "armor": "15",
         "touch": "15",
@@ -2797,7 +2756,10 @@
         "Resist": "Cold 10"
       },
       "weaknesses": "Force vulnerability",
-      "speed": "40ft,. 60ft Swim",
+      "speed": {
+        "walk": "40",
+        "Swim": "60"
+      },
       "melee": [
         {
           "name": "Bite",
@@ -2826,11 +2788,11 @@
       "skillProgression": "Middle",
       "cmb": "5",
       "cmd": "20",
-      "feats": [
-        "Power Attack",
-        "Improved Initiative",
-        "Lightning Reflexes"
-      ],
+      "feats": {
+        "Power Attack": "",
+        "Improved Initiative": "",
+        "Lightning Reflexes": ""
+      },
       "skills": {
         "Acrobatics": "5",
         "Climb": "3",
@@ -2877,12 +2839,12 @@
       "cr": "4",
       "alignment": "N",
       "size": "Medium",
+      "sizeType": false,
       "type": "Aberration",
       "subtype": "Sinulence",
-      "senses": [
-        "Darkvision 60ft.",
-        "Perception +5"
-      ],
+      "senses": {
+        "darkvision": "60"
+      },
       "ac": {
         "armor": "12",
         "touch": "12",
@@ -2901,7 +2863,9 @@
         "Immune": "Lightning",
         "Resist": "Cold 10"
       },
-      "speed": "30",
+      "speed": {
+        "walk": "30"
+      },
       "melee": [
         {
           "name": "Melee Spell Touch Attack",
@@ -2928,11 +2892,11 @@
       "skillProgression": "Middle",
       "cmb": "4",
       "cmd": "16",
-      "feats": [
-        "Bonded Mind",
-        "Toughness",
-        "Great Fortitude"
-      ],
+      "feats": {
+        "Bonded Mind": "",
+        "Toughness": "",
+        "Great Fortitude": ""
+      },
       "skills": {
         "Acrobatics": "2",
         "Climb": "3",
@@ -2967,12 +2931,13 @@
       "cr": "10",
       "alignment": "N",
       "size": "Large",
+      "sizeType": false,
       "type": "Aberration",
       "subtype": "Sinulence",
-      "senses": [
-        "Darkvision 60ft., Blindsight 40ft.",
-        "Perception +9"
-      ],
+      "senses": {
+        "darkvision": "60",
+        "Blindsight": "40"
+      },
       "ac": {
         "armor": "22",
         "touch": "17",
@@ -2992,7 +2957,10 @@
       "defensive_traits": {
         "Resist": "Cold 15"
       },
-      "speed": "25ft,. 50ft Swim",
+      "speed": {
+        "walk": "25",
+        "Swim": "50"
+      },
       "melee": [
         {
           "name": "Silence Claws",
@@ -3020,13 +2988,13 @@
       "skillProgression": "Middle",
       "cmb": "14",
       "cmd": "28",
-      "feats": [
-        "Iron Will",
-        "Lightning Reflexes",
-        "Toughness",
-        "Great Fortitude",
-        "Bonded Mind"
-      ],
+      "feats": {
+        "Iron Will": "",
+        "Lightning Reflexes": "",
+        "Toughness": "",
+        "Great Fortitude": "",
+        "Bonded Mind": ""
+      },
       "skills": {
         "Acrobatics": "8",
         "Climb": "3",
@@ -3075,12 +3043,13 @@
       "cr": "12",
       "alignment": "N",
       "size": "Gargantuan",
+      "sizeType": false,
       "type": "Dragon",
       "subtype": "Sinulence",
-      "senses": [
-        "Darkvision 120 ft. Blindsight 60 ft.",
-        "Perception +9"
-      ],
+      "senses": {
+        "darkvision": "120",
+        "Blindsight": "60"
+      },
       "aura": [
         {
           "name": "Depths Aura",
@@ -3109,7 +3078,10 @@
         "Resist": "Cold 25",
         "SR": "20"
       },
-      "speed": "30",
+      "speed": {
+        "walk": "30",
+        "fly": "60"
+      },
       "melee": [
         {
           "name": "Bite",
@@ -3151,15 +3123,15 @@
       "skillProgression": "High",
       "cmb": "25",
       "cmd": "37",
-      "feats": [
-        "Power Attack",
-        "Improved Initiative",
-        "Iron Will",
-        "Multiattack",
-        "Bonded Mind",
-        "Aquatic Combat",
-        "Toughness"
-      ],
+      "feats": {
+        "Power Attack": "",
+        "Improved Initiative": "",
+        "Iron Will": "",
+        "Multiattack": "",
+        "Bonded Mind": "",
+        "Aquatic Combat": "",
+        "Toughness": ""
+      },
       "skills": {
         "Appraise": "12",
         "Bluff": "4",
@@ -3174,7 +3146,16 @@
         "Fly": "14",
         "Heal": "12",
         "Intimidate": "14",
-        "Knowledge(All)": "14",
+        "Knowledge(Arcana)": "0",
+        "Knowledge(Dungeoneering)": "0",
+        "Knowledge(Engineering)": "0",
+        "Knowledge(Geography)": "0",
+        "Knowledge(History)": "0",
+        "Knowledge(Local)": "0",
+        "Knowledge(Nature)": "0",
+        "Knowledge(Nobility)": "0",
+        "Knowledge(Planes)": "0",
+        "Knowledge(Religion)": "0",
         "Perception": "7",
         "SenseMotive": "7",
         "Spellcraft": "0",
@@ -3207,12 +3188,12 @@
       "cr": "8",
       "alignment": "N",
       "size": "Large",
+      "sizeType": false,
       "type": "Aberration",
       "subtype": "Sinulence",
-      "senses": [
-        "Darkvision 60 ft.",
-        "Perception +1"
-      ],
+      "senses": {
+        "darkvision": "60"
+      },
       "ac": {
         "armor": "34",
         "touch": "7",
@@ -3237,7 +3218,10 @@
         "Resist": "Cold 10"
       },
       "weaknesses": "Force vulnerability",
-      "speed": "20ft. 30 ft. Swim",
+      "speed": {
+        "walk": "20",
+        "Swim": "30"
+      },
       "melee": [
         {
           "name": "Bite",
@@ -3265,12 +3249,12 @@
       "skillProgression": "Middle",
       "cmb": "12",
       "cmd": "20",
-      "feats": [
-        "Toughness",
-        "Great Fortitude",
-        "Shield Wall",
-        "Bonded Mind"
-      ],
+      "feats": {
+        "Toughness": "",
+        "Great Fortitude": "",
+        "Shield Wall": "",
+        "Bonded Mind": ""
+      },
       "skills": {
         "Acrobatics": "0",
         "Climb": "0",
@@ -3304,11 +3288,9 @@
       "cr": "4",
       "alignment": "N",
       "size": "Medium",
+      "sizeType": false,
       "type": "Aberration",
       "subtype": "Sinulence",
-      "senses": [
-        "Perception +9"
-      ],
       "ac": {
         "armor": "19",
         "touch": "14",
@@ -3330,7 +3312,10 @@
         "DR": "10/magic",
         "Resist": "Cold 10"
       },
-      "speed": "40ft,. 60ft Swim",
+      "speed": {
+        "walk": "40",
+        "Swim": "60"
+      },
       "melee": [
         {
           "name": "Halberd Strike",
@@ -3352,12 +3337,12 @@
       "skillProgression": "Middle",
       "cmb": "13",
       "cmd": "25",
-      "feats": [
-        "Power Attack",
-        "Toughness",
-        "Aquatic Combat",
-        "Bonded Mind"
-      ],
+      "feats": {
+        "Power Attack": "",
+        "Toughness": "",
+        "Aquatic Combat": "",
+        "Bonded Mind": ""
+      },
       "skills": {
         "Acrobatics": "3",
         "Climb": "3",
@@ -3394,11 +3379,9 @@
       "cr": "4",
       "alignment": "N",
       "size": "Medium",
+      "sizeType": false,
       "type": "Construct",
       "subtype": "Sinulence",
-      "senses": [
-        "Perception 0"
-      ],
       "ac": {
         "armor": "9",
         "touch": "9",
@@ -3417,7 +3400,9 @@
         "Immune": "All Conditions, Piercing Damage, Precision Damage"
       },
       "weaknesses": "Fire, Cold, Lightning, Thunder",
-      "speed": "30",
+      "speed": {
+        "walk": "30"
+      },
       "str": "-",
       "dex": "8",
       "con": "20",
@@ -3431,7 +3416,7 @@
       "special_abilities": [
         {
           "abilityName": "Deceit of the Depths",
-          "ability_desc": "A creature within 5ft. of this creature at the start of it's turn must make a [saveDC] save or be afflicted with Deceit until the start of their next turn. Those inflicted with Deceit gain 20% mischance on attacks against Sinulence creatures and are considered flat-footed for them. this is a mind-altering effect.",
+          "ability_desc": "A creature within 5ft. of this creature at the start of it's turn or entering this radius must make a [saveDC] save or be afflicted with Deceit until the start of their next turn. Those inflicted with Deceit gain 20% mischance on attacks against Sinulence creatures and are considered flat-footed for them. this is a mind-altering effect.",
           "dcStat": "Con",
           "saveType": "Will",
           "abilityType": "Su(Supernatural)"
@@ -3456,11 +3441,9 @@
       "cr": "5",
       "alignment": "N",
       "size": "Medium",
+      "sizeType": false,
       "type": "Aberration",
       "subtype": "Sinulence",
-      "senses": [
-        "Perception 0"
-      ],
       "ac": {
         "armor": "15",
         "touch": "15",
@@ -3480,7 +3463,9 @@
         "Resist": "Cold 10"
       },
       "weaknesses": "Force vulnerability, Fire vulnerability, Slashing vulnerability",
-      "speed": "60 ft., 120 ft.",
+      "speed": {
+        "walk": "120"
+      },
       "melee": [
         {
           "name": "Mindless Barrage",
@@ -3501,10 +3486,11 @@
       "skillProgression": "Middle",
       "cmb": "11",
       "cmd": "26",
-      "feats": [
-        "Power Attack",
-        "Toughness"
-      ],
+      "feats": {
+        "Power Attack": "",
+        "Toughness": "",
+        "Weapon Focus": "Mindless Barrage"
+      },
       "skills": {
         "Acrobatics": "4",
         "Climb": "0",
@@ -3531,7 +3517,7 @@
         },
         {
           "abilityName": "Blooming Flower",
-          "ability_desc": "While connected to a Cerulean Vein fire one projectile at a target within 10 ft. of this creature. with a +10 attack bonus, on hit deal 1d10 force damage.",
+          "ability_desc": "While connected to a Cerulean Vein fire one projectile at a target within 100 ft. of this creature. with a +10 attack bonus, on hit deal 1d10 force damage.",
           "abilityType": "Su(Supernatural)"
         }
       ]
@@ -3544,11 +3530,9 @@
       "cr": "4",
       "alignment": "N",
       "size": "Medium",
+      "sizeType": false,
       "type": "Aberration",
       "subtype": "Sinulence",
-      "senses": [
-        "Perception +11"
-      ],
       "ac": {
         "armor": "13",
         "touch": "13",
@@ -3563,7 +3547,10 @@
       "fort": "Bad",
       "ref": "Bad",
       "will": "Good",
-      "speed": "20ft,. 40ft Swim",
+      "speed": {
+        "walk": "20",
+        "swim": "40"
+      },
       "special_attacks": "Contaminate Mind +9",
       "str": "14",
       "dex": "16",
@@ -3575,12 +3562,12 @@
       "skillProgression": "Middle",
       "cmb": "7",
       "cmd": "20",
-      "feats": [
-        "Improved Initiative",
-        "Bonded Mind",
-        "Dodge ",
-        "Toughness"
-      ],
+      "feats": {
+        "Improved Initiative": "",
+        "Bonded Mind": "",
+        "Dodge": "",
+        "Toughness": ""
+      },
       "skills": {
         "Acrobatics": "5",
         "Climb": "3",
@@ -3991,7 +3978,7 @@
       "actions": [
         {
           "actionName": "Multiattack",
-          "action_desc": " makes three attacks: one with its bite and two with its claws."
+          "action_desc": "makes three attacks: one with its bite and two with its claws."
         },
         {
           "actionName": "Claw",
@@ -4008,6 +3995,457 @@
         {
           "actionName": "Breath Weapon(Recharge 6)",
           "action_desc": "DC 20, 6d10 sonic, half as much damage on a successful one"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Empty Shade",
+      "title": "Shade",
+      "cr": "4",
+      "alignment": "N",
+      "size": "Medium",
+      "sizeType": false,
+      "type": "Construct",
+      "subtype": "Null",
+      "senses": {
+        "Void Tile Sense": ""
+      },
+      "ac": {
+        "armor": "15",
+        "touch": "14",
+        "flat_foot": "13",
+        "bonuses": {
+          "deflection": "2",
+          "dex": "2",
+          "natural": "1"
+        }
+      },
+      "level": "10",
+      "hitDice": "d10",
+      "rate": "Monster",
+      "fort": "Bad",
+      "ref": "Bad",
+      "will": "Bad",
+      "speed": {
+        "walk": "15",
+        "voidTile": "30"
+      },
+      "melee": [
+        {
+          "name": "Empty Slash",
+          "diceCount": "2",
+          "damageDice": "d8",
+          "uniqueDamage": "Applies 1 stack of Collapse",
+          "multiAttack": "1",
+          "isAlternative": false,
+          "isAdditive": false
+        }
+      ],
+      "ranged": [
+        {
+          "name": "Vile Sludge Shot",
+          "diceCount": "1",
+          "damageDice": "d4",
+          "uniqueDamage": "applies 2 collapse stacks",
+          "isAlternative": false,
+          "isAdditive": false
+        }
+      ],
+      "special_attacks": "Collapse Detonation",
+      "str": "24",
+      "dex": "14",
+      "con": "10",
+      "int": "-",
+      "wis": "12",
+      "cha": "-",
+      "bab": "Slow",
+      "skillProgression": "Low",
+      "cmb": "12",
+      "cmd": "24",
+      "special_abilities": [
+        {
+          "abilityName": "One with the Void or is it the Null",
+          "ability_desc": "Gains double it's move speed while moving across Void Tiles.",
+          "abilityType": "Su(Supernatural)"
+        },
+        {
+          "abilityName": "Collapse Detonation",
+          "ability_desc": "For each tile [creatureName] moves across it gains 1 collapse charge and for each collapse inflicted gain 2 charges, as an action it can use all charges to explode dealing (5+collapse stacks)d6 to all targets within 10 ft. of it. All targets within this radius must make a [saveDC] on a success half.",
+          "dcStat": "Con",
+          "saveType": "Ref",
+          "abilityType": "Su(Supernatural)"
+        },
+        {
+          "abilityName": "Many Armed one",
+          "ability_desc": "Is able to use 1 full round attack action even after moving. If this creature uses a full round attack action, it instead uses the attack as if it where a full round action twice.",
+          "abilityType": "Ex(Extraordinary)"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Void Envoy Corrupted",
+      "title": "Envoy(Nulled)",
+      "cr": "7",
+      "alignment": "CN",
+      "size": "Large",
+      "sizeType": false,
+      "type": "Aberration",
+      "subtype": "Void",
+      "senses": {
+        "blindsight": "60",
+        "darkvision": "60"
+      },
+      "ac": {
+        "armor": "17",
+        "touch": "15",
+        "flat_foot": "13",
+        "bonuses": {
+          "deflection": "2",
+          "dex": "4",
+          "natural": "2"
+        }
+      },
+      "level": "12",
+      "hitDice": "d10",
+      "rate": "Monster",
+      "hp_traits": "Regeneration 5(Force)",
+      "fort": "Good",
+      "ref": "Bad",
+      "will": "Good",
+      "save_bonuses": [
+        "4(Mental effects)"
+      ],
+      "defensive_traits": {
+        "Defensive_Abilities": "Void Shield",
+        "DR": "5/magic",
+        "Immune": "Nauseated, Sickened, Asleep, Drowsy, Petrified",
+        "Resist": "Cold 5"
+      },
+      "speed": {
+        "walk": "40"
+      },
+      "melee": [
+        {
+          "name": "2 claws",
+          "diceCount": "2",
+          "damageDice": "d10",
+          "critRange": "19",
+          "isAlternative": false,
+          "isAdditive": false
+        }
+      ],
+      "ranged": [
+        {
+          "name": "Null Blast",
+          "diceCount": "2",
+          "damageDice": "d8",
+          "isAlternative": false,
+          "isAdditive": false
+        }
+      ],
+      "str": "22",
+      "dex": "18",
+      "con": "24",
+      "int": "12",
+      "wis": "18",
+      "cha": "18",
+      "bab": "Fast",
+      "skillProgression": "Middle",
+      "cmb": "19",
+      "cmd": "33",
+      "cmdMod": [
+        {
+          "CMDBonusDetails": "vs. bull rush and trip",
+          "CMDBonus": "4"
+        }
+      ],
+      "feats": {
+        "Aquatic Combatant": "",
+        "Improved Initiative": "",
+        "Intimidating Prowess": "",
+        "Stealthy": "",
+        "Toughness": "",
+        "Eldritch Claws": ""
+      },
+      "skills": {
+        "Acrobatics": "5",
+        "Climb": "5",
+        "EscapeArtist": "5",
+        "Fly": "4",
+        "Intimidate": "7",
+        "Knowledge(Planes)": "8",
+        "Perception": "8",
+        "Spellcraft": "0",
+        "Stealth": "8",
+        "Survival": "5",
+        "Swim": "5"
+      },
+      "racialModifiers": {
+        "intimidate": "6",
+        "stealth": "4"
+      },
+      "languages": [
+        "Aboleth"
+      ],
+      "special_abilities": [
+        {
+          "abilityName": "Immortality",
+          "ability_desc": "An Envoy of The Void does not age, nor does it need to eat or breathe. Only violence can bring about the death of one of these creatures.",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Void Shield",
+          "ability_desc": "An Envoy of The Void gains +2 deflection bonus from it's protection given by the void(reduced by 3 from usual 5 due to null corruption).",
+          "abilityType": "Su(Supernatural)"
+        },
+        {
+          "abilityName": "Starflight",
+          "ability_desc": "The eldritch can survive in the void of outer space and does not need to breathe when in the void. It fly through space at an incredible speed. Although exact travel times vary, a trip within a single solar system normally takes 3d20 months, while a trip beyond should take 3d20 years (or more, at the GM's discretion).",
+          "abilityType": "Ex(Extraordinary)"
+        },
+        {
+          "abilityName": "Eternal Entity",
+          "ability_desc": "This Creature does not get exhausted or fatigued.",
+          "abilityType": "Ex(Extraordinary)"
+        }
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "pathfinder",
+      "name": "Mimic",
+      "title": "Mimic",
+      "cr": "4",
+      "alignment": "N",
+      "size": "Medium",
+      "sizeType": false,
+      "type": "Aberration",
+      "senses": {
+        "darkvision": "120"
+      },
+      "ac": {
+        "armor": "11",
+        "touch": "11",
+        "flat_foot": "10",
+        "bonuses": {
+          "dex": "1"
+        }
+      },
+      "level": "7",
+      "hitDice": "d8",
+      "rate": "Monster",
+      "fort": "Bad",
+      "ref": "Bad",
+      "will": "Good",
+      "speed": {
+        "walk": "30",
+        "fly": "60"
+      },
+      "str": "19",
+      "dex": "12",
+      "con": "17",
+      "int": "10",
+      "wis": "13",
+      "cha": "10",
+      "bab": "Medium",
+      "skillProgression": "Middle",
+      "cmb": "9",
+      "cmd": "20",
+      "feats": {
+        "Great Cleave": ""
+      },
+      "skills": {
+        "Acrobatics": "5",
+        "Climb": "0",
+        "EscapeArtist": "0",
+        "Fly": "0",
+        "Intimidate": "0",
+        "Perception": "0",
+        "Spellcraft": "0",
+        "Stealth": "0",
+        "Survival": "0",
+        "Swim": "0"
+      },
+      "languages": [
+        "Common"
+      ]
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "5e",
+      "name": "Krampus",
+      "size": "Large",
+      "type": "Monstrosity(shapechanger)",
+      "alignment": "LE",
+      "level": "19",
+      "hitDice": "d20",
+      "ac": "20",
+      "speed": "50 ft.",
+      "str": "26",
+      "dex": "12",
+      "con": "24",
+      "int": "20",
+      "wis": "18",
+      "cha": "22",
+      "proficiency": "6",
+      "saving_throws": {
+        "str": 14,
+        "con": 13,
+        "int": 11
+      },
+      "skillsProf": {
+        "Acrobatics": true,
+        "AnimalHandling": false,
+        "Arcana": true,
+        "Athletics": true,
+        "Deception": true,
+        "History": false,
+        "Insight": false,
+        "Intimidation": false,
+        "Investigation": false,
+        "Medicine": false,
+        "Nature": false,
+        "Perception": false,
+        "Performance": true,
+        "Persuasion": true,
+        "Religion": true,
+        "SleightofHand": false,
+        "Stealth": false,
+        "Survival": false
+      },
+      "damage_vulnerabilities": "Fire",
+      "damage_resistances": "Cold",
+      "damage_immunities": "Non-Magical BPS",
+      "condition_immunities": "Sleep, Fear, Petrified",
+      "senses": "blindsight 20 ft., darkvision 120 ft.",
+      "cr": "20",
+      "xp": "1200",
+      "ability": [
+        {
+          "abilityName": "Hard Skin",
+          "ability_desc": "Once per round as a reaction Krampus can make a Con Save equal to 10+half the damage taken(round down). On a success take half of the damage(round down)."
+        },
+        {
+          "abilityName": "Winters Screech",
+          "ability_desc": "All creatures in a 20ft. cone must make a DC 16 Wis Save or be frightened. At the start of it's turn the creature takes 2d6 physic damage and remake the save. On a success they are immune for the rest of the day."
+        },
+        {
+          "abilityName": "Degradation of Reality",
+          "ability_desc": "Once per turn when a creature takes damage from Krampus they must make a DC 16 Saving throw based off of the D6 rolled(STR(1)-CHA(6)). On a failure take 1 stat damage to that stat."
+        }
+      ],
+      "actions": [
+        {
+          "actionName": "Multiattack",
+          "action_desc": "Krampus can uses his Winters Screech(When off Recharge). It then makes four attacks. One with it's Bite, two with it's claws and one with it's tail."
+        },
+        {
+          "actionName": "Bite",
+          "action_desc": "Melee Weapon Attack: +14 to hit, reach 10 ft., one target. Hit: 19(1d10 + 8) piercing plus 1d10 cold"
+        },
+        {
+          "actionName": "Claw",
+          "action_desc": "Melee Weapon Attack: +14 to hit, reach 10 ft., one target. Hit: 15 (1d6 + 8) slashing plus 1d6 cold damage."
+        },
+        {
+          "actionName": "Tail",
+          "action_desc": "Melee Weapon Attack: +14 to hit, reach 15 ft., one target. Hit: 17 (1d8 + 8) bludgeoning plus 1d8 cold damage."
+        },
+        {
+          "actionName": "Ice Cannon",
+          "action_desc": "Ranged Weapon Attack +14 to hit, 50ft./100 ft. Hit: 21(2d12+8) cold."
+        },
+        {
+          "actionName": "Tail Swipe",
+          "action_desc": "As a reaction Krampus gains +5 to AC."
+        }
+      ],
+      "legendaryAbilities": {
+        "legendary_details": "Krampus can take 3 legendary Actions.",
+        "legendaryActions": [
+          {
+            "legendaryName": "Winters Howl(Cost 2)",
+            "legendary_desc": "All Creatures within 20ft. of Krampus must make a DC 14 Con save or take 2d12 physic damage."
+          },
+          {
+            "legendaryName": "Regain Reaction",
+            "legendary_desc": "Krampus Regains his Reaction"
+          },
+          {
+            "legendaryName": "Claw attack",
+            "legendary_desc": "Krampus makes one claw attack"
+          },
+          {
+            "legendaryName": "Wintery Warp(Cost 3)",
+            "legendary_desc": "Krampus can warp to one place within 120 ft of himself."
+          },
+          {
+            "legendaryName": "Summon Minions(Cost 2)",
+            "legendary_desc": "Summon 2d6 Minions"
+          }
+        ]
+      }
+    },
+    {
+      "path": "./creatureDisplay.html",
+      "system": "5e",
+      "name": "Minions of Krampus",
+      "size": "Small",
+      "type": "Aberration(shapechanger)",
+      "alignment": "LE",
+      "level": "4",
+      "hitDice": "d6",
+      "ac": "12",
+      "speed": "30",
+      "str": "18",
+      "dex": "12",
+      "con": "16",
+      "int": "10",
+      "wis": "12",
+      "cha": "10",
+      "proficiency": "3",
+      "saving_throws": {
+        "dex": 4,
+        "cha": 3
+      },
+      "skillsProf": {
+        "Acrobatics": true,
+        "AnimalHandling": false,
+        "Arcana": false,
+        "Athletics": true,
+        "Deception": false,
+        "History": false,
+        "Insight": false,
+        "Intimidation": false,
+        "Investigation": false,
+        "Medicine": false,
+        "Nature": false,
+        "Perception": false,
+        "Performance": true,
+        "Persuasion": true,
+        "Religion": false,
+        "SleightofHand": true,
+        "Stealth": true,
+        "Survival": false
+      },
+      "damage_vulnerabilities": "Fire",
+      "damage_resistances": "Cold",
+      "condition_immunities": "Sleep",
+      "senses": "darkvision 60ft.",
+      "cr": "4",
+      "xp": "1200",
+      "actions": [
+        {
+          "actionName": "Throw Icy Snowball",
+          "action_desc": "Ranged Weapon Attack +4 to hit, range 60ft./120 ft. Hit: 1d6 bludgeoning plus 1d6 cold +1"
+        },
+        {
+          "actionName": "Icicle Rapier",
+          "action_desc": "Melee Weapon Attack +7 to hit, reach 5ft. hit 1d6 piercing plus 1d6 cold + 4."
         }
       ]
     }

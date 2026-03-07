@@ -11,107 +11,107 @@ function getModifier(val){
 /**
  * returns ability modifier for skill asked for
  * @param {string} skill 
- * @param {json} creatureData 
+ * @param {json} NPCData 
  * @returns int
  */
-function skillModifier(skill,creatureData){
+function skillModifier(skill,NPCData){
   switch(skill){
     case "Acrobatics":
-      return getModifier(creatureData.dex);
+      return getModifier(NPCData.dex);
     case "Athletics":
-      return getModifier(creatureData.str);
+      return getModifier(NPCData.str);
     case "Appraise":
-      return getModifier(creatureData.int);
+      return getModifier(NPCData.int);
     case "Bluff":
-      return getModifier(creatureData.cha);
+      return getModifier(NPCData.cha);
     case "Climb":
-        return getModifier(creatureData.str);
+        return getModifier(NPCData.str);
     case "Craft":
-      return getModifier(creatureData.int);
+      return getModifier(NPCData.int);
     case "Diplomacy":
-      return getModifier(creatureData.cha);
+      return getModifier(NPCData.cha);
     case "DisableDevice":
-      return getModifier(creatureData.dex);
+      return getModifier(NPCData.dex);
     case "Deception":
-      return getModifier(creatureData.cha);
+      return getModifier(NPCData.cha);
     case "Disguise":
-      return getModifier(creatureData.cha);
+      return getModifier(NPCData.cha);
     case "EscapeArtist":
-      return getModifier(creatureData.dex);
+      return getModifier(NPCData.dex);
     case "Fly":
-      return getModifier(creatureData.dex);
+      return getModifier(NPCData.dex);
     case "HandleAnimals":
-      return getModifier(creatureData.cha);
+      return getModifier(NPCData.cha);
     case "AnimalHandling":
-      return getModifier(creatureData.wis);
+      return getModifier(NPCData.wis);
     case "Heal":
-      return getModifier(creatureData.wis);
+      return getModifier(NPCData.wis);
     case "Medicine":
-      return getModifier(creatureData.wis);
+      return getModifier(NPCData.wis);
     case "Intimidate":
-      return getModifier(creatureData.cha);
+      return getModifier(NPCData.cha);
     case "Intimidation":
-      return getModifier(creatureData.cha);
+      return getModifier(NPCData.cha);
     case "Arcane":
-      return getModifier(creatureData.int);
+      return getModifier(NPCData.int);
     case "History":
-      return getModifier(creatureData.int);
+      return getModifier(NPCData.int);
     case "KnowledgeArcana":
-      return getModifier(creatureData.int);
+      return getModifier(NPCData.int);
     case "KnowledgeDungeoneering":
-      return getModifier(creatureData.int);
+      return getModifier(NPCData.int);
     case "KnowledgeEngineering":
-      return getModifier(creatureData.int);
+      return getModifier(NPCData.int);
     case "KnowledgeGeography":
-      return getModifier(creatureData.int);
+      return getModifier(NPCData.int);
     case "KnowledgeHistory":
-      return getModifier(creatureData.int);
+      return getModifier(NPCData.int);
     case "KnowledgeLocal":
-      return getModifier(creatureData.int);
+      return getModifier(NPCData.int);
     case "KnowledgeNature":
-      return getModifier(creatureData.int);
+      return getModifier(NPCData.int);
     case "KnowledgeNobility":
-      return getModifier(creatureData.int);
+      return getModifier(NPCData.int);
     case "KnowledgePlanes":
-      return getModifier(creatureData.int);
+      return getModifier(NPCData.int);
     case "KnowledgeReligion":
-      return getModifier(creatureData.int);
+      return getModifier(NPCData.int);
     case "Linguistics":
-      return getModifier(creatureData.int);
+      return getModifier(NPCData.int);
     case "Perception":
-      return getModifier(creatureData.wis);
+      return getModifier(NPCData.wis);
     case "Perform":
-      return getModifier(creatureData.cha);
+      return getModifier(NPCData.cha);
     case "Profession":
-      return getModifier(creatureData.wis);
+      return getModifier(NPCData.wis);
     case "Ride":
-      return getModifier(creatureData.dex);
+      return getModifier(NPCData.dex);
     case "SenseMotive":
-      return getModifier(creatureData.wis);
+      return getModifier(NPCData.wis);
     case "Insight":
-      return getModifier(creatureData.wis);
+      return getModifier(NPCData.wis);
     case "SleightOfHand":
-      return getModifier(creatureData.dex);
+      return getModifier(NPCData.dex);
     case "Spellcraft":
-      return getModifier(creatureData.int);
+      return getModifier(NPCData.int);
     case "Investigation":
-      return getModifier(creatureData.int);
+      return getModifier(NPCData.int);
     case "Nature":
-      return getModifier(creatureData.int);
+      return getModifier(NPCData.int);
     case "Religion":
-      return getModifier(creatureData.int);
+      return getModifier(NPCData.int);
     case "Stealth":
-      return getModifier(creatureData.dex);
+      return getModifier(NPCData.dex);
     case "Survival":
-      return getModifier(creatureData.wis);
+      return getModifier(NPCData.wis);
     case "Swim":
-      return getModifier(creatureData.str);
+      return getModifier(NPCData.str);
     case "UseMagicDevice":
-      return getModifier(creatureData.cha);
+      return getModifier(NPCData.cha);
     case "Performance":
-      return getModifier(creatureData.cha);
+      return getModifier(NPCData.cha);
     case "Persuasion":
-      return getModifier(creatureData.cha);
+      return getModifier(NPCData.cha);
     default:
       return 0;
   }
@@ -169,7 +169,7 @@ function getBaB(babSpeed,level){
         return bab;
 }
 
-function getCreatureSizeMod(size,type=""){
+function getNPCSizeMod(size,type=""){
   switch(size){
     case "Colossal":
         return -8;
@@ -194,7 +194,7 @@ function getCreatureSizeMod(size,type=""){
 
 /**
  * 
- * @param {creatureInfo.cr} cr 
+ * @param {NPCInfo.cr} cr 
  * @return {int}
  */
 function getEXP(cr){
@@ -276,31 +276,37 @@ function getEXP(cr){
 
 /**
  * 
- * @param {JSON} creatureInfo 
+ * @param {JSON} NPCInfo 
  * @returns {int}
  */
-function getHP(creatureInfo,sys){
+function getHP(NPCInfo,sys){
   let health = 0;
-  let hitDice = Number(creatureInfo.hitDice.replace("d",""));
-  let level = creatureInfo.level;
+  let hitDice = Number(NPCInfo.hitDice.replace("d",""));
+  let level = NPCInfo.level;
   switch(sys){
     case "pathfinder":
-      let conBonus = getModifier(creatureInfo.con)*Number(creatureInfo.level)+getFeatBonuses("con",creatureInfo.feats,creatureInfo.level,creatureInfo);
-      let bonuses = 0;
-      if(creatureInfo.type.toLowerCase().includes("construct")){
-        bonuses = getConstructBonusHealth(creatureInfo.size);
-        conBonus = 0
+      let conBonus = getModifier(NPCInfo.con)*Number(NPCInfo.level)+getFeatBonuses("con",NPCInfo.feats,NPCInfo.level,NPCInfo);
+      if(NPCInfo.type.toLowerCase().includes("construct")){
+        conBonus = getConstructBonusHealth(NPCInfo.size);
       }
-      if(creatureInfo.rate=="Monster"){
-        health = Math.floor(conBonus+(((hitDice/2)+0.5)*level))+bonuses;
-      }else if(creatureInfo.rate=="Player"){
-        health = Math.floor(conBonus+(((hitDice/2)+1)*(level-1)))+hitDice+bonuses;
+      switch(NPCInfo.NPCType){
+        case "Monster":
+          if(NPCInfo.rate=="Monster"){
+            health = Math.floor(conBonus+(((hitDice/2)+0.5)*level));
+          }else if(NPCInfo.rate=="Player"){
+            health = Math.floor(conBonus+(((hitDice/2)+1)*(level-1)))+hitDice;
+          }
+          break;
+        case "NPC":
+          health = getClassBasedHealthDisplay(NPCInfo,conBonus);
+          break;
       }
+
       break;
     case "5e":
       let highRollCount = Math.floor(level/2);
       let half = hitDice/2;
-      health = ((highRollCount*(half+1))+((level-highRollCount)*half)+(getModifier(creatureInfo.con)*level));
+      health = ((highRollCount*(half+1))+((level-highRollCount)*half)+(getModifier(NPCInfo.con)*level));
       if(health<0){
         health=1;
       }
@@ -308,14 +314,39 @@ function getHP(creatureInfo,sys){
   }
     return health;
 }
+
+function getClassBasedHealthDisplay(NPCInfo,conBonus){
+  let con = NPCInfo.con;
+  let firstClass = true;
+  let totalHealth = 0;
+  let classIndex = 0;
+  let archetype = "None";
+  // let feats=getf();
+  NPCInfo.class.forEach(className=>{
+    classIndex = getClassIndexDisplay(NPCInfo,className.name);
+    archetype = NPCInfo.class[classIndex].archetype;
+    if(firstClass){
+      firstClass = false;
+      totalHealth+=Number(getHitDice(className.name,archetype))+getModifier(con);
+      if((className.level-1)>0){
+        totalHealth+=Math.floor((getHitDice(className.name,archetype)/2)+1)*(Number(className.level)-1);
+      }
+    }else{
+      totalHealth+=Math.floor((getHitDice(className.name,archetype)/2)+1)*(Number(className.level))
+    }
+  });
+  totalHealth+=conBonus;
+  return totalHealth;
+}
+
 /**
  * 
  * @param {Array} array 
- * @param {JSON} creatureInfo 
+ * @param {JSON} NPCInfo 
  * @returns 
  */
 
-function getSpecialValue(array,creatureInfo){
+function getSpecialValue(array,NPCInfo){
     let total = 0;
     let math = "";
     let doMath = false;
@@ -329,14 +360,14 @@ function getSpecialValue(array,creatureInfo){
                 if(isNumericString(element)){
                     total = Number(element);
                 }else{
-                    total = getElementData(creatureInfo,element);
+                    total = getElementData(NPCInfo,element);
                 }
             }else{
                 
                 if(isNumericString(element)){
                     elNum = Number(element);
                 }else{
-                    elNum = getElementData(creatureInfo,element);
+                    elNum = getElementData(NPCInfo,element);
                 }
                 switch(math){
                     case "+":
@@ -359,16 +390,16 @@ function getSpecialValue(array,creatureInfo){
 }
 /**
  * 
- * @param {JSON} creatureInfo 
+ * @param {JSON} NPCInfo 
  * @param {string} element 
  * @returns 
  */
-function getElementData(creatureInfo,element){
+function getElementData(NPCInfo,element){
     switch(element){
         case "level":
-            return Number(creatureInfo.level);
+            return Number(NPCInfo.level);
         case "max health"||"max hp"||"hp"||"total hp":
-            return getHP(creatureInfo,creatureInfo.system);
+            return getHP(NPCInfo,NPCInfo.system);
     }
 }
 /**
@@ -382,7 +413,7 @@ function isNumericString(str){
 
 /**
  * 
- * @param {creatureInfo.size} size 
+ * @param {NPCInfo.size} size 
  * @returns 
  */
 function getConstructBonusHealth(size){
@@ -404,7 +435,7 @@ function getConstructBonusHealth(size){
     }
 }
 
-function getAttackDetails(attackPath,creatureInfo,enchantedGear,type){
+function getAttackDetails(attackPath,NPCInfo,enchantedGear,type){
     let k=0;
     let attackString = "";
     attackPath.forEach(attackData=>{
@@ -419,12 +450,12 @@ function getAttackDetails(attackPath,creatureInfo,enchantedGear,type){
             }
         }
         let bab=0;
-        bab = getBaB(creatureInfo.bab,creatureInfo.level);
-        let abilityBonus = getModifier(creatureInfo.dex);
+        bab = getBaB(NPCInfo.bab,NPCInfo.level);
+        let abilityBonus = getModifier(NPCInfo.dex);
         if(type==="melee"){
-            abilityBonus=getModifier(creatureInfo.str);
+            abilityBonus=getModifier(NPCInfo.str);
         }
-        let toHit = abilityBonus+(bab)+getFeatBonuses(type+"attack",creatureInfo.feats,bab,creatureInfo,attackData.name);
+        let toHit = abilityBonus+(bab)+getFeatBonuses(type+"attack",NPCInfo.feats,bab,NPCInfo,attackData.name);
         if(attackData.toHitModifier){
             toHit+=Number(attackData.toHitModifier);
         }
@@ -450,10 +481,10 @@ function getAttackDetails(attackPath,creatureInfo,enchantedGear,type){
         let damageBonus = 0;
         viableForStrength =['dagger','composite longbow'];
         if(viableForStrength.includes(attackData.name)||type==="melee"){
-                damageBonus =getModifier(creatureInfo.str)+getFeatBonuses((type+"damage"),creatureInfo.feats,bab,creatureInfo);
+                damageBonus =getModifier(NPCInfo.str)+getFeatBonuses((type+"damage"),NPCInfo.feats,bab,NPCInfo);
         }
         if(attackData.enchantments){
-            damageBonus+=getMagicBonuses("damageBonus",attackData.enchantments,creatureInfo.bab,creatureInfo,getModifier(creatureInfo.str),getModifier(creatureInfo.dex));
+            damageBonus+=getMagicBonuses("damageBonus",attackData.enchantments,NPCInfo.bab,NPCInfo,getModifier(NPCInfo.str),getModifier(NPCInfo.dex));
         }
         if(damageBonus>0){
             damageBonus = "+"+damageBonus;
@@ -470,7 +501,7 @@ function getAttackDetails(attackPath,creatureInfo,enchantedGear,type){
         if(attackData.enchantments){
             enchantedGear.push(`${attackData.name}(${(attackData.enchantments).toString().replace(",",", ")})`);
         }
-        let trueCRange = cr-getMagicBonuses("critRange",attackData.enchantments,creatureInfo.bab,creatureInfo);
+        let trueCRange = cr-getMagicBonuses("critRange",attackData.enchantments,NPCInfo.bab,NPCInfo);
         if(trueCRange<20){
             damageString=damageString.replace(")",`/${trueCRange}-20)`);
         }
@@ -501,12 +532,12 @@ function findSaveType(description,trueSaveType){
     }
 }
 
-function nonConditionBonus(stat,creatureInfo){
+function nonConditionBonus(stat,NPCInfo){
   let fort = 0;
   let ref = 0;
   let will =0
-  if(creatureInfo.save_bonuses!=null){
-    creatureInfo.save_bonuses.forEach(bonuses=>{
+  if(NPCInfo.save_bonuses!=null){
+    NPCInfo.save_bonuses.forEach(bonuses=>{
               let numVal = bonuses.replace(/[^0-9]/g, '')
               if(bonuses.includes("-")){
                   numVal*=-1;
@@ -538,62 +569,67 @@ function nonConditionBonus(stat,creatureInfo){
   return 0;
 }
 
-function getSaveMod(save,creatureData){
+function getSaveMod(save,NPCData){
     switch(save){
         case "Str":
-            return creatureData.str!="-"? getModifier(creatureData.str):0;
+            return NPCData.str!="-"? getModifier(NPCData.str):0;
         case "Dex":
-            return creatureData.dex!="-"? getModifier(creatureData.dex):0;
+            return NPCData.dex!="-"? getModifier(NPCData.dex):0;
         case "Con":
-            return creatureData.con!="-"? getModifier(creatureData.con):0;
+            return NPCData.con!="-"? getModifier(NPCData.con):0;
         case "Int":
-            return creatureData.int!="-"? getModifier(creatureData.int):0;
+            return NPCData.int!="-"? getModifier(NPCData.int):0;
         case "Wis":
-            return creatureData.wis!="-"? getModifier(creatureData.wis):0;
+            return NPCData.wis!="-"? getModifier(NPCData.wis):0;
         case "Cha":
-            return creatureData.cha!="-"? getModifier(creatureData.cha):0;
+            return NPCData.cha!="-"? getModifier(NPCData.cha):0;
         default:
             return 0;
     }
 }
 
-function getstatValue(value,creatureData){
+function getstatValue(value,NPCData){
   switch(value){
     case "Str":
-      return creatureData.str!="-"? Number(creatureData.str):0;
+      return NPCData.str!="-"? Number(NPCData.str):0;
     case "Dex":
-      return creatureData.dex!="-"? Number(creatureData.dex):0;
+      return NPCData.dex!="-"? Number(NPCData.dex):0;
     case "Con":
-      return creatureData.con!="-"? Number(creatureData.con):0;
+      return NPCData.con!="-"? Number(NPCData.con):0;
     case "Int":
-      return creatureData.int!="-"? Number(creatureData.int):0;
+      return NPCData.int!="-"? Number(NPCData.int):0;
     case "Wis":
-      return creatureData.wis!="-"? Number(creatureData.wis):0;
+      return NPCData.wis!="-"? Number(NPCData.wis):0;
     case "Cha":
-      return creatureData.cha!="-"? Number(creatureData.cha):0;
+      return NPCData.cha!="-"? Number(NPCData.cha):0;
     default:
       return 0;
   }
 }
 
 function checkStatVal(stat){
-  if(isNaN(stat)){
+  if(isNaN(stat)||stat==""){
     if(stat!="-"){
-      return "-";
+      return "-1";
     }
   }
   return stat;
 }
+
+
+
+
+
 
 /**
  * 
  * @param {string} skill 
  * @param {array} feats 
  * @param {int} ranks 
- * @param {json} creature 
+ * @param {json} NPC 
  * @returns int
  */
-function getFeatBonuses(skill,feats,ranks,creature,extra=""){
+function getFeatBonuses(skill,feats,ranks,NPC,extra=""){
   let totalBonuses = 0;
   let value = skill.replace(/[0-9] /g, '')
   let arr = []
@@ -666,12 +702,12 @@ function getFeatBonuses(skill,feats,ranks,creature,extra=""){
       }
     case "Intimidating Prowess":
       if(skill==="Intimidate"){
-        totalBonuses += getModifier(creature.str);
+        totalBonuses += getModifier(NPC.str);
       }
       break;
     case "Martial Dominance":
       if(skill==="Intimidate"){
-        let bab=getBaB(creature.bab,creature.level);
+        let bab=getBaB(NPC.bab,NPC.level);
         if(bab>ranks){
           totalBonuses+=bab-ranks;
         }
@@ -728,8 +764,8 @@ function getFeatBonuses(skill,feats,ranks,creature,extra=""){
       break;
     case "Defensive Combat Training":
         if(skill==="CMD"){
-          if(creature.level>getBaB(creature.bab,creature.level)){
-            totalBonuses+=creature.level-getBaB(creature.bab,creature.level);
+          if(NPC.level>getBaB(NPC.bab,NPC.level)){
+            totalBonuses+=NPC.level-getBaB(NPC.bab,NPC.level);
           }
         }
         break;
@@ -748,7 +784,7 @@ function getFeatBonuses(skill,feats,ranks,creature,extra=""){
       }
     // case "Gain Con":
     //   if(skill==="con"){
-    //     totalBonuses+=getModifier(creature.con)*Number(creature.level);
+    //     totalBonuses+=getModifier(NPC.con)*Number(NPC.level);
     //   }
     //   break;
     case "Improved Natural Armor":
@@ -773,12 +809,12 @@ function getFeatBonuses(skill,feats,ranks,creature,extra=""){
  * @param {string} value 
  * @param {array} Enchantments 
  * @param {int} ranks 
- * @param {json} creature 
+ * @param {json} NPC 
  * @param {int} strBonus 
  * @param {int} dexBonus 
  * @returns int
  */
-function getMagicBonuses(value,Enchantments,ranks,creature,strBonus,dexBonus){
+function getMagicBonuses(value,Enchantments,ranks,NPC,strBonus,dexBonus){
   let totalBonuses =0;
   if(Enchantments){
 
@@ -807,3 +843,117 @@ function getMagicBonuses(value,Enchantments,ranks,creature,strBonus,dexBonus){
   }
   return totalBonuses
 };
+
+
+function getIndex(json,className){
+    var index = json.findIndex(obj=>obj.name==className);
+    return index;
+}
+
+function getClassIndexDisplay(NPCInfo,className){
+  var index = NPCInfo.class.findIndex(obj=>obj.name==className);
+  return index;
+}
+
+function getArchetypeIndex(className,archetypeName){
+    var classInformation = classJson.class[getIndex(classJson.class,className.toLowerCase())];
+    var archetypeIndex = -1;
+    if(archetypeName!="None"){
+      archetypeIndex = classInformation.archetype.findIndex(obj=>obj.name==archetypeName);
+    }
+    return archetypeIndex;
+}
+
+function getSaveBonus(saveName){
+  var rate = "Bad";
+  var level = 0;
+  let saveBonus = 0;
+  if(document.getElementById("NPCChoice").value=="Monster"){
+    rate = document.getElementById(`NPC${saveName}`).value;
+    level = document.getElementById(`MonsterLevel`).value;
+    switch(rate){
+      case "Good":
+        saveBonus = 2+Math.floor(level/2);
+      case "Bad":
+        saveBonus = Math.floor(level/3);
+  }
+  }else{
+    let classArchetype = "";
+    getClassesData().forEach(className=>{
+    classArchetype="";
+    if(document.getElementById(`archetype${className}subList`)!=null){
+      classArchetype = document.getElementById(`archetype${className}subList`).value;
+    }
+    if(classArchetype==""){
+
+      classArchetype="None";
+    }
+    classData = classJson.class[getIndex(classJson.class,className)];
+    var archetypeIndex = -1; 
+    if(classArchetype!="None"){
+      archetypeIndex = getArchetypeIndex(className,classArchetype);
+    }
+    if(archetypeIndex!=-1){
+      switch(saveName){
+        case "Fort":
+          if(classData.archetype[archetypeIndex].fortSave==null){
+            archetypeIndex=-1;
+          }
+          break;
+        case "Ref":
+          if(classData.archetype[archetypeIndex].refSave==null){
+            archetypeIndex=-1;
+          }
+          break;
+      case "Will":
+          if(classData.archetype[archetypeIndex].willSave==null){
+            archetypeIndex=-1;
+          }
+          break;
+      }
+    }
+    if(archetypeIndex==-1){
+      switch(saveName){
+        case "Will":
+          rate = classData.willSave;
+          break;
+        case "Ref":
+          rate = classData.refSave;
+          break;
+        case "Fort":
+          rate = classData.fortSave;
+          break;
+      }
+    }else{
+      switch(saveName){
+        case "Will":
+          rate = classData.archetype[archetypeIndex].willSave;
+          break;
+        case "Ref":
+          rate = classData.archetype[archetypeIndex].refSave;
+          break;
+        case "Fort":
+          rate = classData.archetype[archetypeIndex].fortSave;
+          break;
+      }
+    }
+    switch(rate){
+      case "Good":
+         saveBonus +=2+Math.floor(getClassLevels(className)/2);
+         break;
+      case "Bad":
+         saveBonus +=Math.floor(getClassLevels(className)/3);
+         break;
+      default:
+        saveBonus += 0;
+        break;
+    }
+    });
+  }
+  return saveBonus;
+}
+
+function convertSaveRateToValue(){
+    fort = 2+ Math.floor(NPCInfo.level/2);
+    fort = Math.floor(NPCInfo.level/3);
+}

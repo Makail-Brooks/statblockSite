@@ -62,13 +62,13 @@ app.delete("/deleteEntry/:entry",async(req,res)=>{
     let id = req.params.entry;
     fs.readFile("list.json",function(err,data){
         let list = JSON.parse(data);
-        list.creatures.splice(id,1);
+        list.NPCs.splice(id,1);
         fs.writeFile(
                 "list.json",JSON.stringify(list, null,2),
                 err=>{
                     if(err) throw err;
                 });
-//        let index = list.creatures.findIndex(page => page.index === id);
+//        let index = list.NPCs.findIndex(page => page.index === id);
     });
 
     fs.readFile("lastVisitedPages.json",function(err,data){
@@ -90,7 +90,7 @@ app.delete("/deleteEntry/:entry",async(req,res)=>{
                 });
 
     });
-    // list.creatures.forEach(element => {
+    // list.NPCs.forEach(element => {
     //         console.log(element);
     //     });
     // console.log("list2 " +visited.pages[5].index);
@@ -98,13 +98,13 @@ app.delete("/deleteEntry/:entry",async(req,res)=>{
 app.post("/create", async (req, res) => {
     fs.readFile("list.json",function(err,data){
         let list = JSON.parse(data);
-        list.creatures.push(req.body);
+        list.NPCs.push(req.body);
         fs.writeFile(
                 "list.json",JSON.stringify(list, null,2),
                 err=>{
                     if(err) throw err;
                 });
-//        let index = list.creatures.findIndex(page => page.index === id);
+//        let index = list.NPCs.findIndex(page => page.index === id);
     });
     console.log("finished");
 })
@@ -113,19 +113,19 @@ app.put("/update/:id",async(req,res)=>{
     let id = Number(req.params.id);
 fs.readFile("list.json",function(err,data){
     let list = JSON.parse(data);
-    list.creatures[id]=req.body;
+    list.NPCs[id]=req.body;
     fs.writeFile(
                 "list.json",JSON.stringify(list, null,2),
                 err=>{
                     if(err) throw err;
                 });
-    // list.creatures.splice(id,1);
+    // list.NPCs.splice(id,1);
     // fs.writeFile(
     //         "list.json",JSON.stringify(list, null,2),
     //         err=>{
     //             if(err) throw err;
     //         });
-//        let index = list.creatures.findIndex(page => page.index === id);
+//        let index = list.NPCs.findIndex(page => page.index === id);
 });
 
 })

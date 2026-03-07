@@ -1,56 +1,62 @@
 fetch("./list.json")
     .then(response=>response.json())
-    .then(jsonList=>editCurCreature(jsonList))
+    .then(jsonList=>editCurNPC(jsonList))
 /**
  * 
  * @param {Array} listInformation 
  */
 
 
-function editCurCreature(listInformation){
-let id = sessionStorage.getItem("creature");
+function editCurNPC(listInformation){
+let id = sessionStorage.getItem("NPC");
 let param = new URLSearchParams(window.location.search);
-id = param.get("creature");
-var creatureInfo = listInformation.creatures[id];
+id = param.get("NPC");
+var NPCInfo = listInformation.NPCs[id];
 var resetButtonDisplay = document.getElementById("resetButton");
 var creationHTML = document.createElement("div");
+var hotbarDisplay = document.getElementById("hotBar");
+var hotbarHTML = document.createElement("div");
+var choiceDisplay = document.getElementById("choiceDrop");
+var choiceHTML = document.createElement("div");
 let system;
 system = sessionStorage.getItem("system");
+hotbarHTML.innerHTML+=getHotbar(system,"edit");
+choiceHTML.innerHTML+=getChoiceDrop(system);
 creationHTML.innerHTML+= getForum(system,"edit");
 var creationDisplay = document.getElementById("creationDis");
 creationDisplay.appendChild(creationHTML);
-        // <option value="d4" ${creatureInfo.hitDice==="d4"?"selected":""}>d4</option>
-        // <option value="d6" ${creatureInfo.hitDice==="d6"?"selected":""}>d6</option>
-        // <option value="d8" ${creatureInfo.hitDice==="d8"?"selected":""}>d8</option>
-        // <option value="d10" ${creatureInfo.hitDice==="d10"?"selected":""}>d10</option>
-        // <option value="d12" ${creatureInfo.hitDice==="d12"?"selected":""}>d12</option>
+choiceDisplay.appendChild(choiceHTML);
+hotbarDisplay.appendChild(hotbarHTML);
+        // <option value="d4" ${NPCInfo.hitDice==="d4"?"selected":""}>d4</option>
+        // <option value="d6" ${NPCInfo.hitDice==="d6"?"selected":""}>d6</option>
+        // <option value="d8" ${NPCInfo.hitDice==="d8"?"selected":""}>d8</option>
+        // <option value="d10" ${NPCInfo.hitDice==="d10"?"selected":""}>d10</option>
+        // <option value="d12" ${NPCInfo.hitDice==="d12"?"selected":""}>d12</option>
 ;
-// console.log(creatureType);
-createListeners("creatureType",`change`,creatureTypeListener);
+// console.log(NPCType);
 
-readJsonData(creatureInfo,system);
 
-createVariableEnhancedListener('senseList','keyup',toggleInput,'senseInput');
-createVariableEnhancedListener('featList','keyup',toggleInput,'featInput');
 var resetButton = document.createElement("button");
 resetButton.setAttribute("class","button");
-resetButton.setAttribute("onClick",`resetEdit(${JSON.stringify(creatureInfo)},'${system}')`);
+resetButton.setAttribute("onClick",`resetEdit(${JSON.stringify(NPCInfo)},'${system}')`);
 resetButton.textContent = "Reset";
 resetButtonDisplay.appendChild(resetButton);
-const targetNode = document.getElementById('featChoice');
-const config = {attributes:true,childList:true,subtree:true,CharacterData:true};
-observer.observe(targetNode,config);
+listenersSetup();
+createMainForm(system);
+readJsonData(NPCInfo,system);
+updateSaveValues()
+updateClasses();
 }
 
 /**
  * 
- * @param {json} creatureInfo 
+ * @param {json} NPCInfo 
  * @param {string} sys 
  */
-function readJsonData(creatureInfo,sys){
+function readJsonData(NPCInfo,sys){
     let i=0;
     let selectionID = 0;
-    // let cSize = String(creatureInfo.size).toLowerCase()
+    // let cSize = String(NPCInfo.size).toLowerCase()
     //     switch(cSize){
     //         case "fine":
     //             selectionID = 0;
@@ -96,52 +102,69 @@ function readJsonData(creatureInfo,sys){
 // for(let i=0;formInputs.length>i;i++){
 //     formInputs.item(i).addEventListener("contextmenu",(e)=>{e.preventDefault()})
 // }
-    createDropDownChoices(dropDownArray);
-    document.getElementById("creatureName").value = creatureInfo.name;
-    document.getElementById("creatureType")[getChoiceSelection(['Aberration','Animal','Construct','Dragon','Fey','Humanoid','Magical Beast','Monstrous Humanoid','Ooze','Outsider','Plant','Undead','Vermin','Custom'],creatureInfo.type)].selected=true;
-    creatureTypeListener();
-    if(creatureInfo.type==="Custom"){
-        document.getElementById("customType").value=creatureInfo.customType;
+    document.getElementById("NPCName").value = NPCInfo.name;
+    if(NPCInfo.NPCType==null){
+        document.getElementById("NPCChoice").value="Monster";
+    }else{
+        document.getElementById("NPCChoice").value=NPCInfo.NPCType; 
     }
-    document.getElementById("creatureTitle").value = creatureInfo.title;
-    document.getElementById("creatureCR")[getChoiceSelection(['1/8','1/6','1/4','1/3','1/2','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30'],creatureInfo.cr)].selected=true;
-    document.getElementById("creatureLevel").value = creatureInfo.level;
-    document.getElementById("creatureFort").value = creatureInfo.fort;
-    document.getElementById("creatureRef").value = creatureInfo.ref;
-    document.getElementById("creatureWill").value = creatureInfo.will;
-    document.getElementById("creatureAlignment")[getChoiceSelection(['LE','LN','LG','NG','N','NE','CE','CN','CG'],creatureInfo.alignment)].selected=true;
-    document.getElementById("creatureStr").value = creatureInfo.str;
-    document.getElementById("creatureDex").value = creatureInfo.dex;
-    document.getElementById("creatureCon").value = creatureInfo.con;
-    document.getElementById("creatureInt").value = creatureInfo.int;
-    document.getElementById("creatureWis").value = creatureInfo.wis;
-    document.getElementById("creatureCha").value = creatureInfo.cha;
-    document.getElementById("creatureHitDice")[getChoiceSelection(['d4','d6','d8','d10','d12'],creatureInfo.hitDice)].selected=true;
-    document.getElementById("creatureHitDiceRate")[getChoiceSelection(['Monster','Player'],creatureInfo.rate)].selected=true;
-    document.getElementById("creatureBaB")[getChoiceSelection(['fast','medium','slow'],creatureInfo.bab)].selected=true;
-    document.getElementById("creatureSkillProgression")[getChoiceSelection(['high','middle','low'],creatureInfo.skillProgression)].selected=true;
-    document.getElementById("creatureSize")[getChoiceSelection(['fine','diminutive','tiny','small','medium','large','huge','gargantuan','colossal'],creatureInfo.size)].selected = true;
+    updateFormOnType();
+    document.getElementById("NPCType")[getChoiceSelection(['Aberration','Animal','Construct','Dragon','Fey','Humanoid','Magical Beast','Monstrous Humanoid','Ooze','Outsider','Plant','Undead','Vermin','Custom'],NPCInfo.type)].selected=true;
+    if(NPCInfo.type==="Custom"){
+        document.getElementById("customType").value=NPCInfo.customType;
+    }
+    document.getElementById("NPCTitle").value = NPCInfo.title;
+    document.getElementById("NPCCR")[getChoiceSelection(['1/8','1/6','1/4','1/3','1/2','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30'],NPCInfo.cr)].selected=true;
+    document.getElementById("MonsterLevel").value = NPCInfo.level;
+    document.getElementById("NPCFort").value = NPCInfo.fort;
+    document.getElementById("NPCRef").value = NPCInfo.ref;
+    document.getElementById("NPCWill").value = NPCInfo.will;
+    document.getElementById("NPCAlignment")[getChoiceSelection(['LE','LN','LG','NG','N','NE','CE','CN','CG'],NPCInfo.alignment)].selected=true;
+    document.getElementById("NPCStr").value = NPCInfo.str;
+    document.getElementById("NPCDex").value = NPCInfo.dex;
+    document.getElementById("NPCCon").value = NPCInfo.con;
+    document.getElementById("NPCInt").value = NPCInfo.int;
+    document.getElementById("NPCWis").value = NPCInfo.wis;
+    document.getElementById("NPCCha").value = NPCInfo.cha;
+    document.getElementById("usesSphereOption").checked=NPCInfo.spheres;
+    adjustDisplay("Sphere");
+    document.getElementById("NPCHitDice")[getChoiceSelection(['d4','d6','d8','d10','d12'],NPCInfo.hitDice)].selected=true;
+    if(NPCInfo.rate!=null){
+                document.getElementById("NPCHitDiceRate")[getChoiceSelection(['Monster','Player'],NPCInfo.rate)].selected=true
+    }else{
+        document.getElementById("NPCHitDiceRate")[0].selected=true;
+    }
+    document.getElementById("NPCBaB")[getChoiceSelection(['fast','medium','slow'],NPCInfo.bab)].selected=true;
+    document.getElementById("NPCSkillProgression")[getChoiceSelection(['high','middle','low'],NPCInfo.skillProgression)].selected=true;
+    document.getElementById("NPCSize")[getChoiceSelection(['fine','diminutive','tiny','small','medium','large','huge','gargantuan','colossal'],NPCInfo.size)].selected = true;
+    document.getElementById("isItLongOption").checked = NPCInfo.sizeType;
         i =0;
-        if(creatureInfo.speed!=null){
-            let speedValue = creatureInfo.speed;
-            Object.keys(creatureInfo.speed).forEach(speed=>{
+        if(NPCInfo.speed!=null){
+            let speedValue = NPCInfo.speed;
+            Object.keys(NPCInfo.speed).forEach(speed=>{
                     getDropDownSelection(speed,'speed',speedValue);
                     i++;
             })
         }
-        if(creatureInfo.senses!=null){
-            let senseValue = creatureInfo.senses;
-            Object.keys(creatureInfo.senses).forEach(senses=>{
+        if(NPCInfo.senses!=null){
+            let senseValue = NPCInfo.senses;
+            Object.keys(NPCInfo.senses).forEach(senses=>{
                 if(!senses.toLowerCase().includes("perception")){
                     getDropDownSelection(senses,'sense',senseValue);
                     i++;
                 }
             })
         }
+        if(NPCInfo.class!=null){
+            NPCInfo.class.forEach(classes=>{
+                getDropDownSelection(classes.name,'classes',classes)
+                classListenerSetup(classes.name.toLowerCase());
+            })
+        }
        // senseString!='';
        i=0;
-        if(creatureInfo.aura!=null){
-            creatureInfo.aura.forEach(aura=>{
+        if(NPCInfo.aura!=null){
+            NPCInfo.aura.forEach(aura=>{
                 createDualInformation('aura','Aura','Radius','Aura','Aura','Radius','text','number',true,false,false,false,true);
                 document.getElementById(`auraAura${i}`).value=aura.name;
                 document.getElementById(`auraRadius${i}`).value=aura.radius;
@@ -158,55 +181,55 @@ function readJsonData(creatureInfo,sys){
                 i++;
             })
         }
-        if(creatureInfo.setHD||creatureInfo.setHP){
+        if(NPCInfo.setHD||NPCInfo.setHP){
                 document.getElementById("setHPInformationOption").checked = true;
-                if(creatureInfo.setHP){
-                    document.getElementById("creatureSetHP").value=creatureInfo.setHP;
+                if(NPCInfo.setHP){
+                    document.getElementById("NPCSetHP").value=NPCInfo.setHP;
                 }
-                if(creatureInfo.setHD){
-                    document.getElementById("creatureSetHD").value=creatureInfo.setHD;
+                if(NPCInfo.setHD){
+                    document.getElementById("NPCSetHD").value=NPCInfo.setHD;
                 }
         }
-        if(creatureInfo.subtype!=null){
-        document.getElementById("Subtype").value=creatureInfo.subtype;
+        if(NPCInfo.subtype!=null){
+        document.getElementById("Subtype").value=NPCInfo.subtype;
         document.getElementById("SubtypeOption").checked=true;
         }
-        let creatureAcBonus = creatureInfo.ac.bonuses;
-        if(creatureAcBonus.armor){
+        let NPCAcBonus = NPCInfo.ac.bonuses;
+        if(NPCAcBonus.armor){
             document.getElementById("bonusACOption").checked = true;
             document.getElementById("armorOption").checked = true;
-            document.getElementById("armor").value = creatureAcBonus.armor;
+            document.getElementById("armor").value = NPCAcBonus.armor;
         }
-        if(creatureAcBonus.deflection){
+        if(NPCAcBonus.deflection){
             document.getElementById("bonusACOption").checked = true;
             document.getElementById("deflectionOption").checked = true;
-            document.getElementById("deflection").value = creatureAcBonus.deflection;
+            document.getElementById("deflection").value = NPCAcBonus.deflection;
         }
-        if(creatureAcBonus.dodge){
+        if(NPCAcBonus.dodge){
             document.getElementById("bonusACOption").checked = true;
             document.getElementById("dodgeOption").checked = true;
-            document.getElementById("dodge").value = creatureAcBonus.dodge;
+            document.getElementById("dodge").value = NPCAcBonus.dodge;
         }
-        if(creatureAcBonus.shield){
+        if(NPCAcBonus.shield){
             document.getElementById("bonusACOption").checked = true;
             document.getElementById("shieldOption").checked = true;
-            document.getElementById("shield").value = creatureAcBonus.shield;
+            document.getElementById("shield").value = NPCAcBonus.shield;
         }
-        if(creatureAcBonus.natural){
+        if(NPCAcBonus.natural){
             document.getElementById("bonusACOption").checked = true;
             document.getElementById("naturalOption").checked = true;
-            document.getElementById("natural").value = creatureAcBonus.natural;
+            document.getElementById("natural").value = NPCAcBonus.natural;
         }
         let extras;
         i=0;
-        if(creatureAcBonus.extra){
+        if(NPCAcBonus.extra){
             document.getElementById("bonusACOption").checked = true;
             document.getElementById("extraBonusesOption").checked = true;
-            creatureAcBonus.extra.forEach(bonusEl=>{
+            NPCAcBonus.extra.forEach(bonusEl=>{
                 extras = Object.keys(bonusEl);
                 extras.forEach(ex=>{
                     createDualInformation('extra','name','amount','Extra Bonus','Bonus Name','Bonus Amount','text','number')
-                    creatureAcBonus.extra.forEach(bonusEl=>{
+                    NPCAcBonus.extra.forEach(bonusEl=>{
                document.getElementById(`extraname${i}`).value = ex;
                document.getElementById(`extraamount${i}`).value = bonusEl[ex];
                 i++;
@@ -217,41 +240,41 @@ function readJsonData(creatureInfo,sys){
               
             })
         }
-        if(creatureInfo.special_attacks){
+        if(NPCInfo.special_attacks){
             document.getElementById("special_attacksOption").checked = true;
-            document.getElementById("special_attacks").value=creatureInfo.special_attacks;
+            document.getElementById("special_attacks").value=NPCInfo.special_attacks;
         }
-        if(creatureInfo.gear){
+        if(NPCInfo.gear){
             document.getElementById("gearOption").checked = true;
-            document.getElementById("gear").value=creatureInfo.gear;
+            document.getElementById("gear").value=NPCInfo.gear;
         }
-        if(creatureInfo.weaknesses){
+        if(NPCInfo.weaknesses){
             document.getElementById("weaknessOption").checked = true;
-            document.getElementById("weakness").value=creatureInfo.weaknesses;
+            document.getElementById("weakness").value=NPCInfo.weaknesses;
         }
-        if(creatureInfo.melee){
+        if(NPCInfo.melee){
             document.getElementById("meleeOption").checked = true;
-            getAttackInformation(creatureInfo.melee,"melee");
+            getAttackInformation(NPCInfo.melee,"melee");
         }
-        if(creatureInfo.ranged){
+        if(NPCInfo.ranged){
             document.getElementById("rangeOption").checked = true;
-            getAttackInformation(creatureInfo.ranged,"range");
+            getAttackInformation(NPCInfo.ranged,"range");
         }
 
-        if(creatureInfo.hp_traits){
+        if(NPCInfo.hp_traits){
             document.getElementById("HPTraitsOption").checked = true;
-            hpTraits = document.getElementById("HPTraits").value = creatureInfo.hp_traits;
+            hpTraits = document.getElementById("HPTraits").value = NPCInfo.hp_traits;
         }
         i=0;
-        if(creatureInfo.save_bonuses){
-            creatureInfo.save_bonuses.forEach(bonuses=>{
+        if(NPCInfo.save_bonuses){
+            NPCInfo.save_bonuses.forEach(bonuses=>{
                 createArrayChoice('saveBonus','Save Bonus','Save Bonus Amount');
                 document.getElementById(`saveBonus${i}`).value = bonuses;
             })
         }
-        if(creatureInfo.defensive_traits){
+        if(NPCInfo.defensive_traits){
                 document.getElementById("defensiveTraitsOption").checked = true;
-                let DT = creatureInfo.defensive_traits
+                let DT = NPCInfo.defensive_traits
                 traits = Object.keys(DT);
               traits.forEach(ex=>{
                     if(ex==="Defensive_Abilities"){
@@ -278,28 +301,27 @@ function readJsonData(creatureInfo,sys){
             })
         }
         i=0;
-        if(creatureInfo.feats){
-            let featArrayList = creatureInfo.feats;
-            Object.keys(creatureInfo.feats).forEach(feats=>{
+        if(NPCInfo.feats){
+            let featArrayList = NPCInfo.feats;
+            Object.keys(NPCInfo.feats).forEach(feats=>{
                     getDropDownSelection(feats,'feat',featArrayList);
                                 i++;
             })
         }
         i=0;
-        if(creatureInfo.skills){
-            document.getElementById("skillsOption").checked = true;
-            let skills = creatureInfo.skills;
-            let cSkills = Object.keys(creatureInfo.skills);
+        if(NPCInfo.skills){
+            let skills = NPCInfo.skills;
+            let cSkills = Object.keys(NPCInfo.skills);
             doSkills(cSkills,skills);
         }
-        document.getElementById("isItLongOption").checked=creatureInfo.sizeType;
         i=0;
-        if(creatureInfo.spell_abilities){
-            if(creatureInfo.spell_abilities){
-                document.getElementById("spellsOption").checked=true;
-            let creatureSpellInfo = creatureInfo.spell_abilities;
-            if(creatureSpellInfo.innate){
-                let innate = creatureSpellInfo.innate;
+        if(NPCInfo.spell_abilities){
+            if(NPCInfo.spell_abilities){
+                document.getElementById("usesSpellOption").checked=true;
+                adjustDisplay('Spell');
+            let NPCSpellInfo = NPCInfo.spell_abilities;
+            if(NPCSpellInfo.innate){
+                let innate = NPCSpellInfo.innate;
                 if(innate.CL||innate.concentrate){
                     document.getElementById("innateCasterLevelOption").checked = true;
                     document.getElementById("innateCasterLevel").style.display = "block";
@@ -333,10 +355,10 @@ function readJsonData(creatureInfo,sys){
     
                     })
                 }
-                document.getElementById("creatureSpellModInnate").value=innate.casterMod;
+                document.getElementById("NPCSpellModInnate").value=innate.casterMod;
             }
-            if(creatureSpellInfo.prepared){
-                let prepared = creatureSpellInfo.prepared;
+            if(NPCSpellInfo.prepared){
+                let prepared = NPCSpellInfo.prepared;
                 if(prepared.CL||prepared.concentrate){
                     document.getElementById("preparedCasterLevelOption").checked = true;
                     document.getElementById("preparedCasterLevel").style.display = "block";
@@ -347,7 +369,7 @@ function readJsonData(creatureInfo,sys){
                 if(prepared.concentrate){
                     document.getElementById("ConcentratePrepared").value=prepared.concentrate;
                 }
-                document.getElementById("creatureSpellModPrepared").value=prepared.casterMod;
+                document.getElementById("NPCSpellModPrepared").value=prepared.casterMod;
                 document.getElementById("spellsPreparedOption").checked = true;
                 if(prepared.ninth){
                     document.getElementById("ninth").value = prepared.ninth;
@@ -403,36 +425,36 @@ function readJsonData(creatureInfo,sys){
         }
         }
         i=0;
-        if(creatureInfo.racialModifiers){
-            let racialMod = creatureInfo.racialModifiers;
+        if(NPCInfo.racialModifiers){
+            let racialMod = NPCInfo.racialModifiers;
             Object.keys(racialMod).forEach(racialModifier=>{
                     getDropDownSelection(racialModifier,'racialMod',racialMod);
                 i++;
             })
         }
         i=0;
-        if(creatureInfo.languages){
-            creatureInfo.languages.forEach(element=>{
+        if(NPCInfo.languages){
+            NPCInfo.languages.forEach(element=>{
                 getDropDownSelection(element,'language');
                 i++;
             })
         }
         i=0;
-        if(creatureInfo.special_qualities!=null){
-            creatureInfo.special_qualities.forEach(element=>{
+        if(NPCInfo.special_qualities!=null){
+            NPCInfo.special_qualities.forEach(element=>{
                 createArrayChoice('SQ','Special Quality','Special Quality Name')
                 document.getElementById(`SQ${i}`).value = element;
                 i++;
             })
         }
-        if(creatureInfo.reach_bonus_effects){
+        if(NPCInfo.reach_bonus_effects){
             document.getElementById("reach_bonus_effectsOption").checked = true;
-            document.getElementById(`reach_bonus_effects`).value = creatureInfo.reach_bonus_effects;
+            document.getElementById(`reach_bonus_effects`).value = NPCInfo.reach_bonus_effects;
         }
         
         i=0;
-        if(creatureInfo.special_abilities!=null){
-            creatureInfo.special_abilities.forEach(element => {
+        if(NPCInfo.special_abilities!=null){
+            NPCInfo.special_abilities.forEach(element => {
                 createDualInformation('SpecialAbility','Name','Details','Special Ability','Special Ability Name','Special Ability Details','text','text',true,true,true,true);
                 document.getElementById(`SpecialAbilityName${i}`).value = element.abilityName;
                 document.getElementById(`SpecialAbilityDetails${i}`).value= element.ability_desc;
@@ -454,8 +476,8 @@ function readJsonData(creatureInfo,sys){
             });
         }
         i=0;
-        if(creatureInfo.cmdMod){
-            creatureInfo.cmdMod.forEach(cmdModifier=>{
+        if(NPCInfo.cmdMod){
+            NPCInfo.cmdMod.forEach(cmdModifier=>{
                 createDualInformation('cmdMod','Details','Bonus','cmdMod','CMD Modifier Details','CMD Modifier Value','text','number')
                 let CMDBonusDetails = cmdModifier.CMDBonusDetails;
                 let CMDBonus = cmdModifier.CMDBonus;
@@ -464,17 +486,13 @@ function readJsonData(creatureInfo,sys){
                 i++;
             })
         }
-    arrayToggle('bonusAC',['Container','Armor','Deflection','Dodge','Shield','Natural','Extra']);
-    arrayToggle('defensiveTraits',['Container','DA','DR','Immune','Resist','SR']);
-    arrayToggle('spells',['Container','InnateOption','PreparedOption']);
+    // arrayToggle('bonusAC',['Container','Armor','Deflection','Dodge','Shield','Natural','Extra']);
+    // arrayToggle('defensiveTraits',['Container','DA','DR','Immune','Resist','SR']);
+    // arrayToggle('spells',['Container','InnateOption','PreparedOption']);
     toggle('Subtype');
     toggle('weakness');
-    toggle('melee');
-    toggle('range');
-    toggle('gear');
     toggle('armor');
     toggle('deflection');
-    toggle('special_attacks');
     toggle('dodge');
     toggle('shield');
     toggle('natural');
@@ -484,38 +502,19 @@ function readJsonData(creatureInfo,sys){
     toggle('Immune');
     toggle('Resist');
     toggle('SR');
-    toggle('reach_bonus_effects');
     arrayToggle('spellsInnate',['Container','Constant','atWill','xDay']);
     toggle('constant');
     toggle('atWill');
     toggle('xDay');
     arrayToggle('spellsPrepared',['Container','Ninth','Eighth','Seventh','Sixth','Fifth','Fourth','Third','Second','First','Zeroth']);
-    toggle("HPTraits");
-    arrayToggle('skills',['Container','Acrobatics','Appraise','Bluff','Climb','Craft','Diplomacy','DisableDevice','Disguise','EscapeArtist','Fly','HandleAnimal','Heal','Intimidate','KnowledgeOption','Linguistics','Perception','Perform','Profession','Ride','SenseMotive','SleightofHand','Spellcraft','Stealth','Survival','Swim','UseMagicDevice']);
+    // arrayToggle('skills',['Container','Acrobatics','Appraise','Bluff','Climb','Craft','Diplomacy','DisableDevice','Disguise','EscapeArtist','Fly','HandleAnimal','Heal','Intimidate','KnowledgeOption','Linguistics','Perception','Perform','Profession','Ride','SenseMotive','SleightofHand','Spellcraft','Stealth','Survival','Swim','UseMagicDevice']);
     arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
     toggle('setHPInformation');
-    var skillDisplay = document.getElementById("skillPoints");
-var skillHTML = document.createElement("div");
-let skillCont = document.getElementById("skillsContainer");
-let skillList = skillCont.getElementsByClassName("searchBarCreation")
-var featDisplay = document.getElementById("featCount");
-var featHTML = document.createElement("div");
-featHTML.innerHTML = `<p class="inputName" id="featAmountDisplay">Remaining Feats: ${setFeatsAvailable()}</p>`;
-featDisplay.appendChild(featHTML);
-var healthDisplay = document.getElementById("calcHealth");
-var healthHTML = document.createElement("div");
-healthHTML.innerHTML = `<p class="inputName" id="calculateHealth">Health: ${getForumHP()}</p>`;
-healthDisplay.appendChild(healthHTML);
-createFormListenersFeatsAndSkills(skillList);
-createListeners("creatureLevel",`change`,updateHealthDisplay);
-createListeners("creatureHitDice",`change`,updateHealthDisplay);
-createListeners("creatureHitDiceRate",`change`,updateHealthDisplay);
-skillHTML.innerHTML = `<p class="inputName" id="skillPointsDisplay">Remaining Ranks: ${setSkillPoints()}</p>`;
-skillDisplay.appendChild(skillHTML);
-            break;
+    updateHealthDisplay();
+    break;
         
         case "5e":
-        let cSize = String(creatureInfo.size).toLowerCase()
+        let cSize = String(NPCInfo.size).toLowerCase()
         switch(cSize){
             case "tiny":
                 selectionID = 0;
@@ -545,80 +544,80 @@ skillDisplay.appendChild(skillHTML);
                 selectionID = 2;
                 break;
         }
-            document.getElementById("creatureHitDice")[getChoiceSelection(['d4','d6','d8','d10','d12','d20'],creatureInfo.hitDice)].selected=true;
-            document.getElementById("creatureName").value=creatureInfo.name;
-            document.getElementById("creatureType").value=creatureInfo.type;
-            document.getElementById("creatureCR").value=creatureInfo.cr;
-            document.getElementById("creatureLevel").value=creatureInfo.level;
-            document.getElementById("creatureSpeed").value=creatureInfo.speed;
-            document.getElementById("creatureSize")[selectionID].selected=true;
-            document.getElementById("creatureStr").value=creatureInfo.str;
-            document.getElementById("creatureDex").value=creatureInfo.dex;
-            document.getElementById("creatureCon").value=creatureInfo.con;
-            document.getElementById("creatureInt").value=creatureInfo.int;
-            document.getElementById("creatureWis").value=creatureInfo.wis;
-            document.getElementById("creatureCha").value=creatureInfo.cha;
-            document.getElementById("creatureProficiency").value;
-            document.getElementById("ac").value=creatureInfo.ac;
-            document.getElementById("creatureAlignment").value=creatureInfo.alignment;
-            document.getElementById("creatureSense").value=creatureInfo.senses;
-            document.getElementById("creatureProficiency").value = creatureInfo.proficiency;
-            if(creatureInfo.saving_throws.str){
+            document.getElementById("NPCHitDice")[getChoiceSelection(['d4','d6','d8','d10','d12','d20'],NPCInfo.hitDice)].selected=true;
+            document.getElementById("NPCName").value=NPCInfo.name;
+            document.getElementById("NPCType").value=NPCInfo.type;
+            document.getElementById("NPCCR").value=NPCInfo.cr;
+            document.getElementById("NPCLevel").value=NPCInfo.level;
+            document.getElementById("NPCSpeed").value=NPCInfo.speed;
+            document.getElementById("NPCSize")[selectionID].selected=true;
+            document.getElementById("NPCStr").value=NPCInfo.str;
+            document.getElementById("NPCDex").value=NPCInfo.dex;
+            document.getElementById("NPCCon").value=NPCInfo.con;
+            document.getElementById("NPCInt").value=NPCInfo.int;
+            document.getElementById("NPCWis").value=NPCInfo.wis;
+            document.getElementById("NPCCha").value=NPCInfo.cha;
+            document.getElementById("NPCProficiency").value;
+            document.getElementById("ac").value=NPCInfo.ac;
+            document.getElementById("NPCAlignment").value=NPCInfo.alignment;
+            document.getElementById("NPCSense").value=NPCInfo.senses;
+            document.getElementById("NPCProficiency").value = NPCInfo.proficiency;
+            if(NPCInfo.saving_throws.str){
                 document.getElementById("StrSavingThrowProficiencyOption").checked = true;
             }
-            if(creatureInfo.saving_throws.dex){
+            if(NPCInfo.saving_throws.dex){
                 document.getElementById("DexSavingThrowProficiencyOption").checked = true;
             }
-            if(creatureInfo.saving_throws.con){
+            if(NPCInfo.saving_throws.con){
                 document.getElementById("ConSavingThrowProficiencyOption").checked = true;
             }
-            if(creatureInfo.saving_throws.int){
+            if(NPCInfo.saving_throws.int){
                 document.getElementById("IntSavingThrowProficiencyOption").checked = true;
             }
-            if(creatureInfo.saving_throws.wis){
+            if(NPCInfo.saving_throws.wis){
                 document.getElementById("WisSavingThrowProficiencyOption").checked = true;
             }
-            if(creatureInfo.saving_throws.cha){
+            if(NPCInfo.saving_throws.cha){
                 document.getElementById("ChaSavingThrowProficiencyOption").checked = true;
             }
             
             let skillList5e = ['Acrobatics','AnimalHandling','Arcana','Athletics','Athletics','Deception','History','Insight','Intimidation','Investigation','Medicine','Nature','Perception','Performance','Persuasion','Religion','SleightofHand','Stealth','Survival'];
             skillList5e.forEach(skills=>{
-                document.getElementById(`${skills}ProficiencyOption`).checked=creatureInfo.skillsProf[skills];
+                document.getElementById(`${skills}ProficiencyOption`).checked=NPCInfo.skillsProf[skills];
             }
                 );
 
-            if(creatureInfo.setHD||creatureInfo.setHP){
+            if(NPCInfo.setHD||NPCInfo.setHP){
                 document.getElementById("setHPInformationOption").checked = true;
-                if(creatureInfo.setHP){
-                    document.getElementById("creatureSetHP").value=creatureInfo.setHP;
+                if(NPCInfo.setHP){
+                    document.getElementById("NPCSetHP").value=NPCInfo.setHP;
                 }
-                if(creatureInfo.setHD){
-                    document.getElementById("creatureSetHD").value=creatureInfo.setHD;
+                if(NPCInfo.setHD){
+                    document.getElementById("NPCSetHD").value=NPCInfo.setHD;
                 }
             }
-            if(creatureInfo.damage_vulnerabilities){
-                document.getElementById("damage_vulnerabilities").value = creatureInfo.damage_vulnerabilities;
+            if(NPCInfo.damage_vulnerabilities){
+                document.getElementById("damage_vulnerabilities").value = NPCInfo.damage_vulnerabilities;
                 document.getElementById("damage_vulnerabilitiesOption").checked = true;
                 document.getElementById("damage_vulnerabilities").style.display = "block";
             }
-            if(creatureInfo.damage_resistances){
-                document.getElementById("damage_resistances").value=creatureInfo.damage_resistances;
+            if(NPCInfo.damage_resistances){
+                document.getElementById("damage_resistances").value=NPCInfo.damage_resistances;
                 document.getElementById("damage_resistancesOption").checked = true;
                 document.getElementById("damage_resistances").style.display = "block";
             }
-            if(creatureInfo.damage_immunities){
-                document.getElementById("damage_immunities").value=creatureInfo.damage_immunities;
+            if(NPCInfo.damage_immunities){
+                document.getElementById("damage_immunities").value=NPCInfo.damage_immunities;
                 document.getElementById("damage_immunitiesOption").checked = true;
                 document.getElementById("damage_immunities").style.display = "block";
             }
-            if(creatureInfo.condition_immunities){
-                document.getElementById("condition_immunities").value=creatureInfo.condition_immunities;
+            if(NPCInfo.condition_immunities){
+                document.getElementById("condition_immunities").value=NPCInfo.condition_immunities;
                 document.getElementById("condition_immunitiesOption").checked = true;
                 document.getElementById("condition_immunities").style.display = "block";
             }    
-            if(creatureInfo.ability){
-                creatureInfo.ability.forEach(element=>{
+            if(NPCInfo.ability){
+                NPCInfo.ability.forEach(element=>{
                     createDualInformation('Ability','name','details','Ability','Ability Name','Ability Details','text','text');
                     document.getElementById(`Abilityname${i}`).value = element.abilityName;
                     document.getElementById(`Abilitydetails${i}`).value = element.ability_desc;
@@ -626,8 +625,8 @@ skillDisplay.appendChild(skillHTML);
                 })  
             }
             i=0;
-            if(creatureInfo.actions){
-                creatureInfo.actions.forEach(element=>{
+            if(NPCInfo.actions){
+                NPCInfo.actions.forEach(element=>{
                     createDualInformation('Action','name','details','Action','Action Name','Action Details','text','text');
                     document.getElementById(`Actionname${i}`).value = element.actionName;
                     document.getElementById(`Actiondetails${i}`).value = element.action_desc;
@@ -635,11 +634,11 @@ skillDisplay.appendChild(skillHTML);
                 })
             }
             i=0;
-            if(creatureInfo.legendaryAbilities){
+            if(NPCInfo.legendaryAbilities){
                 document.getElementById("legendaryAbilitiesOption").checked = true;
                 document.getElementById("legendaryAbilities").style.display = "block";
-                document.getElementById("legendary_details").value=creatureInfo.legendaryAbilities.legendary_details;
-                            let legendaryActions = creatureInfo.legendaryAbilities.legendaryActions;
+                document.getElementById("legendary_details").value=NPCInfo.legendaryAbilities.legendary_details;
+                            let legendaryActions = NPCInfo.legendaryAbilities.legendaryActions;
                 legendaryActions.forEach(element=>{
                     createDualInformation('legendaryActions','name','details','legendary Action','Legendary Action Name','Legendary Action Details','text','text');
                     document.getElementById(`legendaryActionsname${i}`).value = element.legendaryName;
@@ -741,6 +740,7 @@ function getDropDownSelection(item,group,infoVal=[]){
     var textSelected = document.createElement("label");
     textSelected.textContent = val;
     textSelected.className = "inputName"
+    textSelected.setAttribute("for",`${group}${val.toLowerCase()}`);
     var button = document.createElement("button");
     button.setAttribute("class","formButton");
     button.setAttribute("id",`delete${val}`);
@@ -809,19 +809,63 @@ function getDropDownSelection(item,group,infoVal=[]){
             document.getElementById(`${group}List`).value = "";
         }
     }
+    if(group=="classes"){
+
+
+        let input = document.createElement("input");
+        input.setAttribute("type","number");
+        input.setAttribute("class","searchBarCreation");
+        input.setAttribute("name",`classes${val.toLowerCase()}`);
+        input.setAttribute("id",`classes${val.toLowerCase()}`);
+        input.setAttribute("title",`classes${val.toLowerCase()}`);
+        input.setAttribute("placeholder",`Insert Level Here`);
+        input.value=infoVal.level;
+        divZone.appendChild(input);
+        if(!checkIfNPC(val)){
+        let archetypeSelected = infoVal.archetype;
+        if(archetypeSelected=="None"){
+            archetypeSelected="";
+        }
+        let subZone = document.createElement("div");
+        subZone.setAttribute("id",`archetype${val.toLowerCase()}subArea`);
+        subZone.setAttribute("class","dropDownAddition");
+        divZone.appendChild(subZone);
+        document.getElementById(`${group}Choice`).appendChild(divZone);
+        arrayToDropdownSub(getArchetypeName(classJson.class,val),`archetype${val}`,archetypeSelected);
+        createListeners(`archetype${val.toLowerCase()}subArea`,`input`,classListener);
+        createListeners(`archetype${val.toLowerCase()}subArea`,`input`,setSkillPoints);
+        createListeners(`archetype${val.toLowerCase()}subArea`,`input`,updateSaveValues);
+     }
+     document.getElementById(`${group}Temp`).value = "";
+    }
     divZone.appendChild(button);
     divZone.setAttribute("class","dropDownChoice");
   document.getElementById(`${group}Choice`).appendChild(divZone);
   modifyList(group);
 }
 
+function classListenerSetup(val){
+    createVariableListener(`classes${val}`,`input`,setProperMinLevel,`classes${val}`);
+    createVariableListener(`classes${val}`,`focusout`,setProperMinLevel,`classes${val}`);
+    createVariableListener(`classes${val}`,`focusout`,enforceMinLevel,`classes${val}`);
+    createVariableListener(`classes${val}`,`keyup`,setProperMinLevel,`classes${val}`);
+    createListeners(`classes${val}`,`input`,classListener);
+    createListeners(`classes${val}`,`focusout`,classListener);
+    createListeners(`classes${val}`,`keyup`,classListener);
+    createListeners(`classes${val}`,`input`,setSkillPoints);
+    createListeners(`classes${val}`,`input`,updateSaveValues);
+    createListeners(`classes${val}`,`input`,updateFeatDetails);
+
+    modifyList("classes");
+}
+
 //put checked at the end of an input type checkbox for it to start off as checked
 
-// if(creatureInfo.cmd.includes("(")){
+// if(NPCInfo.cmd.includes("(")){
 //     document.getElementById("cmdModOption").checked = true;
-//     let cmd = creatureInfo.cmd;
+//     let cmd = NPCInfo.cmd;
 //     let unmodifedcmd=cmd.substring(0,cmd.indexOf("("));
-//     let modifiedCMD1 = creatureInfo.cmd.substring(creatureInfo.cmd.indexOf("(")+1).trim();
+//     let modifiedCMD1 = NPCInfo.cmd.substring(NPCInfo.cmd.indexOf("(")+1).trim();
 //     let modifiedCMD = modifiedCMD1.substring(0,modifiedCMD1.indexOf(")"));
 //     modifiedCMD = modifiedCMD.substring(0,modifiedCMD.indexOf(" "));
 //     let bonusCMD = unmodifedcmd;
@@ -834,8 +878,3 @@ function getDropDownSelection(item,group,infoVal=[]){
 //     document.getElementById("cmdMod").value = bonusCMD +" "+ cmdText;
 
 // }
-function createDropDownChoices(arr){
-    arr.forEach(element=>{
-        arrayToDropdown(element[0],element[1]);
-    })
-}

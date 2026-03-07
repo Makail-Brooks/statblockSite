@@ -2,11 +2,11 @@
     "systems":[
         {
             "name":"pathfinder",
-            "path":"./creatureCreation.html"
+            "path":"./NPCCreation.html"
         },
         {
             "name":"5e",
-            "path":"./creatureCreation.html"
+            "path":"./NPCCreation.html"
         }
     ]
 }

@@ -1,7 +1,7 @@
 {
-  "creatures": [
+  "NPCs": [
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "5e",
       "name": "5e Template",
       "size": "Medium",
@@ -91,7 +91,7 @@
       }
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Bandit",
       "title": "Bandit",
@@ -168,7 +168,7 @@
       "gear": "studded leather, buckler, composite longbow (+1 Str) with 20 arrows, rapier, sap, light horse (combat trained), blue dot is Void Remnant(\"scale\" or some other kind of Armor or information detailing the void) Green Dot is general alternative loot"
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Void Envoy",
       "title": "Envoy",
@@ -270,17 +270,17 @@
         "Survival": "10",
         "Swim": "10"
       },
-      "racialModifiers": [
-        "+6 Intimidate",
-        "+4 Stealth"
-      ],
+      "racialModifiers": {
+        "Intimidate": 6,
+        "Stealth": 4
+      },
       "languages": [
         "Aboleth"
       ],
       "special_abilities": [
         {
           "abilityName": "Immortality",
-          "ability_desc": "An Envoy of The Void does not age, nor does it need to eat or breathe. Only violence can bring about the death of one of these creatures.",
+          "ability_desc": "An Envoy of The Void does not age, nor does it need to eat or breathe. Only violence can bring about the death of one of these NPCs.",
           "abilityType": "Ex(Extraordinary)"
         },
         {
@@ -290,7 +290,7 @@
         },
         {
           "abilityName": "Insanity",
-          "ability_desc": "A creature that starts it's turn within the aura must make a [saveDC] save or take 1d4 Wisdom damage. The save DC is Constitution-based.",
+          "ability_desc": "A NPC that starts it's turn within the aura must make a [saveDC] save or take 1d4 Wisdom damage. The save DC is Constitution-based.",
           "dcStat": "Con",
           "saveType": "Will",
           "abilityType": "Ex(Extraordinary)",
@@ -303,7 +303,7 @@
         },
         {
           "abilityName": "Oblivion Wail",
-          "ability_desc": "As a free action every 1d6 rounds, the Void Envoy may open it's 'mouth' to open a portal to the void projecting images to creatures in a 25-foot sphere. Creatures in the sphere take 5d6 Psychic damage and gain a level of madness. A [saveDC] save halves the damage and negates the madness increment effect. This is a Psychic mind affecting effect. The save DC is Charisma-based.",
+          "ability_desc": "As a free action every 1d6 rounds, the Void Envoy may open it's 'mouth' to open a portal to the void projecting images to NPCs in a 25-foot sphere. NPCs in the sphere take 5d6 Psychic damage and gain a level of madness. A [saveDC] save halves the damage and negates the madness increment effect. This is a Psychic mind affecting effect. The save DC is Charisma-based.",
           "dcStat": "Cha",
           "saveType": "Will",
           "abilityType": "Ex(Extraordinary)"
@@ -315,13 +315,13 @@
         },
         {
           "abilityName": "Eternal Entity",
-          "ability_desc": "This Creature does not get exhausted or fatigued.",
+          "ability_desc": "This NPC does not get exhausted or fatigued.",
           "abilityType": "Ex(Extraordinary)"
         }
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Acolyte of False God",
       "title": "Acolyte",
@@ -397,7 +397,7 @@
       "gear": "studded leather armor, light wooden shield, daggers (2), sap, short sword, white robes, iron mask, 2d10 gp each"
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Null Hound",
       "title": "Null Hound",
@@ -484,10 +484,10 @@
         "Survival": "1",
         "Swim": "1"
       },
-      "racialModifiers": [
-        "+20 Disguise when mimicking other creatures",
-        "+10 Survival when using scent"
-      ],
+      "racialModifiers": {
+        "Disguise (when mimicking other NPCs)": 20,
+        "Survival (when using scent)": 10
+      },
       "languages": [
         "Celestial",
         "Aboleth"
@@ -503,12 +503,12 @@
         },
         {
           "abilityName": "Immortality",
-          "ability_desc": "A Null Hound does not age, nor does it need to eat or breathe. Only violence can bring about the death of one of these creatures.",
+          "ability_desc": "A Null Hound does not age, nor does it need to eat or breathe. Only violence can bring about the death of one of these NPCs.",
           "abilityType": "Ex(Extraordinary)"
         },
         {
           "abilityName": "Null Entity",
-          "ability_desc": "This Creature does not need to breath, or eat and does not get exhausted but can become fatigued.",
+          "ability_desc": "This NPC does not need to breath, or eat and does not get exhausted but can become fatigued.",
           "abilityType": "Ex(Extraordinary)"
         },
         {
@@ -523,7 +523,7 @@
         },
         {
           "abilityName": "Aggressive Flanking(SM)",
-          "ability_desc": "While within the affected area of this tactic, allied creatures are considered to be flanking as long as they both threaten the same creature, regardless of their comparative positioning.",
+          "ability_desc": "While within the affected area of this tactic, allied NPCs are considered to be flanking as long as they both threaten the same NPC, regardless of their comparative positioning.",
           "abilityType": "Ex(Extraordinary)"
         },
         {
@@ -538,13 +538,13 @@
         },
         {
           "abilityName": "Focusing Tactics(SMT)",
-          "ability_desc": "Any ally currently affected by one of your shouts or tactics may spend a move action to restore your martial focus. The creature spending a move action must have an Intelligence of at least 3 and possess a number of Hit Dice at least equal to 1/2 your total Hit Dice.",
+          "ability_desc": "Any ally currently affected by one of your shouts or tactics may spend a move action to restore your martial focus. The NPC spending a move action must have an Intelligence of at least 3 and possess a number of Hit Dice at least equal to 1/2 your total Hit Dice.",
           "abilityType": "Ex(Extraordinary)"
         }
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Yelfen",
       "title": "Yelfen",
@@ -648,10 +648,6 @@
         "Survival": "8",
         "Swim": "1"
       },
-      "racialModifiers": [
-        "+2 against Enchantment",
-        "+2 perception checks"
-      ],
       "languages": [
         "Common",
         "Elven",
@@ -690,7 +686,7 @@
         },
         {
           "abilityName": "Sniper Sphere",
-          "ability_desc": "Snipers specialize in making single, deadly shots, often over great distances. Practitioners of the Sniper sphere can shoot or throw ranged weapons at a creature engaged in melee without taking the standard –4 penalty on their attack roll. Associated Feat: Precise Shot.",
+          "ability_desc": "Snipers specialize in making single, deadly shots, often over great distances. Practitioners of the Sniper sphere can shoot or throw ranged weapons at a NPC engaged in melee without taking the standard –4 penalty on their attack roll. Associated Feat: Precise Shot.",
           "abilityType": "Ex(Extraordinary)"
         },
         {
@@ -710,7 +706,7 @@
         },
         {
           "abilityName": "Unblockable",
-          "ability_desc": "Your ranged attacks are launched with devastating accuracy; whenever you make a ranged attack using the attack action and a spell or ability (such as wind wall or the Deflect Arrows feat) would allow a creature to prevent or deflect it, that creature must succeed at a caster level check (if the blocking effect is a spell or supernatural ability) or a combat maneuver check against your attack roll. Failure on this check means that your attack is not impeded by the ability.",
+          "ability_desc": "Your ranged attacks are launched with devastating accuracy; whenever you make a ranged attack using the attack action and a spell or ability (such as wind wall or the Deflect Arrows feat) would allow a NPC to prevent or deflect it, that NPC must succeed at a caster level check (if the blocking effect is a spell or supernatural ability) or a combat maneuver check against your attack roll. Failure on this check means that your attack is not impeded by the ability.",
           "abilityType": "Ex(Extraordinary)"
         },
         {
@@ -725,17 +721,17 @@
         },
         {
           "abilityName": "Unarmored Training",
-          "ability_desc": "Your deft movements, physical conditioning, and expert use of your chosen weapons allow you to create a protective barrier around yourself as effective as any true suit of armor. When unarmored and unencumbered, you gain a +3 armor bonus to your AC. This bonus increases by +1 for every 3 points of base attack bonus you possess. Characters who gain Acrobatics as a class skill may instead choose to have the armor bonus increase by +1 for every 3 ranks in the Acrobatics skill they possess.  This bonus to AC applies even against touch attacks or when you are flat-footed. You lose these bonuses when you are immobilized or helpless, when you wear any armor, or when you carry a medium or heavy load. These bonuses do not stack with the AC bonus class feature of the monk or similar abilities.  This bonus depends on an intricate awareness of the practitioner's body and balance, and as such is lost when the target is under any shapeshift other than blank form, or is polymorphed into a creature of the animal, dragon, elemental, magical beast, plant, or vermin type.",
+          "ability_desc": "Your deft movements, physical conditioning, and expert use of your chosen weapons allow you to create a protective barrier around yourself as effective as any true suit of armor. When unarmored and unencumbered, you gain a +3 armor bonus to your AC. This bonus increases by +1 for every 3 points of base attack bonus you possess. Characters who gain Acrobatics as a class skill may instead choose to have the armor bonus increase by +1 for every 3 ranks in the Acrobatics skill they possess.  This bonus to AC applies even against touch attacks or when you are flat-footed. You lose these bonuses when you are immobilized or helpless, when you wear any armor, or when you carry a medium or heavy load. These bonuses do not stack with the AC bonus class feature of the monk or similar abilities.  This bonus depends on an intricate awareness of the practitioner's body and balance, and as such is lost when the target is under any shapeshift other than blank form, or is polymorphed into a NPC of the animal, dragon, elemental, magical beast, plant, or vermin type.",
           "abilityType": "Ex(Extraordinary)"
         },
         {
           "abilityName": "Blooded Strike",
-          "ability_desc": "Whenever you use the attack action or an attack of opportunity to attack or disarm a creature, you deal an additional 1 point of bleed damage to the target on a successful attempt, +1 for every 3 points of base attack bonus you possess; this stacks with any other bleed damage you are capable of dealing. Practitioners of the Duelist sphere never provoke attacks of opportunity when attempting combat maneuvers against a target currently taking bleed damage.  Bleed: Some talents have the (bleed) descriptor; these talents are triggered when you deal bleed damage to a creature using your blooded strike. You may only apply the effects of a single (bleed) talent to a given attack. A target that is immune to bleed damage is also immune to all other effects of talents with this descriptor. For the purpose of these talents, only bleed damage you deal with your blooded strike is considered when determining their effects.  Disarm: Some talents have the (disarm) descriptor; these talents trigger whenever you succeed at a disarm attempt against a creature. You may only apply the effects of a single (disarm) talent to a given disarm attempt. (Disarm) talents cannot be applied to maneuvers performed as a free action.",
+          "ability_desc": "Whenever you use the attack action or an attack of opportunity to attack or disarm a NPC, you deal an additional 1 point of bleed damage to the target on a successful attempt, +1 for every 3 points of base attack bonus you possess; this stacks with any other bleed damage you are capable of dealing. Practitioners of the Duelist sphere never provoke attacks of opportunity when attempting combat maneuvers against a target currently taking bleed damage.  Bleed: Some talents have the (bleed) descriptor; these talents are triggered when you deal bleed damage to a NPC using your blooded strike. You may only apply the effects of a single (bleed) talent to a given attack. A target that is immune to bleed damage is also immune to all other effects of talents with this descriptor. For the purpose of these talents, only bleed damage you deal with your blooded strike is considered when determining their effects.  Disarm: Some talents have the (disarm) descriptor; these talents trigger whenever you succeed at a disarm attempt against a NPC. You may only apply the effects of a single (disarm) talent to a given disarm attempt. (Disarm) talents cannot be applied to maneuvers performed as a free action.",
           "abilityType": "Ex(Extraordinary)"
         },
         {
           "abilityName": "Focusing Bloodshed [CrimDan]",
-          "ability_desc": "After causing a creature to begin bleeding, you may spend a move action to regain your martial focus. As part of this move action, you may make a melee touch attack as a free action against a non-bleeding creature within reach. This attack deals no damage, but causes that creature to begin bleeding as per your blooded strike. (This does not allow you to apply a (bleed) talent.) Additionally, when an enemy causes you to begin bleeding, you may spend an immediate action to regain your martial focus.  Author's Note: For the intents of this talent, \"begin bleeding\" refers to any application of a new source of bleed damage that the creature did not already suffer from, rather than causing a creature to begin bleeding for the first time.",
+          "ability_desc": "After causing a NPC to begin bleeding, you may spend a move action to regain your martial focus. As part of this move action, you may make a melee touch attack as a free action against a non-bleeding NPC within reach. This attack deals no damage, but causes that NPC to begin bleeding as per your blooded strike. (This does not allow you to apply a (bleed) talent.) Additionally, when an enemy causes you to begin bleeding, you may spend an immediate action to regain your martial focus.  Author's Note: For the intents of this talent, \"begin bleeding\" refers to any application of a new source of bleed damage that the NPC did not already suffer from, rather than causing a NPC to begin bleeding for the first time.",
           "abilityType": "Ex(Extraordinary)"
         },
         {
@@ -745,12 +741,12 @@
         },
         {
           "abilityName": "Debilitating Injuries (bleed)",
-          "ability_desc": "Whenever you deal bleed damage to a creature, you may cause them to take a penalty on all weapon attack rolls equal to the amount of bonus bleed damage granted to you by blooded strike for as long as the bleed is in effect. Any healing or other ability that ends the bleed also ends this penalty.",
+          "ability_desc": "Whenever you deal bleed damage to a NPC, you may cause them to take a penalty on all weapon attack rolls equal to the amount of bonus bleed damage granted to you by blooded strike for as long as the bleed is in effect. Any healing or other ability that ends the bleed also ends this penalty.",
           "abilityType": "Ex(Extraordinary)"
         },
         {
           "abilityName": "Perforating Wounds (bleed) [CrimDan]",
-          "ability_desc": "Whenever you deal bleed damage as part of an attack action to a creature who is already suffering bleed damage from your blooded strike, you deal an amount of bleed damage equal to 1 + 1 for every 3 points of base attack bonus you possess. This bleed damage stacks with other bleed damage granted by the Duelist sphere. You can stack this bleed damage with itself once for every 6 points of base attack bonus you possess. This bleed damage is separate from your blooded strike, and does not affect other abilities that scale off of your blooded strike’s bleed damage.",
+          "ability_desc": "Whenever you deal bleed damage as part of an attack action to a NPC who is already suffering bleed damage from your blooded strike, you deal an amount of bleed damage equal to 1 + 1 for every 3 points of base attack bonus you possess. This bleed damage stacks with other bleed damage granted by the Duelist sphere. You can stack this bleed damage with itself once for every 6 points of base attack bonus you possess. This bleed damage is separate from your blooded strike, and does not affect other abilities that scale off of your blooded strike’s bleed damage.",
           "abilityType": "Ex(Extraordinary)"
         },
         {
@@ -760,7 +756,7 @@
         },
         {
           "abilityName": "Hand Slasher",
-          "ability_desc": "As long as a creature is currently taking bleed damage, their disarm and sunder attempts always provoke attacks of opportunity from you, even if they have an ability that would normally prevent them from doing so.",
+          "ability_desc": "As long as a NPC is currently taking bleed damage, their disarm and sunder attempts always provoke attacks of opportunity from you, even if they have an ability that would normally prevent them from doing so.",
           "abilityType": "Ex(Extraordinary)"
         },
         {
@@ -770,7 +766,7 @@
         },
         {
           "abilityName": "Ooze Ichor",
-          "ability_desc": "You are able to deal bleed damage to behemoths, constructs, elementals, and undead, bypassing their normal immunity, though all bleed damage you deal to such creatures is reduced to half of what it would normally be, to a minimum of 1 point of bleed damage whenever you would successfully deal bleed damage to such a creature.\n\nBlood Sphere note: The Duelist sphere Ooze Ichor talent allows the user to deal bleed damage to creature types that are normally immune, but does not by itself make them",
+          "ability_desc": "You are able to deal bleed damage to behemoths, constructs, elementals, and undead, bypassing their normal immunity, though all bleed damage you deal to such NPCs is reduced to half of what it would normally be, to a minimum of 1 point of bleed damage whenever you would successfully deal bleed damage to such a NPC.\n\nBlood Sphere note: The Duelist sphere Ooze Ichor talent allows the user to deal bleed damage to NPC types that are normally immune, but does not by itself make them",
           "abilityType": "Ex(Extraordinary)"
         },
         {
@@ -781,7 +777,7 @@
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "5e",
       "name": "Emilia Nelythes",
       "size": "Medium",
@@ -847,7 +843,7 @@
         }
       ],
       "legendaryAbilities": {
-        "legendary_details": "The Emilia Nyarlathotep can take 3 legendary actions, choosing from the options below. Only one legendary option can be used at a time and only at the end of another creature's turn. The Emilia Nyarlathotep regains spent legendary actions at the start of its turn.",
+        "legendary_details": "The Emilia Nyarlathotep can take 3 legendary actions, choosing from the options below. Only one legendary option can be used at a time and only at the end of another NPC's turn. The Emilia Nyarlathotep regains spent legendary actions at the start of its turn.",
         "legendaryActions": [
           {
             "legendaryName": "Attack of the Deep(cost 1)",
@@ -861,7 +857,7 @@
       }
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Paraselene",
       "title": "Paraselene",
@@ -938,7 +934,7 @@
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Parhelion",
       "title": "Parhelion",
@@ -1006,7 +1002,7 @@
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Slime",
       "title": "Generic",
@@ -1058,7 +1054,7 @@
       "str": "10",
       "dex": "14",
       "con": "12",
-      "int": "-",
+      "int": "-1",
       "wis": "5",
       "cha": "6",
       "bab": "Medium",
@@ -1076,7 +1072,7 @@
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Goblin",
       "title": "Goblin",
@@ -1146,16 +1142,16 @@
         "Stealth": "0",
         "Swim": "4"
       },
-      "racialModifiers": [
-        "+4 Ride",
-        "+4 Stealth"
-      ],
+      "racialModifiers": {
+        "Ride": 4,
+        "Stealth": 4
+      },
       "languages": [
         "Goblin"
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Skeleton",
       "title": "Medium Skeleton",
@@ -1214,8 +1210,8 @@
       ],
       "str": "15",
       "dex": "14",
-      "con": "-",
-      "int": "-",
+      "con": "-1",
+      "int": "-1",
       "wis": "10",
       "cha": "10",
       "bab": "Slow",
@@ -1228,7 +1224,7 @@
       "gear": "broken chain shirt, broken scimitar"
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Zombie, Fast",
       "title": "Fast Zombie",
@@ -1272,8 +1268,8 @@
       "special_attacks": "quick strikes",
       "str": "17",
       "dex": "14",
-      "con": "-",
-      "int": "-",
+      "con": "-1",
+      "int": "-1",
       "wis": "10",
       "cha": "10",
       "bab": "Medium",
@@ -1292,7 +1288,7 @@
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "System Corrupted Minotaur",
       "title": "Minotaur",
@@ -1397,10 +1393,10 @@
         "Survival": "15",
         "Swim": "15"
       },
-      "racialModifiers": [
-        "+4 Perception",
-        "+4 Survival"
-      ],
+      "racialModifiers": {
+        "Perception": 4,
+        "Survival": 4
+      },
       "languages": [
         "Giant",
         "Xarvric"
@@ -1418,7 +1414,7 @@
         },
         {
           "abilityName": "System Corruption",
-          "ability_desc": "Due to the corruption of the System this creature gains a +4 deflection bonus. It also has -10 to Crit Confirms as it is unable to strike true as well.",
+          "ability_desc": "Due to the corruption of the System this NPC gains a +4 deflection bonus. It also has -10 to Crit Confirms as it is unable to strike true as well.",
           "abilityType": "Su(Supernatural)"
         },
         {
@@ -1428,21 +1424,21 @@
         },
         {
           "abilityName": "Gravities Strength",
-          "ability_desc": "Once per round when a creature is hit with the greataxe they must make a [saveDC] saving throw or become staggered for 1 round if the failed save total was less 10 than then creature become stunned instead. A creature can only be stunned by this effect once every 2d6 turns.",
+          "ability_desc": "Once per round when a NPC is hit with the greataxe they must make a [saveDC] saving throw or become staggered for 1 round if the failed save total was less 10 than then NPC become stunned instead. A NPC can only be stunned by this effect once every 2d6 turns.",
           "dcStat": "Str",
           "saveType": "Fort",
           "abilityType": "Ex(Extraordinary)"
         },
         {
           "abilityName": "Corruption Roar",
-          "ability_desc": "The System Corrupted Minotaur can make a roar as a free action, each creature within 40ft. of it must make a [saveDC] saving throw or be Deafened for 1d4+1 rounds. This creature can take this action every 1d6 rounds.",
+          "ability_desc": "The System Corrupted Minotaur can make a roar as a free action, each NPC within 40ft. of it must make a [saveDC] saving throw or be Deafened for 1d4+1 rounds. This NPC can take this action every 1d6 rounds.",
           "dcStat": "Cha",
           "saveType": "Fort",
           "abilityType": "Ex(Extraordinary)"
         },
         {
           "abilityName": "Mountain Mover",
-          "ability_desc": "As part of an attack you may make a CMB check against target creatures CMD, on a success move them 10 ft. in a chosen direction, for every extra 5 past the target creatures CMD move target creature an extra 5 ft. If total movement is greater than 30ft. the creature is considered launched(Flat-footed until start of their turn) if target creature hits an obstacle without expending all remaining movement they take 1d6 for each 5ft of movement remaining.",
+          "ability_desc": "As part of an attack you may make a CMB check against target NPCs CMD, on a success move them 10 ft. in a chosen direction, for every extra 5 past the target NPCs CMD move target NPC an extra 5 ft. If total movement is greater than 30ft. the NPC is considered launched(Flat-footed until start of their turn) if target NPC hits an obstacle without expending all remaining movement they take 1d6 for each 5ft of movement remaining.",
           "abilityType": "Ex(Extraordinary)"
         },
         {
@@ -1458,7 +1454,7 @@
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Kora",
       "title": "Kora",
@@ -1554,7 +1550,7 @@
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Corrupted Goblin",
       "title": "Goblin",
@@ -1630,9 +1626,9 @@
         "Ride": "4",
         "Stealth": "4"
       },
-      "racialModifiers": [
-        "+4 Ride"
-      ],
+      "racialModifiers": {
+        "Ride": 4
+      },
       "languages": [
         "Goblin"
       ],
@@ -1644,13 +1640,13 @@
         },
         {
           "abilityName": "System Corruption",
-          "ability_desc": "Due to the corruption of the System this creature has a harder time hitting creatures giving it a -3 to hit, however it gains a +3 deflection bonus",
+          "ability_desc": "Due to the corruption of the System this NPC has a harder time hitting NPCs giving it a -3 to hit, however it gains a +3 deflection bonus",
           "abilityType": "Su(Supernatural)"
         }
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Spider, Giant (Medium)",
       "title": "Giant Spider",
@@ -1699,7 +1695,7 @@
       "str": "11",
       "dex": "17",
       "con": "12",
-      "int": "-",
+      "int": "-1",
       "wis": "10",
       "cha": "2",
       "bab": "Slow",
@@ -1711,11 +1707,11 @@
         "Perception": "0",
         "Stealth": "0"
       },
-      "racialModifiers": [
-        "+16 climb",
-        "+4 Perception",
-        "+4 stealth"
-      ],
+      "racialModifiers": {
+        "climb": 16,
+        "Perception": 4,
+        "stealth": 4
+      },
       "special_abilities": [
         {
           "abilityName": "Poison",
@@ -1725,7 +1721,7 @@
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Corrupted Skeleton",
       "title": "Medium Skeleton",
@@ -1781,8 +1777,8 @@
       ],
       "str": "19",
       "dex": "12",
-      "con": "-",
-      "int": "-",
+      "con": "-1",
+      "int": "-1",
       "wis": "8",
       "cha": "6",
       "bab": "Medium",
@@ -1800,18 +1796,18 @@
         },
         {
           "abilityName": "System Corruption",
-          "ability_desc": "Due to the corruption of the System this creature has a harder time hitting creatures giving it a -2 to hit, however it gains a +3 deflection bonus",
+          "ability_desc": "Due to the corruption of the System this NPC has a harder time hitting NPCs giving it a -2 to hit, however it gains a +3 deflection bonus",
           "abilityType": "Su(Supernatural)"
         },
         {
           "abilityName": "Corrupted Betrayal",
-          "ability_desc": "At the start of each of it's turns it must make a DC 15 will save or attack the closest creature.",
+          "ability_desc": "At the start of each of it's turns it must make a DC 15 will save or attack the closest NPC.",
           "abilityType": "Su(Supernatural)"
         }
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Spider, Giant(Corrupted)",
       "title": "Corrupted Giant Spider",
@@ -1861,7 +1857,7 @@
       "str": "16",
       "dex": "14",
       "con": "14",
-      "int": "-",
+      "int": "-1",
       "wis": "8",
       "cha": "1",
       "bab": "Medium",
@@ -1873,11 +1869,11 @@
         "Perception": "0",
         "Stealth": "0"
       },
-      "racialModifiers": [
-        "+4 perception",
-        "+4 stealth",
-        "+16 climb"
-      ],
+      "racialModifiers": {
+        "perception": 4,
+        "stealth": 4,
+        "climb": 16
+      },
       "special_abilities": [
         {
           "abilityName": "Corruption",
@@ -1886,18 +1882,18 @@
         },
         {
           "abilityName": "System Corruption",
-          "ability_desc": "Due to the corruption of the System this creature gains a +3 deflection bonus",
+          "ability_desc": "Due to the corruption of the System this NPC gains a +3 deflection bonus",
           "abilityType": "Su(Supernatural)"
         },
         {
           "abilityName": "Corrupted Betrayal",
-          "ability_desc": "At the start of each of it's turns it must make a DC 15 will save or attack the closest creature.",
+          "ability_desc": "At the start of each of it's turns it must make a DC 15 will save or attack the closest NPC.",
           "abilityType": "Su(Supernatural)"
         }
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Cockroach, Giant",
       "title": "Cockroach, Giant",
@@ -1938,7 +1934,7 @@
       "str": "11",
       "dex": "12",
       "con": "19",
-      "int": "-",
+      "int": "-1",
       "wis": "11",
       "cha": "2",
       "bab": "Slow",
@@ -1955,17 +1951,17 @@
         "Perception": "0",
         "Stealth": "0"
       },
-      "racialModifiers": [
-        "+8 climb",
-        "+4 perception",
-        "+4 stealth"
-      ],
+      "racialModifiers": {
+        "climb": 8,
+        "perception": 4,
+        "stealth": 4
+      },
       "special_qualities": [
         "hold breath"
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Randaz Gylus",
       "title": "\"Theoros\"",
@@ -2052,14 +2048,14 @@
         },
         {
           "abilityName": "FORMAT Malfunction_Zone",
-          "ability_desc": "Every Enemy Creature within a 20ft cube must make a [saveDC] ref or take 2d6 force damage. For each 20 dmg taken this ability is used automatically.",
+          "ability_desc": "Every Enemy NPC within a 20ft cube must make a [saveDC] ref or take 2d6 force damage. For each 20 dmg taken this ability is used automatically.",
           "dcStat": "Cha",
           "saveType": "Ref",
           "abilityType": "Sp(Spell-Like)"
         },
         {
           "abilityName": "Mythos Axiom",
-          "ability_desc": "Creature effected by this must make a [saveDC] fort taking 3d6 force damage, half on a success. This effect has a recharge trait of 6.",
+          "ability_desc": "NPC effected by this must make a [saveDC] fort taking 3d6 force damage, half on a success. This effect has a recharge trait of 6.",
           "dcStat": "Cha",
           "saveType": "Fort",
           "abilityType": "Su(Supernatural)"
@@ -2082,7 +2078,7 @@
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Nullite",
       "title": "Nullites",
@@ -2155,28 +2151,28 @@
         },
         {
           "abilityName": "False Armor",
-          "ability_desc": "Replace host creatures natural armor with 2 natural armor and remove spell resistance.",
+          "ability_desc": "Replace host NPCs natural armor with 2 natural armor and remove spell resistance.",
           "abilityType": "Su(Supernatural)"
         },
         {
           "abilityName": "Borrowed Sight",
-          "ability_desc": "Uses the host creatures sight.",
+          "ability_desc": "Uses the host NPCs sight.",
           "abilityType": "Ex(Extraordinary)"
         },
         {
           "abilityName": "Control Body",
-          "ability_desc": "When making attacks using the host body all feats from this creature are active.",
+          "ability_desc": "When making attacks using the host body all feats from this NPC are active.",
           "abilityType": "Ex(Extraordinary)"
         },
         {
           "abilityName": "Fake Initative",
-          "ability_desc": "Pretends to be the creature but has it's own initative",
+          "ability_desc": "Pretends to be the NPC but has it's own initative",
           "abilityType": "Ex(Extraordinary)"
         }
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Singularity Destroyer",
       "title": "Null Sentinel",
@@ -2265,7 +2261,7 @@
       "special_abilities": [
         {
           "abilityName": "Summon Eruditions Black Hole",
-          "ability_desc": "All Creatures minus [creatureName] within 30 ft. of the a point(100 ft. range) of [creatureName]'s choice must make a [saveDC] save or take 2d10 force damage as they are pulled by a black hole. Where the black hole was placed a 3x3 square of Void Tiles is created. This can be done every 1d6 turns.",
+          "ability_desc": "All NPCs minus [NPCName] within 30 ft. of the a point(100 ft. range) of [NPCName]'s choice must make a [saveDC] save or take 2d10 force damage as they are pulled by a black hole. Where the black hole was placed a 3x3 square of Void Tiles is created. This can be done every 1d6 turns.",
           "dcStat": "Cha",
           "saveType": "Fort",
           "abilityType": "Sp(Spell-Like)"
@@ -2287,7 +2283,7 @@
         },
         {
           "abilityName": "Great Null Slam(Phase 2)",
-          "ability_desc": "When Singularity Destroyer uses Slash of Null this hits targets within a 30 ft. cube but the overall attack is considered single attacks towards each target for AoO triggers. All creatures within the 30ft. cube and 15 ft. beyond that must make a [saveDC] save or take 3d6 fire damage as the ground cracks beneath them. All tiles hit by this are transformed into Void Tiles.",
+          "ability_desc": "When Singularity Destroyer uses Slash of Null this hits targets within a 30 ft. cube but the overall attack is considered single attacks towards each target for AoO triggers. All NPCs within the 30ft. cube and 15 ft. beyond that must make a [saveDC] save or take 3d6 fire damage as the ground cracks beneath them. All tiles hit by this are transformed into Void Tiles.",
           "dcStat": "Str",
           "saveType": "Ref",
           "abilityType": "Ex(Extraordinary)"
@@ -2299,7 +2295,7 @@
         },
         {
           "abilityName": "Suns Descent",
-          "ability_desc": "Grab the sun that resides in this layer and slam it into the ground. All creatures within 50 ft. of the epicenter, except the user of this skill, must make a [saveDC] save or take 2d10 fire damage. Advance closest turn to below current turn, unless what causes this is an action from it's own turn then have the current turn again.",
+          "ability_desc": "Grab the sun that resides in this layer and slam it into the ground. All NPCs within 50 ft. of the epicenter, except the user of this skill, must make a [saveDC] save or take 2d10 fire damage. Advance closest turn to below current turn, unless what causes this is an action from it's own turn then have the current turn again.",
           "dcStat": "Str",
           "saveType": "Ref",
           "abilityType": "Ex(Extraordinary)"
@@ -2311,7 +2307,7 @@
         },
         {
           "abilityName": "Void Tiles",
-          "ability_desc": "A tile that is considered difficult terrain if a creature begins their turn in it. These tiles inflict one stack of collapse when passed through. Once you leave the area and re-enter it is no longer considered difficult terrain. Start of [creatureName]'s turns roll 1d6 on a 4-6 creature 1 Empty Shade on an empty Void Tile. For every 5 tiles add 1d6 to the pool.",
+          "ability_desc": "A tile that is considered difficult terrain if a NPC begins their turn in it. These tiles inflict one stack of collapse when passed through. Once you leave the area and re-enter it is no longer considered difficult terrain. Start of [NPCName]'s turns roll 1d6 on a 4-6 NPC 1 Empty Shade on an empty Void Tile. For every 5 tiles add 1d6 to the pool.",
           "abilityType": "Su(Supernatural)"
         },
         {
@@ -2323,20 +2319,20 @@
         },
         {
           "abilityName": "The Corrosion Vortex(Phase 2)",
-          "ability_desc": "At the start of a creatures if it is within the range of this aura it takes 1d4 piercing damage as a dust and debris is spun around Singularity Destroyer's massive body.",
+          "ability_desc": "At the start of a NPCs if it is within the range of this aura it takes 1d4 piercing damage as a dust and debris is spun around Singularity Destroyer's massive body.",
           "abilityType": "Su(Supernatural)",
           "auraRadius": "20"
         },
         {
           "abilityName": "Immolate the Heavens, Abandon the World of all Causality",
-          "ability_desc": "This ability activates immediately once [creatureName] reaches 10% health and forces all creatures to make a [saveDC] save or takes 4d10+12 force damage as they summon their Oblivions Edge from the void and force it into the ground causing all tiles within 120 ft. to be converted into void tiles. Gain a 3rd turn that is after the current turn.",
+          "ability_desc": "This ability activates immediately once [NPCName] reaches 10% health and forces all NPCs to make a [saveDC] save or takes 4d10+12 force damage as they summon their Oblivions Edge from the void and force it into the ground causing all tiles within 120 ft. to be converted into void tiles. Gain a 3rd turn that is after the current turn.",
           "dcStat": "Str",
           "saveType": "Fort",
           "abilityType": "Ex(Extraordinary)"
         },
         {
           "abilityName": "Null Beam",
-          "ability_desc": "All Creatures in a 100 ft. Wide Mile long line must make a [saveDC] or take 10d6 force damage. Half on a success. Useable every 1d6 rounds.",
+          "ability_desc": "All NPCs in a 100 ft. Wide Mile long line must make a [saveDC] or take 10d6 force damage. Half on a success. Useable every 1d6 rounds.",
           "dcStat": "Cha",
           "saveType": "Ref",
           "abilityType": "Su(Supernatural)"
@@ -2344,7 +2340,7 @@
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "5e",
       "name": "Sinulence Drone",
       "size": "Small",
@@ -2397,7 +2393,7 @@
         },
         {
           "abilityName": "Group Tactics",
-          "ability_desc": "When two allies of the same creature are threatening the same threat gain advantage."
+          "ability_desc": "When two allies of the same NPC are threatening the same threat gain advantage."
         }
       ],
       "actions": [
@@ -2407,16 +2403,16 @@
         },
         {
           "actionName": "Consumption",
-          "action_desc": "Consume a killed creature and absorb part of it's essence taking 1 point of their highest stat and adding it to the Sinulence collective or healing all present allies by 2d4+1."
+          "action_desc": "Consume a killed NPC and absorb part of it's essence taking 1 point of their highest stat and adding it to the Sinulence collective or healing all present allies by 2d4+1."
         },
         {
           "actionName": "Explode",
-          "action_desc": "As an action this creature explodes causing all creatures within 10 ft. to make a 13 Ref or take 2d6 Cold damage on a fail, nothing on a success. Spreads Cerulean Veins in a 3x3 area centered on point of explosion. This action counts as the creature dying."
+          "action_desc": "As an action this NPC explodes causing all NPCs within 10 ft. to make a 13 Ref or take 2d6 Cold damage on a fail, nothing on a success. Spreads Cerulean Veins in a 3x3 area centered on point of explosion. This action counts as the NPC dying."
         }
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "5e",
       "name": "Sinulence Runner",
       "size": "Medium",
@@ -2469,7 +2465,7 @@
         },
         {
           "abilityName": "Nourished Enhancement",
-          "ability_desc": "Upon dealing damage to a creature it gains +2 damage and an extra claw attack when it attacks, this state only lasts 2 rounds and can not be used for 1 once over."
+          "ability_desc": "Upon dealing damage to a NPC it gains +2 damage and an extra claw attack when it attacks, this state only lasts 2 rounds and can not be used for 1 once over."
         }
       ],
       "actions": [
@@ -2484,7 +2480,7 @@
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "5e",
       "name": "Sinulence Stormcaller",
       "size": "Medium",
@@ -2552,7 +2548,7 @@
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "5e",
       "name": "Sinulence Absolver",
       "size": "Large",
@@ -2604,7 +2600,7 @@
         },
         {
           "abilityName": "Seaborn Consumption.",
-          "ability_desc": "Whenever a Sinulence creature uses the consume action or dies Sinulence Absolver heals 1d6+7"
+          "ability_desc": "Whenever a Sinulence NPC uses the consume action or dies Sinulence Absolver heals 1d6+7"
         }
       ],
       "actions": [
@@ -2614,7 +2610,7 @@
         },
         {
           "actionName": "Absolver's Will(Recharge 4-6)",
-          "action_desc": "Creatures within 30 ft. must make a DC 14 wisdom saving throw or take 2d6 psychic damage, half on a success as the Absolver forces their will onto them."
+          "action_desc": "NPCs within 30 ft. must make a DC 14 wisdom saving throw or take 2d6 psychic damage, half on a success as the Absolver forces their will onto them."
         },
         {
           "actionName": "Silence Claws",
@@ -2622,7 +2618,7 @@
         },
         {
           "actionName": "Beam of Sinulence",
-          "action_desc": "All creatures within a line 100 feet long and 10 feet wide must make a DC 14 Dex saving throw or take 2d10 thunder damage and are deafened. Half on a success and not deafened."
+          "action_desc": "All NPCs within a line 100 feet long and 10 feet wide must make a DC 14 Dex saving throw or take 2d10 thunder damage and are deafened. Half on a success and not deafened."
         },
         {
           "actionName": "Bite of the Depths",
@@ -2631,7 +2627,7 @@
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Sinulence Drone",
       "title": "Drone",
@@ -2707,17 +2703,17 @@
       "special_abilities": [
         {
           "abilityName": "Lunge",
-          "ability_desc": "[creatureName] lunges itself at a target within it's movement as a move action and can make a Slam attack action once this movement completes.",
+          "ability_desc": "[NPCName] lunges itself at a target within it's movement as a move action and can make a Slam attack action once this movement completes.",
           "abilityType": "Ex(Extraordinary)"
         },
         {
           "abilityName": "Consume",
-          "ability_desc": "Consume a killed creature and absorb part of it's essence healing all allies within 20ft. by 2d4+1.",
+          "ability_desc": "Consume a killed NPC and absorb part of it's essence healing all allies within 20ft. by 2d4+1.",
           "abilityType": "Su(Supernatural)"
         },
         {
           "abilityName": "Explode",
-          "ability_desc": "As an action or on death(roll 1d4 on a 4 they explode) this creature explodes causing all creatures within 10 ft. to make a [saveDC] or take 2d6 Cold damage on a fail, nothing on a success. Spreads Cerulean Veins in a 3x3 area centered on point of explosion. This action counts as the creature dying.",
+          "ability_desc": "As an action or on death(roll 1d4 on a 4 they explode) this NPC explodes causing all NPCs within 10 ft. to make a [saveDC] or take 2d6 Cold damage on a fail, nothing on a success. Spreads Cerulean Veins in a 3x3 area centered on point of explosion. This action counts as the NPC dying.",
           "dcStat": "Dex",
           "saveType": "Ref",
           "abilityType": "Ex(Extraordinary)"
@@ -2725,7 +2721,7 @@
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Sinulence Runner",
       "title": "Runner",
@@ -2805,9 +2801,9 @@
         "Survival": "5",
         "Swim": "5"
       },
-      "racialModifiers": [
-        "+5 Acrobatics"
-      ],
+      "racialModifiers": {
+        "Acrobatics": 5
+      },
       "special_abilities": [
         {
           "abilityName": "Sprint",
@@ -2816,12 +2812,12 @@
         },
         {
           "abilityName": "Nourished Enhancement",
-          "ability_desc": "Upon dealing damage to a creature it gains +2 damage to it's attacks, this state only lasts 2 rounds and can not be used for 1 once over.",
+          "ability_desc": "Upon dealing damage to a NPC it gains +2 damage to it's attacks, this state only lasts 2 rounds and can not be used for 1 once over.",
           "abilityType": "Ex(Extraordinary)"
         },
         {
           "abilityName": "Seeking Nourishment",
-          "ability_desc": "When not in the Nourished Enhanced state, [creatureName] gains a +3 to hit on it's attacks.",
+          "ability_desc": "When not in the Nourished Enhanced state, [NPCName] gains a +3 to hit on it's attacks.",
           "abilityType": "Ex(Extraordinary)"
         },
         {
@@ -2832,7 +2828,7 @@
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Sinulence Stormcaller",
       "title": "Stormcaller",
@@ -2918,13 +2914,13 @@
         },
         {
           "abilityName": "Lightning Rod",
-          "ability_desc": "Half the lightning damage that would have been taken is converted into healing. All lightning damage done heals [creatureName].",
+          "ability_desc": "Half the lightning damage that would have been taken is converted into healing. All lightning damage done heals [NPCName].",
           "abilityType": "Su(Supernatural)"
         }
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Sinulence Absolver",
       "title": "Absolver",
@@ -3016,19 +3012,19 @@
         },
         {
           "abilityName": "Seaborn Consumption",
-          "ability_desc": "Whenever a Sinulence creature uses the consume action or dies Sinulence Absolver heals 1d6+7",
+          "ability_desc": "Whenever a Sinulence NPC uses the consume action or dies Sinulence Absolver heals 1d6+7",
           "abilityType": "Su(Supernatural)"
         },
         {
           "abilityName": "Absolver's Will(Recharge 5-6)",
-          "ability_desc": "Creatures within 30 ft. must make a [saveDC] saving throw or take 2d6 psychic damage, half on a success as the Absolver forces their will onto them.",
+          "ability_desc": "NPCs within 30 ft. must make a [saveDC] saving throw or take 2d6 psychic damage, half on a success as the Absolver forces their will onto them.",
           "dcStat": "Cha",
           "saveType": "Will",
           "abilityType": "Su(Supernatural)"
         },
         {
           "abilityName": "Beam of Sinulence(4-6)",
-          "ability_desc": "All creatures within a line 100 feet long and 10 feet wide must make a [saveDC] or take 2d10 thunder damage and are deafened. Half on a success and not deafened.",
+          "ability_desc": "All NPCs within a line 100 feet long and 10 feet wide must make a [saveDC] or take 2d10 thunder damage and are deafened. Half on a success and not deafened.",
           "dcStat": "Con",
           "saveType": "Ref",
           "abilityType": "Su(Supernatural)"
@@ -3036,13 +3032,13 @@
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Sinulence Leviathan",
       "title": "Leviathan",
       "cr": "12",
       "alignment": "N",
-      "size": "Gargantuan",
+      "size": "Huge",
       "sizeType": false,
       "type": "Dragon",
       "subtype": "Sinulence",
@@ -3058,9 +3054,9 @@
         }
       ],
       "ac": {
-        "armor": "25",
-        "touch": "10",
-        "flat_foot": "23",
+        "armor": "27",
+        "touch": "12",
+        "flat_foot": "25",
         "bonuses": {
           "deflection": "2",
           "dex": "2",
@@ -3121,8 +3117,8 @@
       "cha": "16",
       "bab": "Fast",
       "skillProgression": "High",
-      "cmb": "25",
-      "cmd": "37",
+      "cmb": "23",
+      "cmd": "35",
       "feats": {
         "Power Attack": "",
         "Improved Initiative": "",
@@ -3165,23 +3161,23 @@
         "UseMagicDevice": "0"
       },
       "special_qualities": [
-        "Is considered as Aberration creature type"
+        "Is considered as Aberration NPC type"
       ],
       "special_abilities": [
         {
           "abilityName": "Inspiring Presence",
-          "ability_desc": "As Long as [creatureName] is on the battle field all creatures gain +2 damage +1 to attack and +1 deflection bonus",
+          "ability_desc": "As Long as [NPCName] is on the battle field all NPCs gain +2 damage +1 to attack and +1 deflection bonus",
           "abilityType": "Ex(Extraordinary)"
         },
         {
           "abilityName": "Depths Aura",
-          "ability_desc": "All creatures within the aura take 1d6 cold damage.",
+          "ability_desc": "All NPCs within the aura take 1d6 cold damage.",
           "abilityType": "Su(Supernatural)"
         }
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Sinulenece Shellherald",
       "title": "Shellherald",
@@ -3270,18 +3266,18 @@
       "special_abilities": [
         {
           "abilityName": "Shield Shell",
-          "ability_desc": "Shell counts as always wielding a Tower shield for purposes of effects and feats. This shell has 10 health(tracked as temporary hp) but is resistant to all damage unless a sundered strike is used. Once this shell is gone or is attacked from behind this creatures AC becomes it's touch. If an attack would miss the creature then if the attack is greater than or equal to the armor of this creature than deal half the damage that would be dealt to the shell instead(this stacks with it's normal resistance).",
+          "ability_desc": "Shell counts as always wielding a Tower shield for purposes of effects and feats. This shell has 10 health(tracked as temporary hp) but is resistant to all damage unless a sundered strike is used. Once this shell is gone or is attacked from behind this NPCs AC becomes it's touch. If an attack would miss the NPC then if the attack is greater than or equal to the armor of this NPC than deal half the damage that would be dealt to the shell instead(this stacks with it's normal resistance).",
           "abilityType": "Ex(Extraordinary)"
         },
         {
           "abilityName": "Block Projectile",
-          "ability_desc": "As a reaction this creature may block a projectile that would strike an ally within 10 ft. of it. It may do this 3 times per round, damage will still apply if the attack would hit under normal circumstances.",
+          "ability_desc": "As a reaction this NPC may block a projectile that would strike an ally within 10 ft. of it. It may do this 3 times per round, damage will still apply if the attack would hit under normal circumstances.",
           "abilityType": "Ex(Extraordinary)"
         }
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Sinulence Envisel",
       "title": "Envisel",
@@ -3359,12 +3355,12 @@
       "special_abilities": [
         {
           "abilityName": "Heralds Shield",
-          "ability_desc": "As an action a [creatureName] can tear off the shell of a Shellherald within reach. Doing so gives this creature the effects of a towershield and causes the Shellherald to take half of it's max health as damage and loses it's shell effects.",
+          "ability_desc": "As an action a [NPCName] can tear off the shell of a Shellherald within reach. Doing so gives this NPC the effects of a towershield and causes the Shellherald to take half of it's max health as damage and loses it's shell effects.",
           "abilityType": "Ex(Extraordinary)"
         },
         {
           "abilityName": "Aircannon",
-          "ability_desc": "All creatures with a 125ft. cone must make a [saveDC] save. Depending on the distance from the source different effects transpire, those within 20 ft. and fail are deafened, knocked prone, dazed and take 2d12 force damage. Within 60 ft. those that fail are knocked prone and take 2d10 force damage. Within 120 ft. those that fail take 2d6 force damage. For all of the above, on a success take half damage and avoid all negative effects.\n\nThis ability has a recharge of 2d4 rounds. After using this [creatureName] is unable to use it's natural Halberd for 1 round.",
+          "ability_desc": "All NPCs with a 125ft. cone must make a [saveDC] save. Depending on the distance from the source different effects transpire, those within 20 ft. and fail are deafened, knocked prone, dazed and take 2d12 force damage. Within 60 ft. those that fail are knocked prone and take 2d10 force damage. Within 120 ft. those that fail take 2d6 force damage. For all of the above, on a success take half damage and avoid all negative effects.\n\nThis ability has a recharge of 2d4 rounds. After using this [NPCName] is unable to use it's natural Halberd for 1 round.",
           "dcStat": "Str",
           "saveType": "Ref",
           "abilityType": "Ex(Extraordinary)"
@@ -3372,7 +3368,7 @@
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Cerulean Vein",
       "title": "Cerulean Vein",
@@ -3403,12 +3399,12 @@
       "speed": {
         "walk": "30"
       },
-      "str": "-",
+      "str": "-1",
       "dex": "8",
       "con": "20",
-      "int": "-",
-      "wis": "-",
-      "cha": "-",
+      "int": "-1",
+      "wis": "-1",
+      "cha": "-1",
       "bab": "Slow",
       "skillProgression": "Low",
       "cmb": "0",
@@ -3416,14 +3412,14 @@
       "special_abilities": [
         {
           "abilityName": "Deceit of the Depths",
-          "ability_desc": "A creature within 5ft. of this creature at the start of it's turn or entering this radius must make a [saveDC] save or be afflicted with Deceit until the start of their next turn. Those inflicted with Deceit gain 20% mischance on attacks against Sinulence creatures and are considered flat-footed for them. this is a mind-altering effect.",
+          "ability_desc": "A NPC within 5ft. of this NPC at the start of it's turn or entering this radius must make a [saveDC] save or be afflicted with Deceit until the start of their next turn. Those inflicted with Deceit gain 20% mischance on attacks against Sinulence NPCs and are considered flat-footed for them. this is a mind-altering effect.",
           "dcStat": "Con",
           "saveType": "Will",
           "abilityType": "Su(Supernatural)"
         },
         {
           "abilityName": "Resistant Core",
-          "ability_desc": "This creature gains resistance to all physical damage dealt to it",
+          "ability_desc": "This NPC gains resistance to all physical damage dealt to it",
           "abilityType": "Ex(Extraordinary)"
         },
         {
@@ -3434,7 +3430,7 @@
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Sinulence Flowenec",
       "title": "Flowenec",
@@ -3507,23 +3503,23 @@
       "special_abilities": [
         {
           "abilityName": "Apart of a whole",
-          "ability_desc": "As long as the [creatureName] is connected to a Cerulean Vein it gains 1d4+3(minus 1 per [creatureName] on the same branch minimum 1) and has it's movements set to 0. Also gains resistance to all damages it is not weak too.",
+          "ability_desc": "As long as the [NPCName] is connected to a Cerulean Vein it gains 1d4+3(minus 1 per [NPCName] on the same branch minimum 1) and has it's movements set to 0. Also gains resistance to all damages it is not weak too.",
           "abilityType": "Ex(Extraordinary)"
         },
         {
           "abilityName": "Reapers call",
-          "ability_desc": "Once [creatureName] reaches at or below half health(17) or the Vein it is on is destroyed this creature gains it's movement speeds and gains the melee attack Mindless Barrage.",
+          "ability_desc": "Once [NPCName] reaches at or below half health(17) or the Vein it is on is destroyed this NPC gains it's movement speeds and gains the melee attack Mindless Barrage.",
           "abilityType": "Su(Supernatural)"
         },
         {
           "abilityName": "Blooming Flower",
-          "ability_desc": "While connected to a Cerulean Vein fire one projectile at a target within 100 ft. of this creature. with a +10 attack bonus, on hit deal 1d10 force damage.",
+          "ability_desc": "While connected to a Cerulean Vein fire one projectile at a target within 100 ft. of this NPC. with a +10 attack bonus, on hit deal 1d10 force damage.",
           "abilityType": "Su(Supernatural)"
         }
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Sinulence Ceralence",
       "title": "Ceralence",
@@ -3584,12 +3580,12 @@
       "special_abilities": [
         {
           "abilityName": "Veins of the Depths",
-          "ability_desc": "As a full round action [creatureName] accelerates the growth of a Cerulean Vein and either causes it to spread early or makes it grow a Sinulence Flowenec.",
+          "ability_desc": "As a full round action [NPCName] accelerates the growth of a Cerulean Vein and either causes it to spread early or makes it grow a Sinulence Flowenec.",
           "abilityType": "Su(Supernatural)"
         },
         {
           "abilityName": "Contaminate Mind",
-          "ability_desc": "Make a ranged(60 ft.) touch attack(using widsom instead of dex). On hit force the hit creature must make a [saveDC] save or be effected by Deceit of the Depths.",
+          "ability_desc": "Make a ranged(60 ft.) touch attack(using widsom instead of dex). On hit force the hit NPC must make a [saveDC] save or be effected by Deceit of the Depths.",
           "dcStat": "Wis",
           "saveType": "Will",
           "abilityType": "Su(Supernatural)"
@@ -3597,7 +3593,7 @@
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "5e",
       "name": "Sinulenece Shellherald",
       "size": "Medium",
@@ -3646,13 +3642,13 @@
       "ability": [
         {
           "abilityName": "Shield Shell",
-          "ability_desc": "Shell counts as shield This shell has 10 temporary health but is resistant to all damage. Once this shell is gone or is attacked from behind this creatures AC is -15."
+          "ability_desc": "Shell counts as shield This shell has 10 temporary health but is resistant to all damage. Once this shell is gone or is attacked from behind this NPCs AC is -15."
         }
       ],
       "actions": [
         {
           "actionName": "Block Projectile",
-          "action_desc": "As a reaction this creature may block a projectile that would strike an ally within 10 ft. of it. It may do this 3 times per round, damage will still apply if the attack would hit under normal circumstances."
+          "action_desc": "As a reaction this NPC may block a projectile that would strike an ally within 10 ft. of it. It may do this 3 times per round, damage will still apply if the attack would hit under normal circumstances."
         },
         {
           "actionName": "Bite",
@@ -3669,7 +3665,7 @@
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "5e",
       "name": "Sinulence Envisel",
       "size": "Medium",
@@ -3716,11 +3712,11 @@
       "ability": [
         {
           "abilityName": "Heralds Shield",
-          "ability_desc": "As an action a Sinulence Envisel can tear off the shell of a Shellherald within reach. Doing so gives this creature the effects of a towershield and causes the Shellherald to take half of it's max health as damage and loses it's shell effects."
+          "ability_desc": "As an action a Sinulence Envisel can tear off the shell of a Shellherald within reach. Doing so gives this NPC the effects of a towershield and causes the Shellherald to take half of it's max health as damage and loses it's shell effects."
         },
         {
           "abilityName": "Aircannon",
-          "ability_desc": "All creatures with a 125ft. cone must make a 18 Dex save. Depending on the distance from the source different effects transpire, those within 20 ft. and fail are deafened, knocked prone, dazed and take 2d12 force damage. Within 60 ft. those that fail are knocked prone and take 2d10 force damage. Within 120 ft. those that fail take 2d6 force damage. For all of the above, on a success take half damage and avoid all negative effects. This ability has a recharge of 2d4 rounds. After using this Sinulence Envisel is unable to use it's natural Halberd for 1 round."
+          "ability_desc": "All NPCs with a 125ft. cone must make a 18 Dex save. Depending on the distance from the source different effects transpire, those within 20 ft. and fail are deafened, knocked prone, dazed and take 2d12 force damage. Within 60 ft. those that fail are knocked prone and take 2d10 force damage. Within 120 ft. those that fail take 2d6 force damage. For all of the above, on a success take half damage and avoid all negative effects. This ability has a recharge of 2d4 rounds. After using this Sinulence Envisel is unable to use it's natural Halberd for 1 round."
         }
       ],
       "actions": [
@@ -3731,7 +3727,7 @@
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "5e",
       "name": "Sinulence Flowenec",
       "size": "Medium",
@@ -3784,11 +3780,11 @@
         },
         {
           "abilityName": "Reapers call ",
-          "ability_desc": "Once Sinulence Flowenec reaches at or below half health or the Vein it is on is destroyed this creature gains it's movement speeds and gains the melee attack Mindless Barrage."
+          "ability_desc": "Once Sinulence Flowenec reaches at or below half health or the Vein it is on is destroyed this NPC gains it's movement speeds and gains the melee attack Mindless Barrage."
         },
         {
           "abilityName": "Blooming Flower",
-          "ability_desc": "While connected to a Cerulean Vein fire one projectile at a target within 10 ft. of this creature. with a +10 attack bonus, on hit deal 1d10 force damage."
+          "ability_desc": "While connected to a Cerulean Vein fire one projectile at a target within 10 ft. of this NPC. with a +10 attack bonus, on hit deal 1d10 force damage."
         }
       ],
       "actions": [
@@ -3803,7 +3799,7 @@
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "5e",
       "name": "Sinulence Ceralence",
       "size": "Medium",
@@ -3854,7 +3850,7 @@
         },
         {
           "abilityName": "Contaminate Mind",
-          "ability_desc": "Make a ranged(60 ft.) touch attack(using widsom instead of dex). On hit force the hit creature must make a 17 Will save or be effected by Deceit of the Depths."
+          "ability_desc": "Make a ranged(60 ft.) touch attack(using widsom instead of dex). On hit force the hit NPC must make a 17 Will save or be effected by Deceit of the Depths."
         }
       ],
       "actions": [
@@ -3865,7 +3861,7 @@
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "5e",
       "name": "Cerulean Vein",
       "size": "Medium",
@@ -3909,11 +3905,11 @@
       "ability": [
         {
           "abilityName": "Deceit of the Depths",
-          "ability_desc": "A creature within 5ft. of this creature at the start of it's turn must make a 15 Wis save or be afflicted with Deceit until the start of their next turn. Those inflicted with Deceit gain 20% mischance on attacks against Sinulence creatures and are considered flat-footed for them. this is a mind-altering effect."
+          "ability_desc": "A NPC within 5ft. of this NPC at the start of it's turn must make a 15 Wis save or be afflicted with Deceit until the start of their next turn. Those inflicted with Deceit gain 20% mischance on attacks against Sinulence NPCs and are considered flat-footed for them. this is a mind-altering effect."
         },
         {
           "abilityName": "Resistant Core",
-          "ability_desc": "This creature gains resistance to all physical damage dealt to it"
+          "ability_desc": "This NPC gains resistance to all physical damage dealt to it"
         },
         {
           "abilityName": "Spread Silence",
@@ -3922,7 +3918,7 @@
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "5e",
       "name": "Sinulence Leviathan",
       "size": "Medium",
@@ -3972,7 +3968,7 @@
       "ability": [
         {
           "abilityName": "Inspiring Presence",
-          "ability_desc": "As Long as Sinulence Leviathan is on the battle field all creatures gain +2 damage +1 to attack and +1 ac bonus"
+          "ability_desc": "As Long as Sinulence Leviathan is on the battle field all NPCs gain +2 damage +1 to attack and +1 ac bonus"
         }
       ],
       "actions": [
@@ -3999,7 +3995,7 @@
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Empty Shade",
       "title": "Shade",
@@ -4057,9 +4053,9 @@
       "str": "24",
       "dex": "14",
       "con": "10",
-      "int": "-",
+      "int": "-1",
       "wis": "12",
-      "cha": "-",
+      "cha": "-1",
       "bab": "Slow",
       "skillProgression": "Low",
       "cmb": "12",
@@ -4072,20 +4068,20 @@
         },
         {
           "abilityName": "Collapse Detonation",
-          "ability_desc": "For each tile [creatureName] moves across it gains 1 collapse charge and for each collapse inflicted gain 2 charges, as an action it can use all charges to explode dealing (5+collapse stacks)d6 to all targets within 10 ft. of it. All targets within this radius must make a [saveDC] on a success half.",
+          "ability_desc": "For each tile [NPCName] moves across it gains 1 collapse charge and for each collapse inflicted gain 2 charges, as an action it can use all charges to explode dealing (5+collapse stacks)d6 to all targets within 10 ft. of it. All targets within this radius must make a [saveDC] on a success half.",
           "dcStat": "Con",
           "saveType": "Ref",
           "abilityType": "Su(Supernatural)"
         },
         {
           "abilityName": "Many Armed one",
-          "ability_desc": "Is able to use 1 full round attack action even after moving. If this creature uses a full round attack action, it instead uses the attack as if it where a full round action twice.",
+          "ability_desc": "Is able to use 1 full round attack action even after moving. If this NPC uses a full round attack action, it instead uses the attack as if it where a full round action twice.",
           "abilityType": "Ex(Extraordinary)"
         }
       ]
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "pathfinder",
       "name": "Void Envoy Corrupted",
       "title": "Envoy(Nulled)",
@@ -4194,7 +4190,7 @@
       "special_abilities": [
         {
           "abilityName": "Immortality",
-          "ability_desc": "An Envoy of The Void does not age, nor does it need to eat or breathe. Only violence can bring about the death of one of these creatures.",
+          "ability_desc": "An Envoy of The Void does not age, nor does it need to eat or breathe. Only violence can bring about the death of one of these NPCs.",
           "abilityType": "Ex(Extraordinary)"
         },
         {
@@ -4209,73 +4205,13 @@
         },
         {
           "abilityName": "Eternal Entity",
-          "ability_desc": "This Creature does not get exhausted or fatigued.",
+          "ability_desc": "This NPC does not get exhausted or fatigued.",
           "abilityType": "Ex(Extraordinary)"
         }
       ]
     },
     {
-      "path": "./creatureDisplay.html",
-      "system": "pathfinder",
-      "name": "Mimic",
-      "title": "Mimic",
-      "cr": "4",
-      "alignment": "N",
-      "size": "Medium",
-      "sizeType": false,
-      "type": "Aberration",
-      "senses": {
-        "darkvision": "120"
-      },
-      "ac": {
-        "armor": "11",
-        "touch": "11",
-        "flat_foot": "10",
-        "bonuses": {
-          "dex": "1"
-        }
-      },
-      "level": "7",
-      "hitDice": "d8",
-      "rate": "Monster",
-      "fort": "Bad",
-      "ref": "Bad",
-      "will": "Good",
-      "speed": {
-        "walk": "30",
-        "fly": "60"
-      },
-      "str": "19",
-      "dex": "12",
-      "con": "17",
-      "int": "10",
-      "wis": "13",
-      "cha": "10",
-      "bab": "Medium",
-      "skillProgression": "Middle",
-      "cmb": "9",
-      "cmd": "20",
-      "feats": {
-        "Great Cleave": ""
-      },
-      "skills": {
-        "Acrobatics": "5",
-        "Climb": "0",
-        "EscapeArtist": "0",
-        "Fly": "0",
-        "Intimidate": "0",
-        "Perception": "0",
-        "Spellcraft": "0",
-        "Stealth": "0",
-        "Survival": "0",
-        "Swim": "0"
-      },
-      "languages": [
-        "Common"
-      ]
-    },
-    {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "5e",
       "name": "Krampus",
       "size": "Large",
@@ -4331,11 +4267,11 @@
         },
         {
           "abilityName": "Winters Screech",
-          "ability_desc": "All creatures in a 20ft. cone must make a DC 16 Wis Save or be frightened. At the start of it's turn the creature takes 2d6 physic damage and remake the save. On a success they are immune for the rest of the day."
+          "ability_desc": "All NPCs in a 20ft. cone must make a DC 16 Wis Save or be frightened. At the start of it's turn the NPC takes 2d6 physic damage and remake the save. On a success they are immune for the rest of the day."
         },
         {
           "abilityName": "Degradation of Reality",
-          "ability_desc": "Once per turn when a creature takes damage from Krampus they must make a DC 16 Saving throw based off of the D6 rolled(STR(1)-CHA(6)). On a failure take 1 stat damage to that stat."
+          "ability_desc": "Once per turn when a NPC takes damage from Krampus they must make a DC 16 Saving throw based off of the D6 rolled(STR(1)-CHA(6)). On a failure take 1 stat damage to that stat."
         }
       ],
       "actions": [
@@ -4369,7 +4305,7 @@
         "legendaryActions": [
           {
             "legendaryName": "Winters Howl(Cost 2)",
-            "legendary_desc": "All Creatures within 20ft. of Krampus must make a DC 14 Con save or take 2d12 physic damage."
+            "legendary_desc": "All NPCs within 20ft. of Krampus must make a DC 14 Con save or take 2d12 physic damage."
           },
           {
             "legendaryName": "Regain Reaction",
@@ -4391,7 +4327,7 @@
       }
     },
     {
-      "path": "./creatureDisplay.html",
+      "path": "./NPCDisplay.html",
       "system": "5e",
       "name": "Minions of Krampus",
       "size": "Small",
@@ -4448,6 +4384,183 @@
           "action_desc": "Melee Weapon Attack +7 to hit, reach 5ft. hit 1d6 piercing plus 1d6 cold + 4."
         }
       ]
+    },
+    {
+      "path": "./NPCDisplay.html",
+      "system": "pathfinder",
+      "name": "Null Mimic",
+      "title": "Mimic",
+      "cr": "4",
+      "alignment": "NE",
+      "size": "Small",
+      "sizeType": false,
+      "type": "Aberration",
+      "senses": {
+        "darkvision": "120",
+        "blindsight": "10"
+      },
+      "ac": {
+        "armor": "22",
+        "touch": "13",
+        "flat_foot": "22",
+        "bonuses": {
+          "armor": "5",
+          "deflection": "2",
+          "natural": "4"
+        }
+      },
+      "level": "2",
+      "hitDice": "d8",
+      "rate": "Monster",
+      "fort": "Bad",
+      "ref": "Bad",
+      "will": "Good",
+      "defensive_traits": {
+        "SR": "5"
+      },
+      "weaknesses": "Force",
+      "speed": {
+        "walk": "30"
+      },
+      "melee": [
+        {
+          "name": "Slam",
+          "diceCount": "1",
+          "damageDice": "d4",
+          "isAlternative": false,
+          "isAdditive": false
+        }
+      ],
+      "str": "8",
+      "dex": "10",
+      "con": "12",
+      "int": "14",
+      "wis": "16",
+      "cha": "18",
+      "bab": "Slow",
+      "skillProgression": "Middle",
+      "cmb": "-1",
+      "cmd": "9",
+      "feats": {
+        "skill focus": "Disguise",
+        "toughness": ""
+      },
+      "skills": {
+        "Acrobatics": "1",
+        "Bluff": "2",
+        "Climb": "0",
+        "Disguise": "2",
+        "EscapeArtist": "0",
+        "Fly": "0",
+        "Intimidate": "2",
+        "Perception": "2",
+        "Spellcraft": "0",
+        "Stealth": "2",
+        "Survival": "1",
+        "Swim": "0"
+      },
+      "racialModifiers": {
+        "disguise": "20",
+        "bluff": "10"
+      }
+    },
+    {
+      "path": "./NPCDisplay.html",
+      "system": "pathfinder",
+      "name": "Mimic",
+      "title": "Mimic",
+      "cr": "4",
+      "alignment": "N",
+      "size": "Medium",
+      "sizeType": false,
+      "NPCType": "Monster",
+      "type": "Aberration",
+      "ac": {
+        "armor": "10",
+        "touch": "10",
+        "flat_foot": "10",
+        "bonuses": {}
+      },
+      "level": "7",
+      "hitDice": "d8",
+      "rate": "Monster",
+      "fort": "Bad",
+      "ref": "Bad",
+      "will": "Good",
+      "str": "19",
+      "dex": "10",
+      "con": "17",
+      "int": "10",
+      "wis": "13",
+      "cha": "10",
+      "bab": "Medium",
+      "skillProgression": "Middle",
+      "cmb": "9",
+      "cmd": "19",
+      "skills": {
+        "Acrobatics": "0",
+        "Climb": "0",
+        "EscapeArtist": "0",
+        "Fly": "0",
+        "Intimidate": "0",
+        "Perception": "0",
+        "Spellcraft": "0",
+        "Stealth": "0",
+        "Survival": "0",
+        "Swim": "0"
+      }
+    },
+    {
+      "path": "./NPCDisplay.html",
+      "system": "pathfinder",
+      "name": "Mimic",
+      "title": "Mimic",
+      "cr": "4",
+      "alignment": "N",
+      "size": "Medium",
+      "sizeType": false,
+      "NPCType": "NPC",
+      "type": "Humanoid",
+      "subtype": "Human",
+      "ac": {
+        "armor": "11",
+        "touch": "11",
+        "flat_foot": "10",
+        "bonuses": {
+          "dex": "1"
+        }
+      },
+      "level": 2,
+      "hitDice": "d8",
+      "fort": "Bad",
+      "ref": "Bad",
+      "will": "Good",
+      "melee": [],
+      "ranged": [],
+      "str": "19",
+      "dex": "12",
+      "con": "17",
+      "int": "10",
+      "wis": "13",
+      "cha": "10",
+      "bab": "Medium",
+      "skillProgression": "Middle",
+      "cmb": "5",
+      "cmd": "16",
+      "skills": {},
+      "class": [
+        {
+          "name": "Barbarian",
+          "level": "1",
+          "archetype": "Sphere Arc1"
+        },
+        {
+          "name": "Adept",
+          "level": "1",
+          "archetype": "None"
+        }
+      ],
+      "spheres": true
     }
   ]
 }

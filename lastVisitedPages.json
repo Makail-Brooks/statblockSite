@@ -1,53 +1,28 @@
 {
   "pages": [
     {
-      "name": "Sinulence Flowenec",
-      "index": "40",
-      "system": "5e"
-    },
-    {
-      "name": "Sinulence Envisel",
-      "index": "39",
-      "system": "5e"
-    },
-    {
-      "name": "Sinulence Absolver",
-      "index": "27",
-      "system": "5e"
-    },
-    {
-      "name": "Sinulence Stormcaller",
-      "index": "26",
-      "system": "5e"
-    },
-    {
-      "name": "Sinulence Drone",
-      "index": "28",
+      "name": "Void Envoy Corrupted",
+      "index": "44",
       "system": "pathfinder"
     },
     {
-      "name": "Sinulence Runner",
-      "index": "25",
-      "system": "5e"
-    },
-    {
-      "name": "Sinulence Drone",
-      "index": "24",
-      "system": "5e"
+      "name": "Void Envoy",
+      "index": "2",
+      "system": "pathfinder"
     },
     {
       "name": "Sinulence Leviathan",
-      "index": "43",
-      "system": "5e"
+      "index": "31",
+      "system": "pathfinder"
     },
     {
-      "name": "Sinulence Ceralence",
-      "index": "41",
-      "system": "5e"
+      "name": "Mimic",
+      "index": "45",
+      "system": "pathfinder"
     },
     {
-      "name": "Cerulean Vein",
-      "index": "35",
+      "name": "Bandit",
+      "index": "1",
       "system": "pathfinder"
     }
   ]

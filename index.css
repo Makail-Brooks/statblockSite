@@ -95,6 +95,7 @@
 }
 .information{
   font-size: 25px;
+  text-transform: capitalize;
 }
 .information5e{
   font-size: 20px;
@@ -250,8 +251,15 @@ hr{
 }
 .creationSetup{
   display: flex;
-  gap:150px;
+  justify-content: space-between;
+  gap: 150px;
+  margin: auto;
 }
+
+.creationDisplay{
+  justify-items: center;
+}
+
 .stairCase{
   margin-left: 50px;
 }
@@ -262,4 +270,21 @@ hr{
 
 .largeGap{
   margin-left: 100px;
+}
+.optionMenu{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.divide{
+  margin-left: 200px;
+}
+.dropDownAddition{
+  display: flex;
+}
+
+
+.dropDownChoice{
+  display: flex;
+  gap:20px;
 }

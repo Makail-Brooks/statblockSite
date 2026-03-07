@@ -19,7 +19,25 @@ featDisplay.appendChild(featHTML);
 skillDisplay.appendChild(skillHTML);
 let skillCont = document.getElementById("skillsContainer");
 let skillList = skillCont.getElementsByClassName("searchBarCreation")
-createFormListeners(skillList);
+var healthDisplay = document.getElementById("calcHealth");
+var healthHTML = document.createElement("div");
+healthHTML.innerHTML = `<p class="inputName" id="calculateHealth">Health: ${getForumHP()}</p>`;
+healthDisplay.appendChild(healthHTML);
+createFormListenersFeatsAndSkills(skillList);
 createListeners("creatureLevel",'input',setFeatsAvailable);
 createListeners("creatureType",`change`,creatureTypeListener);
+createListeners("creatureLevel",`change`,updateHealthDisplay);
+createListeners("creatureHitDice",`change`,updateHealthDisplay);
 creatureTypeListener();
+createDropDownChoices(dropDownArray);
+createVariableEnhancedListener('senseList','keyup',toggleInput,'senseInput');
+createVariableEnhancedListener('featList','keyup',toggleInput,'featInput');
+const targetNode = document.getElementById('featChoice');
+const config = {attributes:true,childList:true,subtree:true,CharacterData:true};
+observer.observe(targetNode,config);
+
+function createDropDownChoices(arr){
+    arr.forEach(element=>{
+        arrayToDropdown(element[0],element[1]);
+    })
+}

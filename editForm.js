@@ -28,15 +28,18 @@ creationDisplay.appendChild(creationHTML);
 // console.log(creatureType);
 createListeners("creatureType",`change`,creatureTypeListener);
 
-
 readJsonData(creatureInfo,system);
 
-
+createVariableEnhancedListener('senseList','keyup',toggleInput,'senseInput');
+createVariableEnhancedListener('featList','keyup',toggleInput,'featInput');
 var resetButton = document.createElement("button");
 resetButton.setAttribute("class","button");
 resetButton.setAttribute("onClick",`resetEdit(${JSON.stringify(creatureInfo)},'${system}')`);
 resetButton.textContent = "Reset";
 resetButtonDisplay.appendChild(resetButton);
+const targetNode = document.getElementById('featChoice');
+const config = {attributes:true,childList:true,subtree:true,CharacterData:true};
+observer.observe(targetNode,config);
 }
 
 /**
@@ -93,6 +96,7 @@ function readJsonData(creatureInfo,sys){
 // for(let i=0;formInputs.length>i;i++){
 //     formInputs.item(i).addEventListener("contextmenu",(e)=>{e.preventDefault()})
 // }
+    createDropDownChoices(dropDownArray);
     document.getElementById("creatureName").value = creatureInfo.name;
     document.getElementById("creatureType")[getChoiceSelection(['Aberration','Animal','Construct','Dragon','Fey','Humanoid','Magical Beast','Monstrous Humanoid','Ooze','Outsider','Plant','Undead','Vermin','Custom'],creatureInfo.type)].selected=true;
     creatureTypeListener();
@@ -100,9 +104,8 @@ function readJsonData(creatureInfo,sys){
         document.getElementById("customType").value=creatureInfo.customType;
     }
     document.getElementById("creatureTitle").value = creatureInfo.title;
-    document.getElementById("creatureCR")[getChoiceSelection(['1/8','1/6','1/4','1/2','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30'],creatureInfo.cr)].selected=true;
+    document.getElementById("creatureCR")[getChoiceSelection(['1/8','1/6','1/4','1/3','1/2','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30'],creatureInfo.cr)].selected=true;
     document.getElementById("creatureLevel").value = creatureInfo.level;
-    document.getElementById("creatureSpeed").value = creatureInfo.speed;
     document.getElementById("creatureFort").value = creatureInfo.fort;
     document.getElementById("creatureRef").value = creatureInfo.ref;
     document.getElementById("creatureWill").value = creatureInfo.will;
@@ -119,16 +122,21 @@ function readJsonData(creatureInfo,sys){
     document.getElementById("creatureSkillProgression")[getChoiceSelection(['high','middle','low'],creatureInfo.skillProgression)].selected=true;
     document.getElementById("creatureSize")[getChoiceSelection(['fine','diminutive','tiny','small','medium','large','huge','gargantuan','colossal'],creatureInfo.size)].selected = true;
         i =0;
+        if(creatureInfo.speed!=null){
+            let speedValue = creatureInfo.speed;
+            Object.keys(creatureInfo.speed).forEach(speed=>{
+                    getDropDownSelection(speed,'speed',speedValue);
+                    i++;
+            })
+        }
         if(creatureInfo.senses!=null){
-
-            creatureInfo.senses.forEach(senses=>{
+            let senseValue = creatureInfo.senses;
+            Object.keys(creatureInfo.senses).forEach(senses=>{
                 if(!senses.toLowerCase().includes("perception")){
-                    createArrayChoice('sense','Sense','Sense');
-                    document.getElementById(`sense${i}`).value=senses;
+                    getDropDownSelection(senses,'sense',senseValue);
                     i++;
                 }
             })
-            let senseTitle = " <b>Sense</b>";
         }
        // senseString!='';
        i=0;
@@ -271,10 +279,10 @@ function readJsonData(creatureInfo,sys){
         }
         i=0;
         if(creatureInfo.feats){
-            creatureInfo.feats.forEach(element=>{
-                createArrayChoice('feat','Feat','Feat Name');
-                document.getElementById(`feat${i}`).value = element;
-                i++;
+            let featArrayList = creatureInfo.feats;
+            Object.keys(creatureInfo.feats).forEach(feats=>{
+                    getDropDownSelection(feats,'feat',featArrayList);
+                                i++;
             })
         }
         i=0;
@@ -284,6 +292,7 @@ function readJsonData(creatureInfo,sys){
             let cSkills = Object.keys(creatureInfo.skills);
             doSkills(cSkills,skills);
         }
+        document.getElementById("isItLongOption").checked=creatureInfo.sizeType;
         i=0;
         if(creatureInfo.spell_abilities){
             if(creatureInfo.spell_abilities){
@@ -395,17 +404,16 @@ function readJsonData(creatureInfo,sys){
         }
         i=0;
         if(creatureInfo.racialModifiers){
-            creatureInfo.racialModifiers.forEach(element=>{
-                createArrayChoice('racialMod','Racial Modifier','Racial Modifier Bonus');
-                document.getElementById(`racialMod${i}`).value = element;
+            let racialMod = creatureInfo.racialModifiers;
+            Object.keys(racialMod).forEach(racialModifier=>{
+                    getDropDownSelection(racialModifier,'racialMod',racialMod);
                 i++;
             })
         }
         i=0;
         if(creatureInfo.languages){
             creatureInfo.languages.forEach(element=>{
-                createArrayChoice('language','Language','Language Name')
-                document.getElementById(`language${i}`).value = element;
+                getDropDownSelection(element,'language');
                 i++;
             })
         }
@@ -420,14 +428,6 @@ function readJsonData(creatureInfo,sys){
         if(creatureInfo.reach_bonus_effects){
             document.getElementById("reach_bonus_effectsOption").checked = true;
             document.getElementById(`reach_bonus_effects`).value = creatureInfo.reach_bonus_effects;
-        }
-        if(creatureInfo.reach){
-            document.getElementById("reachOption").checked = true;
-            document.getElementById(`reach`).value = creatureInfo.reach;
-        }
-        if(creatureInfo.space){
-            document.getElementById("spaceOption").checked = true;
-            document.getElementById(`space`).value = creatureInfo.space;
         }
         
         i=0;
@@ -466,7 +466,6 @@ function readJsonData(creatureInfo,sys){
         }
     arrayToggle('bonusAC',['Container','Armor','Deflection','Dodge','Shield','Natural','Extra']);
     arrayToggle('defensiveTraits',['Container','DA','DR','Immune','Resist','SR']);
-    arrayToggle('reach',['Container','reach_bonus_effects','Space']);
     arrayToggle('spells',['Container','InnateOption','PreparedOption']);
     toggle('Subtype');
     toggle('weakness');
@@ -486,7 +485,6 @@ function readJsonData(creatureInfo,sys){
     toggle('Resist');
     toggle('SR');
     toggle('reach_bonus_effects');
-    toggle('space');
     arrayToggle('spellsInnate',['Container','Constant','atWill','xDay']);
     toggle('constant');
     toggle('atWill');
@@ -494,7 +492,7 @@ function readJsonData(creatureInfo,sys){
     arrayToggle('spellsPrepared',['Container','Ninth','Eighth','Seventh','Sixth','Fifth','Fourth','Third','Second','First','Zeroth']);
     toggle("HPTraits");
     arrayToggle('skills',['Container','Acrobatics','Appraise','Bluff','Climb','Craft','Diplomacy','DisableDevice','Disguise','EscapeArtist','Fly','HandleAnimal','Heal','Intimidate','KnowledgeOption','Linguistics','Perception','Perform','Profession','Ride','SenseMotive','SleightofHand','Spellcraft','Stealth','Survival','Swim','UseMagicDevice']);
-    arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion','All']);
+    arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
     toggle('setHPInformation');
     var skillDisplay = document.getElementById("skillPoints");
 var skillHTML = document.createElement("div");
@@ -504,7 +502,14 @@ var featDisplay = document.getElementById("featCount");
 var featHTML = document.createElement("div");
 featHTML.innerHTML = `<p class="inputName" id="featAmountDisplay">Remaining Feats: ${setFeatsAvailable()}</p>`;
 featDisplay.appendChild(featHTML);
-createFormListeners(skillList);
+var healthDisplay = document.getElementById("calcHealth");
+var healthHTML = document.createElement("div");
+healthHTML.innerHTML = `<p class="inputName" id="calculateHealth">Health: ${getForumHP()}</p>`;
+healthDisplay.appendChild(healthHTML);
+createFormListenersFeatsAndSkills(skillList);
+createListeners("creatureLevel",`change`,updateHealthDisplay);
+createListeners("creatureHitDice",`change`,updateHealthDisplay);
+createListeners("creatureHitDiceRate",`change`,updateHealthDisplay);
 skillHTML.innerHTML = `<p class="inputName" id="skillPointsDisplay">Remaining Ranks: ${setSkillPoints()}</p>`;
 skillDisplay.appendChild(skillHTML);
             break;
@@ -729,6 +734,87 @@ function getAttackInformation(attackPath,attackName){
 function getChoiceSelection(options,info){
     return options.findIndex(choice=>choice.toLowerCase()===info.toLowerCase());
 }
+
+
+function getDropDownSelection(item,group,infoVal=[]){
+      let val = item;
+    var textSelected = document.createElement("label");
+    textSelected.textContent = val;
+    textSelected.className = "inputName"
+    var button = document.createElement("button");
+    button.setAttribute("class","formButton");
+    button.setAttribute("id",`delete${val}`);
+    button.setAttribute("type","button");
+    button.setAttribute("onClick",`deleteChoice('${val}Choice','${group}')`);
+    button.textContent = `Delete`;
+    let divZone = document.createElement("div");
+    divZone.setAttribute("id",`${val}Choice`);
+    divZone.appendChild(textSelected);
+    if(group=="sense"){
+        let inputval = infoVal[val];
+        if(inputval!=""){
+            let input = document.createElement("input");
+            input.setAttribute("type","number");
+            input.setAttribute("class","searchBarCreation");
+            input.setAttribute("name",`sense${val}`);
+            input.setAttribute("id",`sense${val}`);
+            input.setAttribute("title",`sense${val}`);
+            input.setAttribute("placeholder",`Insert Vision Range Here`);
+            input.value=inputval;
+            divZone.appendChild(input);
+            document.getElementById(`${group}Temp`).value = "";
+        }
+        
+    }
+    if(group=="speed"){
+        let inputval = infoVal[val];
+            let input = document.createElement("input");
+            input.setAttribute("type","number");
+            input.setAttribute("class","searchBarCreation");
+            input.setAttribute("name",`speed${val}`);
+            input.setAttribute("id",`speed${val}`);
+            input.setAttribute("title",`speed${val}`);
+            input.setAttribute("placeholder",`Insert Speed Here`);
+            input.value=inputval;
+            divZone.appendChild(input);
+            document.getElementById(`${group}Temp`).value = "";
+        
+    }
+    if(group=="racialMod"){
+        let inputval = infoVal[val];
+            let input = document.createElement("input");
+            input.setAttribute("type","number");
+            input.setAttribute("class","searchBarCreation");
+            input.setAttribute("name",`racialMod${val}`);
+            input.setAttribute("id",`racialMod${val}`);
+            input.setAttribute("title",`racialMod${val}`);
+            input.setAttribute("placeholder",`Insert racial modifier Here`);
+            input.value=inputval;
+            divZone.appendChild(input);
+            document.getElementById(`${group}Temp`).value = "";
+        
+    }
+    if(group=="feat"){
+        let inputval = infoVal[val];
+        if(inputval!=""){
+            let input = document.createElement("input");
+            input.setAttribute("type","text");
+            input.setAttribute("class","searchBarCreation");
+            input.setAttribute("name",`feat${val}`);
+            input.setAttribute("id",`feat${val}`);
+            input.setAttribute("title",`feat${val}`);
+            input.setAttribute("placeholder",`Insert Feat Details Here`);
+            input.value=inputval;
+            divZone.appendChild(input);
+            document.getElementById(`${group}List`).value = "";
+        }
+    }
+    divZone.appendChild(button);
+    divZone.setAttribute("class","dropDownChoice");
+  document.getElementById(`${group}Choice`).appendChild(divZone);
+  modifyList(group);
+}
+
 //put checked at the end of an input type checkbox for it to start off as checked
 
 // if(creatureInfo.cmd.includes("(")){
@@ -748,3 +834,8 @@ function getChoiceSelection(options,info){
 //     document.getElementById("cmdMod").value = bonusCMD +" "+ cmdText;
 
 // }
+function createDropDownChoices(arr){
+    arr.forEach(element=>{
+        arrayToDropdown(element[0],element[1]);
+    })
+}

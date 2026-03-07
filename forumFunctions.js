@@ -44,6 +44,27 @@ function populateSpecialAbilityData(array,elementName){
   }
 }
 
+function populateDataDropDownArray(array,name){
+    //for getting information
+  let len = document.getElementById(`${name}Choice`).childElementCount;
+  for(var i = 0;i<len;i++){
+    let val = document.getElementById(`${name}Choice`).children.item(i).getElementsByTagName("label").item(0).textContent;
+    array.push(val);
+  }
+}
+
+function populateDataDropDownJson(json,name){
+    let len = document.getElementById(`${name}Choice`).childElementCount;
+    let val = ""
+    for(var i = 0;i<len;i++){
+      let entry = document.getElementById(`${name}Choice`).children.item(i).getElementsByTagName("label").item(0).textContent;
+      if((document.getElementById(`${name}${entry}`))!=null){
+        val = document.getElementById(`${name}${entry}`).value;
+      }
+      json[entry]=val;
+    }
+}
+
 function populate5eData(array,elementName,jsonSetName){
   let len = document.getElementById("forum").querySelector(`.${elementName}`).childElementCount;
   let jsonName = jsonSetName+"Name";
@@ -212,7 +233,7 @@ let multiSkillArray = [];
         }
       }
     }else{
-      populateSkills(json,['Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion','All'],"knowledge");
+      populateSkills(json,['Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion'],"knowledge");
     }
     // if(spellLevel!=''&&hasLevel){
     //   prepared[level]=spellLevel;
@@ -876,8 +897,22 @@ elements.remove();
 function toggle(toggle){
   var checkbox = document.getElementById(`${toggle}Option`);
   var element = document.getElementById(`${toggle}`);
-  element.style.display = checkbox.checked===true ? "block" : "none";
+  if (toggle!="All"){
+    element.style.display = checkbox.checked===true ? "block" : "none";
+  }else{
+    arr = ['Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion'];
+    toggleArray(arr);
+  }
 }
+
+function toggleArray(arr){
+  arr.forEach(optionName=>{
+    var checkbox = document.getElementById(`${optionName}Option`);
+    checkbox.checked = checkbox.checked === true ? false:true;
+    toggle(optionName)
+  })
+}
+
 /**
  * goes through and toggles elements based on an array
  * @param {string} toggle 
@@ -908,6 +943,12 @@ function reset(){
   let wisMod = 0;
   switch(sys){
     case "pathfinder":
+      var featDisplay = document.getElementById("featCount");
+      var skillDisplay = document.getElementById("skillPoints");
+      featDisplay.removeChild(featDisplay.firstElementChild);
+      skillDisplay.removeChild(skillDisplay.firstElementChild);
+      clearDropList = ['language','sense','speed','feat','racialMod'];
+      clearDropDowns(clearDropList);
         document.getElementById("bonusACOption").checked = false;
   document.getElementById("innateCasterLevelOption").checked=false;
   toggle("innateCasterLevel");
@@ -918,8 +959,6 @@ function reset(){
   arrayToggle('bonusAC',['Container','Armor','Deflection','Dodge','Shield','Natural','Extra']);
   document.getElementById("defensiveTraitsOption").checked = false;
   arrayToggle('defensiveTraits',['Container','DA','DR','Immune','Resist','SR']);
-  document.getElementById("reachOption").checked = false;
-  arrayToggle('reach',['Container','reach_bonus_effects','Space']);
   document.getElementById("spellsOption").checked = false;
   arrayToggle('spells',['Container','InnateOption','PreparedOption']);
   document.getElementById("SubtypeOption").checked=false;
@@ -956,8 +995,6 @@ function reset(){
   toggle('SR');
   document.getElementById("reach_bonus_effectsOption").checked = false;
   toggle('reach_bonus_effects')
-  document.getElementById("spaceOption").checked = false;
-  toggle('space');
   document.getElementById("spellsInnateOption").checked = false;
   arrayToggle('spellsInnate',['Container','Constant','atWill','xDay']);
   document.getElementById("constantOption").checked = false;
@@ -981,7 +1018,6 @@ function reset(){
   document.getElementById("creatureHitDice")[2].selected = true;
   document.getElementById("creatureSetHP").value="";
   document.getElementById("creatureSetHD").value="";
-  document.getElementById("creatureSpeed").value = "30";
   document.getElementById("creatureFort")[1].selected = true;
   document.getElementById("creatureRef")[1].selected = true;
   document.getElementById("creatureWill")[0].selected = true;
@@ -999,10 +1035,10 @@ function reset(){
   let spellLevelArray = ['ninth','eighth','seventh','sixth','fifth','fourth','third','second','first','zeroth'];
   clearArray(spellLevelArray);
   resetSkills();
+  document.getElementById("speedList").remove();
 
 
-
-  textBoxes = ['creatureSetHP','creatureSetHD','atWill','constant','weakness','gear','special_attacks','HPTraits','space','reach_bonus_effects','reach','SR','Resist','Immune','DR','DA','natural','shield','dodge','deflection','ConcentratePrepared','CLPrepared','ConcentrateInnate','CLInnate'];
+  textBoxes = ['creatureSetHP','creatureSetHD','atWill','constant','weakness','gear','special_attacks','HPTraits','reach_bonus_effects','SR','Resist','Immune','DR','DA','natural','shield','dodge','deflection','ConcentratePrepared','CLPrepared','ConcentrateInnate','CLInnate'];
   textBoxes.forEach(elements=>{
     clearText(elements);
   })
@@ -1098,6 +1134,35 @@ function resetEdit(creatureInfo,sys){
   readJsonData(creatureInfo,sys);
 }
 
+function getForumHP(){
+    let level = document.getElementById("creatureLevel").value;
+    let hitDice = document.getElementById("creatureHitDice").value.replace("d","");
+    let conStat = document.getElementById("creatureCon").value;
+    let conBonus = getModifier(conStat)*Number(level)+getFeatBonuses("con",getForumFeats(),level,document.body,"forum");
+      let bonuses = 0;
+      if(document.getElementById("creatureType").value.toLowerCase().includes("construct")){
+        bonuses = getConstructBonusHealth(creatureInfo.size);
+        conBonus = 0
+      }
+      if(document.getElementById("creatureHitDiceRate").value=="Monster"){
+        health = Math.floor(conBonus+(((hitDice/2)+0.5)*level))+bonuses;
+        console.log(health);
+      }else if(document.getElementById("creatureHitDiceRate").value=="Player"){
+        health = Math.floor(conBonus+(((hitDice/2)+1)*(level-1)))+Number(hitDice)+Number(bonuses);
+      }
+    return health;
+}
+function getForumFeats(){
+        let len = document.getElementById(`featChoice`).childElementCount;
+    let val = ""
+    let arrayFeats = [];
+    for(var i = 0;i<len;i++){
+      let entry = document.getElementById(`featChoice`).children.item(i).getElementsByTagName("label").item(0).textContent;
+      arrayFeats.push(entry);
+    }
+    return arrayFeats;
+    
+}
 
 /**
  * creates json for the site to read and modify
@@ -1109,7 +1174,6 @@ function createCreatureJson(cinfo){
     case "pathfinder":
   let hasBonusAC = document.getElementById("bonusACOption").checked;
   let hasDefensiveTraits = document.getElementById("defensiveTraitsOption").checked;
-  let hasReach = document.getElementById("reachOption").checked;
   let hasSpells = document.getElementById("spellsOption").checked;
   let hasWeakness = document.getElementById("weaknessOption").checked;
   let hasMeleeAttack = document.getElementById("meleeOption").checked;
@@ -1126,7 +1190,6 @@ function createCreatureJson(cinfo){
   let hasImmunities = document.getElementById("ImmuneOption").checked;
   let hasResistances = document.getElementById("ResistOption").checked;
   let hasSR = document.getElementById("SROption").checked;
-  let hasSpace = document.getElementById("spaceOption").checked;
   let hasReach_bonus_effects = document.getElementById("reach_bonus_effectsOption").checked;
   let hasSpecial_attacks = document.getElementById("special_attacksOption").checked
   let hasInnate = document.getElementById("spellsInnateOption").checked;
@@ -1150,7 +1213,6 @@ function createCreatureJson(cinfo){
   let rate = document.getElementById("creatureHitDiceRate").value
   let setHP = document.getElementById("creatureSetHP").value
   let setHD = document.getElementById("creatureSetHD").value
-  let speed = document.getElementById("creatureSpeed").value;
 
   let hpTraits ="";
   if(document.getElementById("HPTraits")!=''){
@@ -1212,16 +1274,6 @@ if(hasBonusAC){
     
   }
   //reach
-  let reach ="";
-  if(document.getElementById("reach").value!=''&&hasReach){
-    reach = document.getElementById("reach").value;
-    
-  }
-  let space ="";
-  if(document.getElementById("space").value!=''&&hasSpace){
-    space = document.getElementById("space").value;
-    
-  }
   let reach_bonus_effects ="";
   if(document.getElementById("reach_bonus_effects").value!=''&&hasReach_bonus_effects){
     reach_bonus_effects = document.getElementById("reach_bonus_effects").value;
@@ -1331,11 +1383,11 @@ if(hasBonusAC){
 
   let sizeMod =getCreatureSizeMod(size);
 
-  let sense = [];
+  let sense = {};
   let saveBonus = [];
   let aura = [];
-  let feat = [];
-  let racialMod = [];
+  let feat = {};
+  let racialMod = {};
   let language = [];
   let SQ = [];
   let specialAbility =[];
@@ -1344,6 +1396,7 @@ if(hasBonusAC){
   let CMDBonus = [];
   let melee = [];
   let range = [];
+  let speed = {};
   let ac = 10+armor+shield+dexModifier+deflection+natural+dodge+sizeMod;
   let touch = 10+dexModifier+deflection+dodge+sizeMod;
   let flatFooted = 10+armor+shield+deflection+natural+sizeMod+(dexModifier>0?0:dexModifier);
@@ -1352,32 +1405,20 @@ if(hasBonusAC){
   //   let senseVal = document.getElementById(`sense${i}`).value;
   //   sense.push(senseVal);
   // }
-  populateData(sense,'sense');
+  populateDataDropDownJson(sense,'sense');
+  populateDataDropDownJson(speed,'speed');
   populateData(saveBonus,'saveBonus');
   populateDataAura(aura,'aura');
-  populateData(feat,'feat');
-  populateData(racialMod,'racialMod');
-  populateData(language,'language');
+  populateDataDropDownJson(feat,'feat');
+  populateDataDropDownJson(racialMod,'racialMod');
+  console.log(racialMod);
+  populateDataDropDownArray(language,'language');
   populateData(SQ,'SQ');
   populateAttackData(melee,'meleeAttack');
   populateAttackData(range,'rangeAttack');
   populateSpecialAbilityData(specialAbility,'SpecialAbility');
   wisMod = getModifier(wis);
   populateCMDBonusData(CMDBonus,"cmdMod");
-  let perception = document.getElementById("Perception").value;
-  let hasPerception = document.getElementById("PerceptionOption").checked;
-  if(perception!='' &&hasPerception){
-    let perceptionText;
-    perception = Number(perception) + Number(wisMod)+getFeatBonuses("Perception",feat,perception)+getRacialBonus(racialMod,"Perception");
-    if(perception>0){
-      perceptionText = "+" +  perception;
-    }else{
-      perceptionText = perception;
-    }
-    sense.push("Perception "+perceptionText)
-  }else{
-    sense.push("Perception "+wisMod);
-  }
 
   let list = ['Acrobatics','Appraise','Bluff','Climb','Craft','Diplomacy','DisableDevice','Disguise','EscapeArtist','Fly','HandleAnimal','Heal','Intimidate','Knowledge','Linguistics','Perception','Perform','Profession','Ride','SenseMotive','SleightofHand','Spellcraft','Stealth','Survival','Swim','UseMagicDevice'];
   populateSkills(skills,list);
@@ -1388,6 +1429,7 @@ if(hasBonusAC){
   cinfo["cr"]=cr;
   cinfo["alignment"]=alignment;
   cinfo["size"]=size;
+  cinfo["sizeType"]=document.getElementById("isItLongOption").checked;
   cinfo["type"]=type;
   if(type==="Custom"){
     cinfo["customType"]=cType;
@@ -1395,7 +1437,7 @@ if(hasBonusAC){
   if(hasSubtype){
     cinfo["subtype"]=subtype;
   }
-  if(sense.length>0){
+  if(Object.keys(sense).length>0){
     cinfo['senses']=sense;
   }
   if(aura.length>0){
@@ -1475,18 +1517,12 @@ if(hasBonusAC){
   if(document.getElementById("weakness").value!==''&&hasWeakness){
     cinfo["weaknesses"] = weak;
   }
-  cinfo["speed"]=String(speed);
+  cinfo["speed"]=speed;
   if(document.getElementById("melee").value!==''&&hasMeleeAttack){
     cinfo["melee"] = melee;
   }
   if(document.getElementById("range").value!==''&&hasRangedAttack){
     cinfo["ranged"] = range;
-  }
-  if(space!=''&&hasSpace){
-    cinfo["space"]=space;
-  }
-  if(reach!=''&&hasReach){
-    cinfo["reach"]=reach;
   }
   if(reach_bonus_effects!=''&&hasReach_bonus_effects){
     cinfo["reach_bonus_effects"]=reach_bonus_effects;
@@ -1527,17 +1563,17 @@ if(hasBonusAC){
   cinfo["skillProgression"]=skillProgression;
   cinfo["cmb"]=String(Number(getBaB(bab,lvl))+strModifier+(sizeMod*-1));
   cinfo["cmd"]=String(baseCMD);
-  if(CMDBonus.length>0){
+  if(Object.keys(CMDBonus).length>0){
     cinfo["cmdMod"]=CMDBonus;
   }
 
-  if(feat.length>0){
+  if(Object.keys(feat).length>0){
     cinfo["feats"]=feat;
   }
   if(skills!={} && hasSkillList){
     cinfo["skills"]=skills;
   }
-  if(racialMod.length>0){
+  if(Object.keys(racialMod).length>0){
     cinfo["racialModifiers"]=racialMod;
   }
   if(language.length>0){
@@ -1675,7 +1711,7 @@ function setSkillPoints(){
   let skillList = skillCont.getElementsByClassName("searchBarCreation")
   let usedPoints = 0;
 //  console.log(skillList);
-  let knowledge = ['Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion','All'];
+  let knowledge = ['Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion'];
   for(let skill of skillList){
     if(document.getElementById(`${skill.name}Option`)){
       if(document.getElementById(`${skill.name}Option`).checked){
@@ -1727,6 +1763,155 @@ function setSkillPoints(){
 //  skillPoints
 
 }
+
+function addDropdownchoice(listName){
+  let val = document.getElementById(`${listName}List`).value.toLowerCase();
+  if(val!=""){
+    var textSelected = document.createElement("label");
+    textSelected.textContent = val;
+    textSelected.className = "inputName"
+    var button = document.createElement("button");
+    button.setAttribute("class","formButton");
+    button.setAttribute("id",`delete${val}`);
+    button.setAttribute("type","button");
+    button.setAttribute("onClick",`deleteChoice('${val}Choice','${listName}')`);
+    button.textContent = `Delete`;
+    let divZone = document.createElement("div");
+    divZone.setAttribute("id",`${val}Choice`);
+    divZone.appendChild(textSelected);
+    if(listName=="sense"){
+        let inputval = document.getElementById(`${listName}Temp`).value;
+        let input = document.createElement("input");
+        input.setAttribute("type","number");
+        input.setAttribute("class","searchBarCreation");
+        input.setAttribute("name",`sense${val}`);
+        input.setAttribute("id",`sense${val}`);
+        input.setAttribute("title",`sense${val}`);
+        input.setAttribute("placeholder",`Insert Vision Range Here`);
+        input.value=inputval;
+        divZone.appendChild(input);
+        document.getElementById(`${listName}Temp`).value = "";
+    }
+    if(listName=="speed"){
+        let inputval = document.getElementById(`${listName}Temp`).value;
+        let input = document.createElement("input");
+        input.setAttribute("type","number");
+        input.setAttribute("class","searchBarCreation");
+        input.setAttribute("name",`speed${val}`);
+        input.setAttribute("id",`speed${val}`);
+        input.setAttribute("title",`speed${val}`);
+        input.setAttribute("placeholder",`Insert Speed Distance Here`);
+        input.value=inputval;
+        divZone.appendChild(input);
+        document.getElementById(`${listName}Temp`).value = "";
+    }
+    if(listName=="racialMod"){
+        let inputval = document.getElementById(`${listName}Temp`).value;
+        let input = document.createElement("input");
+        input.setAttribute("type","number");
+        input.setAttribute("class","searchBarCreation");
+        input.setAttribute("name",`racialMod${val}`);
+        input.setAttribute("id",`racialMod${val}`);
+        input.setAttribute("title",`racialMod${val}`);
+        input.setAttribute("placeholder",`Insert Racial Modifier Here`);
+        input.value=inputval;
+        divZone.appendChild(input);
+        document.getElementById(`${listName}Temp`).value = "";
+    }
+    if(listName=="feat"&&setFeatsAvailable()>0&&!notInputFeat(val)){
+        let inputval = document.getElementById(`${listName}Temp`).value;
+        let input = document.createElement("input");
+        input.setAttribute("type","text");
+        input.setAttribute("class","searchBarCreation");
+        input.setAttribute("name",`feat${val}`);
+        input.setAttribute("id",`feat${val}`);
+        input.setAttribute("title",`feat${val}`);
+        input.setAttribute("placeholder",`Insert Feat Details Here`);
+        input.value=inputval;
+        divZone.appendChild(input);
+        document.getElementById(`${listName}Temp`).value = "";
+    }
+    divZone.appendChild(button);
+    divZone.setAttribute("class","dropDownChoice");
+    if(setFeatsAvailable()>0||listName!="feat"){
+      document.getElementById(`${listName}Choice`).appendChild(divZone);
+      document.getElementById(`${listName}List`).value="";
+    }
+  }
+  modifyList(listName);
+
+}
+
+function deleteChoice(id,list){
+  document.getElementById(id).remove();
+  modifyList(list)
+}
+
+function modifyList(list){
+  var arr = []
+  var isDropDown;
+  switch(list){
+    case "language":
+      isDropDown = document.getElementById("language");
+      
+      arr=lanList;
+      break;
+      case "sense":
+        isDropDown = document.getElementById("sense");
+        
+        arr=senseList;
+        break;
+      case "feat":
+        isDropDown = document.getElementById("feat");
+        
+        arr=showObtainableFeats(featList);
+        break;
+      case "speed":
+        isDropDown = document.getElementById("speed");
+        arr=movementList;
+        break;
+      case "racialMod":
+        isDropDown = document.getElementById("racialMod");
+        arr=racialModifiersList;
+        break;
+      }
+
+    isDropDown.innerHTML="";
+    arr.forEach(name=>{
+      if(list=="sense"){
+      }
+      if(document.getElementById(`${name}Choice`)==null){
+        var option = document.createElement("option");
+        option.value = name;
+        option.text = name;
+        isDropDown.appendChild(option);
+      }
+    })
+  }
+
+function arrayToDropdown(arr,listName){
+  var dalist = document.createElement("div");
+  var isDropDown = document.createElement("datalist");
+  isDropDown.setAttribute("class","searchBarCreation");
+  isDropDown.setAttribute("id",listName);
+  dalist.appendChild(isDropDown);
+  arr.forEach(name=>{
+    var option = document.createElement("option");
+    option.value = name;
+    option.text = name;
+    isDropDown.appendChild(option);
+  })
+  var searchDropdown = document.createElement("input");
+  searchDropdown.setAttribute("list",listName);
+  searchDropdown.setAttribute("id",`${listName}List`);
+  searchDropdown.setAttribute("class","searchBarCreation")
+  searchDropdown.setAttribute("placeholder",`Insert ${listName} type here`)
+  dalist.appendChild(searchDropdown);
+  //class="searchBarCreation" name="creatureSize" id="creatureSize"
+  document.getElementById(`${listName}Area`).appendChild(dalist);
+  var choice = ""
+}
+
 /**
  * does a full scan of the form to get new elements that are added and removed from the form
  */
@@ -1745,9 +1930,9 @@ for(let i=0;i<proflen;i++){
 for(let i=0;i<craftlen;i++){
  createListeners(`deleteCraft${i}`,'click',refreshList);
 }
-for(let i=0;i<featlen;i++){
-  createListeners(`deletefeat${i}`,'click',refreshList);
-}
+// for(let i=0;i<featlen;i++){
+//   createListeners(`deletefeat${i}`,'click',refreshList);
+// }
 setSkillPoints();
 setFeatsAvailable();
 }
@@ -1755,7 +1940,7 @@ setFeatsAvailable();
  * creates all needed listeners for the edit and creations forms to interact with Skills and feats 
  * @param {array} skillList 
  */
-function createFormListeners(skillList){
+function createFormListenersFeatsAndSkills(skillList){
   for(let skill of skillList){
     let skillName = skill.name;
     if(skill.name.includes("Value")){
@@ -1779,8 +1964,8 @@ function createFormListeners(skillList){
 
 
 function setFeatsAvailable(){
-  let feats = Math.floor((Number(document.getElementById("creatureLevel").value)-1)/2)+1;
-  let createdFeats = document.getElementById("forum").querySelector(`.feat`).childElementCount;
+  let feats = Math.ceil((Number(document.getElementById("creatureLevel").value)-1)/2)+1;
+  let createdFeats = document.getElementById("featChoice").childElementCount;
   let int = document.getElementById("creatureInt").value;
 //  console.log(feats);
   let availFeats = feats-createdFeats;
@@ -1800,9 +1985,29 @@ function setFeatsAvailable(){
  * @param {Function} functionName 
  */
 function createListeners(elementID,eventType,functionName){
-//  console.log(elementID);
   const newListener = document.getElementById(elementID);
   newListener.addEventListener(eventType,()=>functionName());
+}
+
+function createVariableEnhancedListener(elementID,eventType,functionName,variable1){
+  const newListener = document.getElementById(elementID);
+  newListener.addEventListener(eventType,()=>
+    {
+      if(rangelessSense.includes(newListener.value.toLowerCase()) && variable1=="senseInput"){
+        functionName(variable1,"none");
+      }else{
+        functionName(variable1);
+      }
+      if(variable1=="featInput"&&notInputFeat(newListener.value.toLowerCase())&&newListener.value!=""){
+        functionName(variable1,"none");
+      }else{
+        functionName(variable1);
+      }
+    });
+}
+
+function toggleInput(inputName,state="block"){
+document.getElementById(inputName).style.display=state;
 }
 
 function createSelection(arrary,element){
@@ -1816,13 +2021,14 @@ function createSelection(arrary,element){
 
 function resetSkills(){
   let skills = ['Acrobatics','Appraise','Bluff','Climb','Craft','Diplomacy','DisableDevice','Disguise','EscapeArtist','Fly','HandleAnimal','Heal','Intimidate','Linguistics','Perception','Perform','Profession','Ride','SenseMotive','SleightofHand','Spellcraft','Stealth','Survival','Swim','UseMagicDevice'];
-  let knowledge = ['Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion','All'];
+  let knowledge = ['Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion'];
   clearArray(skills);
   clearArray(knowledge);
+  document.getElementById("AllOption").checked=false;
   document.getElementById("skillsOption").checked = false;
   arrayToggle('skills',['Container','Acrobatics','Appraise','Bluff','Climb','Craft','Diplomacy','DisableDevice','Disguise','EscapeArtist','Fly','HandleAnimal','Heal','Intimidate','KnowledgeOption','Linguistics','Perception','Perform','Profession','Ride','SenseMotive','SleightofHand','Spellcraft','Stealth','Survival','Swim','UseMagicDevice']);
   document.getElementById("skillsKnowledgeOption").checked = false;
-  arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion','All']);
+  arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
 }
 
 function creatureTypeListener(){
@@ -1846,7 +2052,7 @@ function creatureTypeListener(){
       skills = ["Acrobatics","Climb","EscapeArtist","Fly","Intimidate","Knowledge","Perception","Spellcraft","Stealth","Survival","Swim"];
       doSkills(skills,skills,true);
       arrayToggle('skills',['Container','Acrobatics','Appraise','Bluff','Climb','Craft','Diplomacy','DisableDevice','Disguise','EscapeArtist','Fly','HandleAnimal','Heal','Intimidate','KnowledgeOption','Linguistics','Perception','Perform','Profession','Ride','SenseMotive','SleightofHand','Spellcraft','Stealth','Survival','Swim','UseMagicDevice']);
-      arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion','All']);
+      arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
     break;
   case "Animal":
       document.getElementById("creatureHitDice")[2].selected = true;
@@ -1860,7 +2066,7 @@ function creatureTypeListener(){
       skills = ["Acrobatics","Climb","Fly","Perception","Stealth","Swim"];
       doSkills(skills,skills,true);
       arrayToggle('skills',['Container','Acrobatics','Appraise','Bluff','Climb','Craft','Diplomacy','DisableDevice','Disguise','EscapeArtist','Fly','HandleAnimal','Heal','Intimidate','KnowledgeOption','Linguistics','Perception','Perform','Profession','Ride','SenseMotive','SleightofHand','Spellcraft','Stealth','Survival','Swim','UseMagicDevice']);
-      arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion','All']);
+      arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
     break;
     case "Construct":
       document.getElementById("creatureHitDice")[3].selected = true;
@@ -1883,7 +2089,7 @@ function creatureTypeListener(){
       skills = ["Appraise","Bluff","Climb","Craft","Diplomacy","Fly","Heal","Intimidate","Knowledge(All)","Perception","SenseMotive","Spellcraft","Stealth","Survival","Swim","UseMagicDevice"];
       doSkills(skills,skills,true);
       arrayToggle('skills',['Container','Acrobatics','Appraise','Bluff','Climb','Craft','Diplomacy','DisableDevice','Disguise','EscapeArtist','Fly','HandleAnimal','Heal','Intimidate','KnowledgeOption','Linguistics','Perception','Perform','Profession','Ride','SenseMotive','SleightofHand','Spellcraft','Stealth','Survival','Swim','UseMagicDevice']);
-      arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion','All']);
+      arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
     break;
     case "Fey":
       document.getElementById("creatureHitDice")[1].selected = true;
@@ -1892,12 +2098,12 @@ function creatureTypeListener(){
       document.getElementById("creatureFort")[1].selected = true;
       document.getElementById("creatureRef")[0].selected = true;
       document.getElementById("creatureWill")[0].selected = true;
-      document.getElementById("skillsOption").checked = true;
       resetSkills();
+      document.getElementById("skillsOption").checked = true;
       skills = ["Acrobatics","Bluff","Climb","Craft","Diplomacy","Disguise","EscapeArtist","Fly","Knowledge(Geography)","Knowledge(Local)","Knowledge(Nature)","Perception","Perform","Sense Motive","SleightofHand","Stealth","Swim","UseMagicDevice"];
       doSkills(skills,skills,true);
       arrayToggle('skills',['Container','Acrobatics','Appraise','Bluff','Climb','Craft','Diplomacy','DisableDevice','Disguise','EscapeArtist','Fly','HandleAnimal','Heal','Intimidate','KnowledgeOption','Linguistics','Perception','Perform','Profession','Ride','SenseMotive','SleightofHand','Spellcraft','Stealth','Survival','Swim','UseMagicDevice']);
-      arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion','All']);
+      arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
     break;
     case "Humanoid":
       document.getElementById("creatureHitDice")[2].selected = true;
@@ -1906,12 +2112,12 @@ function creatureTypeListener(){
       document.getElementById("creatureFort")[1].selected = true;
       document.getElementById("creatureRef")[1].selected = true;
       document.getElementById("creatureWill")[0].selected = true;
-      document.getElementById("skillsOption").checked = true;
       resetSkills();
+      document.getElementById("skillsOption").checked = true;
       skills = ["Climb","Craft","HandleAnimal","Heal","Profession","Ride","Survival"];
       doSkills(skills,skills,true);
       arrayToggle('skills',['Container','Acrobatics','Appraise','Bluff','Climb','Craft','Diplomacy','DisableDevice','Disguise','EscapeArtist','Fly','HandleAnimal','Heal','Intimidate','KnowledgeOption','Linguistics','Perception','Perform','Profession','Ride','SenseMotive','SleightofHand','Spellcraft','Stealth','Survival','Swim','UseMagicDevice']);
-      arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion','All']);
+      arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
     break;
     case "Magical Beast":
       document.getElementById("creatureHitDice")[3].selected = true;
@@ -1920,12 +2126,12 @@ function creatureTypeListener(){
       document.getElementById("creatureFort")[1].selected = true;
       document.getElementById("creatureRef")[0].selected = true;
       document.getElementById("creatureWill")[0].selected = true;
-      document.getElementById("skillsOption").checked = true;
       resetSkills();
+      document.getElementById("skillsOption").checked = true;
       skills = ["Acrobatics","Climb","Fly","Perception","Stealth","Swim"];
       doSkills(skills,skills,true);
       arrayToggle('skills',['Container','Acrobatics','Appraise','Bluff','Climb','Craft','Diplomacy','DisableDevice','Disguise','EscapeArtist','Fly','HandleAnimal','Heal','Intimidate','KnowledgeOption','Linguistics','Perception','Perform','Profession','Ride','SenseMotive','SleightofHand','Spellcraft','Stealth','Survival','Swim','UseMagicDevice']);
-      arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion','All']);
+      arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
     break;
       case "Monstrous Humanoid":
       document.getElementById("creatureHitDice")[3].selected = true;
@@ -1934,12 +2140,12 @@ function creatureTypeListener(){
       document.getElementById("creatureFort")[1].selected = true;
       document.getElementById("creatureRef")[0].selected = true;
       document.getElementById("creatureWill")[0].selected = true;
-      document.getElementById("skillsOption").checked = true;
       resetSkills();
+      document.getElementById("skillsOption").checked = true;
       skills = ["Acrobatics","Climb","Fly","Perception","Stealth","Swim"];
       doSkills(skills,skills,true);
       arrayToggle('skills',['Container','Acrobatics','Appraise','Bluff','Climb','Craft','Diplomacy','DisableDevice','Disguise','EscapeArtist','Fly','HandleAnimal','Heal','Intimidate','KnowledgeOption','Linguistics','Perception','Perform','Profession','Ride','SenseMotive','SleightofHand','Spellcraft','Stealth','Survival','Swim','UseMagicDevice']);
-      arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion','All']);
+      arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
     break;
     case "Ooze":
       document.getElementById("creatureHitDice")[2].selected = true;
@@ -1957,12 +2163,12 @@ function creatureTypeListener(){
       document.getElementById("creatureFort")[1].selected = true;
       document.getElementById("creatureRef")[0].selected = true;
       document.getElementById("creatureWill")[0].selected = true;
-      document.getElementById("skillsOption").checked = true;
       resetSkills();
+      document.getElementById("skillsOption").checked = true;
       skills = ["Bluff","Craft","Knowledge(Planes)","Perception","SenseMotive","Stealth"];
       doSkills(skills,skills,true);
       arrayToggle('skills',['Container','Acrobatics','Appraise','Bluff','Climb','Craft','Diplomacy','DisableDevice','Disguise','EscapeArtist','Fly','HandleAnimal','Heal','Intimidate','KnowledgeOption','Linguistics','Perception','Perform','Profession','Ride','SenseMotive','SleightofHand','Spellcraft','Stealth','Survival','Swim','UseMagicDevice']);
-      arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion','All']);
+      arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
     break;
     case "Plant":
       document.getElementById("creatureHitDice")[2].selected = true;
@@ -1971,12 +2177,12 @@ function creatureTypeListener(){
       document.getElementById("creatureFort")[0].selected = true;
       document.getElementById("creatureRef")[1].selected = true;
       document.getElementById("creatureWill")[1].selected = true;
-      document.getElementById("skillsOption").checked = true;
       resetSkills();
+      document.getElementById("skillsOption").checked = true;
       skills = ["Perception","Stealth"];
       doSkills(skills,skills,true);
       arrayToggle('skills',['Container','Acrobatics','Appraise','Bluff','Climb','Craft','Diplomacy','DisableDevice','Disguise','EscapeArtist','Fly','HandleAnimal','Heal','Intimidate','KnowledgeOption','Linguistics','Perception','Perform','Profession','Ride','SenseMotive','SleightofHand','Spellcraft','Stealth','Survival','Swim','UseMagicDevice']);
-      arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion','All']);
+      arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
     break;
     case "Undead":
       document.getElementById("creatureHitDice")[2].selected = true;
@@ -1985,12 +2191,12 @@ function creatureTypeListener(){
       document.getElementById("creatureFort")[1].selected = true;
       document.getElementById("creatureRef")[1].selected = true;
       document.getElementById("creatureWill")[0].selected = true;
-      document.getElementById("skillsOption").checked = true;
       resetSkills();
+      document.getElementById("skillsOption").checked = true;
       skills = ["Climb","Disguise","Fly","Intimidate","Knowledge(Arcana)","Knowledge(Religion)","Perception","SenseMotive","Spellcraft","Stealth"];
       doSkills(skills,skills,true);
       arrayToggle('skills',['Container','Acrobatics','Appraise','Bluff','Climb','Craft','Diplomacy','DisableDevice','Disguise','EscapeArtist','Fly','HandleAnimal','Heal','Intimidate','KnowledgeOption','Linguistics','Perception','Perform','Profession','Ride','SenseMotive','SleightofHand','Spellcraft','Stealth','Survival','Swim','UseMagicDevice']);
-      arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion','All']);
+      arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
     break;
       case "Vermin":
       document.getElementById("creatureHitDice")[2].selected = true;
@@ -2001,6 +2207,14 @@ function creatureTypeListener(){
       document.getElementById("creatureWill")[1].selected = true;
       resetSkills();
     break;
+      case "Custom":
+        document.getElementById("creatureHitDice")[0].selected = true;
+        document.getElementById("creatureBaB")[0].selected = true;
+        document.getElementById("creatureSkillProgression")[0].selected = true;
+        document.getElementById("creatureFort")[0].selected = true;
+        document.getElementById("creatureRef")[0].selected = true;
+        document.getElementById("creatureWill")[0].selected = true;
+        resetSkills();
   default:
     break;
  }
@@ -2063,11 +2277,40 @@ function doSkills(cSkills,skills,isJustEnable=false){
                       let skill = element.replace("Knowledge(","");
                       skill = skill.substring(0,skill.lastIndexOf(")")).trim();
                       document.getElementById(skill+"Option").checked = true;
+                      if(skill!="All"){
                       document.getElementById(skill).style.display = "block";
                       if(!isJustEnable){
                         document.getElementById(skill).value = Number(skills[element]);
                       }
+                    }else{
+                      arr = ['Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion'];
+                      toggleArray(arr)
+                    }
                     }
                 }
             })
+}
+
+
+function showObtainableFeats(feats){
+  feats.forEach(feat=>{
+  //  console.log(featswithPrereqs[feat.replace(" ","")]);
+  })
+  return feats;
+}
+
+function clearDropDowns(list){
+  list.forEach(name=>{
+    var languageVar = document.getElementById(`${name}Choice`);
+        while(languageVar.hasChildNodes()){
+          languageVar.removeChild(languageVar.firstElementChild);
+        }
+
+  })
+}
+
+
+function updateHealthDisplay(){
+  var skillDisplay = document.getElementById("calculateHealth");
+  skillDisplay.textContent=`Health: ${getForumHP()}`;
 }

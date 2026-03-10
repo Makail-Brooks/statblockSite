@@ -1806,7 +1806,7 @@ function setSkillPoints(){
 }
 
 function checkIsInList(list,value){
-  let item = camelCaseCharacters(value);
+  let item = capitalizedCaseCharacter(value);
   switch(list){
     case "classes":
       if(classList.includes(item)){
@@ -1888,7 +1888,16 @@ function addDeleteButton(divZone,val,listName){
     divZone.appendChild(button);
 }
 
-function addDropdownchoice(listName,secondaryInput=false,placeholder="something",subDropdown=false,secondaryInputType="text"){
+function checkIfInTalents(item){
+      if(alterationList.includes(item)){
+        return true;
+      }
+      if(destructionList.includes(item)){
+        return true;
+      }
+}
+
+function addDropdownchoice(listName,secondaryInput=false,placeholder="something",secondaryInputType="text",subDropdown=false,doDelete=true,isDropinDrop=false){
   let val = document.getElementById(`${listName}List`).value;
   let additionalValidation = true;
   if(document.getElementById(`${listName}Temp`)!=null&&document.getElementById(`${listName}Input`).style.display!="none"){
@@ -1896,9 +1905,12 @@ function addDropdownchoice(listName,secondaryInput=false,placeholder="something"
       additionalValidation=false;
     }
   }
-  val = camelCaseCharacters(val.toLocaleLowerCase());
+  val = capitalizedCaseCharacter(val.toLocaleLowerCase());
   if(additionalValidation!=false){
     additionalValidation = checkIsInList(listName,val);
+    if(additionalValidation==false){
+      additionalValidation = checkIfInTalents(val);
+    }
   }
   
   if(listName=="classes"){
@@ -1923,8 +1935,32 @@ function addDropdownchoice(listName,secondaryInput=false,placeholder="something"
     textSelected.className = "inputName"
     textSelected.setAttribute("for",`${listName}${val}`);
     let divZone = document.createElement("div");
+    let arr = [];
+    if(listName.includes("sphere")){
+      arr = getTalentList(capitalizedCaseCharacter(val));
+    }
     divZone.setAttribute("id",`${val}Choice`);
-    divZone.appendChild(textSelected);
+    divZone.setAttribute("class","dropDownChoice");
+    if(listName.includes("sphere")){
+      divZone.setAttribute("style","display: block;");
+      let subDiv = document.createElement("div");
+      let extraChoice = document.createElement("div");
+      extraChoice.setAttribute("id",`${val}subChoice`)
+      extraChoice.setAttribute("style","display:block;")
+      let dropDownDiv = document.createElement("div");
+      dropDownDiv=createNewArea(val);
+      subDiv.setAttribute("class","dropDownChoice");
+      subDiv.appendChild(textSelected);
+      divZone.appendChild(subDiv);
+      divZone.appendChild(dropDownDiv);
+      divZone.appendChild(extraChoice);
+      addDeleteButton(subDiv,val,listName);
+    }else{
+      divZone.appendChild(textSelected);
+    }
+    if(doDelete && !listName.includes("sphere")){
+      addDeleteButton(divZone,val,listName);
+    }
     if(listName=="feat"){
       secondaryInput=(setFeatsAvailable()>0&&!notInputFeat(val));
     }
@@ -1937,11 +1973,19 @@ function addDropdownchoice(listName,secondaryInput=false,placeholder="something"
   
       }
     }
-    addDeleteButton(divZone,val,listName);
-      divZone.setAttribute("class","dropDownChoice");
+    
       if(setFeatsAvailable()>0||listName!="feat"||listName!="classes"){
-        document.getElementById(`${listName}Choice`).appendChild(divZone);
+        if(isDropinDrop){
+          
+          document.getElementById(`${listName}subChoice`).appendChild(divZone);
+
+        }else{
+          document.getElementById(`${listName}Choice`).appendChild(divZone);
+        }
         document.getElementById(`${listName}List`).value="";
+      }
+      if(secondaryInput==false &&subDropdown==true){
+        arrayToDropdown(arr,val,`Insert ${capitalizedCaseCharacter(val)} talent`);
       }
     if(listName=="classes"){
       createListeners(`classes${val}`,`input`,classListener);
@@ -1954,6 +1998,22 @@ function addDropdownchoice(listName,secondaryInput=false,placeholder="something"
     }
     modifyList(listName);
 }
+
+function createNewArea(selection){
+    let newArea = document.createElement("div");
+    let subArea = document.createElement("div");
+    subArea.setAttribute("class",selection);
+    subArea.setAttribute("id",`${selection}Area`);
+    newArea.appendChild(subArea);
+    let addButton = document.createElement("button");
+    addButton.setAttribute("type","button");
+    addButton.setAttribute("class","formButton");
+    addButton.setAttribute("onclick",`addDropdownchoice('${selection}',false,'','',false,true,true)`)
+    addButton.innerText=`Add ${selection} Sphere`;
+    newArea.appendChild(addButton);
+    return newArea;
+}
+
 
 function createInputSection(listName,divZone,selection,placeholderText,inputType,doSubDropdown){
   let inputval = document.getElementById(`${listName}Temp`).value;
@@ -1974,7 +2034,7 @@ function createInputSection(listName,divZone,selection,placeholderText,inputType
       subZone.setAttribute("class","dropDownAddition");
       divZone.appendChild(subZone);
       document.getElementById(`${listName}Choice`).appendChild(divZone);
-      arrayToDropdownSub(getArchetypeName(classJson.class,selection),`archetype${selection}`,archetypeSelected);
+      arrayToDropdownSub(getArchetypeName(classJson.class,selection),"Insert Archetype here",`archetype${selection}`,`${listName.toLowerCase()}subArea`,archetypeSelected);
     }
   }
   document.getElementById(`${listName}Temp`).value = "";
@@ -1998,53 +2058,58 @@ function deleteChoice(id,list){
   modifyList(list)
 }
 
+function getTalentList(list){
+  list = capitalizedCaseCharacter(list);
+  switch(list){
+    case "Alteration":
+      return alterationList;
+    case "Destruction":
+      return destructionList;
+    default:
+      return [];
+  }
+}
+
 function modifyList(list){
   var arr = []
   var isDropDown;
+  isDropDown = document.getElementById(list);
   switch(list){
     case "language":
-      isDropDown = document.getElementById("language");
       arr=lanList;
       break;
-      case "sense":
-        isDropDown = document.getElementById("sense");
-        
-        arr=senseList;
-        break;
-      case "feat":
-        isDropDown = document.getElementById("feat");
-        
-        arr=showObtainableFeats(featList);
-        break;
-      case "speed":
-        isDropDown = document.getElementById("speed");
-        arr=movementList;
-        break;
-      case "racialMod":
-        isDropDown = document.getElementById("racialMod");
-        arr=racialModifiersList;
-        break;
-      case "classes":
-        isDropDown = document.getElementById("classes");
-        arr=classList;
-        break;      
-      case "spherePower":
-        isDropDown = document.getElementById("spherePower");
-        arr=spherePowerList;
-        break;
-      case "sphereMight":
-        isDropDown = document.getElementById("sphereMight");
-        arr=sphereMightList;
-        break;
-      case "sphereGuile":
-        isDropDown = document.getElementById("sphereGuile");
-        arr=sphereGuileList;
-        break;
+    case "sense":
+      arr=senseList;
+      break;
+    case "feat":
+      arr=showObtainableFeats(featList);
+      break;
+    case "speed":
+      arr=movementList;
+      break;
+    case "racialMod":
+      arr=racialModifiersList;
+      break;
+    case "classes":
+      arr=classList;
+      break;      
+    case "spherePower":
+      arr=spherePowerList;
+      break;
+    case "sphereMight":
+      arr=sphereMightList;
+      break;
+    case "sphereGuile":
+      arr=sphereGuileList;
+      break;
+    default:
+      arr = getTalentList(list);
+      break;
       }
-
     isDropDown.innerHTML="";
+    
     arr.forEach(name=>{
-      if(document.getElementById(`${camelCaseCharacters(name)}Choice`)==null&&document.getElementById(`${name.toLowerCase()}Choice`)==null){
+      if(document.getElementById(`${capitalizedCaseCharacter(name)}Choice`)==null&&document.getElementById(`${name.toLowerCase()}Choice`)==null){
         var option = document.createElement("option");
         option.value = name;
         option.text = getName(list,name);
@@ -2074,14 +2139,13 @@ function arrayToDropdown(arr,listName,placeHoldertext){
   isDropDown.setAttribute("class","searchBarCreation");
   isDropDown.setAttribute("id",listName);
   arr.forEach(name=>{
-    if(document.getElementById(`${camelCaseCharacters(name)}Choice`)==null){
+    if(document.getElementById(`${capitalizedCaseCharacter(name)}Choice`)==null){
         var option = document.createElement("option");
         option.value = name;
         option.text = getName(listName,name);
         isDropDown.appendChild(option);
     }
   })
-//  isDropDown.setAttribute("autocomplete","off");
   dalist.appendChild(isDropDown);
 
   var searchDropdown = document.createElement("input");
@@ -2091,11 +2155,10 @@ function arrayToDropdown(arr,listName,placeHoldertext){
   searchDropdown.setAttribute("placeholder",`${placeHoldertext}`);
   dalist.appendChild(searchDropdown);
   document.getElementById(`${listName}Area`).appendChild(dalist);
-  var choice = ""
 }
-function arrayToDropdownSub(arr,listName,archetypeSelected){
+function arrayToDropdownSub(arr,listName,placeHolderText,target,archetypeSelected=""){
   listName = listName.toLocaleLowerCase();
-  const targetArea = document.getElementById(`${listName}subArea`);
+  const targetArea = document.getElementById(`${target}`);
   targetArea.innerHTML="";
   var dalist = document.createElement("div");
   var isDropDown = document.createElement("datalist");
@@ -2113,10 +2176,12 @@ function arrayToDropdownSub(arr,listName,archetypeSelected){
   searchDropdown.setAttribute("list",`${listName}sub`);
   searchDropdown.setAttribute("id",`${listName}subList`);
   searchDropdown.setAttribute("class","searchBarCreation");
-  searchDropdown.setAttribute("placeholder",`Insert archetype here`);
-  searchDropdown.value=archetypeSelected;
+  searchDropdown.setAttribute("placeholder",`${placeHolderText}`);
+  if(archetypeSelected!=""){
+    searchDropdown.value=archetypeSelected;
+  }
   dalist.appendChild(searchDropdown);
-  document.getElementById(`${listName}subArea`).appendChild(dalist);
+  document.getElementById(`${target}`).appendChild(dalist);
   if(listName.includes("archetype")){
     var name=listName.replace("archetype","").trim();
       createVariableListener(`${listName}subList`,`input`,constrainedDropdown,name);
@@ -2383,7 +2448,7 @@ function getArchetypeName(json,item){
   return archetypeArray;
 }
 
-function camelCaseCharacters(text){
+function capitalizedCaseCharacter(text){
   if(text==""){
     return "";
   }
@@ -2406,7 +2471,7 @@ function classListener(){
   }else{
     document.getElementById("customClasses").style.display="none";
   }
-  if(playerClassList.includes(camelCaseCharacters(className.toLocaleLowerCase()))){
+  if(playerClassList.includes(capitalizedCaseCharacter(className.toLocaleLowerCase()))){
     document.getElementById("archetypeSection").style.display="block";
     arrayToDropdown(constArch,"archetype","Search Archetype");
   }else{

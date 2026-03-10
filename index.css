@@ -289,6 +289,10 @@ hr{
   justify-items: center;
 }
 
+.creationDisplayBlock{
+  justify-self: center;
+}
+
 .stairCase{
   margin-left: 50px;
 }
@@ -318,10 +322,6 @@ hr{
   gap:20px;
 }
 
-.dropDownChoice{
-  display: flex;
-  gap:20px;
-}
 
 .gapBetweenItems{
   display: flex;

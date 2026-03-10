@@ -40,6 +40,9 @@ var racialModifiersList = ['Acrobatics','Appraise','Bluff','Climb','Craft','Dipl
 var spherePowerList = ['Alteration','Destruction'];
 var sphereMightList = ['Artifice']
 var sphereGuileList = ['Alchemy']
+var alterationList = ['Adaptive Physicality [utility]','Additional Limbs'];
+var destructionList = ['Admixture','Cascade Failure'];
+
 
 lanList.sort();
 senseList.sort();
@@ -62,6 +65,7 @@ var spherePowerArray = [spherePowerList,'spherePower','Search Power Spheres'];
 var sphereMightArray = [sphereMightList,'sphereMight','Search Might Spheres'];
 var sphereGuileArray = [sphereGuileList,'sphereGuile','Search Guile Spheres'];
 var dropDownArray =[lanArray,senseArray,featArray,movementArray,racialModifierArray,classArray,spherePowerArray,sphereMightArray,sphereGuileArray];
+
 
 fetch("./list.json")
     .then(response=>response.json())
@@ -322,13 +326,14 @@ function returnToNPC(){
   window.location.href = `./NPCDisplay.html?NPC=${id}`;
 }
 var last_combat = "defensiveTraits"
+var lastSphereSelect = "selectionPower"
 function displayChange(section){
     //   if(section=="offensiveTraits"||section=="defensiveTraits"){
     //   last_combat=section;
     // }
-    
     let subSetOption = ["bonusACOption","resistanceOption","defensiveBonusOption","defensiveMiscOption","specialAttacksOption","specialAbilityOption","auraOption","meleeOption","rangeOption"];
     let combatList = ["combatTraits","bonusACOption","resistanceOption","defensiveBonusOption","defensiveMiscOption","specialAttacksOption","specialAbilityOption","auraOption","meleeOption","rangeOption"];
+    let sphereListhotbar = ["spheres","selectionPower","selectionMight","selectionGuile"];
     document.getElementById("main").style.display = section=="main"? "flex":"none";
     document.getElementById("combatTraits").style.display = combatList.includes(section)? "block":"none";
     document.getElementById("classesSec").style.display = section=="class"? "block":"none";
@@ -353,7 +358,16 @@ function displayChange(section){
     }
     document.getElementById("SQSection").style.display = section=="SQSection"? "block":"none";
     document.getElementById("feats").style.display = section=="feats"? "block":"none";
-    document.getElementById("spheres").style.display = section=="spheres"? "flex":"none";
+    document.getElementById("spheres").style.display = sphereListhotbar.includes(section)? "block":"none";
+    if(section=="spheres"){
+      section=lastSphereSelect;
+    }
+    if(section=="selectionGuile"||section=="selectionMight"||section=="selectionPower"){
+      lastSphereSelect = section;      
+    }
+    document.getElementById("selectionPower").style.display = section=="selectionPower"? "block":"none";
+    document.getElementById("selectionMight").style.display = section=="selectionMight"? "block":"none";
+    document.getElementById("selectionGuile").style.display = section=="selectionGuile"? "block":"none";
 //    document.getElementById("main").style.display = document.getElementById("main").style.display=="block"?"none":"block";
 }
 
@@ -796,7 +810,7 @@ function getForum(sys,forumType){
         </div>
 
 
-        <div id="classesSec" style="display: none;">
+        <div class="creationDisplayBlock" id="classesSec" style="display: none;">
         
         <p class="inputName" id="classHealth"></p>
         
@@ -1063,22 +1077,41 @@ function getForum(sys,forumType){
         </div>
         </div>
         <div class="spheres" id="spheres" style="display:none;">
+        <div class="gapBetweenItems">
+        <div>
+        <button type="button" class="button" id="spheresPower" onclick="displayChange('selectionPower')">Spheres of Power</button>
+        </div>
+        <div>
+        <button type="button" class="button" id="spheresMight" onclick="displayChange('selectionMight')">Spheres of Might</button>
+        </div>
+        <div>
+        <button type="button" class="button" id="spheresGuile" onclick="displayChange('selectionGuile')">Spheres of Guile</button>
+        </div>
+        </div>
+        <br>
+        <div>
+        <div id="selectionPower" class="creationDisplay">
           <div>
-              <button type="button" class="button" id="spheresPower">Spheres of Power</button>
-              <div class="spheresPower" id="spherePowerArea"></div>
-              <button type="button" class="formButton" onclick="addDropdownchoice('spherePower',false)">Add Power Sphere</button>
-              <div id="spherePowerChoice"></div>
-          </div>
-          <div>
-              <button type="button" class="button" id="spheresMight">Spheres of Might</button>
+            <div class="spheresPower" id="spherePowerArea"></div>
+              <button type="button" class="formButton" onclick="addDropdownchoice('spherePower',false,'','',true)">Add Power Sphere</button>
+              </div>
+              <div id="spherePowerChoice" class="dropDownChoice"></div>
+            </div>
+          <div id="selectionMight" class="creationDisplay" style="display:none;">
+              <div>
               <div class="spheresMight" id="sphereMightArea"></div>
-              <div id="sphereMightChoice"></div>
+              <button type="button" class="formButton" onclick="addDropdownchoice('sphereMight',false,'','',true)">Add Might Sphere</button>
+              </div>
+              <div id="sphereMightChoice" style="display:flex";></div>
           </div>
-          <div>
-              <button type="button" class="button" id="spheresGuile">Spheres of Guile</button>
+          <div id="selectionGuile" class="creationDisplay" style="display:none;">
+              <div>
               <div class="spheresGuile" id="sphereGuileArea"></div>
-              <div id="sphereGuileChoice"></div>
+              <button type="button" class="formButton" onclick="addDropdownchoice('sphereGuile',false,'','',true)">Add Guile Sphere</button>
+              </div>
+              <div id="sphereGuileChoice" style="display:flex";></div>
           </div>
+        </div>
         </div>
         </div>
 

@@ -831,7 +831,7 @@ function getDropDownSelection(item,group,infoVal=[]){
         subZone.setAttribute("class","dropDownAddition");
         divZone.appendChild(subZone);
         document.getElementById(`${group}Choice`).appendChild(divZone);
-        arrayToDropdownSub(getArchetypeName(classJson.class,val),`archetype${val}`,archetypeSelected);
+        arrayToDropdownSub(getArchetypeName(classJson.class,val),`archetype${val}`,"Insert Archetype here",`archetype${val.toLowerCase()}subArea`,archetypeSelected);
         createListeners(`archetype${val.toLowerCase()}subArea`,`input`,classListener);
         createListeners(`archetype${val.toLowerCase()}subArea`,`input`,setSkillPoints);
         createListeners(`archetype${val.toLowerCase()}subArea`,`input`,updateSaveValues);

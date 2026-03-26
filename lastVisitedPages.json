@@ -2,22 +2,17 @@
   "pages": [
     {
       "name": "Mimic",
-      "index": "49",
-      "system": "pathfinder"
-    },
-    {
-      "name": "Mimic",
       "index": "48",
-      "system": "pathfinder"
-    },
-    {
-      "name": "Null Hound",
-      "index": "4",
       "system": "pathfinder"
     },
     {
       "name": "Void Envoy",
       "index": "2",
+      "system": "pathfinder"
+    },
+    {
+      "name": "Null Hound",
+      "index": "4",
       "system": "pathfinder"
     },
     {

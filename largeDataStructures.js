@@ -5754,3 +5754,32 @@ var classes = `{"class":[
         "Abilities":[]
     }
 ]}`
+
+
+
+var monsterAbilitiesInputs = `{
+    "regeneration":{
+        "input":"number"},
+    "rend":{
+        "input":"dice",
+        "default":"d6"},
+    "ability damage":{
+        "input":"dice",
+        "default":"d4"},
+    "bleed":{
+        "input":"dice",
+        "default":"d6"},
+    "blood drain":{
+        "input":"dice",
+        "default":"d2"},
+    "breath weapon":{
+        "input":"breath",
+        "default":"d6",
+        "range":60,
+        "recharge":"d4",
+        "saveType":"reflex"},
+    "frightful presence":{
+        "input":"area",
+        "range":60
+        }
+}`

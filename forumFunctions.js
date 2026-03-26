@@ -698,8 +698,6 @@ function createAttackInformation(overallElementName,placeholderText1,placeholder
   divZone.setAttribute("class",`enchantment${overallElementName}${choice}`);
   divZone.setAttribute("id",`enchantmentArea${overallElementName}${choice}`);
   divZone.setAttribute("style","display:flex;  flex-direction: column;");
-        //   <br><button type="button" class="formButton" onclick="createArrayChoice('sense','Sense','Sense')">Add Sense</button>
-        // <div class="sense" id="senseArea"></div>
   var critZone = document.createElement("input");
   critZone.setAttribute("type","checkbox");
   critZone.setAttribute("id",`critStats${overallElementName}${choice}Option`);
@@ -1854,6 +1852,10 @@ function checkIsInList(list,value){
       if(sphereGuileList.includes(item)){
         return true;
       }
+    case "monsterAbilities":
+      if(monsterAbilitiesList.includes(item)){
+        return true;
+      }
   }
   return false;
 }
@@ -1895,6 +1897,62 @@ function checkIfInTalents(item){
       if(destructionList.includes(item)){
         return true;
       }
+}
+
+function addVariableDropdownchoice(listName){
+  let item = document.getElementById(`${listName}List`).value;
+  let itemBlock = item.replace(" ","");
+  let inputList = document.getElementById(`${listName}Input`).children;
+  let divZone = document.createElement("div");
+  divZone.setAttribute("id",`${itemBlock}Choice`);
+  let itemName = document.createElement("label");
+  itemName.setAttribute("class","inputName");
+  itemName.setAttribute("for",`${listName}${itemBlock}`);
+  itemName.textContent = item;
+  divZone.appendChild(itemName);
+  divZone.appendChild(document.createElement("br"));
+  let instances = 0;
+  for(const element of inputList){
+    let elItem = element.tagName;
+    let tempItem = "";
+    tempItem = createElementSetup(elItem,element,itemBlock,listName);
+    divZone.appendChild(tempItem);
+  }
+  addDeleteButton(divZone,itemBlock,listName);
+  document.getElementById(`${listName}Choice`).appendChild(divZone);
+  document.getElementById(`${listName}List`).value = "";
+  modifyList(listName);
+}
+
+function createElementSetup(elementTag,element,item,listName){
+  let newEl = document.createElement(elementTag);
+  switch(elementTag.toLowerCase()){
+    case "label":
+      newEl.setAttribute("for",`${listName}${item}`);
+      newEl.setAttribute("class","inputName");
+      newEl.textContent = element.textContent;
+      break;
+    case "input":
+      newEl.setAttribute("type",element.getAttributeNode("type").value);
+      newEl.setAttribute("name",`${listName}${item}`);
+      newEl.setAttribute("placeholder",element.getAttributeNode("placeholder").value);
+      newEl.setAttribute("title",element.getAttributeNode("title").value);
+      newEl.setAttribute("id",`${listName}${item}`);
+      newEl.setAttribute("class","searchBarCreation");
+      break;
+    case "select":
+      newEl.setAttribute("class","searchBarCreation");
+      newEl.setAttribute("name",`monsterAbilityDice${item}`);
+      newEl.setAttribute("id",`monsterAbilityDice${item}`);
+      for(let i = 0; i<element.options.length;i++){
+        var option = document.createElement("option");
+        option.value = element.options[i].value;
+        option.text = element.options[i].value;
+        newEl.appendChild(option);
+      }
+      break;
+  }
+  return newEl;
 }
 
 function addDropdownchoice(listName,secondaryInput=false,placeholder="something",secondaryInputType="text",subDropdown=false,doDelete=true,isDropinDrop=false){
@@ -1958,9 +2016,7 @@ function addDropdownchoice(listName,secondaryInput=false,placeholder="something"
     }else{
       divZone.appendChild(textSelected);
     }
-    if(doDelete && !listName.includes("sphere")){
-      addDeleteButton(divZone,val,listName);
-    }
+
     if(listName=="feat"){
       secondaryInput=(setFeatsAvailable()>0&&!notInputFeat(val));
     }
@@ -1973,7 +2029,9 @@ function addDropdownchoice(listName,secondaryInput=false,placeholder="something"
   
       }
     }
-    
+    if(doDelete && !listName.includes("sphere")){
+      addDeleteButton(divZone,val,listName);
+    }
       if(setFeatsAvailable()>0||listName!="feat"||listName!="classes"){
         if(isDropinDrop){
           
@@ -1985,15 +2043,22 @@ function addDropdownchoice(listName,secondaryInput=false,placeholder="something"
         document.getElementById(`${listName}List`).value="";
       }
       if(secondaryInput==false &&subDropdown==true){
-        arrayToDropdown(arr,val,`Insert ${capitalizedCaseCharacter(val)} talent`);
+        arrayToDropdown(arr,val,`Search ${spacelessCapitalizedCaseCharacter(val)} talent`);
       }
     if(listName=="classes"){
       createListeners(`classes${val}`,`input`,classListener);
       createListeners(`classes${val}`,`input`,setSkillPoints);
       createListeners(`classes${val}`,`input`,updateFeatDetails);
-      createVariableListener(`classes${val}`,`input`,setProperMinLevel,`classes${val}`);
-      createVariableListener(`classes${val}`,`focusout`,setProperMinLevel,`classes${val}`);
-      createVariableListener(`classes${val}`,`keyup`,setProperMinLevel,`classes${val}`);
+    }
+    if(secondaryInputType=="number"){
+      createVariableListener(`${listName}${val}`,`input`,setProperMinLevel,`${listName}${val}`);
+      createVariableListener(`${listName}${val}`,`focusout`,setProperMinLevel,`${listName}${val}`);
+      createVariableListener(`${listName}${val}`,`focusout`,enforceMinLevel,`${listName}${val}`);
+      createVariableListener(`${listName}${val}`,`keyup`,setProperMinLevel,`${listName}${val}`);
+    }
+
+    if(listName=="monsterAbilities"){
+      createVariableListener(`monsterAbilities${val}`,`input`,setProperMinLevel,`monsterAbilities${val}`);
     }
     }
     modifyList(listName);
@@ -2026,6 +2091,15 @@ function createInputSection(listName,divZone,selection,placeholderText,inputType
   input.setAttribute("placeholder",`Insert ${placeholderText} Here`);
   input.value=inputval;
   divZone.appendChild(input);
+  if(listName=="sense"||listName=="speed"){
+    let label = document.createElement("label");
+    label.setAttribute("class","inputName");
+    label.setAttribute("id",`${selection}feet`);
+    label.setAttribute("for",`${listName}${selection}`);
+    label.textContent = "ft."
+    divZone.appendChild(label);
+    console.log(divZone);
+  }
   if(doSubDropdown){
     if(!checkIfNPC(selection)){
       let archetypeSelected = document.getElementById(`archetypeList`).value;
@@ -2102,6 +2176,9 @@ function modifyList(list){
     case "sphereGuile":
       arr=sphereGuileList;
       break;
+    case "monsterAbilities":
+      arr=monsterAbilitiesList;
+      break;
     default:
       arr = getTalentList(list);
       break;
@@ -2109,7 +2186,7 @@ function modifyList(list){
     isDropDown.innerHTML="";
     
     arr.forEach(name=>{
-      if(document.getElementById(`${capitalizedCaseCharacter(name)}Choice`)==null&&document.getElementById(`${name.toLowerCase()}Choice`)==null){
+      if(document.getElementById(`${spacelessCapitalizedCaseCharacter(name)}Choice`)==null&&document.getElementById(`${name.toLowerCase()}Choice`)==null){
         var option = document.createElement("option");
         option.value = name;
         option.text = getName(list,name);
@@ -2385,6 +2462,148 @@ function createToggleDisplayListener(elementID,eventType,functionName,variable1)
     });
 }
 
+
+function createVariableArrayListener(elementID,eventType,functionName,variableList){
+  const newListener = document.getElementById(elementID);
+  newListener.addEventListener(eventType,()=>
+    {
+      functionName(...variableList)
+    });
+}
+
+function getProperty(type){
+  switch(type){
+    case "Regeneration":
+      return "Rate";
+    case "Rend":
+      return "Damage";
+    case "Bleed":
+      return "Damage";
+    case "Blood Drain":
+      return "Damage";
+    case "Ability Damage":
+      return "Damage";
+    case "Breath Weapon":
+      return "Damage";
+    case "Frightful Presence":
+      return "Area";
+  }
+}
+
+function dynamicInputs(elementID,itemList,inputAreaID){
+  let inputVal = document.getElementById(elementID).value;
+  let inputType = "text";
+  let curType;
+  let inner="";
+  let hasDice = false;
+  let hasRange = false;
+  let hasSave = false;
+  let hasRecharge = false;
+  let hasVariableArea = false;
+  if(itemList[inputVal.toLowerCase()]!=null){
+    inputType=itemList[inputVal.toLowerCase()].input;
+    if(document.getElementById(inputAreaID).hasChildNodes()){
+      curType = document.getElementById(inputAreaID).childNodes[0].type;
+      inner = document.getElementById(inputAreaID).childNodes[0].outerHTML;
+    }else{
+      curType=null;      
+    }
+    if(curType==null||curType!=inputType){
+      hasDice =(inputType=="dice"||inputType=="breath");
+      hasRange = (inputType=="breath");
+      hasSave = (inputType=="breath");
+      hasRecharge = (inputType=="breath");
+      hasVariableArea = (inputType=="breath");
+      // if(apartOfAttack){
+        //use dropDown based on ex attacks
+      // }
+      inner =`<label class="inputName" for="monsterAbilityDiceTemp">${getProperty(inputVal)} </label>`
+      inner+=`<input type="${getInherentInputType(inputType)}" ${extraArgs(inputType)} class="searchBarCreation" name="monsterAbilityTemp" id="monsterAbilityTemp" placeholder="Insert ${getCustomPlaceholder(inputVal)} Here" title="monsterAbilityTemp">`
+      if(hasDice){
+        inner+=`<select class="searchBarCreation" name="monsterAbilityDiceTemp" id="monsterAbilityDiceTemp">
+        <option>d2</option>
+        <option>d4</option>
+        <option>d6</option>
+        <option>d8</option>
+        <option>d10</option>
+        <option>d12</option>
+        </select>`
+      }
+      if(hasRecharge){
+        inner+=`<br><label class="inputName" for="monsterAbilityRechargeDiceAmountTemp">Recharge Time</label>
+        <input type="number" min="1" class="searchBarCreation" name="monsterAbilityRechargeDiceAmountTemp" id="monsterAbilityRechargeDiceAmountTemp" placeholder="Insert Dice Count Here" title="monsterAbilityRechargeDiceAmountTemp">`
+        inner+=`<select class="searchBarCreation" name="monsterAbilityDice" id="monsterAbilityDice">
+        <option>d2</option>
+        <option>d4</option>
+        <option>d6</option>
+        <option>d8</option>
+        <option>d10</option>
+        <option>d12</option>
+        </select>`
+      }
+      if(hasRange){
+        
+        inner+=`<br><label class="inputName" for="monsterAbilityRangeTemp">Range </label>
+        <input type="number" min="1" class="searchBarCreation" name="monsterAbilityRangeTemp" id="monsterAbilityRangeTemp" placeholder="Insert Range Here" title="monsterAbilityRangeTemp">`
+        if(hasVariableArea){
+          inner+=`<select class="searchBarCreation" name="monsterAbilityAreaTemp" id="monsterAbilityAreaTemp">
+        <option>Line</option>
+        <option>Cone</option>
+        </select>`
+        }
+      }
+      if(hasSave){
+        inner+=`<br><label class="inputName" for="monsterAbilitySaveTemp">Save Type </label>
+        <select class="searchBarCreation" name="monsterAbilitySaveTemp" id="monsterAbilitySaveTemp">
+        <option>Fort</option>
+        <option>Reflex</option>
+        <option>Will</option>
+        </select>`
+      }
+    }
+    document.getElementById(inputAreaID).innerHTML = inner;
+    if(hasDice){
+      document.getElementById("monsterAbilityDiceTemp")[getChoiceSelection(['d2','d4','d6','d8','d10','d12'],itemList[inputVal.toLowerCase()].default)].selected=true;
+    }
+    if(hasSave){
+      document.getElementById("monsterAbilitySaveTemp")[getChoiceSelection(['Fort','Reflex','Will'],itemList[inputVal.toLowerCase()].saveType)].selected=true;
+    }
+  }else{
+    if(monsterAbilitiesList.includes(inputVal)){
+      document.getElementById(inputAreaID).innerHTML = inner;
+    }
+  }
+}
+
+function getCustomPlaceholder(type){
+  switch(type){
+    case "Frightful Presence":
+      return "Range"
+  }
+  return "Value";
+}
+
+function getInherentInputType(type){
+  switch(type){
+    case "dice":
+      return "number";
+    case "breath":
+      return "number";
+    case "frightful presence":
+      return "number"
+  }
+  return type;
+}
+
+function extraArgs(inputType){
+  switch(inputType){
+    case "number":
+      return "min=1";
+    default:
+      return "";
+  }
+}
+
 function toggleInput(inputName,state="block"){
 document.getElementById(inputName).style.display=state;
 }
@@ -2446,6 +2665,11 @@ function getArchetypeName(json,item){
     }
   }
   return archetypeArray;
+}
+function spacelessCapitalizedCaseCharacter(text){
+  let spacelessText = text.replace(" ","");
+  spacelessText = capitalizedCaseCharacter(spacelessText);
+  return spacelessText;
 }
 
 function capitalizedCaseCharacter(text){
@@ -2937,10 +3161,10 @@ function createStatListeners(){
  * @param {String} id 
  */
 
-function setProperMinLevel(id){
+function setProperMinLevel(id,forceAmount=1){
   let val = document.getElementById(`${id}`).value;
   if(val<1&&val!=""){
-    document.getElementById(`${id}`).value=1;
+    document.getElementById(`${id}`).value=forceAmount;
   }
 }
 
@@ -3211,6 +3435,9 @@ function listenersSetup(){
   createVariableListener("classesTemp",'keyup',setProperMinLevel,'classesTemp');
   createVariableListener("MonsterLevel",'focusout',enforceMinLevel,'MonsterLevel');
   createVariableListener("classesTemp",'focusout',enforceMinLevel,'classesTemp');
+  // createVariableListener("monsterAbilitiesTemp",'focusout',enforceMinLevel,'monsterAbilitiesTemp');
+  // createVariableListener("monsterAbilitiesTemp",'keyup',enforceMinLevel,'monsterAbilitiesTemp');
+  // createVariableListener("monsterAbilitiesTemp",'change',enforceMinLevel,'monsterAbilitiesTemp');
   createListeners("MonsterLevel",`focusout`,updateHealthDisplay);
   createListeners("MonsterLevel",`focusout`,setSkillPoints);
   createListeners("MonsterLevel",`change`,updateHealthDisplay);
@@ -3228,6 +3455,7 @@ function listenersSetup(){
   createDropDownChoices(dropDownArray);
   createToggleDisplayListener('senseList','keyup',toggleInput,'senseInput');
   createToggleDisplayListener('featList','keyup',toggleInput,'featInput');
+  createVariableArrayListener('monsterAbilitiesList','keyup',dynamicInputs,['monsterAbilitiesList',monsterAbilitiesJson,'monsterAbilitiesInput']);
   const targetNode = document.getElementById('featChoice');
   const config = {attributes:true,childList:true,subtree:true,CharacterData:true};
   observer.observe(targetNode,config);
@@ -3416,18 +3644,18 @@ function getHotbar(system,forumType){
   <div></div>
     <div>
       <button class="button" onclick="displayChange('main')">Core</button>
-      <button class="button" id="classButton" style="display:none" onclick="displayChange('class')">Class</button>
+      <button class="button-violet" id="classButton" style="display:none" onclick="displayChange('class')">Class</button>
     </div>
     <div>
-      <button class="button" onclick="displayChange('combatTraits')">Combat</button>
-      <button class="button" id="sphereButton" style="display:none" onclick="displayChange('spheres')">Spheres</button>
+      <button class="button-red" onclick="displayChange('combatTraits')">Combat</button>
+      <button class="button-orange" id="sphereButton" style="display:none" onclick="displayChange('spheres')">Spheres</button>
     </div>
     <div>
-      <button class="button" id="skillButton" style="display:none" onclick="displayChange('skills')">Skills</button>
-      <button class="button" id="spellButton" style="display:none" onclick="displayChange('spells')">Spells</button>
+      <button class="button-yellow" id="skillButton" style="display:none" onclick="displayChange('skills')">Skills</button>
+      <button class="button-blue" id="spellButton" style="display:none" onclick="displayChange('spells')">Spells</button>
     </div>
     <div>
-      <button class="button" id="featButton" onclick="displayChange('feats')">Feats</button><br>
+      <button class="button-green" id="featButton" onclick="displayChange('feats')">Feats</button><br>
       <div class="dropdown">
       <button class="button" id="miscButton" onclick="dropdownOptions('misc')">Misc</button>
       <div id="miscOptions" class="dropdown-misc">

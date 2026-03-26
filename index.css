@@ -71,6 +71,130 @@
   color: rgb(69, 3, 112);
 }
 
+
+.button-red {
+  background-color: black; /* Green */
+  border: 1px solid black;
+  color: rgb(204, 4, 4);
+  padding: 15px -1000px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 40px;
+  cursor: pointer;
+  
+}
+
+.button-red:hover, .button-red:focus {
+  color: rgb(112, 3, 3);
+}
+
+.button-blue {
+  background-color: black; /* Green */
+  border: 1px solid black;
+  color: rgb(0, 68, 255);
+  padding: 15px -1000px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 40px;
+  cursor: pointer;
+  
+}
+
+.button-blue:hover, .button-blue:focus {
+  color: rgb(3, 39, 160);
+}
+
+
+.button-green {
+  background-color: black; /* Green */
+  border: 1px solid black;
+  color: rgb(34, 204, 4);
+  padding: 15px -1000px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 40px;
+  cursor: pointer;
+  
+}
+
+.button-green:hover, .button-green:focus {
+  color: rgb(23, 112, 3);
+}
+
+
+.button-orange {
+  background-color: black; /* Green */
+  border: 1px solid black;
+  color: rgb(204, 87, 4);
+  padding: 15px -1000px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 40px;
+  cursor: pointer;
+  
+}
+
+.button-orange:hover, .button-orange:focus {
+  color: rgb(112, 70, 3);
+}
+
+
+
+.button-violet {
+  background-color: black; /* Green */
+  border: 1px solid black;
+  color: rgb(204, 4, 201);
+  padding: 15px -1000px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 40px;
+  cursor: pointer;
+  
+}
+
+.button-violet:hover, .button-violet:focus {
+  color: rgb(112, 3, 103);
+}
+
+.button-yellow {
+  background-color: black; /* Green */
+  border: 1px solid black;
+  color: rgb(204, 201, 4);
+  padding: 15px -1000px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 40px;
+  cursor: pointer;
+  
+}
+
+.button-yellow:hover, .button-yellow:focus {
+  color: rgb(112, 105, 3);
+}
+
+.button-cyan {
+  background-color: black; /* Green */
+  border: 1px solid black;
+  color: rgb(4, 204, 181);
+  padding: 15px -1000px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 40px;
+  cursor: pointer;
+  
+}
+
+.button-cyan:hover, .button-cyan:focus {
+  color: rgb(3, 112, 112);
+}
+
 .title{
     font-size: 35px;
     font-weight: bold;
@@ -85,7 +209,7 @@
 }
 
 .divider{
-  font-size: 15px;
+  font-size: 20px;
   border-top: solid thin;
   border-bottom: solid thin;
   text-transform: uppercase;
@@ -251,6 +375,19 @@ hr{
   cursor: pointer;
   
 }
+
+.formButton-blue {
+  background-color: rgb(0, 0, 220); /* Green */
+  color: rgb(100, 99, 99);
+  padding: 15px -1000px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  cursor: pointer;
+  
+}
+
 .leveler{
   display: flex;
   justify-content: space-between;
@@ -294,6 +431,11 @@ hr{
 }
 
 .stairCase{
+  margin-left: 50px;
+}
+
+.stairCase-yellow{
+  color:rgb(204, 201, 4);
   margin-left: 50px;
 }
 
@@ -351,6 +493,28 @@ hr{
   z-index: 1;
   bottom: 80%;
 } */
+
+.display-red{
+  color: rgb(204, 4, 4);
+}
+.display-orange{
+  color: rgb(204, 87, 4);
+}
+.display-blue{
+  color: rgb(0, 68, 255);
+}
+.display-green{
+  color: rgb(34, 204, 4);
+}
+.display-yellow{
+  color: rgb(204, 201, 4);
+}
+.display-cyan{
+  color: rgb(4, 204, 181);
+}
+.display-violet{
+  color: rgb(204, 4, 201);
+}
 
 .dropdown {
   position: relative;

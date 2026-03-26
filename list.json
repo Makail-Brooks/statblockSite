@@ -315,7 +315,7 @@
         },
         {
           "abilityName": "Eternal Entity",
-          "ability_desc": "This NPC does not get exhausted or fatigued.",
+          "ability_desc": "This Creature does not get exhausted or fatigued.",
           "abilityType": "Ex(Extraordinary)"
         }
       ]
@@ -4462,52 +4462,6 @@
       "racialModifiers": {
         "disguise": "20",
         "bluff": "10"
-      }
-    },
-    {
-      "path": "./NPCDisplay.html",
-      "system": "pathfinder",
-      "name": "Mimic",
-      "title": "Mimic",
-      "cr": "4",
-      "alignment": "N",
-      "size": "Medium",
-      "sizeType": false,
-      "NPCType": "Monster",
-      "type": "Aberration",
-      "ac": {
-        "armor": "10",
-        "touch": "10",
-        "flat_foot": "10",
-        "bonuses": {}
-      },
-      "level": "7",
-      "hitDice": "d8",
-      "rate": "Monster",
-      "fort": "Bad",
-      "ref": "Bad",
-      "will": "Good",
-      "str": "19",
-      "dex": "10",
-      "con": "17",
-      "int": "10",
-      "wis": "13",
-      "cha": "10",
-      "bab": "Medium",
-      "skillProgression": "Middle",
-      "cmb": "9",
-      "cmd": "19",
-      "skills": {
-        "Acrobatics": "0",
-        "Climb": "0",
-        "EscapeArtist": "0",
-        "Fly": "0",
-        "Intimidate": "0",
-        "Perception": "0",
-        "Spellcraft": "0",
-        "Stealth": "0",
-        "Survival": "0",
-        "Swim": "0"
       }
     },
     {

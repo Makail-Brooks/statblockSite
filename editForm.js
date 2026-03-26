@@ -126,8 +126,10 @@ function readJsonData(NPCInfo,sys){
     document.getElementById("NPCInt").value = NPCInfo.int;
     document.getElementById("NPCWis").value = NPCInfo.wis;
     document.getElementById("NPCCha").value = NPCInfo.cha;
-    document.getElementById("usesSphereOption").checked=NPCInfo.spheres;
-    adjustDisplay("Sphere");
+    if(NPCInfo.spheres!=null){
+        document.getElementById("usesSphereOption").checked=NPCInfo.spheres;
+        adjustDisplay("Sphere");
+    }
     document.getElementById("NPCHitDice")[getChoiceSelection(['d4','d6','d8','d10','d12'],NPCInfo.hitDice)].selected=true;
     if(NPCInfo.rate!=null){
                 document.getElementById("NPCHitDiceRate")[getChoiceSelection(['Monster','Player'],NPCInfo.rate)].selected=true
@@ -240,12 +242,7 @@ function readJsonData(NPCInfo,sys){
               
             })
         }
-        if(NPCInfo.special_attacks){
-            document.getElementById("special_attacksOption").checked = true;
-            document.getElementById("special_attacks").value=NPCInfo.special_attacks;
-        }
         if(NPCInfo.gear){
-            document.getElementById("gearOption").checked = true;
             document.getElementById("gear").value=NPCInfo.gear;
         }
         if(NPCInfo.weaknesses){
@@ -260,11 +257,6 @@ function readJsonData(NPCInfo,sys){
             document.getElementById("rangeOption").checked = true;
             getAttackInformation(NPCInfo.ranged,"range");
         }
-
-        if(NPCInfo.hp_traits){
-            document.getElementById("HPTraitsOption").checked = true;
-            hpTraits = document.getElementById("HPTraits").value = NPCInfo.hp_traits;
-        }
         i=0;
         if(NPCInfo.save_bonuses){
             NPCInfo.save_bonuses.forEach(bonuses=>{
@@ -273,7 +265,6 @@ function readJsonData(NPCInfo,sys){
             })
         }
         if(NPCInfo.defensive_traits){
-                document.getElementById("defensiveTraitsOption").checked = true;
                 let DT = NPCInfo.defensive_traits
                 traits = Object.keys(DT);
               traits.forEach(ex=>{

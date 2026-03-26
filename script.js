@@ -29,7 +29,7 @@ let playerClassList = ['Barbarian','Bard','Cleric','Druid','Fighter','Monk','Pal
 let npcClassList = ['Adept','Aristocrat','Commoner','Expert','Warrior'];
 let spherePlayerClassList = ['Incanter'];
 var lanList = ['Common','Abyssal','Celestial','Aboleth','Aklo','Aquan','Auran','Boggard','Cyclops','Dark Folk','Draconic','Drow Sign Language','Druidic','Dwarven','D\'ziriak','Elven','Giant','Gnoll','Gnome','Goblin','Grippli','Halfling','Ignan','Infernal','Necril','Orc','Protean','Rougarou','Sphinx','Sylvan','Tengu','Terran','Treant','Undercommon','Vegepygmy'];
-var senseList = ['Darkvision','Blindsight','Low-light vision','Blindsense','Scent','Tremorsense','Greensight','Keen Scent','Lifesense','Mistsight','See In Darkness','Thoughtsense','X-ray Vision'];
+var senseList = ['Darkvision','Blindsight','Low-light vision','Blindsense','Scent','Tremorsense','Greensight','Keen Scent','Lifesense','Mistsight','See In Darkness','Thoughtsense','X-ray Vision','Thermalsense','Spirit Sense','Touchsight'];
 //put a space after value in a datalist option allows for the text to be displayed along with the value text
 var classList = ['Adept','Alchemist','Antipaladin','Arcanist','Aristocrat','Barbarian','Bard','Bloodrager','Brawler','Cavalier','Cleric','Commoner','Druid','Expert','Fighter','Gunslinger','Hunter','Inquisitor','Investigator','Kineticist','Magus','Medium','Mesmerist','Monk','Ninja','Occultist','Omdura','Oracle','Paladin','Psychic','Ranger','Rogue','Samurai','Shaman','Shifter','Skald','Slayer','Sorcerer','Spiritualist','Summoner','Swashbuckler','Vampire Hunter','Vigilante','Warpriest','Warrior','Witch','Wizard']
 var sphereClassList = ["Armorist","Incanter","Elementalist","Eliciter","Fey Adept","Hedgewitch","Mageknight","Shifter","Soul Weaver","Symbiat","Thaumaturge","Wraith","Agent","Courser","Envoy","Genius","Mastermind","Professional","Advisor","Conduit","Armiger","Blacksmith","Commander","Conscript","Savant","Scholar","Sentinel","Striker","Technician","Bravo","Crimson Dancer","Dissident","Prodigy","Sage","Theorist","Troubadour","Warden","Dragoon","Mountebank","Necros","Raveler","Reaper"];
@@ -41,7 +41,11 @@ var spherePowerList = ['Alteration','Destruction'];
 var sphereMightList = ['Artifice']
 var sphereGuileList = ['Alchemy']
 var alterationList = ['Adaptive Physicality [utility]','Additional Limbs'];
-var destructionList = ['Admixture','Cascade Failure'];
+var destructionList = ['Admixture','Cascade Failure','Clinging Blast'];
+var monsterAbilitiesList = ['Regeneration','Rend','Absurd Reactions','Ability Damage','Bleed','Blood Drain','Breath Weapon','Frightful Presence','Ability Drain','All-Around Vision','All-Knowing','All-Sensing','Amazing Initative','Amorphous','Amphibious','Apocalyptic Resurrection','Archdevil Traits','Attach','Block Sensing','Blood Rage','Burn','Capsize','Channel Resistance','Compression','Constrict','Curse','Curse of Lycanthropy','Demon Lord Traits','Disease','Display of Strength','Distraction','Dual Initiative',
+  'Dragon Senses','Earth Glide','Echosense/Echosight','Emotion Aura','Empyreal Lord Traits','Energy Drain','Engulf','Entrap','Expanding Blindsense','Fast Healing','Fast Swallow','Fear','Ferocity','Fight Through Restriction','Formian Traits','Fortification','Freeze','Frightful Presence','Gaze','Grab','Heat','Hold Breath','Horseman Traits','Incorporeal','Instant Action','Jet','Legendary Concentration','Legendary Saving Throw','Light Blindness','Light Sensitivity','Lycanthropic Empathy','Material sense','Mental Static Aura',
+  'Mythic Durability','Mythic Immortality','Mythic Magic','Mythic Power','Multiweapon Mastery','Natural Invisibility','Negative Energy Affinity','No Breath','Outside Time','Paralysis','Planar Knowledge','Plantbringer','Plant Traits','Poison','Poisonous Blood','Pounce','Powerful Blows','Powerful Charge','Primed Action','Psychic Magic','Psychic Resilience','Pull','Push','Qlippoth Lord Traits','Rake','Recuperation','Rock Catching','Rock Throwing','Smother','Sound Mimicry','Split','Stench','Strangle','Summon','Sunlight Powerlessness',
+  'Superior Scent','Surge','Swallow Whole','Telepathy','Trample','Trip','Unbound Action','Undead Traits','Undersized Weapons','Unnatural Aura','Unstoppable','Water Breathing','Water Dependency','Web','Whirlwind'];
 
 
 lanList.sort();
@@ -50,21 +54,24 @@ featList.sort();
 sphereFeatList.sort();
 movementList.sort();
 racialModifiersList.sort();
+monsterAbilitiesList.sort();
 classList.sort();
 sphereClassList.sort();
 classList.push('Custom');
 var classJson = JSON.parse(classes);
 var sphereClassArchetype = JSON.parse(sCArcs);
+var monsterAbilitiesJson = JSON.parse(monsterAbilitiesInputs);
 var lanArray = [lanList,'language','Search Language'];
 var senseArray = [senseList,'sense','Search Sense'];
 var featArray = [featList,'feat','Search Feat'];
 var movementArray = [movementList,'speed','Search Speed'];
 var racialModifierArray = [racialModifiersList,'racialMod','Search Racial Modifier']
 var classArray = [classList,'classes','Search Class'];
+var monsterAbilitiesArray = [monsterAbilitiesList,'monsterAbilities','Search Monster Abilties'];
 var spherePowerArray = [spherePowerList,'spherePower','Search Power Spheres'];
 var sphereMightArray = [sphereMightList,'sphereMight','Search Might Spheres'];
 var sphereGuileArray = [sphereGuileList,'sphereGuile','Search Guile Spheres'];
-var dropDownArray =[lanArray,senseArray,featArray,movementArray,racialModifierArray,classArray,spherePowerArray,sphereMightArray,sphereGuileArray];
+var dropDownArray =[lanArray,senseArray,featArray,movementArray,racialModifierArray,classArray,spherePowerArray,sphereMightArray,sphereGuileArray,monsterAbilitiesArray];
 
 
 fetch("./list.json")
@@ -345,7 +352,7 @@ function displayChange(section){
     document.getElementById("gearSection").style.display = section=="gearSection"? "block":"none";
     document.getElementById("racialModSection").style.display = section=="racialModSection"? "block":"none";
     document.getElementById("combatSection").style.display = combatList.includes(section)? "block":"none";
-    document.getElementById("MonsterAbilitiesSection").style.display = section =="MonsterAbilitiesSection"? "block":"none";
+    document.getElementById("MonsterAbilitiesSection").style.display = section =="MonsterAbilitiesSection"? "flex":"none";
     if(subSetOption.includes(section)){
       document.getElementById("bonusACOption").style.display = section=="bonusACOption"? "block":"none";
       document.getElementById("resistanceOption").style.display = section=="resistanceOption"? "block":"none";
@@ -448,7 +455,7 @@ var baseJson ={
 function createMainForm(sys){
   document.getElementById("combatTraits").innerHTML=`<div class="doFlex">
         <div class="dropdown">
-        <button type="button" class="button" id="defensiveButton" onclick="dropdownOptions('DT')">Defensive Abilities</button>
+        <button type="button" class="button-blue" id="defensiveButton" onclick="dropdownOptions('DT')">Defensive Abilities</button>
         <div id="DTOptions" class="dropdown-defensive">
         <a class="object" onclick="displayChange('bonusACOption')">Armor</a>
         <a class="object" onclick="displayChange('resistanceOption')">Resistance</a>
@@ -456,7 +463,7 @@ function createMainForm(sys){
         </div>
         </div>
         <div class="dropdown">
-        <button type="button" class="button" id="offensiveButton" onclick="dropdownOptions('OT')">Offensive Abilities</button>
+        <button type="button" class="button-red" id="offensiveButton" onclick="dropdownOptions('OT')">Offensive Abilities</button>
         <div id="OTOptions" class="dropdown-offensive">
         <a class="object" onclick="displayChange('specialAttacksOption')">Special Attack</a>
         <a class="object" onclick="displayChange('meleeOption')">Meele Attack</a>
@@ -586,7 +593,7 @@ function getForum(sys,forumType){
         <button type="button" class="formButton" onclick="addDropdownchoice('speed',true,'Speed')">Add speed</button>
         </div>
         <div id="speedInput" style="display:block;">
-        <input type="number" min="0" class="searchBarCreation" name="speedTemp" id="speedTemp" placeholder="Insert Speed Here" title="SenseTemp">
+        <input type="number" min="1" class="searchBarCreation" name="speedTemp" id="speedTemp" placeholder="Insert Speed Here" title="SpeedTemp">
         </div>
         <div id="speedChoice"></div>
         </div>
@@ -681,7 +688,7 @@ function getForum(sys,forumType){
         </div>
         <div id="combatSection" style="display:none">
         <div class="creationSetup">
-        <div id="bonusACOption" style="display:block">
+        <div id="bonusACOption" style="display:block" class="display-blue">
 
         <p class="inputName" id="bonusACArmor" style="display: block;">Has Armor <input id="armorOption" type="checkbox" placeholder="toggle" onclick="toggle('armor')"></p> 
         <input type="number" class="searchBarCreation" name="armor" id="armor" style="display: none;" placeholder="armor" title="armor">
@@ -703,12 +710,12 @@ function getForum(sys,forumType){
         <div style="display: none;" id="extraBonuses"><button type="button" class="formButton" onclick="createDualInformation('extra','name','amount','Extra Bonus','Bonus Name','Bonus Amount','text','number')">Add Extra Bonuses</button>
         <div class="extra" id="extraArea"></div></div>
         </div>
-        <div id="resistanceOption" style="display: none;">
+        <div id="resistanceOption" style="display: none;" class="display-blue">
 
         <p class="inputName" id="defensiveTraitsDA" style="display: block;">Has Defensive Abilities <input id="DAOption" type="checkbox" placeholder="toggle" onclick="toggle('DA')"></p> 
         <textarea class="searchBarCreation" name="DA" id="DA" style="display: none;" placeholder="Defensive Ability" title="DA"></textarea>
         
-        <p class="inputName" id="defensiveTraitsDR" style="display: block;">Has DR <input id="DROption" type="checkbox" placeholder="toggle" onclick="toggle('DR')"></p> 
+        <p class="inputName" id="defensiveTraitsDR" style="display: block;">Has Damage Reduction <input id="DROption" type="checkbox" placeholder="toggle" onclick="toggle('DR')"></p> 
         <textarea class="searchBarCreation" name="DR" id="DR" style="display: none;" placeholder="DR" title="DR"></textarea>
 
         <p class="inputName" id="defensiveTraitsImmune" style="display: block;">Has Immunities <input id="ImmuneOption" type="checkbox" placeholder="toggle" onclick="toggle('Immune')"></p> 
@@ -718,7 +725,7 @@ function getForum(sys,forumType){
         <textarea class="searchBarCreation" name="Resist" id="Resist" style="display: none;" placeholder="Resist" title="Resist"></textarea>
 
         <p class="inputName" id="defensiveTraitsSR" style="display: block;">Has SR <input id="SROption" type="checkbox" placeholder="toggle" onclick="toggle('SR')"></p> 
-        <input type="number" min="0" class="searchBarCreation" name="SR" id="SR" style="display: none;" placeholder="SR" title="SR">
+        <input type="number" min="1" class="searchBarCreation" name="SR" id="SR" style="display: none;" placeholder="SR" title="SR">
         
         <p class="inputName">Has Weakness<input type="checkbox" id="weaknessOption" placeholder="toggle" onclick="toggle('weakness')"></p>
         <textarea class="searchBarCreation" name="weakness" id="weakness" style="display: none;" placeholder="Weakness" title="weakness"></textarea>
@@ -726,10 +733,14 @@ function getForum(sys,forumType){
 
         <div id="defensiveBonusOption" style="display:none;">
         <br>
+        <div>
         <button type="button" class="formButton" onclick="createArrayChoice('saveBonus','Save Bonus','Save Bonus Amount')">Add Save Bonus</button>
         <div class="saveBonus" id="saveBonusArea"></div>
-        <br><button type="button" class="formButton" onclick="createDualInformation('cmdMod','Details','Bonus','cmdMod','CMD Modifier Details','CMD Modifier Value','text','number')">Add CMD Modifier</button>
+        </div>
+        <div>
+        <button type="button" class="formButton" onclick="createDualInformation('cmdMod','Details','Bonus','cmdMod','CMD Modifier Details','CMD Modifier Value','text','number')">Add CMD Modifier</button>
         <div class="cmdMod" id="cmdModArea"></div>
+        </div>
 
 
         </div>
@@ -770,7 +781,7 @@ function getForum(sys,forumType){
         <button type="button" class="formButton" onclick="addDropdownchoice('sense',true,'Vision Range','number')">Add sense</button>
         </div>
         <div id="senseInput" style="display:block;">
-        <input type="number" min="0" class="searchBarCreation" name="senseTemp" id="senseTemp" placeholder="Insert Vision Range Here" title="SenseTemp">
+        <input type="number" min="1" class="searchBarCreation" name="senseTemp" id="senseTemp" placeholder="Insert Vision Range Here" title="SenseTemp"> <label class="inputName">ft.</label>
         </div>
         <div id="senseChoice"></div>
         </div>
@@ -794,7 +805,7 @@ function getForum(sys,forumType){
         <button type="button" class="formButton" onclick="addDropdownchoice('racialMod',true,'Racial Modifer','number')">Add racialMod</button>
         </div>
         <div id="racialModInput" style="display:block;">
-        <input type="number" min="0" class="searchBarCreation" name="racialModTemp" id="racialModTemp" placeholder="Insert racial modifier Here" title="racialTemp">
+        <input type="number" min="1" class="searchBarCreation" name="racialModTemp" id="racialModTemp" placeholder="Insert racial modifier Here" title="racialTemp">
         </div>
         <div id="racialModChoice"></div>
         </div>
@@ -804,8 +815,16 @@ function getForum(sys,forumType){
         <button type="button" class="formButton" onclick="createArrayChoice('SQ','Special Quality','Special Quality Name')">Add Special Quality</button>
         <div class="SQ" id="SQArea"></div>
         </div>
-        <div id="MonsterAbilitiesSection" style="display: none;">
-        <textarea class="searchBarCreation" name="MonsterAbilities" id="MonsterAbilities" style="display: block;" placeholder="Monster Abilities PlaceHolder" title="MonsterAbilities"></textarea>
+        <div id="MonsterAbilitiesSection" style="display:none;">
+        <div id="blockZone" style="display:block;">
+        <div class=dropDownAddition>
+        <div class="monsterAbilities" id="monsterAbilitiesArea"></div>
+        <button type="button" class="formButton" onclick="addVariableDropdownchoice('monsterAbilities')">Add Monster Ability</button>
+        </div>
+        <div id="monsterAbilitiesInput">
+        </div>
+        </div>
+        <div id="monsterAbilitiesChoice"></div>
         </div>
         </div>
 
@@ -827,14 +846,14 @@ function getForum(sys,forumType){
         
         </div>
         <div id="classesInput" style="display:block;">
-        <input type="number" min="0" class="searchBarCreation" name="classesTemp" id="classesTemp" placeholder="Insert Level" title="classesTemp">
+        <input type="number" min="1" class="searchBarCreation" name="classesTemp" id="classesTemp" placeholder="Insert Level" title="classesTemp">
         </div>
         <div id="classesChoice"></div>
         </div>
 
         <div id="skills" style="display:none;" class="creationDisplay">
         
-        <div id="skillsContainer" class="stairCase">
+        <div id="skillsContainer" class="stairCase-yellow">
         <p id="skillPoints"></p>
         <p class="inputName" id="skillsAcrobatics" >Has Acrobatics <input id="AcrobaticsOption" type="checkbox" placeholder="toggle" onclick="toggle('Acrobatics')"></p> 
         <input type="number" min="0" class="searchBarCreation" name="Acrobatics" id="Acrobatics" style="display: none;" placeholder="Acrobatics" title="Acrobatics">
@@ -1079,13 +1098,13 @@ function getForum(sys,forumType){
         <div class="spheres" id="spheres" style="display:none;">
         <div class="gapBetweenItems">
         <div>
-        <button type="button" class="button" id="spheresPower" onclick="displayChange('selectionPower')">Spheres of Power</button>
+        <button type="button" class="button-blue" id="spheresPower" onclick="displayChange('selectionPower')">Spheres of Power</button>
         </div>
         <div>
-        <button type="button" class="button" id="spheresMight" onclick="displayChange('selectionMight')">Spheres of Might</button>
+        <button type="button" class="button-orange" id="spheresMight" onclick="displayChange('selectionMight')">Spheres of Might</button>
         </div>
         <div>
-        <button type="button" class="button" id="spheresGuile" onclick="displayChange('selectionGuile')">Spheres of Guile</button>
+        <button type="button" class="button-green" id="spheresGuile" onclick="displayChange('selectionGuile')">Spheres of Guile</button>
         </div>
         </div>
         <br>

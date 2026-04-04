@@ -1066,7 +1066,7 @@ function reset(){
   let spellLevelArray = ['ninth','eighth','seventh','sixth','fifth','fourth','third','second','first','zeroth'];
   clearArray(spellLevelArray);
   resetSkills();
-  document.getElementById("speedList").remove();
+  document.getElementById("dropdownspeed").remove();
 
 
   textBoxes = ['NPCSetHP','NPCSetHD','atWill','constant','weakness','gear','special_attacks','HPTraits','reach_bonus_effects','SR','Resist','Immune','DR','DA','natural','shield','dodge','deflection','ConcentratePrepared','CLPrepared','ConcentrateInnate','CLInnate'];
@@ -1955,8 +1955,51 @@ function createElementSetup(elementTag,element,item,listName){
   return newEl;
 }
 
+
+function addEasylist(element,entry,listValue){
+  console.log(listValue);
+  let div = document.createElement("div");
+  let label = document.createElement("label");
+  let select = document.createElement("select");
+        //   <div id="ManeuverabilitySection" style="display:none">
+        // <label class="inputName" for="NPCFlightManeuverability">Flight Maneuverability:</label><br>
+        // <select class="searchBarCreation" name="NPCFlightManeuverability" id="NPCFlightManeuverability">
+        // <option>Clumsy</option>
+        // <option>Poor</option>
+        // <option selected>Average</option>
+        // <option>Good</option>
+        // <option>Perfect</option>
+        // </select><br>
+        // </div>
+  switch(entry){
+    case "fly":
+      div.id="ManeuverabilitySectionRead";
+      div.className="centered"
+      label.className="inputName";
+      label.setAttribute("for","NPCFlightManeuverability");
+      label.textContent = "Maneuverability:";
+      select.className="searchBarCreation";
+      select.name="NPCFlightManeuverabilityRead";
+      select.id="NPCFlightManeuverabilityRead";
+      let itemList = ['Clumsy','Poor','Average','Good','Perfect'];
+      itemList.forEach(item=>{
+        let option = document.createElement("option");
+        option.value =item;
+        option.textContent=item;
+        if(item==listValue){
+          option.selected=true;
+        }
+        select.appendChild(option);
+      });
+      break;
+  }
+  div.appendChild(label);
+  div.appendChild(select);
+  element.appendChild(div);
+}
+
 function addDropdownchoice(listName,secondaryInput=false,placeholder="something",secondaryInputType="text",subDropdown=false,doDelete=true,isDropinDrop=false){
-  let val = document.getElementById(`${listName}List`).value;
+  let val = document.getElementById(`dropdownSelection${listName}`).value;
   let additionalValidation = true;
   if(document.getElementById(`${listName}Temp`)!=null&&document.getElementById(`${listName}Input`).style.display!="none"){
     if(document.getElementById(`${listName}Temp`).value==""){
@@ -2022,12 +2065,12 @@ function addDropdownchoice(listName,secondaryInput=false,placeholder="something"
     }
     if(secondaryInput){
       if(document.getElementById(`${listName}Input`).style.display!="none"){
-        if(listName=="classes"){
-          console.log(secondaryInputType);
-        }
         createInputSection(listName,divZone,val,placeholder,secondaryInputType,subDropdown);
   
       }
+    }
+    if(val=="fly"){      
+      addEasylist(divZone,val,document.getElementById("NPCFlightManeuverability").value);
     }
     if(doDelete && !listName.includes("sphere")){
       addDeleteButton(divZone,val,listName);
@@ -2040,7 +2083,7 @@ function addDropdownchoice(listName,secondaryInput=false,placeholder="something"
         }else{
           document.getElementById(`${listName}Choice`).appendChild(divZone);
         }
-        document.getElementById(`${listName}List`).value="";
+        document.getElementById(`dropdownSelection${listName}`).value="Select";
       }
       if(secondaryInput==false &&subDropdown==true){
         arrayToDropdown(arr,val,`Search ${spacelessCapitalizedCaseCharacter(val)} talent`);
@@ -2098,17 +2141,16 @@ function createInputSection(listName,divZone,selection,placeholderText,inputType
     label.setAttribute("for",`${listName}${selection}`);
     label.textContent = "ft."
     divZone.appendChild(label);
-    console.log(divZone);
   }
   if(doSubDropdown){
     if(!checkIfNPC(selection)){
-      let archetypeSelected = document.getElementById(`archetypeList`).value;
+      let archetypeSelected = document.getElementById(`dropdownSelectionarchetype`).value;
       let subZone = document.createElement("div");
       subZone.setAttribute("id",`archetype${selection}subArea`);
       subZone.setAttribute("class","dropDownAddition");
       divZone.appendChild(subZone);
       document.getElementById(`${listName}Choice`).appendChild(divZone);
-      arrayToDropdownSub(getArchetypeName(classJson.class,selection),"Insert Archetype here",`archetype${selection}`,`${listName.toLowerCase()}subArea`,archetypeSelected);
+      arrayToDropdownSub(getArchetypeName(classJson.class,selection,false),listName,"Insert Archetype here",`archetype${selection}`,archetypeSelected);
     }
   }
   document.getElementById(`${listName}Temp`).value = "";
@@ -2147,7 +2189,8 @@ function getTalentList(list){
 function modifyList(list){
   var arr = []
   var isDropDown;
-  isDropDown = document.getElementById(list);
+  isDropDown = document.getElementById(`dropdown${list}`).querySelector("ul");
+  isDropDown.innerHTML="";
   switch(list){
     case "language":
       arr=lanList;
@@ -2183,24 +2226,27 @@ function modifyList(list){
       arr = getTalentList(list);
       break;
       }
-    isDropDown.innerHTML="";
-    
+    // isDropDown.innerHTML;
+    // console.log(isDropDown);
     arr.forEach(name=>{
       if(document.getElementById(`${spacelessCapitalizedCaseCharacter(name)}Choice`)==null&&document.getElementById(`${name.toLowerCase()}Choice`)==null){
-        var option = document.createElement("option");
-        option.value = name;
-        option.text = getName(list,name);
+        var option = document.createElement("li");
+        option.dataset.value = name;
+        option.textContent = getName(list,name);
+        option.className="dropdown-item";
         isDropDown.appendChild(option);
       }
     })
+    selectionCreation(`dropdown${list}`);
   }
 
 function createDatalist(arr,element,usesCustomText=false,customText=""){
     arr.sort();
     arr.forEach(name=>{
-    var option = document.createElement("option");
-    option.value = name;
-    option.text = name;
+    var option = document.createElement("ul");
+    option.dataset.value = name;
+    option.textContent = name;
+    option.className="dropdown-item";
     if(usesCustomText){
       option.text=customText;
     }
@@ -2211,60 +2257,114 @@ function createDatalist(arr,element,usesCustomText=false,customText=""){
 function arrayToDropdown(arr,listName,placeHoldertext){
   const targetArea = document.getElementById(`${listName}Area`);
   targetArea.innerHTML="";
-  var dalist = document.createElement("div");
-  var isDropDown = document.createElement("datalist");
-  isDropDown.setAttribute("class","searchBarCreation");
-  isDropDown.setAttribute("id",listName);
+  var customDalist = document.createElement("div");
+  customDalist.className="dropdown-box";
+  customDalist.setAttribute("id",`dropdown${listName}`);
+  var inputVeiw = document.createElement("div");
+  var inputText = document.createElement("input");
+  inputVeiw.className="selected-item";
+  inputText.setAttribute("id",`dropdownSelection${listName}`);
+  inputText.type="text";
+  inputText.className="searchBarCreation";
+  inputText.value=placeHoldertext;
+  inputText.readOnly=true;
+  inputVeiw.appendChild(inputText);
+  customDalist.appendChild(inputVeiw)
+  var dropdownContext = document.createElement("div");
+  dropdownContext.setAttribute("class","dropdown-content");
+  var inputSection = document.createElement("div");
+  inputSection.className="search-input";
+  var usersinput = document.createElement("input");
+  usersinput.setAttribute("id",`search${listName}`);
+  usersinput.className="searchBarCreation";
+  inputSection.appendChild(usersinput);
+  dropdownContext.appendChild(inputSection);
+  var ulElement = document.createElement("ul");
   arr.forEach(name=>{
     if(document.getElementById(`${capitalizedCaseCharacter(name)}Choice`)==null){
-        var option = document.createElement("option");
-        option.value = name;
-        option.text = getName(listName,name);
-        isDropDown.appendChild(option);
-    }
-  })
-  dalist.appendChild(isDropDown);
+        var option = document.createElement("li");
+        option.dataset.value = name;
+        option.textContent = getName(listName,name);
+        option.className="dropdown-item";
+        ulElement.appendChild(option);
+      }
+    })
+    dropdownContext.appendChild(ulElement);
 
-  var searchDropdown = document.createElement("input");
-  searchDropdown.setAttribute("list",listName);
-  searchDropdown.setAttribute("id",`${listName}List`);
-  searchDropdown.setAttribute("class","searchBarCreation");
-  searchDropdown.setAttribute("placeholder",`${placeHoldertext}`);
-  dalist.appendChild(searchDropdown);
-  document.getElementById(`${listName}Area`).appendChild(dalist);
+  // var searchDropdown = document.createElement("input");
+  // searchDropdown.setAttribute("list",listName);
+  // searchDropdown.setAttribute("id",`${listName}List`);
+  // searchDropdown.setAttribute("class","searchBarCreation");
+  // searchDropdown.setAttribute("placeholder",`${placeHoldertext}`);
+  customDalist.appendChild(dropdownContext);
+  document.getElementById(`${listName}Area`).appendChild(customDalist);
 }
 function arrayToDropdownSub(arr,listName,placeHolderText,target,archetypeSelected=""){
   listName = listName.toLocaleLowerCase();
-  const targetArea = document.getElementById(`${target}`);
-  targetArea.innerHTML="";
-  var dalist = document.createElement("div");
-  var isDropDown = document.createElement("datalist");
-  isDropDown.setAttribute("class","searchBarCreation");
-  isDropDown.setAttribute("id",`${listName}sub`);
+  // const targetArea = document.getElementById(`${target}`);
+  // targetArea.innerHTML="";
+  var customDalist = document.createElement("div");
+  customDalist.className="dropdown-box";
+  customDalist.setAttribute("id",`dropdown${target}`);
+  var inputVeiw = document.createElement("div");
+  var inputText = document.createElement("input");
+  inputVeiw.className="selected-item";
+  inputText.setAttribute("id",`dropdownSelection${target}`);
+  inputText.type="text";
+  inputText.className="searchBarCreation";
+  inputText.value=placeHolderText;
+  inputText.readOnly=true;
+  inputVeiw.appendChild(inputText);
+  customDalist.appendChild(inputVeiw)
+  var dropdownContext = document.createElement("div");
+  dropdownContext.setAttribute("class","dropdown-content");
+  var inputSection = document.createElement("div");
+  inputSection.className="search-input";
+  var usersinput = document.createElement("input");
+  usersinput.setAttribute("id",`search${target}`);
+  usersinput.className="searchBarCreation";
+  inputSection.appendChild(usersinput);
+  dropdownContext.appendChild(inputSection);
+  var ulElement = document.createElement("ul");
 //  isDropDown.setAttribute("autocomplete","off");
-  dalist.appendChild(isDropDown);
   arr.forEach(name=>{
-    var option = document.createElement("option");
-    option.value = name;
-    option.text = name;
-    isDropDown.appendChild(option);
+    var option = document.createElement("li");
+    option.dataset.value = name;
+    option.textContent = name;
+    option.className="dropdown-item";
+    ulElement.appendChild(option);
   })
-  var searchDropdown = document.createElement("input");
-  searchDropdown.setAttribute("list",`${listName}sub`);
-  searchDropdown.setAttribute("id",`${listName}subList`);
-  searchDropdown.setAttribute("class","searchBarCreation");
-  searchDropdown.setAttribute("placeholder",`${placeHolderText}`);
+  dropdownContext.appendChild(ulElement);
+  // var searchDropdown = document.createElement("input");
+  // searchDropdown.setAttribute("list",`${listName}sub`);
+  // searchDropdown.setAttribute("id",`${listName}subList`);
+  // searchDropdown.setAttribute("class","searchBarCreation");
+  // searchDropdown.setAttribute("placeholder",`${placeHolderText}`);
+  customDalist.appendChild(dropdownContext);
+  document.getElementById(`${target}subArea`).appendChild(customDalist);
   if(archetypeSelected!=""){
-    searchDropdown.value=archetypeSelected;
+    document.getElementById(`dropdownSelection${target}`).value=archetypeSelected;
+    let index = -1;
+    index = getListIndex(target,archetypeSelected);
+    let liItem = document.getElementById(`dropdown${target}`).querySelectorAll("li")[index].classList.add("active");
   }
-  dalist.appendChild(searchDropdown);
-  document.getElementById(`${target}`).appendChild(dalist);
-  if(listName.includes("archetype")){
-    var name=listName.replace("archetype","").trim();
-      createVariableListener(`${listName}subList`,`input`,constrainedDropdown,name);
-  }
+  createVariableListener(`dropdown${target}`,'click',dropdownInteraction,`dropdown${target}`,true);
+  createVariableArrayListener(`dropdown${target}`,'keyup',searchDrop,[`dropdown${target}`,`search${target}`]);
+  selectionCreation(`dropdown${target}`);
+  // if(listName.includes("archetype")){
+  //   var name=listName.replace("archetype","").trim();
+  //  //   createVariableListener(`${listName}subList`,`input`,constrainedDropdown,name);
+  // }
 }
 
+function getListIndex(elementTarget,targetItem){
+    let liList = document.getElementById(`dropdown${elementTarget}`).querySelectorAll("li");
+    for(let i=0;i<liList.length;i++){
+      if(liList[i].dataset.value==targetItem){
+        return i;
+      }
+    }
+}
 
 function constrainedDropdown(item){
   var list = [];
@@ -2433,11 +2533,16 @@ function createListeners(elementID,eventType,functionName){
   newListener.addEventListener(eventType,()=>functionName());
 }
 
-function createVariableListener(elementID,eventType,functionName,variable){
+
+function createVariableListener(elementID,eventType,functionName,variable,eventReliant=false){
   const newListener = document.getElementById(elementID);
-  newListener.addEventListener(eventType,()=>
+  newListener.addEventListener(eventType,(e)=>
     {
-      functionName(variable)
+      if(!eventReliant){
+        functionName(variable)
+      }else{
+        functionName(e,variable)
+      }
     })
 }
 
@@ -2445,15 +2550,23 @@ function createToggleDisplayListener(elementID,eventType,functionName,variable1)
   const newListener = document.getElementById(elementID);
   newListener.addEventListener(eventType,()=>
     {
+      console.log(newListener.querySelector('.selected-item input').value);
       if(variable1=="senseInput"){
-        if(rangelessSense.includes(newListener.value.toLowerCase())){
+        if(rangelessSense.includes(newListener.querySelector('.selected-item input').value.toLowerCase())){
           functionName(variable1,"none");
         }else{
           functionName(variable1);
         }
       }
       if(variable1=="featInput"){
-        if(notInputFeat(newListener.value.toLowerCase())&&newListener.value!=""){
+        if(notInputFeat(newListener.querySelector('.selected-item input').value.toLowerCase())&&newListener.value!=""){
+          functionName(variable1,"none");
+        }else{
+          functionName(variable1);
+        }
+      }
+      if(variable1=="ManeuverabilitySection"){
+        if(newListener.querySelector('.selected-item input').value.toLowerCase()!="fly"){
           functionName(variable1,"none");
         }else{
           functionName(variable1);
@@ -2463,13 +2576,23 @@ function createToggleDisplayListener(elementID,eventType,functionName,variable1)
 }
 
 
-function createVariableArrayListener(elementID,eventType,functionName,variableList){
+function createVariableArrayListener(elementID,eventType,functionName,variableList,eventReliant=false){
   const newListener = document.getElementById(elementID);
-  newListener.addEventListener(eventType,()=>
-    {
+  newListener.addEventListener(eventType,(e)=>
+  {
+    if(!eventReliant){
       functionName(...variableList)
-    });
+    }else{
+      functionName(e,...variableList)
+    }
+  });
 }
+function createWindowListener(functionName,variableArray){
+  document.addEventListener('click',(e)=>
+  {
+    functionName(e,variableArray)
+    });
+  }
 
 function getProperty(type){
   switch(type){
@@ -2656,11 +2779,11 @@ function NPCDisplay(doDisplay){
   document.getElementById("choiceTabs").style.display = doDisplay==false?"block":"none";
 }
 
-function getArchetypeName(json,item){
+function getArchetypeName(json,item,doFilter=true){
   let archetypeArray = [];
   let itemID = getIndex(json,item.toLowerCase());
   if(json[itemID]!=null){
-    if(json[itemID].archetype!="None"){
+    if(json[itemID].archetype!="None"||doFilter==false){
       archetypeArray = objectToArray(json[itemID].archetype,'name');
     }
   }
@@ -2686,7 +2809,7 @@ function capitalizedCaseCharacter(text){
 }
 
 function classListener(){
-  const className = document.getElementById("classesList").value;
+  const className = document.getElementById("dropdownSelectionclasses").value;
   let constArch = getArchetypeName(classJson.class,className);
   let health = 0;
   health = getClassBasedHealth(getClassesData())
@@ -2697,7 +2820,10 @@ function classListener(){
   }
   if(playerClassList.includes(capitalizedCaseCharacter(className.toLocaleLowerCase()))){
     document.getElementById("archetypeSection").style.display="block";
-    arrayToDropdown(constArch,"archetype","Search Archetype");
+    arrayToDropdown(constArch,"archetype","Select");
+    createVariableListener(`dropdownarchetype`,'click',dropdownInteraction,`dropdownarchetype`,true);
+    createVariableArrayListener(`dropdownarchetype`,'keyup',searchDrop,[`dropdownarchetype`,`searcharchetype`]);
+    selectionCreation(`dropdownarchetype`);
   }else{
     document.getElementById("archetypeSection").style.display="none";
 
@@ -3197,7 +3323,30 @@ function setProperMax(stat){
 function createDropDownChoices(arr){
     arr.forEach(element=>{
         arrayToDropdown(element[0],element[1],element[2]);
+          createVariableListener(`dropdown${element[1]}`,'click',dropdownInteraction,`dropdown${element[1]}`,true);
+          createVariableArrayListener(`dropdown${element[1]}`,'keyup',searchDrop,[`dropdown${element[1]}`,`search${element[1]}`]);
+          let elementID=`dropdown${element[1]}`;
+          selectionCreation(elementID);
     })
+}
+
+function selectionCreation(elementID){
+  const dropdown = document.getElementById(elementID);
+          const dropdownItems = document.getElementById(elementID).querySelectorAll(".dropdown-item");
+          dropdownItems.forEach(dropdownItem=>{
+          dropdownItem.addEventListener("click",(e)=>{
+            e.stopPropagation();
+            dropdownItems.forEach(innerDropdownItem=>{
+            innerDropdownItem.classList.remove("active");
+          })
+          dropdownItem.classList.add("active");
+          const selectedItemInput = document.getElementById(elementID).querySelector(".selected-item input");
+          selectedItemInput.value = dropdownItem.dataset.value;
+          const changeEvent = new Event('change',{bubbles:true});
+          selectedItemInput.dispatchEvent(changeEvent);
+          closeAllDropdowns();
+            })
+          })
 }
 
 function updateFormOnType(){
@@ -3211,8 +3360,8 @@ function updateFeats(){
     feats = feats.concat(sphereFeatList);
   }
   feats.sort();
-  document.getElementById("featList").remove();
-  arrayToDropdown(feats,"feat","Search Feat");
+  document.getElementById("dropdownfeat").remove();
+  arrayToDropdown(feats,"feat","Select");
 }
 
 function updateArchetype(className){
@@ -3263,7 +3412,9 @@ function objectToArray(entity,param){
 
 function updateClasses(){
   var classItems = classList;
-  classItems.pop();
+  if(classItems.includes("Custom")){
+    classItems.pop();
+  }
   if(document.getElementById("usesSphereOption").checked){
     sphereClassArchetype.sphereArchetypeList.forEach(element=>{
       var updatedArchetypeID = document.getElementById(`archetype${element.name}sub`);
@@ -3303,11 +3454,23 @@ function updateClasses(){
     // })
   classItems.sort();
   classItems.push("Custom");
-  document.getElementById("classesList").remove();
-  arrayToDropdown(classItems,"classes","Search Class");
-  createListeners("classesList",`change`,classListener);
+  let classesDropDown = document.getElementById(`dropdownclasses`).querySelector("ul");
+  classesDropDown.innerHTML="";
+  generalListCreation(classesDropDown,classItems);
+  selectionCreation(`dropdownclasses`);
 }
 
+function generalListCreation(element,arr){
+    arr.forEach(name=>{
+    if(document.getElementById(`${spacelessCapitalizedCaseCharacter(name)}Choice`)==null&&document.getElementById(`${name.toLowerCase()}Choice`)==null){
+      var option = document.createElement("li");
+      option.dataset.value = name;
+      option.textContent = getName("classes",name);
+      option.className="dropdown-item";
+      element.appendChild(option);
+    }
+  })
+}
 
 function getClassListWithLevel(){
   var cList = getClassesData();
@@ -3453,9 +3616,10 @@ function listenersSetup(){
   createListeners("usesSphereOption","change",validTab);
   NPCTypeListener();
   createDropDownChoices(dropDownArray);
-  createToggleDisplayListener('senseList','keyup',toggleInput,'senseInput');
-  createToggleDisplayListener('featList','keyup',toggleInput,'featInput');
-  createVariableArrayListener('monsterAbilitiesList','keyup',dynamicInputs,['monsterAbilitiesList',monsterAbilitiesJson,'monsterAbilitiesInput']);
+  createToggleDisplayListener('dropdownsense','change',toggleInput,'senseInput');
+  createToggleDisplayListener('dropdownspeed','change',toggleInput,'ManeuverabilitySection');
+  createToggleDisplayListener('dropdownfeat','change',toggleInput,'featInput');
+ createVariableArrayListener('dropdownmonsterAbilities','change',dynamicInputs,['dropdownSelectionmonsterAbilities',monsterAbilitiesJson,'monsterAbilitiesInput']);
   const targetNode = document.getElementById('featChoice');
   const config = {attributes:true,childList:true,subtree:true,CharacterData:true};
   observer.observe(targetNode,config);
@@ -3545,7 +3709,7 @@ function listenersSetup(){
   refDisplay.appendChild(refHTML);
   willDisplay.appendChild(willHTML);
   createFormListenersFeatsAndSkills(skillList);
-  createListeners("classesList",`change`,classListener);
+  createListeners("dropdownSelectionclasses",`change`,classListener);
   classListener();
   createListeners("NPCCon",`input`,classListener);
   updateFormOnType();
@@ -3567,7 +3731,7 @@ function listenersSetup(){
   createListeners("NPCBaB","change",updateFeatDetails);
   createListeners("NPCAlignment","change",updateFeatDetails);
   createListeners("NPCType","change",updateFeatDetails);
-  createListeners("classesList","change",updateFeatDetails);
+  // createListeners("classesList","change",updateFeatDetails);
   createListeners("NPCChoice","change",setSkillPoints)
   createListeners("NPCChoice","change",setFeatsAvailable)
   updateSaveValues();
@@ -3683,5 +3847,81 @@ function getHotbar(system,forumType){
 function dropdownOptions(id){
   document.getElementById(`${id}Options`).classList.toggle("show");
 }
+
+
+function searchDrop(elementID,searchID){
+  const filter = document.getElementById(searchID).value;
+  const dropdownItems = document.getElementById(elementID).querySelectorAll(".dropdown-item");
+  dropdownItems.forEach(dropdownItem=>{
+      if(dropdownItem.innerHTML.toLowerCase().includes(filter)){
+          dropdownItem.classList.remove("hide");
+      }else{
+          dropdownItem.classList.add("hide");
+      }
+  });
+}
+
+document.addEventListener('click',(e)=>{
+  if(!e.target.closest('.dropdown-box')){
+      closeAllDropdowns();
+  }
+})
+
+// window.addEventListener("load",()=>{
+//   createVariableListener('dropdown1','click',dropdownInteraction,'dropdown1',true);
+//   createVariableListener('dropdown2','click',dropdownInteraction,'dropdown2',true);
+//   createVariableArrayListener('dropdown1','keyup',searchDrop,['dropdown1','search1']);
+//   createVariableArrayListener('dropdown2','keyup',searchDrop,['dropdown2','search2']);
+// })
+
+function closeAllDropdowns(){
+    const dropdown = document.querySelectorAll(".dropdown-box");
+    const dropdownArrow = document.querySelectorAll(".selected-item");
+    dropdown.forEach(item=>{
+        item.classList.remove("active");
+    });
+    dropdownArrow.forEach(item=>{
+        item.classList.remove("active");
+    });
+}
+function openDropdown(e,elementID){
+    const dropdownList = document.querySelectorAll(".dropdown-box");
+    const dropdownArrow = document.querySelectorAll(".selected-item");
+    dropdownList.forEach(item=>{
+        if(item.id!=elementID){
+            if(item.classList.contains("active")){
+                item.classList.remove("active");
+            }
+        }
+    })
+    dropdownArrow.forEach(item=>{
+        if(item.id!=elementID){
+            if(item.classList.contains("active")){
+                item.classList.remove("active");
+            }
+        }
+    })        
+    const dropdown = document.getElementById(elementID);
+    if(!dropdown.classList.contains("active")){
+        dropdown.classList.add("active");
+        dropdown.querySelector(".selected-item").classList.add("active");
+      }else{
+        if(!e.target.id.includes("search")){
+          dropdown.classList.remove("active");
+          dropdown.querySelector(".selected-item").classList.remove("active");
+        }
+    }
+}
+
+function dropdownInteraction(e,elementID){
+  openDropdown(e,elementID);
+}
+
+function createElementbasedListeners(element,eventType,functionName){
+  element.addEventListener(eventType,()=>functionName());
+}
+
+
+
 
 //<button class="button" onclick="displayChange('other')">Misc</button>

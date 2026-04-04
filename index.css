@@ -461,9 +461,14 @@ hr{
 
 .dropDownChoice{
   display: flex;
-  gap:20px;
+  gap:10px;
 }
 
+.centered{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 
 .gapBetweenItems{
   display: flex;
@@ -555,3 +560,99 @@ hr{
 }
 
 .show {display: block;}
+
+.dropdown-box .dropdown-content ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown-box{
+  width: 200px;
+  position: relative;
+}
+
+.dropdown-box input{
+  width: 90%;
+  border: 1px solid rgb(77, 77, 77);
+  outline:none;
+  border-radius: 5px;
+  padding: 3px 5px;
+  color: rgb(100, 99, 99);
+}
+
+.dropdown-box .selected-item{
+  position: relative;
+}
+
+.dropdown-box .selected-item::after{
+  content: "";
+  width: 3px;
+  height: 3px;
+  border: 2px solid;
+  border-color: transparent rgb(100, 99, 99) rgb(100, 99, 99) transparent;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-75%) translateX(-100%) rotate(45deg);
+}
+
+.dropdown-box .selected-item.active::after{
+  content: "";
+  width: 3px;
+  height: 3px;
+  border: 2px solid;
+  border-color: transparent rgb(100, 99, 99) rgb(100, 99, 99) transparent;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-75%) translateX(-100%) rotate(-135deg);
+}
+
+/* -135 to invert */
+.dropdown-box .selected-item,
+.dropdown-box .selected-item input{
+  cursor: pointer;
+}
+
+.dropdown-box .dropdown-content{
+box-shadow: 0 5px 15px rgb(0 0 0 / 15%);
+border-radius: 5px;
+max-height: 200px;
+overflow: auto;
+display: none;
+position: absolute;
+z-index: 99;
+background-color: rgb(30, 30, 30);
+width: 90%;
+}
+
+.dropdown-box.active .dropdown-content{
+display: block;
+}
+
+.dropdown-box .dropdown-content .search-input{
+  padding: 5px;
+}
+
+.dropdown-box .dropdown-content ul{
+  list-style: none;
+}
+
+.dropdown-box .dropdown-content ul li{
+  padding: 2px 5px;
+  cursor: pointer;
+}
+
+.dropdown-box .dropdown-content ul li.hide{
+  display: none;
+}
+
+.dropdown-box .dropdown-content ul li:hover{
+  background-color: rgb(39, 39, 39);
+}
+
+.dropdown-box .dropdown-content ul li.active{
+  background-color:  rgb(37, 37, 37);
+  color: rgb(175, 21, 222);
+}

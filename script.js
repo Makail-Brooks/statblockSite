@@ -61,16 +61,16 @@ classList.push('Custom');
 var classJson = JSON.parse(classes);
 var sphereClassArchetype = JSON.parse(sCArcs);
 var monsterAbilitiesJson = JSON.parse(monsterAbilitiesInputs);
-var lanArray = [lanList,'language','Search Language'];
-var senseArray = [senseList,'sense','Search Sense'];
-var featArray = [featList,'feat','Search Feat'];
-var movementArray = [movementList,'speed','Search Speed'];
-var racialModifierArray = [racialModifiersList,'racialMod','Search Racial Modifier']
-var classArray = [classList,'classes','Search Class'];
-var monsterAbilitiesArray = [monsterAbilitiesList,'monsterAbilities','Search Monster Abilties'];
-var spherePowerArray = [spherePowerList,'spherePower','Search Power Spheres'];
-var sphereMightArray = [sphereMightList,'sphereMight','Search Might Spheres'];
-var sphereGuileArray = [sphereGuileList,'sphereGuile','Search Guile Spheres'];
+var lanArray = [lanList,'language','Select'];
+var senseArray = [senseList,'sense','Select'];
+var featArray = [featList,'feat','Select'];
+var movementArray = [movementList,'speed','Select'];
+var racialModifierArray = [racialModifiersList,'racialMod','Select']
+var classArray = [classList,'classes','Select Class'];
+var monsterAbilitiesArray = [monsterAbilitiesList,'monsterAbilities','Select'];
+var spherePowerArray = [spherePowerList,'spherePower','Select'];
+var sphereMightArray = [sphereMightList,'sphereMight','Select'];
+var sphereGuileArray = [sphereGuileList,'sphereGuile','Select'];
 var dropDownArray =[lanArray,senseArray,featArray,movementArray,racialModifierArray,classArray,spherePowerArray,sphereMightArray,sphereGuileArray,monsterAbilitiesArray];
 
 
@@ -590,10 +590,20 @@ function getForum(sys,forumType){
         <label class="inputName" for="speedTemp">NPC Speed:</label><br>
         <div class=dropDownAddition>
         <div class="speed" id="speedArea"></div>
-        <button type="button" class="formButton" onclick="addDropdownchoice('speed',true,'Speed')">Add speed</button>
+        <button type="button" class="formButton" onclick="addDropdownchoice('speed',true,'Speed'),toggleInput('ManeuverabilitySection','none')">Add speed</button>
         </div>
         <div id="speedInput" style="display:block;">
         <input type="number" min="1" class="searchBarCreation" name="speedTemp" id="speedTemp" placeholder="Insert Speed Here" title="SpeedTemp">
+        </div>
+        <div id="ManeuverabilitySection" style="display:none">
+        <label class="inputName" for="NPCFlightManeuverability">Maneuverability:</label><br>
+        <select class="searchBarCreation" name="NPCFlightManeuverability" id="NPCFlightManeuverability">
+        <option>Clumsy</option>
+        <option>Poor</option>
+        <option selected>Average</option>
+        <option>Good</option>
+        <option>Perfect</option>
+        </select><br>
         </div>
         <div id="speedChoice"></div>
         </div>

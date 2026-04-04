@@ -4,5 +4,15 @@
     "cors": "^2.8.5",
     "express": "^5.1.0"
   },
-  "scripts": {"program":"concurrently \"http-server . -c-1\" \"node jsonManipulation.js\""}
+  "name":"stat-blocks-and-characters",
+  "version":"0.9",
+  "main":"jsonManipulation.js",
+  "scripts": {
+    "start":"electron .",
+    "program": "concurrently \"http-server . -c-1\" \"node jsonManipulation.js\""
+  },
+  "author": "Karasil Sothren",
+  "devDependencies": {
+    "electron": "^41.0.4"
+  }
 }

@@ -41,8 +41,8 @@ resetButton.setAttribute("class","button");
 resetButton.setAttribute("onClick",`resetEdit(${JSON.stringify(NPCInfo)},'${system}')`);
 resetButton.textContent = "Reset";
 resetButtonDisplay.appendChild(resetButton);
-listenersSetup();
 createMainForm(system);
+listenersSetup();
 readJsonData(NPCInfo,system);
 updateSaveValues()
 updateClasses();
@@ -822,7 +822,7 @@ function getDropDownSelection(item,group,infoVal=[]){
         subZone.setAttribute("class","dropDownAddition");
         divZone.appendChild(subZone);
         document.getElementById(`${group}Choice`).appendChild(divZone);
-        arrayToDropdownSub(getArchetypeName(classJson.class,val),`archetype${val}`,"Insert Archetype here",`archetype${val.toLowerCase()}subArea`,archetypeSelected);
+        arrayToDropdownSub(getArchetypeName(classJson.class,val,false),`archetype${val}`,"Insert Archetype here",`archetype${val.toLowerCase()}`,archetypeSelected);
         createListeners(`archetype${val.toLowerCase()}subArea`,`input`,classListener);
         createListeners(`archetype${val.toLowerCase()}subArea`,`input`,setSkillPoints);
         createListeners(`archetype${val.toLowerCase()}subArea`,`input`,updateSaveValues);

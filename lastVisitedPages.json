@@ -6,6 +6,11 @@
       "system": "pathfinder"
     },
     {
+      "name": "Slime",
+      "index": "9",
+      "system": "pathfinder"
+    },
+    {
       "name": "Void Envoy",
       "index": "2",
       "system": "pathfinder"
@@ -18,11 +23,6 @@
     {
       "name": "Sinulence Envisel",
       "index": "33",
-      "system": "pathfinder"
-    },
-    {
-      "name": "Slime",
-      "index": "9",
       "system": "pathfinder"
     },
     {

@@ -1,18 +1,27 @@
 var express = require("express");
 var cors = require("cors");
-var app = express();
+var appExpress = express();
 var fs = require("fs");
 var bodyParser = require("body-parser");
-app.use(cors());
-app.use(bodyParser.json());
+appExpress.use(cors());
+appExpress.use(bodyParser.json());
 const port = "8080";
 const host = "localhost";
-app.use(express.static("public"));
-    app.listen(port, () => {
-    console.log("App listening at http://%s:%s", host, port);
+const { app, BrowserWindow } = require('electron')
+const createWindow = () => {
+  const win = new BrowserWindow({
+    width: 800,
+    height: 600
+  })
+
+  win.loadFile('index.html')
+}
+appExpress.use(express.static("public"));
+    appExpress.listen(port, () => {
+    console.log("appExpress listening at http://%s:%s", host, port);
 });
 
-app.get("/json", (req, res) => {
+appExpress.get("/json", (req, res) => {
     fs.readFile(__dirname + "/" + "lastVisitedPages.json", "utf8", (err, data) => {
     res.status(200);
     res.send(data)
@@ -20,7 +29,7 @@ app.get("/json", (req, res) => {
 });
 
 
-app.get("/list", (req, res) => {
+appExpress.get("/list", (req, res) => {
     fs.readFile(__dirname + "/" + "list.json", "utf8", (err, data) => {
     res.status(200);
     res.send(data)
@@ -28,7 +37,7 @@ app.get("/list", (req, res) => {
 });
 
 
-app.post("/write", async (req, res) => {
+appExpress.post("/write", async (req, res) => {
     const id = req.body.index;
     const name = req.body.name;
     const system =req.body.system;
@@ -58,7 +67,7 @@ app.post("/write", async (req, res) => {
         });
 });
 
-app.delete("/deleteEntry/:entry",async(req,res)=>{
+appExpress.delete("/deleteEntry/:entry",async(req,res)=>{
     let id = req.params.entry;
     fs.readFile("list.json",function(err,data){
         let list = JSON.parse(data);
@@ -95,7 +104,7 @@ app.delete("/deleteEntry/:entry",async(req,res)=>{
     //     });
     // console.log("list2 " +visited.pages[5].index);
 });
-app.post("/create", async (req, res) => {
+appExpress.post("/create", async (req, res) => {
     fs.readFile("list.json",function(err,data){
         let list = JSON.parse(data);
         list.NPCs.push(req.body);
@@ -109,7 +118,7 @@ app.post("/create", async (req, res) => {
     console.log("finished");
 })
 
-app.put("/update/:id",async(req,res)=>{
+appExpress.put("/update/:id",async(req,res)=>{
     let id = Number(req.params.id);
 fs.readFile("list.json",function(err,data){
     let list = JSON.parse(data);
@@ -129,3 +138,14 @@ fs.readFile("list.json",function(err,data){
 });
 
 })
+
+if (process.versions && process.versions.electron) {
+    app.whenReady().then(() => {
+        createWindow();
+    });
+
+    app.on('window-all-closed', () => {
+        if (process.platform !== 'darwin') app.quit();
+    });
+
+}

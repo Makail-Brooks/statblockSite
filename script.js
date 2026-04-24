@@ -2,7 +2,6 @@
 // console.log(document.body);
 // //document.getElementById("cols").addEventListener("click",changePage(element.name));
 // }
-
 window.onclick = function(event) {
 //  console.log(event.target.id=="miscButton");
   var miscArray = ["#miscButton","dropdown-misc"]
@@ -42,12 +41,14 @@ var sphereMightList = ['Artifice']
 var sphereGuileList = ['Alchemy']
 var alterationList = ['Adaptive Physicality [utility]','Additional Limbs'];
 var destructionList = ['Admixture','Cascade Failure','Clinging Blast'];
-var monsterAbilitiesList = ['Regeneration','Rend','Absurd Reactions','Ability Damage','Bleed','Blood Drain','Breath Weapon','Frightful Presence','Ability Drain','All-Around Vision','All-Knowing','All-Sensing','Amazing Initative','Amorphous','Amphibious','Apocalyptic Resurrection','Archdevil Traits','Attach','Block Sensing','Blood Rage','Burn','Capsize','Channel Resistance','Compression','Constrict','Curse','Curse of Lycanthropy','Demon Lord Traits','Disease','Display of Strength','Distraction','Dual Initiative',
-  'Dragon Senses','Earth Glide','Echosense/Echosight','Emotion Aura','Empyreal Lord Traits','Energy Drain','Engulf','Entrap','Expanding Blindsense','Fast Healing','Fast Swallow','Fear','Ferocity','Fight Through Restriction','Formian Traits','Fortification','Freeze','Frightful Presence','Gaze','Grab','Heat','Hold Breath','Horseman Traits','Incorporeal','Instant Action','Jet','Legendary Concentration','Legendary Saving Throw','Light Blindness','Light Sensitivity','Lycanthropic Empathy','Material sense','Mental Static Aura',
+var monsterAbilitiesList = ['Regeneration','Rend','Absurd Reactions','Ability Damage','Bleed','Blood Drain','Breath Weapon','Frightful Presence','Ability Drain','All-Around Vision','All-Knowing','All-Sensing','Amazing Initative','Amorphous','Amphibious','Apocalyptic Resurrection','Archdevil Traits','Attach','Block Sensing','Blood Rage','Burn','Capsize','Channel Resistance','Change Shape','Compression','Constrict','Curse','Curse of Lycanthropy','Demon Lord Traits','Disease','Display of Strength','Distraction','Dual Initiative',
+  'Dragon Senses','Earth Glide','Echosense/Echosight','Emotion Aura','Empyreal Lord Traits','Energy Drain','Engulf','Entrap','Expanding Blindsense','Fast Healing','Fast Swallow','Fear','Ferocity','Fight Through Restriction','Formian Traits','Fortification','Freeze','Gaze','Grab','Heat','Hold Breath','Horseman Traits','Incorporeal','Instant Action','Jet','Legendary Concentration','Legendary Saving Throw','Light Blindness','Light Sensitivity','Lycanthropic Empathy','Material sense','Mental Static Aura',
   'Mythic Durability','Mythic Immortality','Mythic Magic','Mythic Power','Multiweapon Mastery','Natural Invisibility','Negative Energy Affinity','No Breath','Outside Time','Paralysis','Planar Knowledge','Plantbringer','Plant Traits','Poison','Poisonous Blood','Pounce','Powerful Blows','Powerful Charge','Primed Action','Psychic Magic','Psychic Resilience','Pull','Push','Qlippoth Lord Traits','Rake','Recuperation','Rock Catching','Rock Throwing','Smother','Sound Mimicry','Split','Stench','Strangle','Summon','Sunlight Powerlessness',
   'Superior Scent','Surge','Swallow Whole','Telepathy','Trample','Trip','Unbound Action','Undead Traits','Undersized Weapons','Unnatural Aura','Unstoppable','Water Breathing','Water Dependency','Web','Whirlwind'];
-
-
+var meleeWeaponList = ['Morningstar','Dagger'];
+var rangedWeaponList = ['Bow','Shortbow'];
+meleeWeaponList.sort();
+rangedWeaponList.sort();
 lanList.sort();
 senseList.sort();
 featList.sort();
@@ -59,8 +60,10 @@ classList.sort();
 sphereClassList.sort();
 classList.push('Custom');
 var classJson = JSON.parse(classes);
+var archetypeDetailsJson = JSON.parse(archetypeDetails);
 var sphereClassArchetype = JSON.parse(sCArcs);
 var monsterAbilitiesJson = JSON.parse(monsterAbilitiesInputs);
+var classSpellListJson = JSON.parse(classSpellList);
 var lanArray = [lanList,'language','Select'];
 var senseArray = [senseList,'sense','Select'];
 var featArray = [featList,'feat','Select'];
@@ -190,12 +193,12 @@ function switchToCreation(list,cname){
 function search(){
   let input, filter;
   input = document.getElementById("entrySearch");
-  filter = input.value.toLowerCase();
+  filter = input.value.toLocaleLowerCase();
   var list = document.getElementById("cols");
   let listlength = list.getElementsByTagName("div").length;
   for(let i=0;i<listlength;i++){
       let a = list.getElementsByTagName("div")[i].getElementsByTagName("a")[0];
-      if(a.innerHTML.toLowerCase().indexOf(filter)>-1){
+      if(a.innerHTML.toLocaleLowerCase().indexOf(filter)>-1){
         list.getElementsByTagName("div")[i].style.display="";
       }else{
         list.getElementsByTagName("div")[i].style.display="none";
@@ -244,12 +247,12 @@ function changePage(index,name,system){
 }
 function openNav() {
   document.getElementById("sideNav").style.width = "300px";
-  document.getElementById("offClick").style.width = "90%";
+  // document.getElementById("offClick").style.width = "90%";
 }
 
 function closeNav() {
   document.getElementById("sideNav").style.width = "0";
-  document.getElementById("offClick").style.width = "0";
+  // document.getElementById("offClick").style.width = "0";
 }
 function goHome(){
      window.location.href = "./index.html";
@@ -343,7 +346,7 @@ function displayChange(section){
     let sphereListhotbar = ["spheres","selectionPower","selectionMight","selectionGuile"];
     document.getElementById("main").style.display = section=="main"? "flex":"none";
     document.getElementById("combatTraits").style.display = combatList.includes(section)? "block":"none";
-    document.getElementById("classesSec").style.display = section=="class"? "block":"none";
+    document.getElementById("classesSec").style.display = section=="class"? "flex":"none";
     document.getElementById("skills").style.display = section=="skills"? "block":"none";
     document.getElementById("spell").style.display = section=="spells"? "flex":"none";
     // document.getElementById("other").style.display = section=="other"? "flex":"none";
@@ -375,6 +378,7 @@ function displayChange(section){
     document.getElementById("selectionPower").style.display = section=="selectionPower"? "block":"none";
     document.getElementById("selectionMight").style.display = section=="selectionMight"? "block":"none";
     document.getElementById("selectionGuile").style.display = section=="selectionGuile"? "block":"none";
+    document.getElementById("chosenClasses").style.display = section=="chosenClasses"? "flex":"none";
 //    document.getElementById("main").style.display = document.getElementById("main").style.display=="block"?"none":"block";
 }
 
@@ -407,6 +411,7 @@ const observer = new MutationObserver(function(MutationList,config){
      updateFeatDetails();
      classListener();
      setSkillPoints();
+     doAttacksDropdown();
     }
   }
 })
@@ -414,8 +419,8 @@ const observer = new MutationObserver(function(MutationList,config){
 
 function notInputFeat(input){
   let inputlessFeat = featList.filter(item=>!featsWithInput.includes(item));
-  inputlessFeat = inputlessFeat.map(element=>element.toLowerCase());
-  if(inputlessFeat.includes(input.toLowerCase())){
+  inputlessFeat = inputlessFeat.map(element=>element.toLocaleLowerCase());
+  if(inputlessFeat.includes(input.toLocaleLowerCase())){
     return true;
   }else{
     return false;
@@ -584,8 +589,8 @@ function getForum(sys,forumType){
         <input type="text" class="searchBarCreation" name="NPCSetHD" id="NPCSetHD" placeholder="SetHD" title="NPC SetHD"><br>
         </div>
         </div>
-      </div>
-      <div>
+        </div>
+        <div>
         <div>
         <label class="inputName" for="speedTemp">NPC Speed:</label><br>
         <div class=dropDownAddition>
@@ -771,16 +776,31 @@ function getForum(sys,forumType){
         <div class="aura" id="auraArea"></div>
         </div>
         <div id="meleeOption" style="display:none;">
-        <div id="melee"><button type="button" class="formButton" onclick="createAttackInformation('meleeAttack','Melee Attack Name','Melee Attack Dice Count')">Add Melee Attack</button>
+        <div id="melee">
+        <select id="meleeSelection" class="searchBarCreation">
+        <option>Weapon</option>
+        <option>Custom</option>
+        </select><br>
+        <div style="display:flex;">
+        <div id="meleeWeaponSelection"></div>
+        <input type="text" class="searchBarCreation" name="material" id="meleeMaterial" style="display: none;" placeholder="Weapon Material" title="material">
+        </div>
+        <button type="button" class="formButton" onclick="createAttackInformation('meleeAttack','Melee Attack Name','Melee Attack Dice Count')">Add Melee Attack</button>
         <div class="meleeAttack" id="meleeAttackArea"></div></div>
         </div>
         <div id="rangeOption" style="display:none;">
-        <div id="range"><button type="button" class="formButton" onclick="createAttackInformation('rangeAttack','Range Attack Name','Range Attack Dice Count')">Add Range Attack</button>
+        <div id="range">
+        <select id="rangeSelection" class="searchBarCreation">
+        <option>Weapon</option>
+        <option>Custom</option>
+        </select><br>
+        <div id="rangeWeaponSelection"></div>
+        <button type="button" class="formButton" onclick="createAttackInformation('rangeAttack','Range Attack Name','Range Attack Dice Count')">Add Range Attack</button>
         <div class="rangeAttack" id="rangeAttackArea"></div></div>
         </div>
         </div>
         </div>
-      </div>
+        </div>
 
 
         <div class="creationDisplay">
@@ -838,17 +858,23 @@ function getForum(sys,forumType){
         </div>
         </div>
 
+        <div id="chosenClasses" class="creationDisplayBlock" style="display:none;">
+        <div style="display:block;">
+        <h1 class="inputName">Classes:</h1>
+        <div class="chosenClasses" id="chosenClassesArea"></div>
+        <div id="archetypesListArea" style="display:flex;"></div>
+        <div><br><h4 class="inputName" id="archetypeDetails">Archetype Details:</h4></div>
+        </div>
+        <div id="selectedArchetypes"><h1 class="inputName">Current Archetypes:</h1></div>
+        </div>
 
         <div class="creationDisplayBlock" id="classesSec" style="display: none;">
-        
+        <div id="classSelection">
         <p class="inputName" id="classHealth"></p>
         
         <div class=dropDownAddition>
         <div class="class" id="classesArea"></div>
-        <button type="button" class="formButton" onclick="addDropdownchoice('classes',true,'Level',true,'number')">Add class</button>
-        </div>
-        <div class=dropDownAddition id="archetypeSection">
-        <div class="archetype" id="archetypeArea"></div>
+        <button type="button" class="formButton" onclick="addDropdownchoice('classes',true,'Level','number',true)">Add class</button>
         </div>
         <div id="customClasses">
         <input type="text" class="searchBarCreation" name="customClasses" placeholder="Classes Name" title="customClasses">
@@ -858,7 +884,21 @@ function getForum(sys,forumType){
         <div id="classesInput" style="display:block;">
         <input type="number" min="1" class="searchBarCreation" name="classesTemp" id="classesTemp" placeholder="Insert Level" title="classesTemp">
         </div>
+        </div>
+        <div id="classDisplay">
+        <label class="inputName">Classes:</label>
+        <button class="button classFeatureButton" type="button" onClick="features('abilities')">Class Feature Options</button>
+        <br>
         <div id="classesChoice"></div>
+        </div>
+        <div class="gridSection" style="display:none;" id="abilitiesChoice">
+        <div>
+        <button class="button return" type="button" onClick="features('return')">&larr; Return to Classes</button>
+        </div>
+        <br>
+        <br>
+        <div class="gridPart"><h2>Class Abilities:</h2></div>
+        </div>
         </div>
 
         <div id="skills" style="display:none;" class="creationDisplay">
@@ -984,7 +1024,7 @@ function getForum(sys,forumType){
 
         </div>
         <div id="spell" class="creationDisplay" style="display: none;">
-        <div id="spellsContainer" class="stairCase">
+        <div id="spellsContainerInnate" class="stairCase">
         
 
         <p class="inputName" style="display: flex">Has Innate<input type="checkbox" id="spellsInnateOption" placeholder="toggle" onclick="arrayToggle('spellsInnate',['Container','Constant','atWill','xDay'])"></p> 
@@ -1014,7 +1054,7 @@ function getForum(sys,forumType){
         <div class="xDay" id="xDayArea"></div></div>
         </div>
         </div>
-        <div id="spellsContainer" class="stairCase">
+        <div id="spellsContainerPrepared" class="stairCase">
         <p class="inputName" style="display: flex">Has Prepared <input type="checkbox" id="spellsPreparedOption" placeholder="toggle" onclick="arrayToggle('spellsPrepared',['Container','Ninth','Eighth','Seventh','Sixth','Fifth','Fourth','Third','Second','First','Zeroth'])"></p>
         
         <div id="spellsPreparedContainer" style="display: none;" class="stairCase">
@@ -1290,4 +1330,52 @@ function getForum(sys,forumType){
   }
   return forum;
 
+}
+
+
+
+function generateForum(){
+    var creationDisplay = document.getElementById("creationDis");
+    var creationHTML = document.createElement("div");
+    var hotbarDisplay = document.getElementById("hotBar");
+    var hotbarHTML = document.createElement("div");
+    var choiceDisplay = document.getElementById("choiceDrop");
+    var choiceHTML = document.createElement("div");
+    let system;
+    system = sessionStorage.getItem("system");
+    hotbarHTML.innerHTML+=getHotbar(system);
+    choiceHTML.innerHTML+=getChoiceDrop(system);
+    creationHTML.innerHTML+=getForum(system);
+    hotbarDisplay.appendChild(hotbarHTML);
+    choiceDisplay.appendChild(choiceHTML);
+    creationDisplay.appendChild(creationHTML);
+    // let formInputs=document.getElementsByClassName("searchBarCreation");
+    // for(let i=0;formInputs.length>i;i++){
+    //     formInputs.item(i).addEventListener("contextmenu",(e)=>{e.preventDefault()})
+    // }
+    createMainForm(system);
+    listenersSetup();
+}
+
+function updateMiscDropdown(){
+  let system;
+  system = sessionStorage.getItem("system");
+  var misc = document.getElementById("miscOptions");
+  document.getElementById("miscOptions").innerHTML="";
+  var display = document.createElement("div");
+  display.innerHTML+=getMiscdropdown();
+  misc.append(display);
+}
+
+function getMiscdropdown(){
+  let drop= `<a class="object" onclick="displayChange('senseSection')">Senses</a>
+      <a class="object" onclick="displayChange('languageSection')">Languages</a>
+      <a class="object" onclick="displayChange('racialModSection')">Racial Modifiers</a>
+      <a class="object" onclick="displayChange('SQSection')">Special Qualities</a>
+      <a class="object" onclick="displayChange('gearSection')">Gear</a>
+      <a class="object" onclick="displayChange('MonsterAbilitiesSection')">Monster Abilities</a>`
+      if(document.getElementById("NPCChoice").value=="NPC"){
+        drop+=`<a class="object" onclick="displayChange('chosenClasses')">Class Archetypes</a>`
+      }
+  return drop;
 }

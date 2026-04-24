@@ -12,40 +12,22 @@ let id = sessionStorage.getItem("NPC");
 let param = new URLSearchParams(window.location.search);
 id = param.get("NPC");
 var NPCInfo = listInformation.NPCs[id];
-var resetButtonDisplay = document.getElementById("resetButton");
-var creationHTML = document.createElement("div");
-var hotbarDisplay = document.getElementById("hotBar");
-var hotbarHTML = document.createElement("div");
-var choiceDisplay = document.getElementById("choiceDrop");
-var choiceHTML = document.createElement("div");
 let system;
 system = sessionStorage.getItem("system");
-hotbarHTML.innerHTML+=getHotbar(system,"edit");
-choiceHTML.innerHTML+=getChoiceDrop(system);
-creationHTML.innerHTML+= getForum(system,"edit");
-var creationDisplay = document.getElementById("creationDis");
-creationDisplay.appendChild(creationHTML);
-choiceDisplay.appendChild(choiceHTML);
-hotbarDisplay.appendChild(hotbarHTML);
-        // <option value="d4" ${NPCInfo.hitDice==="d4"?"selected":""}>d4</option>
-        // <option value="d6" ${NPCInfo.hitDice==="d6"?"selected":""}>d6</option>
-        // <option value="d8" ${NPCInfo.hitDice==="d8"?"selected":""}>d8</option>
-        // <option value="d10" ${NPCInfo.hitDice==="d10"?"selected":""}>d10</option>
-        // <option value="d12" ${NPCInfo.hitDice==="d12"?"selected":""}>d12</option>
-;
-// console.log(NPCType);
 
+generateForum();
 
+var resetButtonDisplay = document.getElementById("resetButton");
 var resetButton = document.createElement("button");
 resetButton.setAttribute("class","button");
 resetButton.setAttribute("onClick",`resetEdit(${JSON.stringify(NPCInfo)},'${system}')`);
 resetButton.textContent = "Reset";
 resetButtonDisplay.appendChild(resetButton);
-createMainForm(system);
-listenersSetup();
 readJsonData(NPCInfo,system);
 updateSaveValues()
 updateClasses();
+updateMiscDropdown();
+checkSpells();
 }
 
 /**
@@ -56,7 +38,7 @@ updateClasses();
 function readJsonData(NPCInfo,sys){
     let i=0;
     let selectionID = 0;
-    // let cSize = String(NPCInfo.size).toLowerCase()
+    // let cSize = String(NPCInfo.size).toLocaleLowerCase()
     //     switch(cSize){
     //         case "fine":
     //             selectionID = 0;
@@ -151,7 +133,7 @@ function readJsonData(NPCInfo,sys){
         if(NPCInfo.senses!=null){
             let senseValue = NPCInfo.senses;
             Object.keys(NPCInfo.senses).forEach(senses=>{
-                if(!senses.toLowerCase().includes("perception")){
+                if(!senses.toLocaleLowerCase().includes("perception")){
                     getDropDownSelection(senses,'sense',senseValue);
                     i++;
                 }
@@ -160,7 +142,7 @@ function readJsonData(NPCInfo,sys){
         if(NPCInfo.class!=null){
             NPCInfo.class.forEach(classes=>{
                 getDropDownSelection(classes.name,'classes',classes)
-                classListenerSetup(classes.name.toLowerCase());
+                classListenerSetup(classes.name.toLocaleLowerCase());
             })
         }
        // senseString!='';
@@ -505,7 +487,7 @@ function readJsonData(NPCInfo,sys){
     break;
         
         case "5e":
-        let cSize = String(NPCInfo.size).toLowerCase()
+        let cSize = String(NPCInfo.size).toLocaleLowerCase()
         switch(cSize){
             case "tiny":
                 selectionID = 0;
@@ -722,7 +704,7 @@ function getAttackInformation(attackPath,attackName){
  * @returns 
  */
 function getChoiceSelection(options,info){
-    return options.findIndex(choice=>choice.toLowerCase()===info.toLowerCase());
+    return options.findIndex(choice=>choice.toLocaleLowerCase()===info.toLocaleLowerCase());
 }
 
 
@@ -731,7 +713,7 @@ function getDropDownSelection(item,group,infoVal=[]){
     var textSelected = document.createElement("label");
     textSelected.textContent = val;
     textSelected.className = "inputName"
-    textSelected.setAttribute("for",`${group}${val.toLowerCase()}`);
+    textSelected.setAttribute("for",`${group}${val.toLocaleLowerCase()}`);
     var button = document.createElement("button");
     button.setAttribute("class","formButton");
     button.setAttribute("id",`delete${val}`);
@@ -806,27 +788,29 @@ function getDropDownSelection(item,group,infoVal=[]){
         let input = document.createElement("input");
         input.setAttribute("type","number");
         input.setAttribute("class","searchBarCreation");
-        input.setAttribute("name",`classes${val.toLowerCase()}`);
-        input.setAttribute("id",`classes${val.toLowerCase()}`);
-        input.setAttribute("title",`classes${val.toLowerCase()}`);
+        input.setAttribute("name",`classes${val.toLocaleLowerCase()}`);
+        input.setAttribute("id",`classes${val.toLocaleLowerCase()}`);
+        input.setAttribute("title",`classes${val.toLocaleLowerCase()}`);
         input.setAttribute("placeholder",`Insert Level Here`);
         input.value=infoVal.level;
         divZone.appendChild(input);
-        if(!checkIfNPC(val)){
-        let archetypeSelected = infoVal.archetype;
-        if(archetypeSelected=="None"){
-            archetypeSelected="";
-        }
-        let subZone = document.createElement("div");
-        subZone.setAttribute("id",`archetype${val.toLowerCase()}subArea`);
-        subZone.setAttribute("class","dropDownAddition");
-        divZone.appendChild(subZone);
-        document.getElementById(`${group}Choice`).appendChild(divZone);
-        arrayToDropdownSub(getArchetypeName(classJson.class,val,false),`archetype${val}`,"Insert Archetype here",`archetype${val.toLowerCase()}`,archetypeSelected);
-        createListeners(`archetype${val.toLowerCase()}subArea`,`input`,classListener);
-        createListeners(`archetype${val.toLowerCase()}subArea`,`input`,setSkillPoints);
-        createListeners(`archetype${val.toLowerCase()}subArea`,`input`,updateSaveValues);
-     }
+    //     if(!checkIfNPC(val)){
+    //     let archetypeSelected = infoVal.archetype;
+    //     if(archetypeSelected=="None"){
+    //         archetypeSelected="";
+    //     }
+    //     let subZone = document.createElement("div");
+    //     subZone.setAttribute("id",`archetype${val.toLocaleLowerCase()}subArea`);
+    //     subZone.setAttribute("class","dropDownAddition");
+    //     divZone.appendChild(subZone);
+    //     document.getElementById(`${group}Choice`).appendChild(divZone);
+    //     arrayToDropdownSub(getArchetypeName(classJson.class,val,false),`archetype${val}`,"Select",`archetype${val.toLocaleLowerCase()}`,archetypeSelected);
+    //     createListeners(`archetype${val.toLocaleLowerCase()}subArea`,`input`,classListener);
+    //     createListeners(`archetype${val.toLocaleLowerCase()}subArea`,`input`,setSkillPoints);
+    //     createListeners(`archetype${val.toLocaleLowerCase()}subArea`,`input`,updateSaveValues);
+    //     createListeners(`dropdownSelectionarchetype${val.toLocaleLowerCase()}`,'change',classListener);
+        
+    //  }
      document.getElementById(`${group}Temp`).value = "";
     }
     divZone.appendChild(button);

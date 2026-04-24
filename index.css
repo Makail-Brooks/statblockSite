@@ -10,7 +10,30 @@
   padding-top: 20px; /* Place content 60px from the top */
   transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 }
+.archetype-item {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s ease-out;
+  width: 200px;
+}
+.archetype-item.active {
+  grid-template-rows: 1fr;
+}
+.archetype-item > div{
+  overflow: hidden;
+}
 
+
+.staticInformation{
+  overflow:hidden;
+  position: relative;  
+  width: 200px;
+}
+
+.absolution{
+  position: relative;
+  margin: 0;
+}
 
 .closeNav{
   height: 100%;
@@ -58,7 +81,7 @@
   background-color: black; /* Green */
   border: 1px solid black;
   color: rgb(124, 4, 204);
-  padding: 15px -1000px;
+  padding: 0px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -76,7 +99,7 @@
   background-color: black; /* Green */
   border: 1px solid black;
   color: rgb(204, 4, 4);
-  padding: 15px -1000px;
+  padding: 0px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -93,7 +116,7 @@
   background-color: black; /* Green */
   border: 1px solid black;
   color: rgb(0, 68, 255);
-  padding: 15px -1000px;
+  padding: 0px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -111,7 +134,7 @@
   background-color: black; /* Green */
   border: 1px solid black;
   color: rgb(34, 204, 4);
-  padding: 15px -1000px;
+  padding: 0px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -129,7 +152,7 @@
   background-color: black; /* Green */
   border: 1px solid black;
   color: rgb(204, 87, 4);
-  padding: 15px -1000px;
+  padding: 0px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -148,7 +171,7 @@
   background-color: black; /* Green */
   border: 1px solid black;
   color: rgb(204, 4, 201);
-  padding: 15px -1000px;
+  padding: 0px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -165,7 +188,7 @@
   background-color: black; /* Green */
   border: 1px solid black;
   color: rgb(204, 201, 4);
-  padding: 15px -1000px;
+  padding: 0px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -182,7 +205,7 @@
   background-color: black; /* Green */
   border: 1px solid black;
   color: rgb(4, 204, 181);
-  padding: 15px -1000px;
+  padding: 0px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -364,22 +387,36 @@ hr{
   font-size: 30px;
 }
 
+.archetypeListClass{
+  display: flex;
+  gap: 5px;
+}
+
+.archetypeClick{
+  cursor: pointer;
+}
+.archetypeClick:hover{
+  color:rgb(72, 72, 72);
+  cursor: pointer;
+}
+
 .formButton {
   background-color: black; /* Green */
   color: rgb(100, 99, 99);
-  padding: 15px -1000px;
+  padding: 0px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 20px;
   cursor: pointer;
-  
+  align-self: flex-start;
+  width: max-content;
 }
 
 .formButton-blue {
   background-color: rgb(0, 0, 220); /* Green */
   color: rgb(100, 99, 99);
-  padding: 15px -1000px;
+  padding: 0px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -424,10 +461,35 @@ hr{
 
 .creationDisplay{
   justify-items: center;
+  justify-self: center;
+}
+
+.centeredHorizontal{
+  margin: auto;
+}
+
+.button.classFeatureButton{
+  font-size: 25px;
+  color:#a8a8a8
+}
+.button.classFeatureButton:hover{
+  font-size: 25px;
+  color:#6c6c6c
 }
 
 .creationDisplayBlock{
   justify-self: center;
+  gap: 50px;
+}
+
+.gridSection{
+  display: grid;
+  grid-template-columns: auto auto  auto;
+  padding: 10px;
+}
+
+.gridPart{
+  grid-column: 2fr;
 }
 
 .stairCase{
@@ -481,6 +543,13 @@ hr{
     align-items: center;
 }
 
+.button.return{
+  position: absolute;
+  left:0;
+  padding-left: 20px;
+  text-align: left;
+  font-size: 30px;
+}
 
 /*the below is the bareboons of what is needed for a decent looking popup*/
 /* .popup {

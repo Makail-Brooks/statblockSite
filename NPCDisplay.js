@@ -150,7 +150,7 @@ function loadsData(list){
 
         let conBonus = getModifier(NPCInfo.con)*Number(NPCInfo.level)+getFeatBonuses("con",NPCInfo.feats,NPCInfo.level,NPCInfo);
         let hpInformation = `${NPCInfo.level}${NPCInfo.hitDice}`;
-        if(NPCInfo.type.toLowerCase().includes("construct")){
+        if(NPCInfo.type.toLocaleLowerCase().includes("construct")){
             conBonus=getConstructBonusHealth(NPCInfo.size);
         }
         if(conBonus>0){
@@ -555,7 +555,7 @@ function loadsData(list){
                     let condensedString = special_abilities_desc;
                     while(special_abilities_desc.includes("[saveDC]")){
                         special_abilities_desc = special_abilities_desc.replace("[saveDC]",`${trueSave} ${element.saveType}`)
-                        // condensedString = condensedString.substring().toLowerCase();
+                        // condensedString = condensedString.substring().toLocaleLowerCase();
                         // condensedString = condensedString.replace("save","");
                         // condensedString = condensedString.replace("dc","");
                         if(condensedString!=""){
@@ -792,7 +792,7 @@ NPCDisplay.appendChild(NPC);
 
 function getReachOrSpace(NPCInfo,obtain){
     let isLong = NPCInfo.sizeType;
-    switch(NPCInfo.size.toLowerCase()){
+    switch(NPCInfo.size.toLocaleLowerCase()){
             case "fine":
                 switch(obtain){
                     case "reach":

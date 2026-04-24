@@ -6,6 +6,31 @@
       "system": "pathfinder"
     },
     {
+      "name": "5e Template",
+      "index": "0",
+      "system": "5e"
+    },
+    {
+      "name": "Bandit",
+      "index": "1",
+      "system": "pathfinder"
+    },
+    {
+      "name": "Minions of Krampus",
+      "index": "46",
+      "system": "5e"
+    },
+    {
+      "name": "Krampus",
+      "index": "45",
+      "system": "5e"
+    },
+    {
+      "name": "Paraselene",
+      "index": "7",
+      "system": "pathfinder"
+    },
+    {
       "name": "Slime",
       "index": "9",
       "system": "pathfinder"
@@ -23,16 +48,6 @@
     {
       "name": "Sinulence Envisel",
       "index": "33",
-      "system": "pathfinder"
-    },
-    {
-      "name": "Sinulence Absolver",
-      "index": "30",
-      "system": "pathfinder"
-    },
-    {
-      "name": "Sinulence Stormcaller",
-      "index": "29",
       "system": "pathfinder"
     }
   ]

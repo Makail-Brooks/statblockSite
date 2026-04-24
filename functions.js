@@ -7,6 +7,32 @@ function getModifier(val){
 //  let calc = round((val-10)/2);
 }
 
+function spacelessCapitalizedCaseCharacter(text,illegalcharacters=[]){
+  let spacelessText = text.replace(" ","");
+  spacelessText = capitalizedCaseCharacter(spacelessText);
+  return spacelessText;
+}
+
+
+/**
+ * capitalizes the first letter of each word in String
+ * @param {String} text 
+ * @returns String
+ */
+function capitalizedCaseCharacter(text,illegalcharacters=[]){
+  if(text==""){
+    return "";
+  }
+  textArray = text.split(" ");
+  let upperCased;
+  textArray.forEach(textString=>{
+    if(!illegalcharacters.includes(textString)){
+      upperCased = textString.replace(textString[0], textString[0].toUpperCase());
+      text = text.replace(textString,upperCased);
+    }
+  })
+  return text;
+}
 
 /**
  * returns ability modifier for skill asked for
@@ -129,7 +155,7 @@ function getRacialBonus(racialBonusArray,skill){
     let returnedBonus = 0;
     if(racialBonusArray!=null){
         Object.keys(racialBonusArray).forEach(bonus=>{
-            if(bonus.toLowerCase().includes(skill.toLowerCase())){
+            if(bonus.toLocaleLowerCase().includes(skill.toLocaleLowerCase())){
               return racialBonusArray[bonus];
             }
         })
@@ -286,7 +312,7 @@ function getHP(NPCInfo,sys){
   switch(sys){
     case "pathfinder":
       let conBonus = getModifier(NPCInfo.con)*Number(NPCInfo.level)+getFeatBonuses("con",NPCInfo.feats,NPCInfo.level,NPCInfo);
-      if(NPCInfo.type.toLowerCase().includes("construct")){
+      if(NPCInfo.type.toLocaleLowerCase().includes("construct")){
         conBonus = getConstructBonusHealth(NPCInfo.size);
       }
       switch(NPCInfo.NPCType){
@@ -675,7 +701,7 @@ function getFeatBonuses(skill,feats,ranks,NPC,extra=""){
       }
       break;
     case "Skill Focus":
-      if(value.toLowerCase()===feats[feat].toLowerCase()){
+      if(value.toLocaleLowerCase()===feats[feat]?.toLocaleLowerCase()){
         totalBonuses+= focusBonus(ranks);
       }
       break;
@@ -728,7 +754,7 @@ function getFeatBonuses(skill,feats,ranks,NPC,extra=""){
         break;
     case "Weapon Focus":
       value = value.replace(/\s/g,"");
-      if(extra.replace(/\s/g,"").toLowerCase()===feats[feat].replace(/\s/g,"").toLowerCase()){
+      if(extra.replace(/\s/g,"").toLocaleLowerCase()===feats[feat].replace(/\s/g,"").toLocaleLowerCase()){
           totalBonuses+=1;
       }
       break;
@@ -845,8 +871,8 @@ function getMagicBonuses(value,Enchantments,ranks,NPC,strBonus,dexBonus){
 };
 
 
-function getIndex(json,className){
-    var index = json.findIndex(obj=>obj.name==className);
+function getIndex(json,objectName){
+    var index = json.findIndex(obj=>obj.name==objectName);
     return index;
 }
 
@@ -856,7 +882,7 @@ function getClassIndexDisplay(NPCInfo,className){
 }
 
 function getArchetypeIndex(className,archetypeName){
-    var classInformation = classJson.class[getIndex(classJson.class,className.toLowerCase())];
+    var classInformation = classJson.class[getIndex(classJson.class,className.toLocaleLowerCase())];
     var archetypeIndex = -1;
     if(archetypeName!="None"){
       archetypeIndex = classInformation.archetype.findIndex(obj=>obj.name==archetypeName);
@@ -956,4 +982,708 @@ function getSaveBonus(saveName){
 function convertSaveRateToValue(){
     fort = 2+ Math.floor(NPCInfo.level/2);
     fort = Math.floor(NPCInfo.level/3);
+}
+
+
+function getSkillsList(classInformation){
+  let skillsList = "";
+  let classArchetype = "";
+  if(classInformation.length<1){
+    return [];
+  }
+  let archeytypeID = 0;
+  let className = classInformation[0];
+  if(document.getElementById(`archetype${className}subList`)!=null){
+      classArchetype = document.getElementById(`archetype${className}subList`).value;
+  }
+  if(classArchetype==""){
+      classArchetype="None";
+  }
+  archeytypeID = getArchetypeIndex(className,classArchetype);
+  if(archeytypeID!=-1){
+    if(classArchetype!="None"&&(classJson.class[getIndex(classJson.class,className.toLocaleLowerCase())].archetype[getArchetypeIndex(className,classArchetype)].SkillList)!=null){
+      return classJson.class[getIndex(classJson.class,className.toLocaleLowerCase())].archetype[archeytypeID].SkillList;
+    }
+    return classJson.class[getIndex(classJson.class,className.toLocaleLowerCase())].SkillList;
+  }
+  return [];
+}
+
+function getClassBasedHealth(classInformation){
+  let con = document.getElementById("NPCCon").value;
+  let firstClass = true;
+  let totalHealth = 0;
+  let feats=getForumFeats();
+  let classArchetype = "";
+  classInformation.forEach(className=>{
+    classArchetype="";
+    if(document.getElementById(`dropdownSelectionarchetype${className}`)!=null){
+      classArchetype = document.getElementById(`dropdownSelectionarchetype${className}`).value;
+    }
+    if(classArchetype==""){
+
+      classArchetype="None";
+    }
+    if(firstClass){
+      firstClass = false;
+      totalHealth+=Number(getHitDice(className,classArchetype))+getModifier(con);
+      if((getClassLevels(className)-1)>0){
+        totalHealth+=Math.floor((getModifier(con)+(getHitDice(className,classArchetype)/2)+1)*(getClassLevels(className)-1));
+      }
+    }else{
+      totalHealth+=Math.floor((getModifier(con)+(getHitDice(className,classArchetype)/2)+1)*(getClassLevels(className)))
+    }
+  });
+  
+  totalHealth+=getFeatBonuses("con",feats,getTotalClassLevels(),getArtificalJson(),"forum");
+  if(getTotalClassLevels()<1){
+    totalHealth=0
+  }
+  return totalHealth;
+}
+
+function getArtificalJson(){
+  let json = {}
+  return json;
+}
+
+function getClassesData(){
+    let classZone = document.getElementById("classesChoice");
+    let classArray = [];
+    classZone.childNodes.forEach(children=>{
+    let textNode = children.id;
+    textNode = textNode.replace("Choice","").toLocaleLowerCase();
+    classArray.push(textNode);
+  });
+  return classArray;
+}
+
+function getTotalClassLevels(){
+  let classZone = document.getElementById("classesChoice");
+    let totalLevels = 0;
+  classZone.childNodes.forEach(children=>{
+    let textNode = children.id;
+    textNode = textNode.replace("Choice","").toLocaleLowerCase();
+    totalLevels+=Number(document.getElementById(`classes${textNode}`).value);  
+  });
+  return totalLevels;
+}
+
+function getClassLevels(className){
+  let totalLevels = 0;
+  totalLevels=Number(document.getElementById(`classes${className}`).value);  
+  if(totalLevels<1){
+    totalLevels=1;
+  }
+  return totalLevels;
+}
+
+function getJsonObject(json,item){
+  return json[item];
+}
+
+function getClassList(){
+  var classItems = classList;
+  var archetypeList;
+  let currentArchetype;
+  let id;
+  if(classItems.includes("Custom")){
+    classItems.pop();
+  }
+  document.getElementById("classesChoice").querySelectorAll(".dropdown-box").forEach(element=>{
+    id = element.id.replace("dropdownarchetype","");
+    id = id.replace("archetype","");
+    id = id.replace("dropdown","");
+    if(document.getElementById("dropdownSelectionarchetype"+id)){
+      currentArchetype = document.getElementById("dropdownSelectionarchetype"+id).value;
+    }
+  })
+  if(document.getElementById("usesSphereOption").checked){
+    sphereClassArchetype.sphereArchetypeList.forEach(element=>{
+      var updatedArchetypeID = document.getElementById(`archetype${element.name}subArea`);
+      if(document.getElementById(`dropdownSelectionarchetype${element.name}`)!=null){
+        let item = document.getElementById(`dropdownSelectionarchetype${element.name}`).value;
+      }
+      if(updatedArchetypeID!=null){
+        updatedArchetypeID.innerHTML="";
+        archetypeList = getArchetypeName(classJson.class,element.name);
+        var sphereArchetypeList = getArchetypeName(sphereClassArchetype.sphereArchetypeList,element.name,true);
+        var joinedArchetypes=[...archetypeList,...sphereArchetypeList];
+        createDatalist(joinedArchetypes,updatedArchetypeID,`archetype${element.name}`,false);
+        createVariableListener(`dropdownarchetype${element.name}`,'click',dropdownInteraction,`dropdownarchetype${element.name}`,true);
+        createVariableArrayListener(`dropdownarchetype${element.name}`,'keyup',searchDrop,[`dropdownarchetype${element.name}`,`searcharchetype${element.name}`]);
+        selectionCreation(`dropdownarchetype${element.name}`);
+      }
+    })
+    classItems = classItems.concat(sphereClassList);
+  }else{
+    console.log("hi");
+    classJson = JSON.parse(classes);
+    classJson.class.forEach(element=>{
+      var updatedArchetypeContent = ""; 
+      if(document.getElementById(`dropdownSelectionarchetype${element.name}`)){
+        updatedArchetypeContent = document.getElementById(`dropdownSelectionarchetype${element.name}`).value;
+        console.log(updatedArchetypeContent);
+      }
+      var list = getArchetypeName(sphereClassArchetype.sphereArchetypeList,element.name);
+      if(list.includes(updatedArchetypeContent)){
+        document.getElementById(`dropdownSelectionarchetype${element.name}`).value="Selection";
+      }
+      var updatedArchetypeID = document.getElementById(`archetype${element.name}subArea`);
+      if(updatedArchetypeID!=null){
+        updatedArchetypeID.innerHTML="";
+        archetypeList = getArchetypeName(classJson.class,element.name);
+        console.log(archetypeList);
+        createDatalist(archetypeList,updatedArchetypeID,`archetype${element.name}`,false);
+        createVariableListener(`dropdownarchetype${element.name}`,'click',dropdownInteraction,`dropdownarchetype${element.name}`,true);
+        createVariableArrayListener(`dropdownarchetype${element.name}`,'keyup',searchDrop,[`dropdownarchetype${element.name}`,`searcharchetype${element.name}`]);
+        selectionCreation(`dropdownarchetype${element.name}`);
+      }
+    })
+ }
+
+//  console.log(archetypeList);
+  // document.getElementById("dropdownSelectionarchetype"+id).value=currentArchetype;
+  // let index = getListIndex(`archetype${id}`,currentArchetype);
+  // document.getElementById(`dropdownarchetype${id}`).querySelectorAll("li")[index].classList.add("active");
+  classItems.sort();
+  classItems.push("Custom");
+  return classItems;
+}
+
+
+function getClassListWithLevel(){
+  var cList = getClassesData();
+  var cDataString = "";
+  var i=0;
+  cList.forEach(element=>{
+    if(i>0){
+      cDataString+=", "
+    }
+    cDataString+=`${element}: ${getClassLevels(element)}`;
+    i++;
+
+  });
+  if(cDataString==""){
+    cDataString = "None";
+  }
+  return cDataString;
+}
+
+
+
+function getTotalBAB(){
+  var cList =  getClassesData();
+  var totalBAB = 0;
+  let classArchetype ="";
+  cList.forEach(className=>{
+      classArchetype="";
+    if(document.getElementById(`archetype${className}subList`)!=null){
+      classArchetype = document.getElementById(`archetype${className}subList`).value;
+    }
+    if(classArchetype==""){
+
+      classArchetype="None";
+    }
+    totalBAB+=getClassBaB(className,classArchetype);
+  })
+  
+  return totalBAB;
+}
+
+function getHitDice(className,archetype="None"){
+  if(className.toLocaleLowerCase()=="custom"){
+    return 4;
+  }
+  var classIndex = getIndex(classJson.class,className.toLocaleLowerCase());
+  var classData = classJson.class[classIndex];
+  var archetypeIndex = getArchetypeIndex(className,archetype);
+  if(archetypeIndex!=-1){
+    if(archetype!="None"&&classData.archetype[archetypeIndex].HD!=null){
+      return classData.archetype[archetypeIndex].HD;
+    }
+  }
+  return classData.HD;
+}
+
+function getClassBaB(className,archetype="None"){
+  if(className.toLocaleLowerCase()=="custom"){
+    return getBaB("Slow",getClassLevels(className));
+  }
+  var classIndex = getIndex(classJson.class,className.toLocaleLowerCase());
+  var classData = classJson.class[classIndex];
+  let BABSpeed = "";
+  var archetypeIndex = getArchetypeIndex(className,archetype);
+  if(archetype=="None"||archetypeIndex==-1||classData.archetype[archetypeIndex].babSpeed==null){
+    BABSpeed= classData.babSpeed;
+  }else{
+    BABSpeed = classData.archetype[archetypeIndex].babSpeed;
+  }
+  return getBaB(BABSpeed,getClassLevels(className));
+}
+
+function getSkillPointsByClass(classList,intMod){
+  var totalSKills = 0;
+  let classArchetype = "";
+  let skillRate = "Low";
+  let classData="";
+  classList.forEach(name=>{
+    classArchetype="";
+    if(document.getElementById(`archetype${name}subList`)!=null){
+      classArchetype = document.getElementById(`archetype${name}subList`).value;
+    }
+    if(classArchetype==""){
+
+      classArchetype="None";
+    }
+    classData = classJson.class[getIndex(classJson.class,name)];
+    var archetypeIndex = getArchetypeIndex(name,classArchetype);
+    classArchetype="";
+    if(document.getElementById(`archetype${name}subList`)!=null){
+      classArchetype = document.getElementById(`archetype${name}subList`).value;
+    }
+    if(classArchetype==""){
+      classArchetype="None";
+    }
+    if(archetypeIndex!=-1){
+      if(classArchetype!="None"&&classData.archetype[archetypeIndex].SkillRate!=null){
+        skillRate = classData.archetype[archetypeIndex].SkillRate; 
+      }else{
+        skillRate = classData.SkillRate;
+      }
+    }else{
+      if(name.toLocaleLowerCase()!="custom"){
+        skillRate = classData.SkillRate;
+      }else{
+        skillRate = "Low";
+      }
+    }
+    totalSKills+=getSkillPoints(skillRate,intMod,getClassLevels(name));
+  })
+  return totalSKills;
+}
+
+function getMaxSkillPoints(NPCType,intMod){
+  switch(NPCType){
+    case "Monster":
+      return getSkillPoints(document.getElementById("NPCSkillProgression").value,intMod,document.getElementById("MonsterLevel").value)
+    case "NPC":
+      return getSkillPointsByClass(getClassesData(),intMod);
+    default:
+      return 1;
+  }
+
+}
+
+function getSkillPoints(skillProgression,intModifier,level){
+      var skillPointsPerLevel = 0;
+      switch(skillProgression){
+      case "Low":
+        skillPointsPerLevel = (2+intModifier);//have alternative based on classLevels
+        break;
+      case "Middle":
+        skillPointsPerLevel = (4+intModifier);//have alternative based on classLevels
+        break;
+      case "High":
+        skillPointsPerLevel = (6+intModifier);//have alternative based on classLevels      case "High":
+        break;
+      case "Super":
+        skillPointsPerLevel = (8+intModifier);//have alternative based on classLevels
+        break;
+      default:
+        skillPointsPerLevel= 0;
+        break;
+    }
+      if(skillPointsPerLevel<0){
+        skillPointsPerLevel = 0;
+      }
+    return skillPointsPerLevel*level;
+}
+
+
+function getFeats(){
+  var feats = 0;
+  switch(document.getElementById("NPCChoice").value){
+    case "Monster":
+      return Math.floor((Number(document.getElementById("MonsterLevel").value)-1)/2)+1;
+    case "NPC":
+        feats = Math.floor((getTotalClassLevels()-1)/2)+1;
+        if(feats<0){
+          feats=0;
+        }
+        if(getTotalClassLevels()<1){
+          feats=0;
+        }
+      return feats;
+    default:
+      return 0;
+  }
+}
+
+
+function getHotbar(system,forumType,variableList=false){
+  let submitButton = "createNPC()";
+  if(forumType==="edit"){
+    submitButton = "completeNPCEdit()";
+  }
+  let hotBar = ""
+  switch(system){
+    case "pathfinder":
+      hotBar = `<div class="leveler">
+  <div></div>
+    <div>
+      <button class="button" onclick="displayChange('main')">Core</button>
+      <button class="button-violet" id="classButton" style="display:none" onclick="displayChange('class')">Class</button>
+    </div>
+    <div>
+      <button class="button-red" onclick="displayChange('combatTraits')">Combat</button>
+      <button class="button-orange" id="sphereButton" style="display:none" onclick="displayChange('spheres')">Spheres</button>
+    </div>
+    <div>
+      <button class="button-yellow" id="skillButton" style="display:none" onclick="displayChange('skills')">Skills</button>
+      <button class="button-blue" id="spellButton" style="display:none" onclick="displayChange('spells')">Spells</button>
+    </div>
+    <div>
+      <button class="button-green" id="featButton" onclick="displayChange('feats')">Feats</button><br>
+      <div class="dropdown">
+      <button class="button" id="miscButton" onclick="dropdownOptions('misc')">Misc</button>
+      <div id="miscOptions" class="dropdown-misc">
+      <a class="object" onclick="displayChange('senseSection')">Senses</a>
+      <a class="object" onclick="displayChange('languageSection')">Languages</a>
+      <a class="object" onclick="displayChange('racialModSection')">Racial Modifiers</a>
+      <a class="object" onclick="displayChange('SQSection')">Special Qualities</a>
+      <a class="object" onclick="displayChange('gearSection')">Gear</a>
+      <a class="object" onclick="displayChange('MonsterAbilitiesSection')">Monster Abilities</a>
+      </div>
+      </div>
+      </div>
+      <div>
+      <button class="button" onclick=${submitButton}>Submit</button>
+    </div>
+    <div></div>
+    </div>`
+      break;
+    default:
+      break;
+  }
+  return hotBar;
+}
+
+function getforumHPMonster(){
+    let level = document.getElementById("MonsterLevel").value;//have alternative based on classLevels
+    let hitDice = document.getElementById("NPCHitDice").value.replace("d","");
+    let conStat = document.getElementById("NPCCon").value;
+    let conBonus = getModifier(conStat)*Number(level)+getFeatBonuses("con",getForumFeats(),level,document.body,"forum");
+      let bonuses = 0;
+      if(document.getElementById("NPCType").value.toLocaleLowerCase().includes("construct")){
+        bonuses = getConstructBonusHealth(NPCInfo.size);
+        conBonus = 0
+      }
+      if(document.getElementById("NPCHitDiceRate").value=="Monster"){
+        health = Math.floor(conBonus+(((hitDice/2)+0.5)*level))+bonuses;
+      }else if(document.getElementById("NPCHitDiceRate").value=="Player"){
+        health = Math.floor(conBonus+(((hitDice/2)+1)*(level-1)))+Number(hitDice)+Number(bonuses);
+      }
+    return health;
+}
+function getForumFeats(){
+    let len = document.getElementById(`featChoice`).childElementCount;
+    let val = ""
+    let arrayFeats = [];
+    for(var i = 0;i<len;i++){
+      let entry = document.getElementById(`featChoice`).children.item(i).getElementsByTagName("label").item(0).textContent.trim();
+      arrayFeats.push(entry);
+    }
+    return arrayFeats;
+    
+}
+
+function getArchetypeList(item,noSelect=false){
+    var list = [];
+  list = getArchetypeName(classJson.class,item,noSelect);
+    if(document.getElementById("usesSphereOption").checked){
+      list.push(...getArchetypeName(sphereClassArchetype.sphereArchetypeList,item));
+    }
+  return list;
+}
+
+
+function getTalentList(list){
+  list = capitalizedCaseCharacter(list);
+  switch(list){
+    case "Alteration":
+      return alterationList;
+    case "Destruction":
+      return destructionList;
+    default:
+      return [];
+  }
+}
+
+function getListIndex(elementTarget,targetItem){
+    let liList = document.getElementById(`dropdown${elementTarget}`).querySelectorAll("li");
+    for(let i=0;i<liList.length;i++){
+      if(liList[i].dataset.value==targetItem){
+        return i;
+      }
+    }
+}
+
+function getName(list,text){
+  updateText = text;
+  if(list=="classes"){
+    if(sphereClassList.includes(text))
+    {
+      updateText= text+"(Spheres)";
+    }
+    if(playerClassList.includes(text)){
+      updateText= text+"(Player)"
+    }
+    if(npcClassList.includes(text)){
+      updateText= text+"(NPC)"
+    }
+    }
+  return updateText;
+}
+
+
+function getAttacks(){
+  let attacksArray = [];
+  for(let i=0;i<document.getElementById("meleeAttackArea").childElementCount;i++){
+    let name = document.getElementById(`meleeAttackName${i}`).value;
+    if(name!=""){
+      attacksArray.push(name);
+    }
+  }
+  for(let i=0;i<document.getElementById("rangeAttackArea").childElementCount;i++){
+    let name = document.getElementById(`rangeAttackName${i}`).value;
+    if(name!=""){
+      attacksArray.push(name);
+    }
+  }
+  if(attacksArray.length<1){
+    attacksArray.push("Slam");
+  }
+  return attacksArray;
+}
+
+function getArchetypeName(json,item,spheres=false){
+  let archetypeArray = [];
+  let itemID = getIndex(json,item.toLocaleLowerCase());
+  if(json[itemID]!=null){
+    if(json[itemID].archetype!="None"){
+      archetypeArray = objectToArray(json[itemID].archetype,'name');
+    }
+  }
+  if(spheres==false){
+    archetypeArray = ["Select",...archetypeArray];
+  }
+  return archetypeArray;
+}
+
+function getAttackLabel(item){
+  switch(item){
+    case "Curse":
+      return "Contact"
+    default:
+      return "Attack"
+  }
+}
+
+function getCustomPlaceholder(type){
+  switch(type){
+    case "Frightful Presence":
+      return "Range"
+  }
+  return "Value";
+}
+
+function getInherentInputType(type){
+  switch(type){
+    case "dice":
+      return "number";
+    case "breath":
+      return "number";
+    case "frightful presence":
+      return "number";
+    case "curse":
+      return "text";
+    case "Regeneration2":
+      return "text";
+    
+  }
+  return type;
+}
+
+
+function getProperty(type){
+  switch(type){
+    case "Curse":
+      return "Name"
+    case "Poison":
+      return "Name"
+    case "Summon":
+      return "Creature Name";
+    case "Summon2":
+      return "Level";
+    case "Poisonous Blood":
+      return "Poison Name"
+    case "Pull":
+      return "Distance Pulled"
+    case "Frightful Presence":
+      return "Aura Range";
+    case "Jet":
+      return "Distance";
+    case "Lycanthropic Empathy":
+      return "Animals";
+    case "Mythic Magic":
+      return "Amount";
+    case "Mythic Power":
+      return "Amount";
+    case "Mythic Magic2":
+      return "Duration Limit(Day)";    
+    case "Mythic Power2":
+      return "Duration Limit(Day)";
+    case "Regeneration":
+      return "Rate";
+    case "Regeneration2":
+      return "How to Disable";
+    case "Change Shape":
+      return "Shape";
+    case "Disease":
+      return "Name";
+    case "Energy Drain":
+      return "Levels Drained";
+    case "Engulf2":
+      return "Damage type and Effects";
+    case "Entrap":
+      return "Duration";
+    case "Paralysis":
+      return "Duration";
+    case "Fast Healing":
+      return "Healing";
+    case "Channel Resistance":
+      return "Resisted Amount";
+    case "Psychic Resilience":
+      return "Resisted Amount";
+    case "Sound Mimicry":
+      return "Sound(s) Mimiced";
+    case "Split":
+      return "Split Condition"; 
+    case "Split":
+      return "Distance";
+    case "Swallow Whole2":
+      return "Damage Type";
+    case "Whirlwind2":
+      return "Max Height";
+    case "Telepathy":
+      return "Range";
+    default:
+      return "Damage";
+  }
+}
+
+
+function removeSpaces(string){
+  while(string.includes(" ")){
+     string = string.replace(" ","")
+ }
+  return string;
+}
+
+function consistentElement(string){
+  string = capitalizedCaseCharacter(string,["of"]);
+  string = removeSpaces(string);
+  return string;
+
+}
+
+function convertToUppercase(arr){
+  let newArr=[];
+  arr.forEach(element=>{
+    newArr.push(capitalizedCaseCharacter(element));
+  })
+  return newArr;
+}
+/**
+ * returns list of archetypes that do not share replaced abilities
+ * @param {String} arr 
+ * @returns arr
+ */
+function getValidArchetypes(arr){
+  return arr;
+}
+
+
+
+function addArchetype(className){
+  // console.log(document.getElementById("dropdownSelectionarchetypesList"));
+  let archetype = document.getElementById("dropdownSelectionarchetypesList").value;
+  if(archetype.toLocaleLowerCase()!="select"){
+  let zone = "";
+  if(document.getElementById(`archetype${className}Zone`)==null){
+    zone = document.createElement("div");
+    zone.id=`archetype${className}Zone`;
+  }else{
+    zone = document.getElementById(`archetype${className}Zone`);
+  }
+  let nonDetails = document.createElement("div");
+  nonDetails.className="archetypeListClass"
+
+
+  let newArchetype = document.createElement("div");
+  
+  newArchetype.id = `${spacelessCapitalizedCaseCharacter(archetype)}Selected`;
+  newArchetype.className="absolution";
+  let newLabel = document.createElement("h2");
+  newLabel.id="inputName";
+  newLabel.setAttribute("style","margin: 0;");
+  newLabel.textContent=archetype;
+  newLabel.setAttribute("onClick",`displayHiddenArchetypeDetails('${spacelessCapitalizedCaseCharacter(archetype)}Selected')`);
+  newLabel.setAttribute("class","archetypeClick")
+  nonDetails.appendChild(newLabel);
+  var button = document.createElement("button");
+  button.setAttribute("class","formButton");
+  button.setAttribute("id",`delete${archetype}`);
+  button.setAttribute("type","button");
+  button.setAttribute("onClick",`deleteObject('${spacelessCapitalizedCaseCharacter(archetype)}Selected')`);
+  button.textContent = `Delete`;
+  nonDetails.appendChild(button);
+  let newDetails = document.createElement("div");
+  newDetails.id = `archetype${spacelessCapitalizedCaseCharacter(archetype)}details`;
+  newDetails.className = "archetype-item";
+  let details = "details"
+  if(getIndex(archetypeDetailsJson[className.toLocaleLowerCase()],archetype)>-1){
+    console.log(getIndex(archetypeDetailsJson[className.toLocaleLowerCase()],archetype));
+    details = archetypeDetailsJson[className.toLocaleLowerCase()][getIndex(archetypeDetailsJson[className.toLocaleLowerCase()],archetype)].details;
+    console.log(details);
+  }
+  let textDetails = `${details}`;
+  let textDetailsInner = document.createElement("div")
+  textDetailsInner.innerHTML+=textDetails;
+  newDetails.appendChild(textDetailsInner);
+  newArchetype.appendChild(nonDetails);
+  newArchetype.appendChild(newDetails);
+  let list = document.getElementById("selectedArchetypes");
+  zone.appendChild(newArchetype);
+  list.append(zone);
+  document.getElementById("dropdownSelectionarchetypesList").value="Select";
+  }
+}
+
+function displayArchetypesList(className){
+  let listPoint = document.getElementById(`archetype${className}Zone`);
+  let list = document.getElementById("selectedArchetypes").querySelectorAll("div");
+  list.forEach(element=>{
+    if(element.id.includes("Zone")){
+      element.style="display:none";
+    }
+  })
+  if(listPoint!=null){
+    listPoint.style="display:block";    
+  }
+}
+
+function hi(){
+  console.log("hi");
 }

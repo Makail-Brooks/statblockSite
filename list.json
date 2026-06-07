@@ -100,6 +100,7 @@
       "size": "Medium",
       "sizeType": false,
       "type": "Humanoid",
+      "NPCType": "NPC",
       "ac": {
         "armor": "12",
         "touch": "12",
@@ -178,6 +179,7 @@
       "sizeType": false,
       "type": "Aberration",
       "subtype": "Void",
+      "NPCType": "Monster",
       "senses": {
         "blindsight": "60",
         "darkvision": "60"
@@ -330,6 +332,7 @@
       "size": "Medium",
       "sizeType": false,
       "type": "Humanoid",
+      "NPCType": "Monster",
       "ac": {
         "armor": "15",
         "touch": "10",
@@ -406,6 +409,7 @@
       "size": "Large",
       "sizeType": false,
       "type": "Aberration",
+      "NPCType": "Monster",
       "senses": {
         "blindsight": "60",
         "scent": ""
@@ -554,6 +558,7 @@
       "sizeType": false,
       "type": "Humanoid",
       "subtype": "Elf",
+      "NPCType": "Monster",
       "senses": {
         "Low-Light Vision": ""
       },
@@ -867,6 +872,7 @@
       "sizeType": false,
       "type": "Magical Beast",
       "subtype": "Construct",
+      "NPCType": "Monster",
       "senses": {
         "darkvision": "60",
         "Low-light vision": ""
@@ -944,6 +950,7 @@
       "sizeType": false,
       "type": "Magical Beast",
       "subtype": "Construct",
+      "NPCType": "Monster",
       "ac": {
         "armor": "14",
         "touch": "14",
@@ -1011,6 +1018,7 @@
       "size": "Medium",
       "sizeType": false,
       "type": "Ooze",
+      "NPCType": "Monster",
       "senses": {
         "Blindsight": "60"
       },
@@ -1082,6 +1090,7 @@
       "sizeType": false,
       "type": "Humanoid",
       "subtype": "goblinoid",
+      "NPCType": "Monster",
       "senses": {
         "darkvision": "60"
       },
@@ -1160,6 +1169,7 @@
       "size": "Medium",
       "sizeType": false,
       "type": "Undead",
+      "NPCType": "Monster",
       "senses": {
         "darkvision": "60"
       },
@@ -1233,6 +1243,7 @@
       "size": "Medium",
       "sizeType": false,
       "type": "Undead",
+      "NPCType": "Monster",
       "senses": {
         "darkvision": "60"
       },
@@ -1298,6 +1309,7 @@
       "sizeType": false,
       "type": "Monstrous Humanoid",
       "subtype": "System Corrupted",
+      "NPCType": "Monster",
       "senses": {
         "darkvision": "60",
         "Blind Sense": "120"
@@ -1460,7 +1472,8 @@
       "title": "Kora",
       "cr": "1/8",
       "alignment": "N",
-      "size": "Medium",
+      "size": "Medium",      
+      "NPCType": "Monster",
       "sizeType": false,
       "type": "Custom",
       "customType": "System Avatar",
@@ -1559,6 +1572,7 @@
       "size": "Small",
       "sizeType": false,
       "type": "Custom",
+      "NPCType": "Monster",
       "customType": "Goblin Corrupted",
       "senses": {
         "darkvision": "60"
@@ -1655,6 +1669,7 @@
       "size": "Medium",
       "sizeType": false,
       "type": "vermin",
+      "NPCType": "Monster",
       "senses": {
         "darkvision": "60"
       },
@@ -1731,6 +1746,7 @@
       "sizeType": false,
       "type": "Custom",
       "customType": "System Corrupted Undead",
+      "NPCType": "Monster",
       "ac": {
         "armor": "18",
         "touch": "14",
@@ -1817,6 +1833,7 @@
       "sizeType": false,
       "type": "Custom",
       "customType": "System Corrupted",
+      "NPCType": "Monster",
       "senses": {
         "darkvision": "60",
         "tremorsense": "60"
@@ -1902,6 +1919,7 @@
       "size": "Small",
       "sizeType": false,
       "type": "Vermin",
+      "NPCType": "Monster",
       "ac": {
         "armor": "14",
         "touch": "12",
@@ -1970,6 +1988,7 @@
       "size": "Medium",
       "sizeType": false,
       "type": "Construct",
+      "NPCType": "Monster",
       "senses": {
         "darkvision": "60",
         "low-light vision": "",
@@ -2087,6 +2106,7 @@
       "size": "Small",
       "sizeType": false,
       "type": "Aberration",
+      "NPCType": "Monster",
       "senses": {
         "Borrowed Sight": ""
       },
@@ -2181,6 +2201,7 @@
       "size": "Colossal",
       "sizeType": false,
       "type": "Aberration",
+      "NPCType": "Monster",
       "ac": {
         "armor": "19",
         "touch": "10",
@@ -2637,6 +2658,7 @@
       "sizeType": false,
       "type": "Aberration",
       "subtype": "Sinulence",
+      "NPCType": "Monster",
       "senses": {
         "darkvision": "30"
       },
@@ -2731,6 +2753,7 @@
       "sizeType": false,
       "type": "Aberration",
       "subtype": "Sinulence",
+      "NPCType": "Monster",
       "senses": {
         "darkvision": "60"
       },
@@ -2838,6 +2861,7 @@
       "sizeType": false,
       "type": "Aberration",
       "subtype": "Sinulence",
+      "NPCType": "Monster",
       "senses": {
         "darkvision": "60"
       },
@@ -2930,6 +2954,7 @@
       "sizeType": false,
       "type": "Aberration",
       "subtype": "Sinulence",
+      "NPCType": "Monster",
       "senses": {
         "darkvision": "60",
         "Blindsight": "40"
@@ -3042,6 +3067,7 @@
       "sizeType": false,
       "type": "Dragon",
       "subtype": "Sinulence",
+      "NPCType": "Monster",
       "senses": {
         "darkvision": "120",
         "Blindsight": "60"
@@ -3187,6 +3213,7 @@
       "sizeType": false,
       "type": "Aberration",
       "subtype": "Sinulence",
+      "NPCType": "Monster",
       "senses": {
         "darkvision": "60"
       },
@@ -3287,6 +3314,7 @@
       "sizeType": false,
       "type": "Aberration",
       "subtype": "Sinulence",
+      "NPCType": "Monster",
       "ac": {
         "armor": "19",
         "touch": "14",
@@ -3378,6 +3406,7 @@
       "sizeType": false,
       "type": "Construct",
       "subtype": "Sinulence",
+      "NPCType": "Monster",
       "ac": {
         "armor": "9",
         "touch": "9",
@@ -3440,6 +3469,7 @@
       "sizeType": false,
       "type": "Aberration",
       "subtype": "Sinulence",
+      "NPCType": "Monster",
       "ac": {
         "armor": "15",
         "touch": "15",
@@ -3529,6 +3559,7 @@
       "sizeType": false,
       "type": "Aberration",
       "subtype": "Sinulence",
+      "NPCType": "Monster",
       "ac": {
         "armor": "13",
         "touch": "13",
@@ -4005,6 +4036,7 @@
       "sizeType": false,
       "type": "Construct",
       "subtype": "Null",
+      "NPCType": "Monster",
       "senses": {
         "Void Tile Sense": ""
       },
@@ -4091,6 +4123,7 @@
       "sizeType": false,
       "type": "Aberration",
       "subtype": "Void",
+      "NPCType": "Monster",
       "senses": {
         "blindsight": "60",
         "darkvision": "60"
@@ -4395,6 +4428,7 @@
       "size": "Small",
       "sizeType": false,
       "type": "Aberration",
+      "NPCType": "Monster",
       "senses": {
         "darkvision": "120",
         "blindsight": "10"

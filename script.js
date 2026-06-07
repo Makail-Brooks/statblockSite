@@ -21,7 +21,6 @@ window.onclick = function(event) {
     }
   })
 }
-
 var arrList = ['Barbarian','Bard','Cleric','Druid','Fighter','Monk','Paladin','Ranger','Rogue','Sorcerer','Wizard','Alchemist','Cavalier','Gunslinger','Inquisitor','Magus','Omdura','Oracle','Shifter','Summoner','Witch','Vampire Hunter','Vigilante','Arcanist','Bloodrager','Brawler','Hunter','Investigator','Shaman','Skald','Slayer','Swashbuckler','Warpriest','Kineticist','Medium','Mesmerist','Occultist','Psychic','Spiritualist','Antipaladin','Ninja','Samurai','Adept','Aristocrat','Commoner','Expert','Warrior'];
 
 let playerClassList = ['Barbarian','Bard','Cleric','Druid','Fighter','Monk','Paladin','Ranger','Rogue','Sorcerer','Wizard','Alchemist','Cavalier','Gunslinger','Inquisitor','Magus','Omdura','Oracle','Shifter','Summoner','Witch','Vampire Hunter','Vigilante','Arcanist','Bloodrager','Brawler','Hunter','Investigator','Shaman','Skald','Slayer','Swashbuckler','Warpriest','Kineticist','Medium','Mesmerist','Occultist','Psychic','Spiritualist','Antipaladin','Ninja','Samurai'];
@@ -75,7 +74,13 @@ var spherePowerArray = [spherePowerList,'spherePower','Select'];
 var sphereMightArray = [sphereMightList,'sphereMight','Select'];
 var sphereGuileArray = [sphereGuileList,'sphereGuile','Select'];
 var dropDownArray =[lanArray,senseArray,featArray,movementArray,racialModifierArray,classArray,spherePowerArray,sphereMightArray,sphereGuileArray,monsterAbilitiesArray];
-
+console.warn("this is how you get the name of the json key in abilities array")
+// var idi  =2;
+// if(typeof classJson.class[6].Abilities[idi] === 'object'){
+//   console.log(Object.keys(classJson.class[6].Abilities[idi]).toString())
+// }else{
+//   console.log("not an object")
+// }
 
 fetch("./list.json")
     .then(response=>response.json())
@@ -471,7 +476,7 @@ function createMainForm(sys){
         <button type="button" class="button-red" id="offensiveButton" onclick="dropdownOptions('OT')">Offensive Abilities</button>
         <div id="OTOptions" class="dropdown-offensive">
         <a class="object" onclick="displayChange('specialAttacksOption')">Special Attack</a>
-        <a class="object" onclick="displayChange('meleeOption')">Meele Attack</a>
+        <a class="object" onclick="displayChange('meleeOption')">Melee Attack</a>
         <a class="object" onclick="displayChange('rangeOption')">Ranged Attack</a>
         <a class="object" onclick="displayChange('auraOption')">Aura</a>
         <a class="object" onclick="displayChange('specialAbilityOption')">Special Ability</a>

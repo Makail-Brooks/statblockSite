@@ -1,19 +1,39 @@
 {
   "pages": [
     {
-      "name": "Mimic",
-      "index": "48",
+      "name": "Kora",
+      "index": "14",
       "system": "pathfinder"
     },
     {
-      "name": "5e Template",
-      "index": "0",
+      "name": "Void Envoy",
+      "index": "2",
+      "system": "pathfinder"
+    },
+    {
+      "name": "Sinulence Envisel",
+      "index": "38",
       "system": "5e"
     },
     {
       "name": "Bandit",
       "index": "1",
       "system": "pathfinder"
+    },
+    {
+      "name": "Mimic",
+      "index": "48",
+      "system": "pathfinder"
+    },
+    {
+      "name": "Null Hound",
+      "index": "4",
+      "system": "pathfinder"
+    },
+    {
+      "name": "5e Template",
+      "index": "0",
+      "system": "5e"
     },
     {
       "name": "Minions of Krampus",
@@ -28,26 +48,6 @@
     {
       "name": "Paraselene",
       "index": "7",
-      "system": "pathfinder"
-    },
-    {
-      "name": "Slime",
-      "index": "9",
-      "system": "pathfinder"
-    },
-    {
-      "name": "Void Envoy",
-      "index": "2",
-      "system": "pathfinder"
-    },
-    {
-      "name": "Null Hound",
-      "index": "4",
-      "system": "pathfinder"
-    },
-    {
-      "name": "Sinulence Envisel",
-      "index": "33",
       "system": "pathfinder"
     }
   ]

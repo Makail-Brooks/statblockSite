@@ -610,10 +610,10 @@
             {"name":"Vatic","newAbilties":[""],"replacedAbilities":[""]},
             {"name":"Weapon-Sworn","newAbilties":[""],"replacedAbilities":[""]},
             {"name":"Wonder Worker","newAbilties":[""],"replacedAbilities":[""]},
-            {"name":"Wuuntzu","newAbilties":[""],"replacedAbilities":[""]},
+            {"name":"Wuuntzu","newAbilties":[""],"replacedAbilities":[""]}
         ],
         "SkillList":["Appraise","Craft","Diplomacy","Heal","Knowledge(Arcana)","Knowledge(History)","Knowledge(Nobility)","Knowledge(Planes)","Knowledge(Religion)","Linguistics","Profession","Sense Motive","Spellcraft"],
-        "Abilities":["Aura","Spells","Channel Energy","Domains","Orisons","Spontaneous Casting","Chaotic, Evil, Good, Lawful Spells","Bonus Languages"],
+        "Abilities":["Aura","Spells","Channel Energy","Domain","Orisons","Spontaneous Casting","Chaotic, Evil, Good, Lawful Spells","Bonus Languages"],
         "proficiencies":{"weapons":["simple"],"armor":["light","medium"],"shield":["Non Tower Shield"]}
     },
     {"name":"commoner",

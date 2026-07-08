@@ -1,7 +1,9 @@
+
 function setAttackChoice(attackType){
     let selection = document.getElementById(`${attackType}Selection`).value;
     let select = document.createElement("select");
     select.className="searchBarCreation";
+    select.id = `${attackType}selection`
     document.getElementById(`${attackType}WeaponSelection`).innerHTML="";
     document.getElementById(`meleeMaterial`).style="display:none;"
     if(selection.toLocaleLowerCase()=="weapon"){
@@ -26,7 +28,7 @@ function setFeatsAvailable(){
   let int = document.getElementById("NPCInt").value;
 //  console.log(feats);
   let availFeats = feats-createdFeats;
-  var featDisplay = document.getElementById("featAmountDisplay");
+  let featDisplay = document.getElementById("featAmountDisplay");
   if(int==="-"){
     availFeats = 0  
   }
@@ -105,7 +107,6 @@ function NPCTypeListener(){
  if(document.getElementById("NPCChoice").value=="NPC"){
   return
  }
-
  let skills = "";
  switch (NPCType.value) {
   case "Aberration":
@@ -119,7 +120,7 @@ function NPCTypeListener(){
       skills = ["Acrobatics","Climb","EscapeArtist","Fly","Intimidate","Knowledge","Perception","Spellcraft","Stealth","Survival","Swim"];
       doSkills(skills,skills,true);
       // arrayToggle('skills',['Container','Acrobatics','Appraise','Bluff','Climb','Craft','Diplomacy','DisableDevice','Disguise','EscapeArtist','Fly','HandleAnimal','Heal','Intimidate','KnowledgeOption','Linguistics','Perception','Perform','Profession','Ride','SenseMotive','SleightofHand','Spellcraft','Stealth','Survival','Swim','UseMagicDevice']);
-    arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
+    // arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
       document.getElementById("usesSkillOption").checked=true;
       adjustDisplay('Skill');
     break;
@@ -130,11 +131,12 @@ function NPCTypeListener(){
       document.getElementById("NPCFort")[0].selected = true;
       document.getElementById("NPCRef")[0].selected = true;
       document.getElementById("NPCWill")[1].selected = true;
+        console.log("update")
       resetSkills();
       skills = ["Acrobatics","Climb","Fly","Perception","Stealth","Swim"];
       doSkills(skills,skills,true);
       // arrayToggle('skills',['Container','Acrobatics','Appraise','Bluff','Climb','Craft','Diplomacy','DisableDevice','Disguise','EscapeArtist','Fly','HandleAnimal','Heal','Intimidate','KnowledgeOption','Linguistics','Perception','Perform','Profession','Ride','SenseMotive','SleightofHand','Spellcraft','Stealth','Survival','Swim','UseMagicDevice']);
-    arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
+    // arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
       document.getElementById("usesSkillOption").checked=true;
       adjustDisplay('Skill');
     break;
@@ -160,7 +162,7 @@ function NPCTypeListener(){
       skills = ["Appraise","Bluff","Climb","Craft","Diplomacy","Fly","Heal","Intimidate","Knowledge(All)","Perception","Sense Motive","Spellcraft","Stealth","Survival","Swim","UseMagicDevice"];
       doSkills(skills,skills,true);
       // arrayToggle('skills',['Container','Acrobatics','Appraise','Bluff','Climb','Craft','Diplomacy','DisableDevice','Disguise','EscapeArtist','Fly','HandleAnimal','Heal','Intimidate','KnowledgeOption','Linguistics','Perception','Perform','Profession','Ride','SenseMotive','SleightofHand','Spellcraft','Stealth','Survival','Swim','UseMagicDevice']);
-    arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
+    // arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
       document.getElementById("usesSkillOption").checked=true;
       adjustDisplay('Skill');
     break;
@@ -175,7 +177,7 @@ function NPCTypeListener(){
       skills = ["Acrobatics","Bluff","Climb","Craft","Diplomacy","Disguise","EscapeArtist","Fly","Knowledge(Geography)","Knowledge(Local)","Knowledge(Nature)","Perception","Perform","Sense Motive","sleight of hand","Stealth","Swim","UseMagicDevice"];
       doSkills(skills,skills,true);
       // arrayToggle('skills',['Container','Acrobatics','Appraise','Bluff','Climb','Craft','Diplomacy','DisableDevice','Disguise','EscapeArtist','Fly','HandleAnimal','Heal','Intimidate','KnowledgeOption','Linguistics','Perception','Perform','Profession','Ride','SenseMotive','SleightofHand','Spellcraft','Stealth','Survival','Swim','UseMagicDevice']);
-    arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
+    // arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
       document.getElementById("usesSkillOption").checked=true;
       adjustDisplay('Skill');
     break;
@@ -190,7 +192,7 @@ function NPCTypeListener(){
       skills = ["Climb","Craft","HandleAnimal","Heal","Profession","Ride","Survival"];
       doSkills(skills,skills,true);
       // arrayToggle('skills',['Container','Acrobatics','Appraise','Bluff','Climb','Craft','Diplomacy','DisableDevice','Disguise','EscapeArtist','Fly','HandleAnimal','Heal','Intimidate','KnowledgeOption','Linguistics','Perception','Perform','Profession','Ride','SenseMotive','SleightofHand','Spellcraft','Stealth','Survival','Swim','UseMagicDevice']);
-    arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
+    // arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
       document.getElementById("usesSkillOption").checked=true;
       adjustDisplay('Skill');
       // NPCDisplay(true);
@@ -206,7 +208,7 @@ function NPCTypeListener(){
       skills = ["Acrobatics","Climb","Fly","Perception","Stealth","Swim"];
       doSkills(skills,skills,true);
       // arrayToggle('skills',['Container','Acrobatics','Appraise','Bluff','Climb','Craft','Diplomacy','DisableDevice','Disguise','EscapeArtist','Fly','HandleAnimal','Heal','Intimidate','KnowledgeOption','Linguistics','Perception','Perform','Profession','Ride','SenseMotive','SleightofHand','Spellcraft','Stealth','Survival','Swim','UseMagicDevice']);
-    arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
+    // arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
       document.getElementById("usesSkillOption").checked=true;
       adjustDisplay('Skill');
     break;
@@ -221,7 +223,7 @@ function NPCTypeListener(){
       skills = ["Acrobatics","Climb","Fly","Perception","Stealth","Swim"];
       doSkills(skills,skills,true);
       // arrayToggle('skills',['Container','Acrobatics','Appraise','Bluff','Climb','Craft','Diplomacy','DisableDevice','Disguise','EscapeArtist','Fly','HandleAnimal','Heal','Intimidate','KnowledgeOption','Linguistics','Perception','Perform','Profession','Ride','SenseMotive','SleightofHand','Spellcraft','Stealth','Survival','Swim','UseMagicDevice']);
-    arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
+    // arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
       document.getElementById("usesSkillOption").checked=true;
       adjustDisplay('Skill');
     break;
@@ -247,7 +249,7 @@ function NPCTypeListener(){
       skills = ["Bluff","Craft","Knowledge(Planes)","Perception","SenseMotive","Stealth"];
       doSkills(skills,skills,true);
       // arrayToggle('skills',['Container','Acrobatics','Appraise','Bluff','Climb','Craft','Diplomacy','DisableDevice','Disguise','EscapeArtist','Fly','HandleAnimal','Heal','Intimidate','KnowledgeOption','Linguistics','Perception','Perform','Profession','Ride','SenseMotive','SleightofHand','Spellcraft','Stealth','Survival','Swim','UseMagicDevice']);
-    arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
+    // arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
       document.getElementById("usesSkillOption").checked=true;
       adjustDisplay('Skill');
     break;
@@ -262,7 +264,7 @@ function NPCTypeListener(){
       skills = ["Perception","Stealth"];
       doSkills(skills,skills,true);
       // arrayToggle('skills',['Container','Acrobatics','Appraise','Bluff','Climb','Craft','Diplomacy','DisableDevice','Disguise','EscapeArtist','Fly','HandleAnimal','Heal','Intimidate','KnowledgeOption','Linguistics','Perception','Perform','Profession','Ride','SenseMotive','SleightofHand','Spellcraft','Stealth','Survival','Swim','UseMagicDevice']);
-    arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
+    // arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
       document.getElementById("usesSkillOption").checked=true;
       adjustDisplay('Skill');
     break;
@@ -277,7 +279,7 @@ function NPCTypeListener(){
       skills = ["Climb","Disguise","Fly","Intimidate","Knowledge(Arcana)","Knowledge(Religion)","Perception","SenseMotive","Spellcraft","Stealth"];
       doSkills(skills,skills,true);
       // arrayToggle('skills',['Container','Acrobatics','Appraise','Bluff','Climb','Craft','Diplomacy','DisableDevice','Disguise','EscapeArtist','Fly','HandleAnimal','Heal','Intimidate','KnowledgeOption','Linguistics','Perception','Perform','Profession','Ride','SenseMotive','SleightofHand','Spellcraft','Stealth','Survival','Swim','UseMagicDevice']);
-    arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
+    // arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
       document.getElementById("usesSkillOption").checked=true;
       adjustDisplay('Skill');
     break;
@@ -309,22 +311,40 @@ function NPCTypeListener(){
  setSkillPoints();
 }
 
+function forceReread(information){
+  let id = sessionStorage.getItem("NPC");
+  let param = new URLSearchParams(window.location.search);
+  id = param.get("NPC");
+  let NPCInfo = information.NPCs[id];
+  let skills = NPCInfo.skills;
+  let cSkills = Object.keys(NPCInfo.skills);
+  doSkills(cSkills,skills);
+  refreshList()
+}
+
 /**
  * sets element to never be below 1
  * @param {String} id 
  */
 
-function setProperMinLevel(id,forceAmount=1){
-  let val = document.getElementById(`${id}`).value;
+function setProperMinLevel(elementID,forceAmount=1){
+  let val = getElementPointer(elementID).value;
   if(val<1&&val!=""){
-    document.getElementById(`${id}`).value=forceAmount;
+    getElementPointer(elementID).value=forceAmount;
   }
 }
 
-function enforceMinLevel(id){
-  let val = document.getElementById(`${id}`).value;
+function enforceMinLevel(elementID){
+  let val = getElementPointer(elementID).value;
   if(val<1){
-    document.getElementById(`${id}`).value=1;
+    getElementPointer(elementID).value=1;
+  }
+}
+
+function enforceMinLevelVariable(elementID,min){
+  let val = getElementPointer(elementID).value;
+  if(val<min){
+    getElementPointer(elementID).value=min;
   }
 }
 
@@ -350,7 +370,7 @@ function setProperMax(stat){
 
 
 function updateHealthDisplay(){
-  var skillDisplay = document.getElementById("calculateHealth");
+  let skillDisplay = document.getElementById("calculateHealth");
   skillDisplay.textContent=`Health: ${getforumHPMonster()}`;
 }
 
@@ -401,7 +421,7 @@ function setSkillPoints(){
     availableSkillPoints = 0;
   }
   if(document.getElementById("skillPointsDisplay")){
-    var skillDisplay = document.getElementById("skillPointsDisplay");
+    let skillDisplay = document.getElementById("skillPointsDisplay");
     skillDisplay.textContent=`Remaining Ranks: ${availableSkillPoints}`;
   }
   return availableSkillPoints;
@@ -429,6 +449,101 @@ function sizeListener(){
 
 }
 
+function updateSpecialAbilities(action="keyup"){
+  let children = document.getElementById("specialAbilityArea").childElementCount;
+  let attacks=document.getElementById("meleeAttackArea").childElementCount;
+  if(children>0){
+    for(let i=0;i<attacks;i++){
+    if(document.getElementById(`extraDmgLabelmeleeAttack${i}`)!=null){
+        array = document.getElementById("specialAbilityArea").children
+         let k = 0;
+         let nameArray = []
+         Array.from(array).forEach(element=>{
+            nameArray.push(element.querySelector(`#SpecialAbilityName${k}`).value);
+            k++;
+         })
+         let selection = document.getElementById(`dropdownmeleeAttackbonusAttackDamage${i}`);
+         let activeList =[];
+         k=0;
+         if(selection!=null){
+            let dropdownArea = selection.querySelector("ul");
+            if(action=="listener"){
+            dropdownArea.querySelectorAll("li").forEach(element=>{
+
+                if(k>deletedID||k<deletedID){
+                  if(element.className.includes("active")){
+                    activeList.push("active");
+                  }    
+                else{
+                    activeList.push("inactive");
+                  }
+              }
+              k++;
+            })
+          }else if(action=="keyup"){
+            dropdownArea.querySelectorAll("li").forEach(element=>{
+              if(element.className.includes("active")){
+                activeList.push("active");
+              }else{
+                activeList.push("inactive");
+              }
+            })
+          }
+            // console.log(dropdownArea)
+            dropdownArea.innerHTML=""
+            if(nameArray!=[]){
+                    document.getElementById(`extraDmgLabelmeleeAttack${i}`).setAttribute("style","display:block");
+              document.getElementById(`dropdownmeleeAttackbonusAttackDamage${i}`).setAttribute("style","display:block");
+
+            }
+            let j=0;
+
+                nameArray.forEach(name=>{
+            // console.log(name);
+            // console.log(dropdownArea);
+            if(name!=""&&dropdownArea!=""){
+            
+                let option = document.createElement("li");
+                option.dataset.value = name;
+                if(action=="listener"){
+
+                if(activeList[j]=="active"){
+                  option.className="dropdown-item active";
+                }else{
+                  option.className="dropdown-item";
+                }
+              }else if(action=="keyup"){
+                if(activeList[j]=="active"&&j<=activeList.length){
+                  console.log(activeList[j]);
+                  option.className="dropdown-item active";
+                }else{
+                  option.className="dropdown-item";
+                }
+              }
+                option.textContent = name;
+                j++
+//                console.log(option);
+                dropdownArea.appendChild(option);
+            }
+     })
+         }
+    }
+    if(document.getElementById(`dropdownmeleeAttackbonusAttackDamage${i}`)!=null){
+//      console.log(document.getElementById(`dropdownmeleeAttackbonusAttackDamage${i}`))
+      multiChoice(`dropdownmeleeAttackbonusAttackDamage${i}`)
+    }
+    }
+  }else{
+    for(let i=0;i<attacks;i++){
+      if(document.getElementById(`extraDmgLabelmeleeAttack${i}`)!=null){
+        document.getElementById(`extraDmgLabelmeleeAttack${i}`).setAttribute("style","display:none");
+        document.getElementById(`dropdownmeleeAttackbonusAttackDamage${i}`).setAttribute("style","display:none");
+      }
+    }
+  }
+  deletedID = -1
+//  console.log(children);
+}
 
 function updateFormOnType(){
   let choice = document.getElementById("NPCChoice").value;
@@ -437,15 +552,15 @@ function updateFormOnType(){
 }
 
 function updateFeats(){
-  var feats = featList;
+  let feats = featList;
   if(document.getElementById("usesSphereOption").checked){
     feats = feats.concat(sphereFeatList);
   }
   feats.sort();
   document.getElementById("dropdownfeat").remove();
   arrayToDropdown(feats,"feat","Select");
-  createVariableListener(`dropdownfeat`,'click',dropdownInteraction,`dropdownfeat`,true);
-  createVariableArrayListener(`dropdownfeat`,'keyup',searchDrop,[`dropdownfeat`,`searchfeat`]);
+  createVariableListener(`dropdownfeat`,'click',dropdownInteraction,getElementPointer(`dropdownfeat`),true);
+  createVariableArrayListener(`dropdownfeat`,'keyup',searchDrop,[getElementPointer(`dropdownfeat`),getElementPointer(`searchfeat`)]);
   selectionCreation(`dropdownfeat`);
 }
 
@@ -469,7 +584,7 @@ document.getElementById(inputName).style.display=state;
 
 
 function dynamicInputs(elementID,itemList,inputAreaID){
-  let inputVal = document.getElementById(elementID).value;
+  let inputVal = getElementPointer(elementID).value;
   let inputType = "text";
   let curType;
   let inner="";
@@ -487,6 +602,7 @@ function dynamicInputs(elementID,itemList,inputAreaID){
   let justHealth = false;
   let chance = false;
   let usesDistance = false;
+  console.log(inputVal);
   if(itemList[inputVal.toLocaleLowerCase()]!=null){
     inputType=itemList[inputVal.toLocaleLowerCase()].input;
     baseCurse=itemList[inputVal.toLocaleLowerCase()].baseCurse;
@@ -495,9 +611,12 @@ function dynamicInputs(elementID,itemList,inputAreaID){
     noBaseInput=itemList[inputVal.toLocaleLowerCase()].noBaseInput;
     usesDurability=itemList[inputVal.toLocaleLowerCase()].durability;
     hasDice =(inputType=="dice"||inputType=="breath");
+    effectsAbilityScores = itemList[inputVal.toLocaleLowerCase()].abilityScore;
     hasRange = itemList[inputVal.toLocaleLowerCase()].range;
-    hasSave = (inputType=="breath");
+    hasSave = itemList[inputVal.toLocaleLowerCase()].saveType;
     hasRecharge = (inputType=="breath");
+    hasDisplaySave = itemList[inputVal.toLocaleLowerCase()].displaySave;
+    saveStat = itemList[inputVal.toLocaleLowerCase()].saveStat;
     justHealth = itemList[inputVal.toLocaleLowerCase()].health;
     hasVariableArea =itemList[inputVal.toLocaleLowerCase()].variableRange;
     power =itemList[inputVal.toLocaleLowerCase()].power;
@@ -533,9 +652,9 @@ function dynamicInputs(elementID,itemList,inputAreaID){
       inner +=`<label class="inputName" for="monsterAbilityDiceTemp">${getProperty(inputVal+"2")} </label>`
       if(inputVal=="Engulf"){
         inner+=`<textarea class="searchBarCreation" name="monsterAbilityTemp" id="monsterAbilitySecondaryTemp" placeholder="Insert Here" title="monsterAbilityTemp"></textarea>`
-      }else if(inputVal=="Split"||inputVal=="Whirlwind"||"Summon"){
+      }else if(inputVal=="Split"||inputVal=="Whirlwind"||inputVal=="Summon"){
         inner+=`<input type="number" class="searchBarCreation" name="monsterAbilityTemp" id="monsterAbilitySecondaryTemp" placeholder="Insert Here" title="monsterAbilityTemp">`
-      }else{        
+      }else{
         inner+=`<input type="text" class="searchBarCreation" name="monsterAbilityTemp" id="monsterAbilitySecondaryTemp" placeholder="Insert Here" title="monsterAbilityTemp">`
       }
     }
@@ -619,6 +738,18 @@ function dynamicInputs(elementID,itemList,inputAreaID){
       <br><label class="inputName" for="monsterAbilityDurationLimitTemp">Duration Limit(Day)</label>
       <input type="number" min="1" class="searchBarCreation" name="monsterAbilityDurationLimitTemp" id="monsterAbilityDurationLimitTemp" placeholder="Insert Recharge Here" title="monsterAbilityRechargeDiceAmountTemp">`
     }
+    if(effectsAbilityScores){
+      inner+=`<label class="inputName" for="monsterAbilityStatTemp">Effected Ability Score </label>
+      <select class="searchBarCreation" name="monsterAbilityStatTemp" id="monsterAbilityStatTemp">
+      <option>Str</option>
+      <option>Dex</option>
+      <option>Con</option>
+      <option>Int</option>
+      <option>Wis</option>
+      <option>Cha</option>
+      </select>`
+    }
+
     if(hasSave){
       if(inner!=""){
         inner+="<br>";
@@ -631,7 +762,7 @@ function dynamicInputs(elementID,itemList,inputAreaID){
       </select>`
     }
     if(variableAbilityType){
-      if(inner!=""&&(!usesAttacks||inputType=="curse")){
+      if(inner!=""&&(!usesAttacks||inputType=="curse"||hasSave)){
         inner+="<br>";
       }
       inner+=`<label class="inputName" for="monsterAbilityTypeTemp">Ability Type </label>
@@ -647,6 +778,27 @@ function dynamicInputs(elementID,itemList,inputAreaID){
       }
       inner+=`</select>`;
     }
+    if(saveStat){
+      if(inner!=""){
+        inner+="<br>";
+      }
+      inner+=`<label class="inputName" for="monsterAbilitySaveStatTemp">Save Ability Score </label>
+      <select class="searchBarCreation" name="monsterAbilitySaveStatTemp" id="monsterAbilitySaveStatTemp">
+      <option>Str</option>
+      <option>Dex</option>
+      <option>Con</option>
+      <option>Int</option>
+      <option>Wis</option>
+      <option>Cha</option>
+      </select>`
+    }
+    if(hasDisplaySave){
+      if(inner!=""){
+        inner+="<br>";
+      }
+      inner+=`<label class="inputName" for="monsterAbilityChanceTemp">Display Save DC</label>
+      <input type="checkbox" class="searchBarCreation" name="monsterAbilityDisplaySaveDCTemp" id="monsterAbilityDisplaySaveDCTemp" placeholder="Insert Chance Here" title="monsterAbilityDisplaySaveDCTempInput"><label class="inputName"></label>`
+    }
     if(chance){
       if(inner!=""){
         inner+="<br>";
@@ -654,7 +806,7 @@ function dynamicInputs(elementID,itemList,inputAreaID){
       inner+=`<label class="inputName" for="monsterAbilityChanceTemp">Chance</label>
       <input type="number" class="searchBarCreation" name="monsterAbilityChanceTemp" id="monsterAbilityChanceTemp" placeholder="Insert Chance Here" title="monsterAbilityChanceTempInput"><label class="inputName"> % </label>`
     }
-    document.getElementById(inputAreaID).innerHTML = inner;
+    getElementPointer(inputAreaID).innerHTML = inner;
     if(hasDice){
       if(itemList[inputVal.toLocaleLowerCase()].default!=null){
         document.getElementById("monsterAbilityDiceTemp")[getChoiceSelection(['d2','d4','d6','d8','d10','d12'],itemList[inputVal.toLocaleLowerCase()].default)].selected=true;
@@ -664,12 +816,12 @@ function dynamicInputs(elementID,itemList,inputAreaID){
       document.getElementById("monsterAbilitySaveTemp")[getChoiceSelection(['Fort','Reflex','Will'],itemList[inputVal.toLocaleLowerCase()].saveType)].selected=true;
     }
     if(usesAttacks){
-      doAttacksDropdown();
+      doAttacksDropdown(inputVal);
 
     }
   }else{
     if(monsterAbilitiesList.includes(inputVal)){
-      document.getElementById(inputAreaID).innerHTML = inner;
+      getElementPointer(inputAreaID).innerHTML = inner;
     }
   }
 }
@@ -684,17 +836,17 @@ function updateClasses(){
 
 
 function updateFeatDetails(){
-  var babDisplay = document.getElementById("babDisplay");
-  var strDisplay = document.getElementById("strDisplay");
-  var dexDisplay = document.getElementById("dexDisplay");
-  var conDisplay = document.getElementById("conDisplay");
-  var intDisplay = document.getElementById("intDisplay");
-  var wisDisplay = document.getElementById("wisDisplay");
-  var chaDisplay = document.getElementById("chaDisplay");
-  var tlevelDisplay = document.getElementById("tlevelDisplay");
-  var clevelDisplay = document.getElementById("clevelDisplay");
-  var raceDisplay = document.getElementById("raceDisplay");
-  var alignmentDisplay = document.getElementById("alignmentDisplay");
+  let babDisplay = document.getElementById("babDisplay");
+  let strDisplay = document.getElementById("strDisplay");
+  let dexDisplay = document.getElementById("dexDisplay");
+  let conDisplay = document.getElementById("conDisplay");
+  let intDisplay = document.getElementById("intDisplay");
+  let wisDisplay = document.getElementById("wisDisplay");
+  let chaDisplay = document.getElementById("chaDisplay");
+  let tlevelDisplay = document.getElementById("tlevelDisplay");
+  let clevelDisplay = document.getElementById("clevelDisplay");
+  let raceDisplay = document.getElementById("raceDisplay");
+  let alignmentDisplay = document.getElementById("alignmentDisplay");
 
     if(document.getElementById("NPCChoice").value=="Monster"){
     babDisplay.innerHTML = `BAB: ${getBaB(document.getElementById("NPCBaB").value,document.getElementById("MonsterLevel").value)}`;
@@ -720,39 +872,41 @@ function updateFeatDetails(){
 
 /**
  * creates function listener for specified element and event type 
- * @param {String} elementID 
+ * @param {string} elementID
  * @param {String} eventType 
  * @param {Function} functionName 
  */
 function createListeners(elementID,eventType,functionName){
-  const newListener = document.getElementById(elementID);
-  newListener.addEventListener(eventType,()=>functionName());
+  const newListener = getElementPointer(elementID);
+  const eventObject=()=>functionName()
+  newListener.addEventListener(eventType,eventObject)
 }
 
 function createVariableListener(elementID,eventType,functionName,variable,eventReliant=false){
-  const newListener = document.getElementById(elementID);
-  newListener.addEventListener(eventType,(e)=>
+  let newListener = getElementPointer(elementID);
+  const eventObject=(e)=>
     {
       if(!eventReliant){
         functionName(variable)
       }else{
         functionName(e,variable)
       }
-    })
+    };
+    newListener.addEventListener(eventType,eventObject)
 }
 
 function updateSaveValues(){
-  var fortHTML = document.getElementById("fortsave");
-  var refHTML = document.getElementById("refsave");
-  var willHTML = document.getElementById("willsave");
+  let fortHTML = document.getElementById("fortsave");
+  let refHTML = document.getElementById("refsave");
+  let willHTML = document.getElementById("willsave");
   fortHTML.textContent = `Base Fort Save: ${getSaveBonus("Fort")}`;
   refHTML.textContent = `Base Ref Save: ${getSaveBonus("Ref")}`;
   willHTML.textContent = `Base Will Save: ${getSaveBonus("Will")}`;
 }
 
 function createToggleDisplayListener(elementID,eventType,functionName,variable1){
-  const newListener = document.getElementById(elementID);
-  newListener.addEventListener(eventType,()=>
+  const newListener = getElementPointer(elementID);
+  const eventObject=()=>
     {
       if(variable1=="senseInput"){
         if(rangelessSense.includes(newListener.querySelector('.selected-item input').value.toLocaleLowerCase())){
@@ -775,51 +929,104 @@ function createToggleDisplayListener(elementID,eventType,functionName,variable1)
           functionName(variable1);
         }
       }
-    });
+    };
+    newListener.addEventListener(eventType,eventObject)
 }
 
 function createVariableArrayListener(elementID,eventType,functionName,variableList,eventReliant=false){
-  const newListener = document.getElementById(elementID);
-  newListener.addEventListener(eventType,(e)=>
+  const newListener = getElementPointer(elementID);
+  const eventObject=(e)=>
   {
     if(!eventReliant){
       functionName(...variableList)
     }else{
       functionName(e,...variableList)
     }
-  });
+  };
+    newListener.addEventListener(eventType,eventObject)
+}
+
+
+function deleteListener(elementID,eventType,functionName){
+  console.log(elementID);
+    console.log(document.getElementById(elementID));
+  const element = document.getElementById(elementID);
+  let registryKey = `${elementID}${eventType}${functionName}`;
+  console.log(listener);
+  console.log(eventType);
+  console.log(element)
+  if(listener){
+    element.removeEventListener(eventType,listener);
+    console.log(registryKey);
+  }
 }
 
 function createWindowListener(functionName,variableArray){
-  document.addEventListener('click',(e)=>
+  const eventObject = (e)=>
   {
     functionName(e,variableArray)
-    });
+    };
+    newListener.addEventListener(eventType,eventObject)
+    document.addEventListener('click',eventObject);
 }
 
 /**updates attack section and attack dropdown */
-function doAttacksDropdown(){
+function doAttacksDropdown(uid=""){
+  console.log(uid)
+  if(uid.length==0){
+    console.log("update")
+  }
+
   if(document.getElementById("curseArea")!=null){
+    let node = document.getElementById('dropdownSelectionmonsterAbilities').value;
     document.getElementById("curseArea").innerHTML="";
-    arrayToDropdown(getAttacks(),"curse","Select");
-    createVariableListener(`dropdowncurse`,'click',dropdownInteraction,`dropdowncurse`,true);
-    createVariableArrayListener(`dropdowncurse`,'keyup',searchDrop,[`dropdowncurse`,`searchcurse`]);
+    arrayToDropdown(getAttacks(node),"curse","Select");
+    createVariableListener(`dropdowncurse`,'click',dropdownInteraction,getElementPointer(`dropdowncurse`),true);
+    createVariableArrayListener(`dropdowncurse`,'keyup',searchDrop,[getElementPointer(`dropdowncurse`),getElementPointer(`searchcurse`)]);
     multiChoice(`dropdowncurse`);
   }
   if(document.getElementById("monsterAbilitiesChoice")!=null){
     if(document.getElementById("monsterAbilitiesChoice").querySelector(".dropdown-box")!=null){
-      let id = document.getElementById("monsterAbilitiesChoice").querySelector(".dropdown-box").id.replace("dropdown","");
-      console.log(id);
-      document.getElementById(`${id}Area`).innerHTML="";
-      arrayToDropdown(getAttacks(),id,"Select");
-      createVariableListener(`dropdown${id}`,'click',dropdownInteraction,`dropdown${id}`,true);
-      createVariableArrayListener(`dropdown${id}`,'keyup',searchDrop,[`dropdown${id}`,`search${id}`]);
 
-      multiChoice(`dropdown${id}`);
-      if(!hasSelected(`dropdown${id}`)){
-        document.getElementById(`dropdown${id}`).querySelector("li").classList.add("active");
-      }
+
+      document.querySelectorAll("#monsterAbilitiesChoice > div").forEach(element=>{
+        let id = element.querySelector(".dropdown-box").id.replace("dropdown","");
+        let node = id.replace("attackSection","")
+        let activeList = document.getElementById("monsterAbilitiesChoice").querySelector(".dropdown-box");
+        document.getElementById(`${id}Area`).innerHTML="";
+        arrayToDropdown(getAttacks(node),id,"Select",true,activeList.querySelectorAll("li"));
+        createVariableListener(`dropdown${id}`,'click',dropdownInteraction,getElementPointer(`dropdown${id}`),true);
+        createVariableArrayListener(`dropdown${id}`,'keyup',searchDrop,[getElementPointer(`dropdown${id}`),getElementPointer(`search${id}`)]);
+        multiChoice(`dropdown${id}`);
+        if(!hasSelected(`dropdown${id}`)){
+          document.getElementById(`dropdown${id}`).querySelector("li").classList.add("active");
+        }
+      })
+
+
+
     }
+  }
+}
+
+function doSpecialAttacksDropdown(){
+  if(document.getElementById("specialAttackArea")!=null){
+    if(document.getElementById("specialAttackArea").childElementCount>0){
+      for(let i=0;i<document.getElementById("specialAttackArea").childElementCount;i++){
+        let activeList = document.getElementById(`specialAttackZone${i}`).querySelector(".dropdown-box")
+        let selected = document.getElementById(`dropdownSelectionspecialAttackAttackList${i}`).value;
+          document.getElementById(`specialAttackAttackList${i}Area`).innerHTML="";
+          arrayToDropdown(getAttacksSpecial(),`specialAttackAttackList${i}`,selected,true,activeList.querySelectorAll("li"),false,true,true);
+          // activeList.querySelectorAll("li").array.forEach(element => {
+          //   console.log(element)
+          // // });
+//          document.getElementById(`dropdownSelectionspecialAttackAttackList${i}`).value="Select";
+        
+        createVariableListener(`dropdownspecialAttackAttackList${i}`,'click',dropdownInteraction,getElementPointer(`dropdownspecialAttackAttackList${i}`),true);
+        createVariableArrayListener(`dropdownspecialAttackAttackList${i}`,'keyup',searchDrop,[getElementPointer(`dropdownspecialAttackAttackList${i}`),getElementPointer(`searchfeat`)]);
+        selectionCreation(`dropdownspecialAttackAttackList${i}`);
+      }
+  }
   }
 }
 
@@ -829,7 +1036,7 @@ function classListener(){
   const className = document.getElementById("dropdownSelectionclasses").value;
   let constArch = getArchetypeName(classJson.class,className);
   if(document.getElementById("usesSphereOption").checked){
-    var sphereArchetypeList = getArchetypeName(sphereClassArchetype.sphereArchetypeList,className,true);
+    let sphereArchetypeList = getArchetypeName(sphereClassArchetype.sphereArchetypeList,className,true);
     constArch = [...constArch,...sphereArchetypeList];
   }
   let classList = convertToUppercase(getClassesData());
@@ -843,8 +1050,8 @@ function classListener(){
   // if(playerClassList.includes(capitalizedCaseCharacter(className.toLocaleLowerCase()))){
     // document.getElementById("archetypeSection").style.display="block";
     arrayToDropdown(classList,"chosenClasses","Select");
-    createVariableListener(`dropdownchosenClasses`,'click',dropdownInteraction,`dropdownchosenClasses`,true);
-    createVariableArrayListener(`dropdownchosenClasses`,'keyup',searchDrop,[`dropdownchosenClasses`,`searchchosenClasses`]);
+    createVariableListener(`dropdownchosenClasses`,'click',dropdownInteraction,getElementPointer(`dropdownchosenClasses`),true);
+    createVariableArrayListener(`dropdownchosenClasses`,'keyup',searchDrop,[getElementPointer(`dropdownchosenClasses`),getElementPointer(`searchchosenClasses`)]);
     createListeners(`dropdownchosenClasses`,'change',displayArchetypes);
     selectionCreation(`dropdownchosenClasses`);
     additionalClick(`dropdownchosenClasses`,displayArchetypesList)
@@ -853,12 +1060,12 @@ function classListener(){
 
   //}
   document.getElementById("classHealth").textContent = `Health: ${health}`;
-  resetSkills();
+//  resetSkills();
   let skillList = getSkillsList(getClassesData());
   if(skillList==""){
     skillList=[];
   }
-  doSkills(skillList,skillList,true);
+//  doSkills(skillList,skillList,true);
   checkSpells();
 }
 
@@ -866,8 +1073,8 @@ function displayArchetypes(){
   let className = document.getElementById("dropdownSelectionchosenClasses").value;
   if(!npcClassList.includes(className)){
     arrayToDropdown(getValidArchetypes(getArchetypeList(className,true)),"archetypesList","Select")
-    createVariableListener(`dropdownarchetypesList`,'click',dropdownInteraction,`dropdownarchetypesList`,true);
-    createVariableArrayListener(`dropdownarchetypesList`,'keyup',searchDrop,[`dropdownarchetypesList`,`searcharchetypesList`]);
+    createVariableListener(`dropdownarchetypesList`,'click',dropdownInteraction,getElementPointer(`dropdownarchetypesList`),true);
+    createVariableArrayListener(`dropdownarchetypesList`,'keyup',searchDrop,[getElementPointer(`dropdownarchetypesList`),getElementPointer(`searcharchetypesList`)]);
     selectionCreation("dropdownarchetypesList");
     additionalClick("dropdownarchetypesList",displayArchetypesDetails);
     let button = document.createElement("button");
@@ -900,9 +1107,19 @@ function displayHiddenArchetypeDetails(element){
   }
 }
 
-function searchDrop(elementID,searchID){
-  const filter = document.getElementById(searchID).value;
-  const dropdownItems = document.getElementById(elementID).querySelectorAll(".dropdown-item");
+
+function toggleHidableElements(id,className){
+  let archetypeItem = document.getElementById(id);
+  if(!archetypeItem.classList.contains("active")){
+    archetypeItem.classList.add("active");
+  }else{
+    archetypeItem.classList.remove("active");
+  }
+}
+
+function searchDrop(elementID,search){
+  const filter = search.value;
+  const dropdownItems = getElementPointer(elementID).querySelectorAll(".dropdown-item");
   dropdownItems.forEach(dropdownItem=>{
       if(dropdownItem.innerHTML.toLocaleLowerCase().includes(filter)){
           dropdownItem.classList.remove("hide");
@@ -949,6 +1166,9 @@ function closeAllDropdowns(){
 function openDropdown(e,elementID){
     const dropdownList = document.querySelectorAll(".dropdown-box");
     const dropdownArrow = document.querySelectorAll(".selected-item");
+    // console.log(e)
+    // console.log(elementID)
+    // console.log(dropdownList)
     dropdownList.forEach(item=>{
         if(item.id!=elementID){
             if(item.classList.contains("active")){
@@ -965,7 +1185,7 @@ function openDropdown(e,elementID){
             }
         }
     })        
-    const dropdown = document.getElementById(elementID);
+    const dropdown = elementID;
     if(!dropdown.classList.contains("active")){
         dropdown.classList.add("active");
         dropdown.querySelector(".selected-item").classList.add("active");
@@ -978,11 +1198,12 @@ function openDropdown(e,elementID){
 }
 
 function dropdownInteraction(e,elementID){
+//  console.log("opened?")
   openDropdown(e,elementID);
 }
 
-function createElementbasedListeners(element,eventType,functionName){
-  element.addEventListener(eventType,()=>functionName());
+function createElementbasedListeners(elementID,eventType,functionName){
+  getElementPointer(element).addEventListener(eventType,()=>functionName());
 }
 
 function checkSpells(){

@@ -1,7 +1,8 @@
+var deletedID = -1;
 function populateClassData(classArray){
     let nodes = document.getElementById("classesChoice").childNodes;
     let len = document.getElementById("classesChoice").childElementCount;
-    for(var i =0;i<len;i++){
+    for(let i =0;i<len;i++){
       let name = document.getElementById(`classesChoice`).children.item(i).getElementsByTagName("label").item(0).textContent;
       let id = (nodes[i].id).replace("Choice","").toLocaleLowerCase();
       let level = document.getElementById(`classes${id}`).value;
@@ -27,7 +28,7 @@ function populateClassData(classArray){
 }
 
 
-function populatexDay(array,elementName){
+function populateXDay(array,elementName){
   let len = document.getElementById("forum").querySelector(`.${elementName}`).childElementCount;
   for(let i=0;i<len;i++){
     let amount = document.getElementById(`${elementName}perDay${i}`).value;
@@ -76,7 +77,7 @@ function populateSpecialAbilityData(array,elementName){
 function populateDataDropDownArray(array,name){
     //for getting information
   let len = document.getElementById(`${name}Choice`).childElementCount;
-  for(var i = 0;i<len;i++){
+  for(let i = 0;i<len;i++){
     let val = document.getElementById(`${name}Choice`).children.item(i).getElementsByTagName("label").item(0).textContent;
     array.push(val);
   }
@@ -85,7 +86,7 @@ function populateDataDropDownArray(array,name){
 function populateDataDropDownJson(json,name){
   let len = document.getElementById(`${name}Choice`).childElementCount;
   let val = ""
-  for(var i = 0;i<len;i++){
+  for(let i = 0;i<len;i++){
       let entry = document.getElementById(`${name}Choice`).children.item(i).getElementsByTagName("label").item(0).textContent;
       if((document.getElementById(`${name}${entry}`))!=null){
         val = document.getElementById(`${name}${entry}`).value;
@@ -138,6 +139,96 @@ function populateData(array,elementName){
   }
 }
 
+function getIndexOfSelected(element){
+  let index = -1;
+  let point = 0;
+  element.querySelectorAll("li").forEach(element=>{
+    if(index>-1){
+      return;
+    }
+    if(element.className.includes("active")){
+      index=point;
+    }
+    point++;
+  })
+  return index;
+}
+
+function getSecondaryData(index,elementData){
+  let i=0;
+  let text = "";
+  elementData.querySelectorAll("li").forEach(element=>{
+    if(i==index){
+      text = element.dataset.value
+    }
+    i++;
+  })
+  return text;
+}
+
+function populateSpecialAttack(arr){
+  let children = document.getElementById("specialAttackArea").childElementCount;
+  let hasDamage = true;
+  let perDaySpecial = ""
+  for(let i=0;i<children;i++){
+    let json ={
+      "name":document.getElementById(`specialAttack${i}`).value
+    };
+    json["displayAttributes"]=document.getElementById(`specialAttackZone${i}Option`).checked;
+    if(document.getElementById(`specialAttackZone${i}Option`).checked){
+      let val = document.getElementById(`choicesSpecial${i}`).value;
+      json["variation"]=val;
+      switch(val){
+        case "Attack":
+          json["toHit"] = document.getElementById(`specialAttackToHitBonus${i}`).value;
+          if(document.getElementById(`dropdownSelectionspecialAttackAttackList${i}`).value!="Select"){
+            json["attack"]=document.getElementById(`dropdownSelectionspecialAttackAttackList${i}`).value;
+            json["attackIndex"]=getIndexOfSelected(document.getElementById(`dropdownspecialAttackAttackList${i}`))
+            json["attackType"]=getSecondaryData(getIndexOfSelected(document.getElementById(`dropdownspecialAttackAttackList${i}`)),document.getElementById(`dropdownspecialAttackAttackList${i}`));
+          }else{
+            json["attack"]=getAttacks()[0];
+            json["attackIndex"]=0
+            json["attackType"]=getSecondaryData(0,);
+          }
+          break;
+        case "Save":
+          json["saveThrowCheck"]=document.getElementById(`savingThrowTypeZone${i}Option`).checked;
+          if(document.getElementById(`savingThrowTypeZone${i}Option`).checked){
+            json["saveThrow"]=document.getElementById(`throwTypespecialAttack${i}`).value;
+          }
+          json["saveStat"] = document.getElementById(`dcStatspecialAttack${i}`).value;
+          perDaySpecial = document.getElementById(`perDayZone${i}Option`).checked;
+          json['perDayChecked']=perDaySpecial;
+          if(perDaySpecial){
+            json["perDaySpecial"]=document.getElementById(`specialAttackperDay${i}`).value;
+          }
+          break;
+        case "Save Only":
+          json["saveThrowCheck"]=document.getElementById(`savingThrowTypeZone${i}Option`).checked;
+          if(document.getElementById(`savingThrowTypeZone${i}Option`).checked){
+            json["saveThrow"]=document.getElementById(`throwTypespecialAttack${i}`).value;
+          }
+          json["saveStat"] = document.getElementById(`dcStatspecialAttack${i}`).value;
+          perDaySpecial = document.getElementById(`perDayZone${i}Option`).checked;
+          json['perDayChecked']=perDaySpecial;
+          if(perDaySpecial){
+            json["perDaySpecial"]=document.getElementById(`specialAttackperDay${i}`).value;
+          }
+          hasDamage=false;
+      }
+      if(hasDamage){
+        json["diceCount"]=document.getElementById(`specialAttackdiceCount${i}`).value;
+        json['damageDice']=document.getElementById(`damageDicespecialAttack${i}`).value;
+      }
+      hasDamage=true;
+
+    }
+    console.log(json)
+    arr.push(json);
+  }
+// json['name'] =;
+}
+
 function populateDataAura(array,elementName){
   let len = document.getElementById("forum").querySelector(`.${elementName}`).childElementCount;
   for(let i=0;i<len;i++){
@@ -164,17 +255,33 @@ function populateAttackData(array,elementName){
   let len = document.getElementById("forum").querySelector(`.${elementName}`).childElementCount;
   for(let i=0;i<len;i++){
     let name = document.getElementById(`${elementName}Name${i}`).value;
-    let diceCount = document.getElementById(`${elementName}diceCount${i}`).value;
+    let diceCount =0;
+    let damageDice = 0;
+    let hasUniqueCrit = false;
+    let hasRange = false;
+    let hasMultiplier = false;
+    let hasUniqueDmg = false;
+    let hasMultiAttack = false;
+    let hasEnchants = false;
+    let weaponMaterial = "";
+    let weaponType = "Weapon";
+    if(document.getElementById(`${elementName}diceCount${i}`)!=null){
+      diceCount = document.getElementById(`${elementName}diceCount${i}`).value;
+      damageDice = document.getElementById(`damageDice${elementName}${i}`).value;
+      hasUniqueCrit = document.getElementById(`critStats${elementName}${i}Option`).checked;
+      hasRange = document.getElementById(`critRange${elementName}${i}Option`).checked;
+      hasMultiplier = document.getElementById(`critMultiplier${elementName}${i}Option`).checked;
+      hasMultiAttack = document.getElementById(`multiAttack${elementName}${i}DivOption`).checked;
+      hasEnchants = document.getElementById(`enchantment${elementName}${i}0`)===null?false:true;
+      hasUniqueDmg = document.getElementById(`${elementName}bonusAttackDamage${i}Area`)!=null;
+      weaponType = "Custom";
+    }
+    if(document.getElementById(`weaponMaterial${i}`)!=null){
+      weaponMaterial = document.getElementById(`weaponMaterial${i}`);
+    }
     if(diceCount<1){
       diceCount = 1;
     }
-    let damageDice = document.getElementById(`damageDice${elementName}${i}`).value;
-    let hasUniqueCrit = document.getElementById(`critStats${elementName}${i}Option`).checked;
-    let hasRange = document.getElementById(`critRange${elementName}${i}Option`).checked;
-    let hasMultiplier = document.getElementById(`critMultiplier${elementName}${i}Option`).checked;
-    let hasUniqueDmg = document.getElementById(`extraDmg${elementName}${i}Option`).checked;
-    let hasMultiAttack = document.getElementById(`multiAttack${elementName}${i}Option`).checked;
-    let hasEnchants = document.getElementById(`enchantment${elementName}${i}0`)===null?false:true;
 //    document.getElementById(`enchantment${elementName}${i}0`).value
     let json={
       "name":name,
@@ -193,14 +300,8 @@ function populateAttackData(array,elementName){
       }
     }
     if(hasUniqueDmg){
-      let uniqueDamage = document.getElementById(`extraDmg${elementName}${i}`).value;
-      json["uniqueDamage"]= uniqueDamage;
+      json["uniqueDamageBonus"]= getMultiDropdownSelectionList(`dropdownmeleeAttackbonusAttackDamage${i}`);
     }
-
-    // let Enchantments = document.getElementById(`${elementName}Enchantments${i}`).value;
-    // if(Enchantments!=""){
-    //   json["Enchantments"]=Enchantments;
-    // }
     if(hasMultiAttack){
       let multiAttack = document.getElementById(`multiAttack${elementName}${i}`).value;
       json["multiAttack"]=multiAttack;
@@ -219,8 +320,17 @@ function populateAttackData(array,elementName){
     if(Number(document.getElementById(`${elementName}toHitModifier${i}`).value)!=0&&document.getElementById(`${elementName}toHitModifier${i}`).value!==" "){
       json['toHitModifier']=document.getElementById(`${elementName}toHitModifier${i}`).value;
     }
-    json['isAlternative']=document.getElementById(`isAlternative${elementName}${i}Option`).checked;
-    json['isAdditive']=document.getElementById(`isAdditive${elementName}${i}Option`).checked;
+    if(document.getElementById(`isAlternative${elementName}${i}Option`)!=null){
+        json['isAlternative']=document.getElementById(`isAlternative${elementName}${i}Option`).checked;
+        json['isAdditive']=document.getElementById(`isAdditive${elementName}${i}Option`).checked;
+    }
+    if(document.getElementById(`meleeMaterial${i}`)!=null){
+      json['material']=document.getElementById(`meleeMaterial${i}`).value;
+    }
+    if(document.getElementById(`meleeAttackfullAttack${i}`)!=null){
+      json['fullRoundAttackCount']=document.getElementById(`meleeAttackfullAttack${i}`).value;
+    }
+    json["weaponType"]=weaponType;
     array.push(json)
   }
 }
@@ -283,18 +393,18 @@ let multiSkillArray = [];
  */
 function createArrayChoice(choiceName,buttonText,placeholderText,isNested=false,canHaveDC=false){
   let choice = document.getElementById("forum").querySelector(`.${choiceName}`).childElementCount;
-  var div = document.createElement("div");
+  let div = document.createElement("div");
   if(isNested){
     div = document.createElement("div4");
   }
-  var input = document.createElement("textarea");
+  let input = document.createElement("textarea");
   input.setAttribute("type","text");
   input.setAttribute("class","searchBarCreation");
   input.setAttribute("name",`${choiceName}${choice}`);
   input.setAttribute("id",`${choiceName}${choice}`);
   input.setAttribute("placeholder",`${placeholderText}`);
   input.setAttribute("title",`NPC ${choiceName}`);
-  var button = document.createElement("button");
+  let button = document.createElement("button");
   button.setAttribute("class","formButton");
   button.setAttribute("id",`delete${choiceName}${choice}`);
   button.setAttribute("type","button");
@@ -303,20 +413,20 @@ function createArrayChoice(choiceName,buttonText,placeholderText,isNested=false,
     button.setAttribute("onClick",`deleteArrayChoice(${choice},'${choiceName}',true)`);
   }
     if(canHaveDC){
-    var saveDCCheckLabel = document.createElement("p");
+    let saveDCCheckLabel = document.createElement("p");
     saveDCCheckLabel.setAttribute("class","inputName");
     saveDCCheckLabel.textContent = "Has Save DC";
-    var saveDCChoice = document.createElement("input");
+    let saveDCChoice = document.createElement("input");
     saveDCChoice.setAttribute("type","checkbox");
     saveDCChoice.setAttribute("id",`saveDC${choiceName}${choice}Option`);
     saveDCChoice.setAttribute("placeholder","toggle");
     saveDCChoice.setAttribute("onclick",`toggle('saveDC${choiceName}${choice}')`);
     saveDCCheckLabel.appendChild(saveDCChoice);
-    var container = document.createElement("div2");
+    let container = document.createElement("div2");
     container.setAttribute("id",`saveDC${choiceName}${choice}`);
     container.setAttribute("style","display:none");
     container.setAttribute("class","stairCase");
-    var dcStat = document.createElement("select");
+    let dcStat = document.createElement("select");
     dcStat.setAttribute("class","searchBarCreation");
     dcStat.setAttribute("name",`dcStat${choiceName}${choice}`);
     dcStat.setAttribute("id",`dcStat${choiceName}${choice}`);
@@ -324,14 +434,14 @@ function createArrayChoice(choiceName,buttonText,placeholderText,isNested=false,
     let ability = ['Str','Dex','Con','Int','Wis','Cha'];
     createSelection(ability,dcStat);
 
-  var DCLabel = document.createElement("label");
+  let DCLabel = document.createElement("label");
   DCLabel.setAttribute("class","inputName");
   DCLabel.setAttribute("for",`dcStat${choiceName}${choice}`);
   DCLabel.textContent="Save Type";
 
     DCLabel.appendChild(dcStat);
     container.appendChild(DCLabel);
-    var br3 = document.createElement("p");
+    let br3 = document.createElement("p");
     container.appendChild(br3);
   }
   button.textContent = `Delete ${buttonText}`;
@@ -399,11 +509,9 @@ function deleteArrayChoice(choiceID,choiceName,isNested=false,canHaveDC=false){
  * @param {boolean} canHaveDamage=false
  * @param {boolean} hasToggle=false
  */
-function createDualInformation(overallElementName,elementName1,elementName2,buttonText,placeholderText1,placeholderText2,buttonType1,buttonType2,canHaveDC=false,needSaveType=false,canBeAnAura=false,hasUniqueTrait=false,canHaveDamage=false){
+function createDualInformation(overallElementName,elementName1,elementName2,buttonText,placeholderText1,placeholderText2,buttonType1,buttonType2,canHaveDC=false,needSaveType=false,canBeAnAura=false,hasUniqueTrait=false,canHaveDamage=false,addListener=false){
   let choice = document.getElementById("forum").querySelector(`.${overallElementName}`).childElementCount;
-  var br = document.createElement("br");
-  var br2 = document.createElement("br");
-  var div = document.createElement("div");
+  let div = document.createElement("div");
   div.setAttribute("class",`${overallElementName}`);
   if(buttonType1==="text"){
     var AName = document.createElement("textarea");
@@ -441,23 +549,22 @@ function createDualInformation(overallElementName,elementName1,elementName2,butt
     container.setAttribute("id",`saveDC${overallElementName}${choice}`);
     container.setAttribute("style","display:none");
     container.setAttribute("class","stairCase");
-     var dcStat = document.createElement("select");
+    let dcStat = document.createElement("select");
     dcStat.setAttribute("class","searchBarCreation");
     dcStat.setAttribute("name",`dcStat${overallElementName}${choice}`);
     dcStat.setAttribute("id",`dcStat${overallElementName}${choice}`);
     let ability = ['Str','Dex','Con','Int','Wis','Cha'];
     createSelection(ability,dcStat);
-    var DCLabel = document.createElement("label");
+    let DCLabel = document.createElement("label");
     DCLabel.setAttribute("class","inputName");
     DCLabel.setAttribute("for",`dcStat${overallElementName}${choice}`);
     DCLabel.textContent="Relevant Ability Mod";
     DCLabel.appendChild(dcStat);
     container.appendChild(DCLabel);
-    var br3 = document.createElement("br");
-    container.appendChild(br3);
+    addBreak(container);
   }
     if(hasUniqueTrait){
-            var uniqueTrait = document.createElement("select");
+            let uniqueTrait = document.createElement("select");
       uniqueTrait.setAttribute("class","searchBarCreation");
       uniqueTrait.setAttribute("name",`uniqueTrait${overallElementName}${choice}`);
       uniqueTrait.setAttribute("id",`uniqueTrait${overallElementName}${choice}`);
@@ -470,13 +577,13 @@ function createDualInformation(overallElementName,elementName1,elementName2,butt
       uniqueTraitLabel.appendChild(uniqueTrait);
     }
     if(needSaveType){
-      var saveType = document.createElement("select");
+      let saveType = document.createElement("select");
       saveType.setAttribute("class","searchBarCreation");
       saveType.setAttribute("name",`saveType${overallElementName}${choice}`);
       saveType.setAttribute("id",`saveType${overallElementName}${choice}`);
       let saves=['Ref','Fort','Will'];
       createSelection(saves,saveType);
-      var abilityLabel = document.createElement("label");
+      let abilityLabel = document.createElement("label");
       abilityLabel.setAttribute("class","inputName");
       abilityLabel.setAttribute("for",`saveType${overallElementName}${choice}`);
       abilityLabel.textContent="Save Type";
@@ -484,7 +591,7 @@ function createDualInformation(overallElementName,elementName1,elementName2,butt
       container.appendChild(abilityLabel)
     }
     if(canHaveDamage){
-    // var auraDmgContainer = document.createElement("div2");
+    // let auraDmgContainer = document.createElement("div2");
     // auraDmgContainer.setAttribute("id",`auraDmg${overallElementName}${choice}`);
     // auraDmgContainer.setAttribute("style","display:none");
     // auraDmgContainer.setAttribute("class","stairCase");
@@ -492,7 +599,7 @@ function createDualInformation(overallElementName,elementName1,elementName2,butt
     var isAuraDmgCheckLabel = document.createElement("p");
     isAuraDmgCheckLabel.setAttribute("class","inputName");
     isAuraDmgCheckLabel.textContent = "Does Damage";
-    var isAuraDmgChoice = document.createElement("input");
+    let isAuraDmgChoice = document.createElement("input");
     isAuraDmgChoice.setAttribute("type","checkbox");
     isAuraDmgChoice.setAttribute("id",`auraDmg${overallElementName}${choice}Option`);
     isAuraDmgChoice.setAttribute("placeholder","toggle");
@@ -519,14 +626,14 @@ function createDualInformation(overallElementName,elementName1,elementName2,butt
     var isAuraCheckLabel = document.createElement("p");
     isAuraCheckLabel.setAttribute("class","inputName");
     isAuraCheckLabel.textContent = "Is Aura";
-    var isAuraChoice = document.createElement("input");
+    let isAuraChoice = document.createElement("input");
     isAuraChoice.setAttribute("type","checkbox");
     isAuraChoice.setAttribute("id",`aura${overallElementName}${choice}Option`);
     isAuraChoice.setAttribute("placeholder","toggle");
     isAuraChoice.setAttribute("onclick",`toggle('aura${overallElementName}${choice}')`);
     isAuraCheckLabel.appendChild(isAuraChoice);
 
-    var auraRadius = document.createElement("input");
+    let auraRadius = document.createElement("input");
     auraRadius.setAttribute("type","number");
     auraRadius.setAttribute("class","searchBarCreation");
     auraRadius.setAttribute("name",`auraRadius${overallElementName}${choice}`);
@@ -535,18 +642,17 @@ function createDualInformation(overallElementName,elementName1,elementName2,butt
     auraRadius.setAttribute("title","auraRadius");
     auracontainer.appendChild(auraRadius);
   }
-  var button = document.createElement("button");
+  let button = document.createElement("button");
   button.setAttribute("class","formButton");
   button.setAttribute("id",`delete${overallElementName}${choice}`);
   button.setAttribute("type","button");
-  button.setAttribute("onClick",`deleteDualInformation(${choice},'${overallElementName}','${elementName1}','${elementName2}',${canHaveDC},${needSaveType},${canBeAnAura},${hasUniqueTrait},${canHaveDamage})`);
+  button.setAttribute("onClick",`deleteDualInformation(${choice},'${overallElementName}','${elementName1}','${elementName2}',${canHaveDC},${needSaveType},${canBeAnAura},${hasUniqueTrait},${canHaveDamage},${addListener})`);
   button.textContent = `Delete ${buttonText}`;
   div.appendChild(AName)
-  div.appendChild(br2);
+  addBreak(div);
   div.appendChild(ADetails);  
   if(hasUniqueTrait){
-    var br4 = document.createElement("br");
-    div.appendChild(br4);
+    addBreak(div);
     div.appendChild(uniqueTraitLabel);
   }
   if(canHaveDC){
@@ -561,11 +667,15 @@ function createDualInformation(overallElementName,elementName1,elementName2,butt
   if(canHaveDamage){
     div.appendChild(isAuraDmgCheckLabel);
 //    div.appendChild(auraDmgContainer);
-div.appendChild(auraDmg);
+  div.appendChild(auraDmg);
   }
-  div.appendChild(br);
+  addBreak(div);
   div.appendChild(button);
   document.getElementById("forum").querySelector(`.${overallElementName}`).appendChild(div);
+  if(addListener){
+    document.getElementById(`${overallElementName}${choice}`)
+    createListeners(`${overallElementName}Name${choice}`,"keyup",updateSpecialAbilities);
+  }
   //body.appendChild(x);
 }
 
@@ -576,7 +686,7 @@ div.appendChild(auraDmg);
  * @param {string} elementName1 
  * @param {string} elementName2 
  */
-function deleteDualInformation(choiceID,overallElementName,elementName1,elementName2,canHaveDC,needSaveType,canBeAnAura,hasUniqueTrait,canHaveDamage){
+function deleteDualInformation(choiceID,overallElementName,elementName1,elementName2,canHaveDC,needSaveType,canBeAnAura,hasUniqueTrait,canHaveDamage,hasListener=false){
     let elements = document.getElementById("forum").querySelector(`.${overallElementName}`).querySelectorAll("div").item(choiceID);
     let elementals = document.getElementById("forum").querySelector(`.${overallElementName}`).querySelectorAll("div");
     let element;
@@ -627,7 +737,10 @@ function deleteDualInformation(choiceID,overallElementName,elementName1,elementN
         element.querySelector(`#delete${overallElementName}${i}`).id=`delete${overallElementName}`+(i-1);
     }
   
-  
+if(overallElementName=="SpecialAbility"){
+  deletedID=choiceID
+}
+
 elements.remove();
 }
 /**
@@ -636,23 +749,33 @@ elements.remove();
  * @param {string} placeholderText1 
  * @param {string} placeholderText2 
  */
-function createAttackInformation(overallElementName,placeholderText1,placeholderText2){
+function createAttackInformation(overallElementName,placeholderText1,placeholderText2,weaponType=""){
   let attack = overallElementName.replace("Attack","")
   let choice = document.getElementById("forum").querySelector(`.${overallElementName}`).childElementCount;
   let curChoice = document.getElementById(`${attack}Selection`).value;
-  var div = document.createElement("div");
+  if(weaponType!=""){
+    curChoice=weaponType;
+  }
+  let div = document.createElement("div");
   div.setAttribute("class",`${overallElementName}`);
   let displayText = document.createElement("label");
   displayText.textContent = `${capitalizedCaseCharacter(overallElementName.replace("Attack",""))} ${choice}:`;
   displayText.className="inputName";
   displayText.id=`${overallElementName}${choice}Label`;
-  displayText.appendChild(document.createElement("br"));
+  displayText.setAttribute("for",`${overallElementName}toHitModifier${choice}`);
+  addBreak(displayText);
   div.appendChild(displayText);
+
   if(curChoice=="Weapon"){
     let weapon = document.getElementById(`${attack}WeaponSelection`).querySelector("Select").value;
     let select = document.createElement("select");
     select.className="searchBarCreation";
-    createSelection(meleeWeaponList,select,weapon);
+    if(attack=="melee"){
+      createSelection(meleeWeaponList,select,weapon);
+    }else{
+      createSelection(rangedWeaponList,select,weapon);
+    }
+    select.id = `${attack}AttackName${choice}`
     div.appendChild(select);
     if(capitalizedCaseCharacter(overallElementName.replace("Attack",""))=="Melee"){
         let inputMaterial = document.createElement("input");
@@ -663,51 +786,68 @@ function createAttackInformation(overallElementName,placeholderText1,placeholder
         inputMaterial.placeholder="Weapon Material";
         inputMaterial.value=document.getElementById("meleeMaterial").value;
         div.appendChild(inputMaterial);
-        div.appendChild(document.createElement("br"));
+        addBreak(div);
     }
     document.getElementById("forum").querySelector(`.${overallElementName}`).appendChild(div);
-      var button = document.createElement("button");
-      button.setAttribute("class","formButton");
-      button.setAttribute("id",`delete${overallElementName}${choice}`);
-      button.setAttribute("type","button");
-      button.setAttribute("onClick",`deleteAttackInformation(${choice},'${overallElementName}')`);
-      button.textContent = `Delete ${overallElementName}`;
-
+    var button = document.createElement("button");
+    button.setAttribute("class","formButton");
+    button.setAttribute("id",`delete${overallElementName}${choice}`);
+    button.setAttribute("type","button");
+    button.setAttribute("onClick",`deleteAttackInformation(${choice},'${overallElementName}')`);
+    button.textContent = `Delete ${overallElementName}`;
+    let toHitModifier = document.createElement("input");
+    toHitModifier.setAttribute("type",`number`);
+    toHitModifier.setAttribute("class","searchBarCreation");
+    toHitModifier.setAttribute("name",`${overallElementName}toHitModifier${choice}`);
+    toHitModifier.setAttribute("id",`${overallElementName}toHitModifier${choice}`);
+    toHitModifier.setAttribute("placeholder",`to hit modifier`);
+    toHitModifier.setAttribute("title",`NPC ${overallElementName}`);
+    let displayTextHitBonus = document.createElement("label");
+    displayTextHitBonus.textContent = `To Hit Bonus `;
+    displayTextHitBonus.className="inputName";
+    div.appendChild(displayTextHitBonus)
+    div.appendChild(toHitModifier);
+    addBreak(div);
   }else{
-  var br = document.createElement("br");
-  var br2 = document.createElement("br");
-  var br3 = document.createElement("br");
-  var br4 = document.createElement("br");
-  var CAName = document.createElement("textarea");
+  let CAName = document.createElement("textarea");
   CAName.setAttribute("type",`text`);
   CAName.setAttribute("class","searchBarCreation");
   CAName.setAttribute("name",`${overallElementName}Name${choice}`);
   CAName.setAttribute("id",`${overallElementName}Name${choice}`);
   CAName.setAttribute("placeholder",`${placeholderText1}`);
   CAName.setAttribute("title",`NPC ${overallElementName}`);
-  var ADice = document.createElement("input");
+  if(overallElementName=="meleeAttack"){
+    var AFullAttack = document.createElement("input");
+    AFullAttack.setAttribute("type",`number`);
+    AFullAttack.setAttribute("class","searchBarCreation");
+    AFullAttack.setAttribute("name",`${overallElementName}fullAttack${choice}`);
+    AFullAttack.setAttribute("id",`${overallElementName}fullAttack${choice}`);
+    AFullAttack.setAttribute("placeholder",`Attacks Per Full Attack`);
+    AFullAttack.setAttribute("title",`NPC ${overallElementName}`);
+  }
+  let ADice = document.createElement("input");
   ADice.setAttribute("type",`number`);
   ADice.setAttribute("class","searchBarCreation");
   ADice.setAttribute("name",`${overallElementName}diceCount${choice}`);
   ADice.setAttribute("id",`${overallElementName}diceCount${choice}`);
   ADice.setAttribute("placeholder",`${placeholderText2}`);
   ADice.setAttribute("title",`NPC ${overallElementName}`);
-  var ALabel = document.createElement("label");
+  let ALabel = document.createElement("label");
   ALabel.setAttribute("class","inputName");
   ALabel.setAttribute("for",`damageDice${overallElementName}${choice}`);
   ALabel.textContent="Damage Dice";
-  var dmgDice = document.createElement("select");
+  let dmgDice = document.createElement("select");
   dmgDice.setAttribute("class","searchBarCreation");
   dmgDice.setAttribute("name",`damageDice${overallElementName}${choice}`);
   dmgDice.setAttribute("id",`damageDice${overallElementName}${choice}`);
-  let diceArray = ['d4','d6','d8','d10','d12'];
+  let diceArray = ['d4','d6','d8','d10','d12','None'];
   diceArray.forEach(dice=>{
-    var option = document.createElement("option");
+    let option = document.createElement("option");
     option.value = dice;
     option.text = dice;
     dmgDice.appendChild(option);
   })
-  // var Enchantments = document.createElement("input");
+  // let Enchantments = document.createElement("input");
   // Enchantments.setAttribute("type",`text`);
   // Enchantments.setAttribute("class","searchBarCreation");
   // Enchantments.setAttribute("name",`${overallElementName}Enchantments${choice}`);
@@ -716,47 +856,47 @@ function createAttackInformation(overallElementName,placeholderText1,placeholder
   // Enchantments.setAttribute("placeholder",`Enchantments`);
   // Enchantments.setAttribute("title",`Weapon Enchantments`);
   // Enchantments.addEventListener("contextmenu",(e)=>{e.preventDefault()});
-  var toHitModifier = document.createElement("input");
+  let toHitModifier = document.createElement("input");
   toHitModifier.setAttribute("type",`number`);
   toHitModifier.setAttribute("class","searchBarCreation");
   toHitModifier.setAttribute("name",`${overallElementName}toHitModifier${choice}`);
   toHitModifier.setAttribute("id",`${overallElementName}toHitModifier${choice}`);
   toHitModifier.setAttribute("placeholder",`to hit modifier`);
   toHitModifier.setAttribute("title",`NPC ${overallElementName}`);
-  var enchantments = document.createElement("button");
+  let enchantments = document.createElement("button");
   enchantments.setAttribute("type","button");
   enchantments.setAttribute("class","formButton");
   enchantments.setAttribute("onClick",`createArrayChoice('enchantment${overallElementName}${choice}','Enchantment','Enchantment',true)`);
   enchantments.textContent = "Add Enchantment";
-  var divZone = document.createElement("div3");
+  let divZone = document.createElement("div3");
   divZone.setAttribute("class",`enchantment${overallElementName}${choice}`);
   divZone.setAttribute("id",`enchantmentArea${overallElementName}${choice}`);
   divZone.setAttribute("style","display:flex;  flex-direction: column;");
-  var critZone = document.createElement("input");
+  let critZone = document.createElement("input");
   critZone.setAttribute("type","checkbox");
   critZone.setAttribute("id",`critStats${overallElementName}${choice}Option`);
   critZone.setAttribute("placeholder","toggle");
   critZone.setAttribute("onClick",`arrayToggle('critStats${overallElementName}${choice}',['Container','critRange','critMultiplier'])`);
-  var checkboxText = document.createElement("p");
+  let checkboxText = document.createElement("p");
   checkboxText.setAttribute("class","inputName");
   checkboxText.textContent = "Has Unique Crit";
   checkboxText.appendChild(critZone);
-  var container = document.createElement("div2");
+  let container = document.createElement("div2");
   container.setAttribute("id",`critStats${overallElementName}${choice}Container`);
   container.setAttribute("style","display:none;");
   container.setAttribute("class","stairCase");
-  var critRangeLabel = document.createElement("p");
+  let critRangeLabel = document.createElement("p");
   critRangeLabel.setAttribute("class","inputName");
   critRangeLabel.setAttribute("id",`critStats${overallElementName}${choice}critRange`);
   critRangeLabel.setAttribute("style","display:none;");
   critRangeLabel.textContent = "Has Increased Crit Range";
-  var critRangeCheck = document.createElement("input");
+  let critRangeCheck = document.createElement("input");
   critRangeCheck.setAttribute("id",`critRange${overallElementName}${choice}Option`);
   critRangeCheck.setAttribute("class","inputName");
   critRangeCheck.setAttribute("type","checkbox");
   critRangeCheck.setAttribute("placeholder","toggle");
   critRangeCheck.setAttribute("onclick",`toggle('critRange${overallElementName}${choice}')`);
-  var critRange = document.createElement("input");
+  let critRange = document.createElement("input");
   critRange.setAttribute("type","number");
   critRange.setAttribute("class","searchBarCreation");
   critRange.setAttribute("name",`critRange${overallElementName}${choice}`);
@@ -767,18 +907,18 @@ function createAttackInformation(overallElementName,placeholderText1,placeholder
   critRangeLabel.appendChild(critRangeCheck);
   container.appendChild(critRangeLabel);
   container.appendChild(critRange);
-  var critMultiplierLabel = document.createElement("p");
+  let critMultiplierLabel = document.createElement("p");
   critMultiplierLabel.setAttribute("class","inputName");
   critMultiplierLabel.setAttribute("id",`critStats${overallElementName}${choice}critMultiplier`);
   critMultiplierLabel.setAttribute("style","display:none;");
   critMultiplierLabel.textContent = "Has Unique Crit Multiplier";
-  var critMultiplierCheck = document.createElement("input");
+  let critMultiplierCheck = document.createElement("input");
   critMultiplierCheck.setAttribute("id",`critMultiplier${overallElementName}${choice}Option`);
   critMultiplierCheck.setAttribute("class","inputName");
   critMultiplierCheck.setAttribute("type","checkbox");
   critMultiplierCheck.setAttribute("placeholder","toggle");
   critMultiplierCheck.setAttribute("onclick",`toggle('critMultiplier${overallElementName}${choice}')`);
-  var critMultiplier = document.createElement("input");
+  let critMultiplier = document.createElement("input");
   critMultiplier.setAttribute("type","number");
   critMultiplier.setAttribute("class","searchBarCreation");
   critMultiplier.setAttribute("name",`critMultiplier${overallElementName}${choice}`);
@@ -789,48 +929,63 @@ function createAttackInformation(overallElementName,placeholderText1,placeholder
   critMultiplierLabel.appendChild(critMultiplierCheck);
   container.appendChild(critMultiplierLabel);
   container.appendChild(critMultiplier);
-  var extraDmgLabel = document.createElement("p");
+  let extraDmgLabel = document.createElement("p");
   extraDmgLabel.setAttribute("class","inputName");
   extraDmgLabel.setAttribute("id",`extraDmgLabel${overallElementName}${choice}`);
-  extraDmgLabel.textContent = "Has Unique Damage Effects";
-  var extraDmgCheck = document.createElement("input");
-  extraDmgCheck.setAttribute("id",`extraDmg${overallElementName}${choice}Option`);
-  extraDmgCheck.setAttribute("class","inputName");
-  extraDmgCheck.setAttribute("type","checkbox");
-  extraDmgCheck.setAttribute("placeholder","toggle");
-  extraDmgCheck.setAttribute("onclick",`toggle('extraDmg${overallElementName}${choice}')`);
-  var extraDmg = document.createElement("textarea");
-  extraDmg.setAttribute("type","text");
-  extraDmg.setAttribute("class","searchBarCreation");
-  extraDmg.setAttribute("name",`extraDmg${overallElementName}${choice}`);
-  extraDmg.setAttribute("id",`extraDmg${overallElementName}${choice}`);
-  extraDmg.setAttribute("style","display:none;");
-  extraDmg.setAttribute("placeholder","extraDmg");
-  extraDmg.setAttribute("title","extraDmg");
-  extraDmgLabel.appendChild(extraDmgCheck);
-  var multiAttackLabel = document.createElement("p");
+  extraDmgLabel.textContent = "Unique Bonus Effects on Hit";
+  if(document.getElementById("specialAbilityName0")==null){
+    extraDmgLabel.setAttribute("style","display:none");
+  }
+  var extraDamageZone = document.createElement("div");
+  extraDamageZone.id=`${overallElementName}bonusAttackDamage${choice}Area`;
+  // let extraDmgCheck = document.createElement("input");
+  // extraDmgCheck.setAttribute("id",`extraDmg${overallElementName}${choice}Option`);
+  // extraDmgCheck.setAttribute("class","inputName");
+  // extraDmgCheck.setAttribute("type","checkbox");
+  // extraDmgCheck.setAttribute("placeholder","toggle");
+  // extraDmgCheck.setAttribute("onclick",`toggle('extraDmg${overallElementName}${choice}')`);
+  // let extraDmg = document.createElement("textarea");
+  // extraDmg.setAttribute("type","text");
+  // extraDmg.setAttribute("class","searchBarCreation");
+  // extraDmg.setAttribute("name",`extraDmg${overallElementName}${choice}`);
+  // extraDmg.setAttribute("id",`extraDmg${overallElementName}${choice}`);
+  // extraDmg.setAttribute("style","display:none;");
+  // extraDmg.setAttribute("placeholder","extraDmg");
+  // extraDmg.setAttribute("title","extraDmg");
+  // extraDmgLabel.appendChild(extraDmgCheck);
+  let multiAttackLabel = document.createElement("p");
   multiAttackLabel.setAttribute("class","inputName");
   multiAttackLabel.setAttribute("id",`multiAttackLabel${overallElementName}${choice}`);
   multiAttackLabel.textContent = "Can MultiAttack with this Attack";
-  var multiAttackCheck = document.createElement("input");
-  multiAttackCheck.setAttribute("id",`multiAttack${overallElementName}${choice}Option`);
+  let multiAttackCheck = document.createElement("input");
+  multiAttackCheck.setAttribute("id",`multiAttack${overallElementName}${choice}DivOption`);
   multiAttackCheck.setAttribute("class","inputName");
   multiAttackCheck.setAttribute("type","checkbox");
   multiAttackCheck.setAttribute("placeholder","toggle");
-  multiAttackCheck.setAttribute("onclick",`toggle('multiAttack${overallElementName}${choice}')`);
-  var multiAttack = document.createElement("input");
+  multiAttackCheck.setAttribute("onclick",`toggle('multiAttack${overallElementName}${choice}Div')`);
+  let multiAttackDiv = document.createElement("div")
+  multiAttackDiv.setAttribute("style","display:none;");
+  multiAttackDiv.id=`multiAttack${overallElementName}${choice}Div`
+  let multiAttack = document.createElement("input");
   multiAttack.setAttribute("type","number");
   multiAttack.setAttribute("class","searchBarCreation");
   multiAttack.setAttribute("name",`multiAttack${overallElementName}${choice}`);
   multiAttack.setAttribute("id",`multiAttack${overallElementName}${choice}`);
-  multiAttack.setAttribute("style","display:none;");
+//  multiAttack.setAttribute("style","display:none;");
   multiAttack.setAttribute("placeholder","number of attacks");
   multiAttack.setAttribute("title","multiAttack");
+  let multiAttackText = document.createElement("label");
+  multiAttackText.textContent = " Number of multi-attacks";
+  multiAttackText.className="inputName"
+  multiAttackDiv.appendChild(multiAttack)
+  multiAttackDiv.appendChild(multiAttackText)
   multiAttackLabel.appendChild(multiAttackCheck);
+//  console.log(choice);
+  if(choice>0){
   var isAlternativeLabel = document.createElement("p");
   isAlternativeLabel.setAttribute("class","inputName");
   isAlternativeLabel.setAttribute("id",`isAlternativeLabel${overallElementName}${choice}`);
-  isAlternativeLabel.textContent = "This is an Alternative Attack";
+  isAlternativeLabel.textContent = "Put an Or before attack name";
   var isAlternativeCheck = document.createElement("input");
   isAlternativeCheck.setAttribute("id",`isAlternative${overallElementName}${choice}Option`);
   isAlternativeCheck.setAttribute("class","inputName");
@@ -840,13 +995,14 @@ function createAttackInformation(overallElementName,placeholderText1,placeholder
   var isAdditiveLabel = document.createElement("p");
   isAdditiveLabel.setAttribute("class","inputName");
   isAdditiveLabel.setAttribute("id",`isAdditiveLabel${overallElementName}${choice}`);
-  isAdditiveLabel.textContent = "This is an Additive Attack";
+  isAdditiveLabel.textContent = "Put an And before attack name";
   var isAdditiveCheck = document.createElement("input");
   isAdditiveCheck.setAttribute("id",`isAdditive${overallElementName}${choice}Option`);
   isAdditiveCheck.setAttribute("class","inputName");
   isAdditiveCheck.setAttribute("type","checkbox");
   isAdditiveCheck.setAttribute("placeholder","toggle");
   isAdditiveLabel.appendChild(isAdditiveCheck);
+  }
   var button = document.createElement("button");
   button.setAttribute("class","formButton");
   button.setAttribute("id",`delete${overallElementName}${choice}`);
@@ -854,25 +1010,49 @@ function createAttackInformation(overallElementName,placeholderText1,placeholder
   button.setAttribute("onClick",`deleteAttackInformation(${choice},'${overallElementName}')`);
   button.textContent = `Delete ${overallElementName}`;
   div.appendChild(CAName)
-  div.appendChild(br4);
+  addBreak(div);
+  if(overallElementName=="meleeAttack"){
+    let displayTextFullAttack = document.createElement("label");
+    div.appendChild(AFullAttack);
+    displayTextFullAttack.textContent = ` Attacks per full Attack Action`;
+    displayTextFullAttack.className="inputName";
+    div.appendChild(displayTextFullAttack)
+    addBreak(div);
+
+  }
   div.appendChild(ADice);
+  let AttackDice = document.createElement("label");
+  AttackDice.textContent = ` Damage Dice Amount`;
+  AttackDice.className="inputName";
+  div.appendChild(AttackDice)
+  addBreak(div);
   div.appendChild(toHitModifier);
-  div.appendChild(br);
+  let toHitLabel = document.createElement("label");
+  toHitLabel.textContent = ` To Hit Modifier`;
+  toHitLabel.className="inputName";
+  div.appendChild(toHitLabel)
+  addBreak(div);
   div.appendChild(ALabel);
   div.appendChild(dmgDice);
-  div.appendChild(br2);
+  addBreak(div);
   // div.appendChild(Enchantments);
   div.appendChild(enchantments);
-   div.appendChild(br3);
+  addBreak(div);
   div.appendChild(divZone);
   div.appendChild(checkboxText);
   div.appendChild(container);
-  div.appendChild(extraDmgLabel);
-  div.appendChild(extraDmg);
+  if(overallElementName=="meleeAttack"){
+    div.appendChild(extraDmgLabel);
+    div.appendChild(extraDamageZone);
+  }
   div.appendChild(multiAttackLabel);
-  div.appendChild(multiAttack);
-  div.appendChild(isAlternativeLabel);
-  div.appendChild(isAdditiveLabel);
+  div.appendChild(multiAttackDiv);
+//  div.appendChild(multiAttack);
+//  console.log(choice);
+  if(choice>0){
+    div.appendChild(isAlternativeLabel);
+    div.appendChild(isAdditiveLabel);
+  }
   //body.appendChild(x);
 }
 div.appendChild(button);
@@ -880,7 +1060,104 @@ document.getElementById("forum").querySelector(`.${overallElementName}`).appendC
 if(curChoice.toLocaleLowerCase()=="custom"){
   createListeners(`${overallElementName}Name${choice}`,'keyup',doAttacksDropdown);
 }
+if(curChoice.toLocaleLowerCase()=="weapon"){
+  createListeners(`meleeMaterial${choice}`,'keyup',doAttacksDropdown);
 }
+addAttackListeners(overallElementName,choice,curChoice);
+if(curChoice!="Weapon"&&overallElementName=="meleeAttack"){
+    if(!getSpecialAbilities()){
+      document.getElementById(`dropdown${overallElementName}bonusAttackDamage${choice}`).setAttribute("style","display:none");
+    }
+}
+
+}
+
+function addAttackListeners(overallElementName,i,weaponType){
+  if(weaponType!="Weapon"){
+  if(overallElementName=="meleeAttack"){
+    if(document.getElementById(`${overallElementName}fullAttack${i}`).value==""){
+      document.getElementById(`${overallElementName}fullAttack${i}`).value=1;
+    }
+    
+    createVariableArrayListener(`${overallElementName}fullAttack${i}`,'keyup',setProperMinLevel,[getElementPointer(getElementPointer(`${overallElementName}fullAttack${i}`)),1],false);
+    createVariableArrayListener(`${overallElementName}fullAttack${i}`,'input',setProperMinLevel,[getElementPointer(getElementPointer(`${overallElementName}fullAttack${i}`)),1],false);
+    createVariableArrayListener(`${overallElementName}fullAttack${i}`,'change',setProperMinLevel,[getElementPointer(getElementPointer(`${overallElementName}fullAttack${i}`)),1],false);
+    createVariableArrayListener(`${overallElementName}fullAttack${i}`,'focusout',enforceMinLevelVariable,[getElementPointer(getElementPointer(`${overallElementName}fullAttack${i}`)),1],false);
+  }
+  if(document.getElementById(`${overallElementName}diceCount${i}`).value==""){
+    document.getElementById(`${overallElementName}diceCount${i}`).value=1;
+  }
+    createVariableArrayListener(`${overallElementName}diceCount${i}`,'keyup',setProperMinLevel,[getElementPointer(`${overallElementName}diceCount${i}`),1],false);
+    createVariableArrayListener(`${overallElementName}diceCount${i}`,'input',setProperMinLevel,[getElementPointer(`${overallElementName}diceCount${i}`),1],false);
+    createVariableArrayListener(`${overallElementName}diceCount${i}`,'change',setProperMinLevel,[getElementPointer(`${overallElementName}diceCount${i}`),1],false);
+    createVariableArrayListener(`${overallElementName}diceCount${i}`,'focusout',enforceMinLevelVariable,[getElementPointer(`${overallElementName}diceCount${i}`),1],false);
+    if(document.getElementById(`critRange${overallElementName}${i}`).value==""){
+      document.getElementById(`critRange${overallElementName}${i}`).value=20;
+    }
+    createVariableArrayListener(`critRange${overallElementName}${i}`,'keyup',setProperMinLevel,[getElementPointer(`critRange${overallElementName}${i}`),1],false);
+    createVariableArrayListener(`critRange${overallElementName}${i}`,'input',setProperMinLevel,[getElementPointer(`critRange${overallElementName}${i}`),1],false);
+    createVariableArrayListener(`critRange${overallElementName}${i}`,'change',setProperMinLevel,[getElementPointer(`critRange${overallElementName}${i}`),1],false);
+    createVariableArrayListener(`critRange${overallElementName}${i}`,'focusout',enforceMinLevelVariable,[getElementPointer(`critRange${overallElementName}${i}`),1],false);
+    if(document.getElementById(`critMultiplier${overallElementName}${i}`).value==""){
+      document.getElementById(`critMultiplier${overallElementName}${i}`).value=2;
+    }
+    createVariableArrayListener(`critMultiplier${overallElementName}${i}`,'keyup',setProperMinLevel,[getElementPointer(`critMultiplier${overallElementName}${i}`),0],false);
+    createVariableArrayListener(`critMultiplier${overallElementName}${i}`,'input',setProperMinLevel,[getElementPointer(`critMultiplier${overallElementName}${i}`),0],false);
+    createVariableArrayListener(`critMultiplier${overallElementName}${i}`,'change',setProperMinLevel,[getElementPointer(`critMultiplier${overallElementName}${i}`),0],false);
+    createVariableArrayListener(`critMultiplier${overallElementName}${i}`,'focusout',enforceMinLevelVariable,[getElementPointer(`critMultiplier${overallElementName}${i}`),0],false);
+    if(document.getElementById(`multiAttack${overallElementName}${i}`).value==""){
+      document.getElementById(`multiAttack${overallElementName}${i}`).value=1;
+    }
+    createVariableArrayListener(`multiAttack${overallElementName}${i}`,'keyup',setProperMinLevel,[getElementPointer(`multiAttack${overallElementName}${i}`),1],false);
+    createVariableArrayListener(`multiAttack${overallElementName}${i}`,'input',setProperMinLevel,[getElementPointer(`multiAttack${overallElementName}${i}`),1],false);
+    createVariableArrayListener(`multiAttack${overallElementName}${i}`,'change',setProperMinLevel,[getElementPointer(`multiAttack${overallElementName}${i}`),1],false);
+    createVariableArrayListener(`multiAttack${overallElementName}${i}`,'focusout',enforceMinLevelVariable,[getElementPointer(`multiAttack${overallElementName}${i}`),1],false);
+}
+    if(document.getElementById(`${overallElementName}toHitModifier${i}`).value==""){
+      document.getElementById(`${overallElementName}toHitModifier${i}`).value=0;
+    }
+  if(weaponType!="Weapon"&&overallElementName=="meleeAttack"){
+    arrayToDropdown(getSpecialAbilities(),`meleeAttackbonusAttackDamage${i}`,'Select',false,[],false,false,true)
+    createVariableListener(`dropdownmeleeAttackbonusAttackDamage${i}`,'click',dropdownInteraction,getElementPointer(`dropdownmeleeAttackbonusAttackDamage${i}`),true);
+    createVariableArrayListener(`dropdownmeleeAttackbonusAttackDamage${i}`,'keyup',searchDrop,[getElementPointer(`dropdownmeleeAttackbonusAttackDamage${i}`),getElementPointer(`searchmeleeAttackbonusAttackDamage${i}`)]);
+    multiChoice(`dropdownmeleeAttackbonusAttackDamage${i}`);
+  }
+
+}
+// function removeAttackListeners(overallElementName,i,weaponType){
+//   console.log(weaponType)
+//   console.log(overallElementName);
+//   if(weaponType!="Weapon"){
+//   if(overallElementName=="meleeAttack"){
+//     deleteListener(fullAttack,'keyup',setProperMinLevel);
+//     deleteListener(fullAttack,'input',setProperMinLevel);
+//     deleteListener(fullAttack,'change',setProperMinLevel);
+//     deleteListener(fullAttack,'focusout',enforceMinLevelVariable);
+//   }
+//     deleteListener(`${overallElementName}diceCount${i}`),'keyup',setProperMinLevel);
+//     deleteListener(`${overallElementName}diceCount${i}`),'input',setProperMinLevel);
+//     deleteListener(`${overallElementName}diceCount${i}`),'change',setProperMinLevel);
+//     deleteListener(`${overallElementName}diceCount${i}`),'focusout',enforceMinLevelVariable);
+//     deleteListener(`critRange${overallElementName}${i}`),'keyup',setProperMinLevel);
+//     deleteListener(`critRange${overallElementName}${i}`),'input',setProperMinLevel);
+//     deleteListener(`critRange${overallElementName}${i}`),'change',setProperMinLevel);
+//     deleteListener(`critRange${overallElementName}${i}`),'focusout',enforceMinLevel);
+//     deleteListener(`critMultiplier${overallElementName}${i}`),'keyup',setProperMinLevel);
+//     deleteListener(`critMultiplier${overallElementName}${i}`),'input',setProperMinLevel);
+//     deleteListener(`critMultiplier${overallElementName}${i}`),'change',setProperMinLevel);
+//     deleteListener(`critMultiplier${overallElementName}${i}`),'focusout',enforceMinLevelVariable);
+//     deleteListener(`multiAttack${overallElementName}${i}`),'keyup',setProperMinLevel);
+//     deleteListener(`multiAttack${overallElementName}${i}`),'input',setProperMinLevel);
+//     deleteListener(`multiAttack${overallElementName}${i}`),'change',setProperMinLevel);
+//     deleteListener(`multiAttack${overallElementName}${i}`),'focusout',enforceMinLevelVariable);
+// }
+//     deleteListener(`${overallElementName}toHitModifier${i}`,'keyup',setProperMinLevel);
+//     deleteListener(`${overallElementName}toHitModifier${i}`,'input',setProperMinLevel);
+//     deleteListener(`${overallElementName}toHitModifier${i}`,'change',setProperMinLevel);
+//     deleteListener(`${overallElementName}toHitModifier${i}`,'focusout',enforceMinLevelVariable);
+
+// }
+
 /**
  * delete pathfinder attacks
  * @param {int} choiceID 
@@ -894,14 +1171,36 @@ function deleteAttackInformation(choiceID,overallElementName){
       return false;
     }
   }
-  let elements = document.getElementById("forum").querySelector(`.${overallElementName}`).querySelectorAll("div").item(choiceID);
-  let elementals = document.getElementById("forum").querySelector(`.${overallElementName}`).querySelectorAll("div");
+  let elements = document.getElementById("forum").querySelector(`.${overallElementName}`).childNodes[choiceID];
+  let elementals = meleeAttackArea.childElementCount;
+  console.log(document.getElementById(`${overallElementName}Area`));
+  console.log(choiceID);
     let element;
-    for(let i=elementals.length-1;i>choiceID;i--){
-      element = document.getElementById("forum").querySelector(`.${overallElementName}`).querySelectorAll("div")[i];
-      if(document.getElementById(`${overallElementName}Name${i}`.name)!=null){
+    let weapon = "Weapon";
+    for(let i=document.getElementById(`${overallElementName}Area`).childElementCount-1;i>choiceID;i--){
+      // removeAttackListeners(overallElementName,i,weapon);
+
+      element = document.getElementById("forum").querySelector(`.${overallElementName}`).querySelectorAll(`.${overallElementName}`)[i];
+      console.log(i)
+      console.log(`${overallElementName}Name${i}`)
+      console.log(document.getElementById(`${overallElementName}Name${i}`).nodeName);
+      if(document.getElementById(`${overallElementName}Name${i}`)!=null){
+        console.log(document.getElementById(`${overallElementName}Name${i}`));
+        weapon =document.getElementById(`${overallElementName}Name${i}`).nodeName=="SELECT"?"Weapon":"NotWeapon";
+      }else{
+
+      }
+console.log(weapon)
+      if(weapon!="Weapon"){
+        console.log("entered")
+        console.log(`#${overallElementName}Name${i}`)
+        console.log(element);
       element.querySelector(`#${overallElementName}Name${i}`).name=`${overallElementName}Name`+(i-1);
       element.querySelector(`#${overallElementName}Name${i}`).id=`${overallElementName}Name`+(i-1);
+      if(overallElementName.includes("melee")){
+        element.querySelector(`#${overallElementName}fullAttack${i}`).name=`${overallElementName}fullAttack`+(i-1);
+        element.querySelector(`#${overallElementName}fullAttack${i}`).id=`${overallElementName}fullAttack`+(i-1);
+      }
       element.querySelector(`#${overallElementName}diceCount${i}`).name=`${overallElementName}diceCount`+(i-1);
       element.querySelector(`#${overallElementName}diceCount${i}`).id=`${overallElementName}diceCount`+(i-1);
       element.querySelector(`#${overallElementName}toHitModifier${i}`).name=`${overallElementName}toHitModifier`+(i-1);
@@ -940,31 +1239,47 @@ function deleteAttackInformation(choiceID,overallElementName){
       element.querySelector(`#critMultiplier${overallElementName}${i}Option`).id=`critMultiplier${overallElementName}${(i-1)}Option`;
       element.querySelector(`#critMultiplier${overallElementName}${i}`).name=`critMultiplier${overallElementName}${(i-1)}`;
       element.querySelector(`#critMultiplier${overallElementName}${i}`).id=`critMultiplier${overallElementName}${(i-1)}`;
-      element.querySelector(`#extraDmg${overallElementName}${i}Option`).setAttribute("onclick",`toggle('extraDmg${overallElementName}${(i-1)}')`);
-      element.querySelector(`#extraDmg${overallElementName}${i}`).name=`extraDmg${overallElementName}${(i-1)}`;
-      element.querySelector(`#extraDmg${overallElementName}${i}`).id=`extraDmg${overallElementName}${(i-1)}`;
-      element.querySelector(`#extraDmgLabel${overallElementName}${i}`).id=`extraDmgLabel${overallElementName}${(i-1)}`;
-      element.querySelector(`#extraDmg${overallElementName}${i}Option`).id=`extraDmg${overallElementName}${(i-1)}Option`
-      element.querySelector(`#multiAttack${overallElementName}${i}Option`).setAttribute("onclick",`toggle('multiAttack${overallElementName}${(i-1)}')`);
-      element.querySelector(`#multiAttack${overallElementName}${i}`).name=`multiAttack${overallElementName}${(i-1)}`;
-      element.querySelector(`#multiAttack${overallElementName}${i}`).id=`multiAttack${overallElementName}${(i-1)}`;
-      element.querySelector(`#multiAttackLabel${overallElementName}${i}`).id=`multiAttackLabel${overallElementName}${(i-1)}`;
-      element.querySelector(`#multiAttack${overallElementName}${i}Option`).id=`multiAttack${overallElementName}${(i-1)}Option`
-      element.querySelector(`#isAlternativeLabel${overallElementName}${i}`).id=`isAlternativeLabel${overallElementName}${(i-1)}`;
-      element.querySelector(`#isAlternative${overallElementName}${i}Option`).id=`isAlternative${overallElementName}${(i-1)}Option`
-      element.querySelector(`#isAdditiveLabel${overallElementName}${i}`).id=`isAdditiveLabel${overallElementName}${(i-1)}`;
-      element.querySelector(`#isAdditive${overallElementName}${i}Option`).id=`isAdditive${overallElementName}${(i-1)}Option`
+      if(overallElementName=="meleeAttack"){
+        element.querySelector(`#extraDmgLabel${overallElementName}${i}`).id=`extraDmgLabel${overallElementName}${(i-1)}`;
+        element.querySelector(`#meleeAttackbonusAttackDamage${i}Area`).id=`meleeAttackbonusAttackDamage${(i-1)}Area`;
+        element.querySelector(`#dropdownSelectionmeleeAttackbonusAttackDamage${i}`).id=`dropdownSelectionmeleeAttackbonusAttackDamage${(i-1)}`;
+        element.querySelector(`#dropdownmeleeAttackbonusAttackDamage${i}`).id=`dropdownmeleeAttackbonusAttackDamage${(i-1)}`;
+        element.querySelector(`#multiAttack${overallElementName}${i}DivOption`).setAttribute("onclick",`toggle('multiAttack${overallElementName}${(i-1)}Div')`);
+        element.querySelector(`#multiAttack${overallElementName}${i}Div`).id=`multiAttack${overallElementName}${(i-1)}Div`;
+        element.querySelector(`#multiAttack${overallElementName}${i}`).name=`multiAttack${overallElementName}${(i-1)}`;
+        element.querySelector(`#multiAttack${overallElementName}${i}`).id=`multiAttack${overallElementName}${(i-1)}`;
+        element.querySelector(`#multiAttackLabel${overallElementName}${i}`).id=`multiAttackLabel${overallElementName}${(i-1)}`;
+        element.querySelector(`#multiAttack${overallElementName}${i}DivOption`).id=`multiAttack${overallElementName}${(i-1)}DivOption`
+      }
+      if((i-1)>0){
+        element.querySelector(`#isAlternativeLabel${overallElementName}${i}`).id=`isAlternativeLabel${overallElementName}${(i-1)}`;
+        element.querySelector(`#isAlternative${overallElementName}${i}Option`).id=`isAlternative${overallElementName}${(i-1)}Option`
+        element.querySelector(`#isAdditiveLabel${overallElementName}${i}`).id=`isAdditiveLabel${overallElementName}${(i-1)}`;
+        element.querySelector(`#isAdditive${overallElementName}${i}Option`).id=`isAdditive${overallElementName}${(i-1)}Option`
+      }else{
+        element.querySelector(`#isAlternativeLabel${overallElementName}${i}`).remove()
+        element.querySelector(`#isAdditiveLabel${overallElementName}${i}`).remove()
+      }
+    }else{
+      // element.querySelector(`${overallElementName}Name${i}`).id
+      element.querySelector(`label[for='${overallElementName}toHitModifier${i}']`).htmlFor=`${overallElementName}toHitModifier`+(i-1);
+      element.querySelector(`#${overallElementName}Name${i}`).id=`${overallElementName}Name${(i-1)}`
+      if(overallElementName.includes("melee")){
+        element.querySelector(`#meleeMaterial${i}`).id=`meleeMaterial${(i-1)}`
+      }
+      element.querySelector(`#${overallElementName}toHitModifier${i}`).id=`${overallElementName}toHitModifier${(i-1)}`
     }
       element.querySelector(`#delete${overallElementName}${i}`).setAttribute("onClick",`deleteAttackInformation(${(i-1)},'${overallElementName}')`);
       element.querySelector(`#delete${overallElementName}${i}`).id=`delete${overallElementName}`+(i-1);
-      element.querySelector(`#${overallElementName}${i}Label`).textContent=`${capitalizedCaseCharacter(overallElementName.replace("Attack",""))} ${i-1}:`;
-      element.querySelector(`#${overallElementName}${i}Label`).appendChild(document.createElement("br"));
-      element.querySelector(`#${overallElementName}${i}Label`).id=`${overallElementName}${i-1}Label`;
-
+      element.querySelector(`#${overallElementName}${i}Label`).textContent=`${capitalizedCaseCharacter(overallElementName.replace("Attack",""))} ${(i-1)}:`;
+      addBreak(element.querySelector(`#${overallElementName}${i}Label`));
+      element.querySelector(`#${overallElementName}${i}Label`).id=`${overallElementName}${(i-1)}Label`;
+      // addAttackListeners(overallElementName,i-1,weapon);
     }
   
-  
-elements.remove();
+if(weapon!=""){
+  elements.remove();
+}
 }
 
 
@@ -974,8 +1289,9 @@ elements.remove();
  * @param {string} toggle 
  */
 function toggle(toggle){
-  var checkbox = document.getElementById(`${toggle}Option`);
-  var element = document.getElementById(`${toggle}`);
+  
+  let checkbox = document.getElementById(`${toggle}Option`);
+  let element = document.getElementById(`${toggle}`);
   if(toggle=="isItLong"){
   }
   if (toggle!="All"){
@@ -988,7 +1304,7 @@ function toggle(toggle){
 
 function toggleArray(arr){
   arr.forEach(optionName=>{
-    var checkbox = document.getElementById(`${optionName}Option`);
+    let checkbox = document.getElementById(`${optionName}Option`);
     checkbox.checked = checkbox.checked === true ? false:true;
     toggle(optionName)
   })
@@ -1000,8 +1316,8 @@ function toggleArray(arr){
  * @param {array} arr 
  */
 function arrayToggle(toggle,arr){
-  var checkbox = document.getElementById(`${toggle}Option`);
-  var element;
+  let checkbox = document.getElementById(`${toggle}Option`);
+  let element;
   let display = checkbox.checked===true ? "block" : "none";
   arr.forEach(optionName=>{
     element = document.getElementById(`${toggle}${optionName}`);
@@ -1021,18 +1337,21 @@ function clearText(element){
  */
 function reset(){
   let sys = sessionStorage.getItem("system").toLocaleLowerCase();
+  let param = new URLSearchParams(window.location.search);
+  let page = sessionStorage.getItem("state").toLocaleLowerCase();
+  page = param.get("Doc");
   switch(sys){
     case "pathfinder":
       document.getElementById("creationDis").innerHTML="";
       document.getElementById("hotBar").innerHTML="";
       document.getElementById("choiceDrop").innerHTML="";
-      generateForum();
+      generateForum(page);
       break;
     case "5e":
       document.getElementById("creationDis").innerHTML="";
       document.getElementById("hotBar").innerHTML="";
       document.getElementById("choiceDrop").innerHTML="";
-      generateForum();
+      generateForum(page);
     break;
   }
 
@@ -1177,10 +1496,6 @@ function createNPCJson(cinfo){
     SR = document.getElementById("SR").value;
     
   }
-  let special_attacks ="";
-  if(document.getElementById("special_attacks").value!=''){
-    special_attacks = document.getElementById("special_attacks").value;
-  }
   //spells
   let atWill ="";
   let constant ="";
@@ -1205,7 +1520,7 @@ function createNPCJson(cinfo){
 
   }
   if(hasxDay){
-    populatexDay(xDay,'xDay');
+    populateXDay(xDay,'xDay');
   }
   if(constant!=''){
     innateJson["constant"]=constant;
@@ -1289,6 +1604,7 @@ function createNPCJson(cinfo){
   let racialMod = {};
   let language = [];
   let SQ = [];
+  let special_attacks = []
   let specialAbility =[];
   let skills = {};
   let acJson = {};
@@ -1313,6 +1629,7 @@ function createNPCJson(cinfo){
   populateDataDropDownJson(racialMod,'racialMod');
   populateDataDropDownArray(language,'language');
   populateData(SQ,'SQ');
+  populateSpecialAttack(special_attacks);
   populateAttackData(melee,'meleeAttack');
   populateAttackData(range,'rangeAttack');
   populateSpecialAbilityData(specialAbility,'SpecialAbility');
@@ -1321,7 +1638,6 @@ function createNPCJson(cinfo){
   populateClassData(classData);
   let list = ['Acrobatics','Appraise','Bluff','Climb','Craft','Diplomacy','DisableDevice','Disguise','EscapeArtist','Fly','HandleAnimal','Heal','Intimidate','Knowledge','Linguistics','Perception','Perform','Profession','Ride','SenseMotive','SleightofHand','Spellcraft','Stealth','Survival','Swim','UseMagicDevice'];
   populateSkills(skills,list);
-  
   cinfo["system"]=system;
   cinfo["name"]=cname;
   cinfo["title"]=title;
@@ -1426,6 +1742,7 @@ function createNPCJson(cinfo){
     cinfo["ranged"] = range;
   }
 //  reach_bonus_effects
+console.log(special_attacks);
   if(special_attacks!=''){
     cinfo["special_attacks"]=special_attacks;
   }
@@ -1489,6 +1806,31 @@ function createNPCJson(cinfo){
   if(Object.keys(classData).length>0){
     cinfo["class"]=classData;
   }
+  if(document.getElementById("monsterAbilitiesChoice").childElementCount>0){
+    cinfo["monsterAbilities"]=[];
+    let tempJSon = {};
+    let monsterAbilityJsonArray = [];
+    Array.from(document.getElementById("monsterAbilitiesChoice").children).forEach(item=>{
+      if(item.getElementsByTagName("label")[0]!=null){
+        
+      
+      let JSONObject={};
+      let name = item.getElementsByTagName("label")[0].textContent;
+      name = name.replaceAll(" ","");
+      console.log(name);
+      name = name.substring(0,name.length-1);
+      console.log(name);
+      // let abilityJson = {
+      //   "name":abilityName
+      // };
+      JSONObject[name] = createMiniMonsterAbilityJson(name,JSONObject);
+      cinfo.monsterAbilities.push(JSONObject);
+      console.log(JSON.stringify(JSONObject));
+      }
+    })
+  //  tempJSon.monsterAbilities.push(JSONObject)
+  }
+
   cinfo['spheres'] =hasSpheres;
   break;
 
@@ -1642,6 +1984,7 @@ function setProperMaxMinSkills(){
 
 function checkIsInList(list,value){
   let item = capitalizedCaseCharacter(value);
+
   switch(list){
     case "classes":
       if(classList.includes(item)){
@@ -1711,7 +2054,7 @@ function checkSecondaryDropdown(value){
 
 
 function addDeleteButton(divZone,val,listName){
-    var button = document.createElement("button");
+    let button = document.createElement("button");
     button.setAttribute("class","formButton");
     button.setAttribute("id",`delete${val}`);
     button.setAttribute("type","button");
@@ -1753,7 +2096,6 @@ function canBeEmpty(id){
 }
 
 function validInformation(informationName,children){
-  console.log(informationName);
   let childrenCount = children.length;
   let validInputs = true;
   let input;
@@ -1792,7 +2134,7 @@ function validInformation(informationName,children){
 
 function addVariableDropdownchoice(listName){
   let item = document.getElementById(`dropdownSelection${listName}`).value;
-  let itemBlock = item.replace(" ","");
+  let itemBlock = item.replaceAll(" ","");
   let inputList = document.getElementById(`${listName}Input`).children;
   if(validInformation(item,inputList)){
     let divZone = document.createElement("div");
@@ -1800,9 +2142,9 @@ function addVariableDropdownchoice(listName){
     let itemName = document.createElement("label");
     itemName.setAttribute("class","inputName");
     itemName.setAttribute("for",`${listName}${itemBlock}`);
-    itemName.textContent = item;
+    itemName.textContent = item+":";
     divZone.appendChild(itemName);
-    divZone.appendChild(document.createElement("br"));
+    addBreak(divZone);
     let isThereDiv=false;
     let labelID = "hi";
     for(const element of inputList){
@@ -1818,23 +2160,28 @@ function addVariableDropdownchoice(listName){
       divZone.appendChild(tempItem);
     }
     addDeleteButton(divZone,itemBlock,listName);
+    
     document.getElementById(`${listName}Choice`).appendChild(divZone);
+    addBreak(document.getElementById(`${listName}Choice`));
     if(isThereDiv){
       arrayToDropdown(getAttacks(),`attackSection${itemBlock}`,"Select",true,document.getElementById("curseArea").querySelectorAll("li"));
-      createVariableListener(`dropdownattackSection${itemBlock}`,'click',dropdownInteraction,`dropdownattackSection${itemBlock}`,true);
-      createVariableArrayListener(`dropdownattackSection${itemBlock}`,'keyup',searchDrop,[`dropdownattackSection${itemBlock}`,`searchattackSection${itemBlock}`]);
+      createVariableListener(`dropdownattackSection${itemBlock}`,'click',dropdownInteraction,getElementPointer(`dropdownattackSection${itemBlock}`),true);
+      createVariableArrayListener(`dropdownattackSection${itemBlock}`,'keyup',searchDrop,[getElementPointer(`dropdownattackSection${itemBlock}`),getElementPointer(`searchattackSection${itemBlock}`)]);
       multiChoice(`dropdownattackSection${itemBlock}`);
       if(document.getElementById("meleeAttackArea").childElementCount<1){
-        createAttackInformation('meleeAttack','Melee Attack Name','Melee Attack Dice Count');
+        createAttackInformation('meleeAttack','Melee Attack Name','Melee Attack Dice Count',"Custom");
         document.getElementById("meleeAttackName0").textContent="Slam";
         document.getElementById("meleeAttackdiceCount0").value="1";
+        document.getElementById("damageDicemeleeAttack0")[1].selected=true;
       }
       if(document.getElementById("meleeAttackArea").childElementCount>0){
         if(document.getElementById("meleeAttackName0").textContent==""){
           document.getElementById("meleeAttackName0").textContent="Slam";
         }
-        if(document.getElementById("meleeAttackdiceCount0").value==""){
-          document.getElementById("meleeAttackdiceCount0").value="1";
+        if(document.getElementById("meleeAttackdiceCount0")!=null){
+          if(document.getElementById("meleeAttackdiceCount0").value==""){
+            document.getElementById("meleeAttackdiceCount0").value="1";
+          }
         }
       }
     }
@@ -1842,10 +2189,281 @@ function addVariableDropdownchoice(listName){
     document.getElementById("searchmonsterAbilities").value="";
     document.getElementById(`dropdownSelection${listName}`).value = "Select";
     modifyList(listName);
+    if(listName=="monsterAbilities"||listName=="sense"){
+      modifyList("monsterAbilities")
+      modifyList("sense")
+  }
+  }
+}
+
+function deleteSpecialAttack(id){
+  console.log(id)
+  let elementToDelete = document.getElementById("specialAttackArea").children[id];
+    let childrenCount = document.getElementById("specialAttackArea").childElementCount;
+    console.log(childrenCount);
+    for(let i=childrenCount-1;i>id;i--){
+      element = document.getElementById("specialAttackArea").children[i];
+      element.querySelector(`#specialAttack${i}`).id=`specialAttack${(i-1)}`;
+      element.querySelector(`#specialAttackToHitBonus${i}`).id=`specialAttackToHitBonus${(i-1)}`;
+      element.querySelector(`#specialAttackZone${i}Option`).setAttribute("onclick",`toggle('specialAttackZone${(i-1)}')`);
+      element.querySelector(`#perDayZone${i}Option`).setAttribute("onclick",`toggle('perDayZone${(i-1)}')`);
+      element.querySelector(`#perDayZone${i}Option`).id=`perDayZone${(i-1)}Option`;
+      element.querySelector(`#perDayZone${i}`).id=`perDayZone${(i-1)}`;
+      element.querySelector(`#specialAttackZone${i}Option`).id=`specialAttackZone${(i-1)}Option`;
+      element.querySelector(`#specialAttackZone${i}`).id=`specialAttackZone${(i-1)}`;
+      element.querySelector(`#choicesSpecial${i}`).id=`choicesSpecial${(i-1)}`;
+      element.querySelector(`#attackDiv${i}`).id=`attackDiv${(i-1)}`;
+      element.querySelector(`#saveDiv${i}`).id=`saveDiv${(i-1)}`;
+      element.querySelector(`#dropdownspecialAttackAttackList${i}`).id=`dropdownspecialAttackAttackList${(i-1)}`;
+     element.querySelector(`#specialAttackAttackList${i}Area`).id=`specialAttackAttackList${(i-1)}Area`;
+      element.querySelector(`#dropdownSelectionspecialAttackAttackList${i}`).id=`dropdownSelectionspecialAttackAttackList${(i-1)}`;
+      element.querySelector(`#searchspecialAttackAttackList${i}`).id=`searchspecialAttackAttackList${(i-1)}`;
+      element.querySelector(`#damageDiv${i}`).id=`damageDiv${(i-1)}`;
+      element.querySelector(`#specialAttackdiceCount${i}`).id=`specialAttackdiceCount${(i-1)}`;
+      element.querySelector(`#throwTypespecialAttack${i}`).id=`throwTypespecialAttack${(i-1)}`;
+      element.querySelector(`#dcStatspecialAttack${i}`).id=`dcStatspecialAttack${(i-1)}`;
+      element.querySelector(`#damageDicespecialAttack${i}`).id=`damageDicespecialAttack${(i-1)}`;
+      element.querySelector(`#deletespecialAttack${i}`).setAttribute("onclick",`deleteSpecialAttack(${(i-1)})`);
+      element.querySelector(`#deletespecialAttack${i}`).id=`deletespecialAttack${(i-1)}`;
+      addSpecialAttackListeners((i-1));
+
+    }
+    elementToDelete.remove();
+}
+
+function addSpecialAttackListeners(i){
+    document.getElementById(`specialAttackToHitBonus${i}`).value=0;
+    document.getElementById(`specialAttackperDay${i}`).value=1;
+    createVariableArrayListener(`specialAttackperDay${i}`,'keyup',setProperMinLevel,[getElementPointer(`specialAttackperDay${i}`),1],false);
+    createVariableArrayListener(`specialAttackperDay${i}`,'input',setProperMinLevel,[getElementPointer(`specialAttackperDay${i}`),1],false);
+    createVariableArrayListener(`specialAttackperDay${i}`,'change',setProperMinLevel,[getElementPointer(`specialAttackperDay${i}`),1],false);
+    createVariableArrayListener(`specialAttackperDay${i}`,'focusout',enforceMinLevelVariable,[getElementPointer(`specialAttackperDay${i}`),1],false);
+    document.getElementById(`specialAttackdiceCount${i}`).value=1;
+    createVariableArrayListener(getElementPointer(`specialAttackdiceCount${i}`),'keyup',setProperMinLevel,[getElementPointer(`specialAttackdiceCount${i}`),1],false);
+    createVariableArrayListener(`specialAttackdiceCount${i}`,'input',setProperMinLevel,[getElementPointer(`specialAttackdiceCount${i}`),1],false);
+    createVariableArrayListener(`specialAttackdiceCount${i}`,'change',setProperMinLevel,[getElementPointer(`specialAttackdiceCount${i}`),1],false);
+    createVariableArrayListener(`specialAttackdiceCount${i}`,'focusout',enforceMinLevelVariable,[getElementPointer(`specialAttackdiceCount${i}`),1],false);
+}
+
+function deleteSpecialAttackListeners(i){
+    deleteListener(`specialAttackperDay${i}`,'keyup',setProperMinLevel);
+    deleteListener(`specialAttackperDay${i}`,'input',setProperMinLevel);
+    deleteListener(`specialAttackperDay${i}`,'change',setProperMinLevel);
+    deleteListener(`specialAttackperDay${i}`,'focusout',enforceMinLevelVariable);
+    deleteListener(`specialAttackdiceCount${i}`,'keyup',setProperMinLevel);
+    deleteListener(`specialAttackdiceCount${i}`,'input',setProperMinLevel);
+    deleteListener(`specialAttackdiceCount${i}`,'change',setProperMinLevel);
+    deleteListener(`specialAttackdiceCount${i}`,'focusout',enforceMinLevelVariable);
+}
+
+function createSpecialAttackSetup(){
+  let choice = document.getElementById("forum").querySelector(`.specialAttack`).childElementCount;
+  let div = document.createElement("div");
+  let input = document.createElement("textarea");
+  input.setAttribute("type","text");
+  input.setAttribute("class","searchBarCreation");
+  input.setAttribute("id",`specialAttack${choice}`);
+  input.setAttribute("placeholder",`Special Attack Name`);
+  input.setAttribute("title",`NPC specialAttack`);
+  let button = document.createElement("button");
+  button.setAttribute("class","formButton");
+  button.setAttribute("id",`deletespecialAttack${choice}`);
+  button.setAttribute("type","button");
+  button.setAttribute("onClick",`deleteSpecialAttack(${choice})`);
+  attackChoices = ["Attack","Save","Bonus Damage","Save Only"]
+  let choices = document.createElement("select");
+  choices.setAttribute("class","searchBarCreation");
+    choices.setAttribute("id",`choicesSpecial${choice}`);
+   attackChoices.forEach(dice=>{
+    let option = document.createElement("option");
+    option.value = dice;
+    option.text = dice;
+    choices.appendChild(option);
+  })
+  let specialAttackZoneLabel = document.createElement("p");
+  specialAttackZoneLabel.setAttribute("class","inputName-close");
+  specialAttackZoneLabel.textContent = "Display Attributes";
+  let specialAttackZone = document.createElement("input");
+  specialAttackZone.setAttribute("type","checkbox");
+  specialAttackZone.setAttribute("id",`specialAttackZone${choice}Option`);
+  specialAttackZone.setAttribute("placeholder","toggle");
+  specialAttackZone.setAttribute("onclick",`toggle('specialAttackZone${choice}')`);
+  specialAttackZoneLabel.appendChild(specialAttackZone);
+  let container = document.createElement("div");
+  container.setAttribute("id",`specialAttackZone${choice}`);
+  container.setAttribute("style","display:none");
+  container.setAttribute("class","stairCase");
+  let dcStat = document.createElement("select");
+  dcStat.setAttribute("class","searchBarCreation");
+  dcStat.setAttribute("id",`dcStatspecialAttack${choice}`);
+  let saves=['Ref','Fort','Will'];
+  let ability = ['Str','Dex','Con','Int','Wis','Cha'];
+  createSelection(ability,dcStat);
+  let throwType = document.createElement("select");
+  throwType.setAttribute("class","searchBarCreation");
+  throwType.setAttribute("id",`throwTypespecialAttack${choice}`);
+  createSelection(saves,throwType);
+
+  let savingThrowTypeLabel = document.createElement("p");
+  savingThrowTypeLabel.setAttribute("class","inputName-close");
+  savingThrowTypeLabel.textContent = "Display Saving Throw Type";
+  let savingThrowTypeZone = document.createElement("input");
+  savingThrowTypeZone.setAttribute("type","checkbox");
+  savingThrowTypeZone.setAttribute("id",`savingThrowTypeZone${choice}Option`);
+  savingThrowTypeZone.setAttribute("placeholder","toggle");
+  savingThrowTypeZone.setAttribute("onclick",`toggle('savingThrowTypeZone${choice}')`);
+  savingThrowTypeLabel.appendChild(savingThrowTypeZone);
+  let DCLabel = document.createElement("label");
+  DCLabel.setAttribute("class","inputName");
+  DCLabel.textContent="Save Stat ";
+  let throwLabel = document.createElement("label");
+  throwLabel.setAttribute("class","stairCase-normalText");
+  throwLabel.textContent="Saving Throw ";
+  throwLabel.id = `savingThrowTypeZone${choice}`;
+  throwLabel.setAttribute("style","display:none");
+  let ALabel = document.createElement("label");
+  ALabel.setAttribute("class","inputName");
+  ALabel.textContent="Damage Dice ";
+  let DLabel = document.createElement("label");
+  DLabel.setAttribute("class","inputName");
+  DLabel.textContent="Dice Count ";
+  let ADice = document.createElement("input");
+  ADice.setAttribute("type",`number`);
+  ADice.setAttribute("class","searchBarCreation");
+  ADice.setAttribute("id",`specialAttackdiceCount${choice}`);
+  ADice.setAttribute("placeholder",`diceCount`);
+  ADice.setAttribute("title",`NPC specialAttack`);
+  let AtLabel = document.createElement("label");
+  AtLabel.setAttribute("class","inputName");
+  AtLabel.textContent="To Hit Bonus ";
+  let AInput = document.createElement("input");
+  AInput.setAttribute("type",`number`);
+  AInput.setAttribute("class","searchBarCreation");
+  AInput.setAttribute("id",`specialAttackToHitBonus${choice}`);
+  AInput.setAttribute("placeholder",`To Hit Bonus`);
+  AInput.setAttribute("title",`NPC specialAttack`);
+  AtLabel.appendChild(AInput);
+  let dmgDice = document.createElement("select");
+  dmgDice.setAttribute("class","searchBarCreation");
+  dmgDice.setAttribute("id",`damageDicespecialAttack${choice}`);
+  let diceArray = ['d4','d6','d8','d10','d12','None'];
+  diceArray.forEach(dice=>{
+    let option = document.createElement("option");
+    option.value = dice;
+    option.text = dice;
+    dmgDice.appendChild(option);
+  })
+  let dropdownArea = document.createElement(`div`);
+  dropdownArea.id=`specialAttackAttackList${choice}Area`;
+  let dropdownCore = document.createElement(`div`);
+  dropdownCore.className="dropDownAddition"
+  dropdownCore.appendChild(dropdownArea);
+  let perDayLabel = document.createElement("label");
+  perDayLabel.setAttribute("class","stairCase-normalText");
+  perDayLabel.setAttribute("id",`perDayZone${choice}`);
+  perDayLabel.setAttribute("style",`display:none`);
+  perDayLabel.textContent="Uses Per Day ";
+  let perDay = document.createElement("input");
+  perDay.setAttribute("type",`number`);
+  perDay.setAttribute("class","searchBarCreation");
+  perDay.setAttribute("id",`specialAttackperDay${choice}`);
+  perDay.setAttribute("placeholder",`perDay`);
+  perDay.setAttribute("title",`NPC specialAttack`);
+  perDayLabel.appendChild(perDay)
+  let perDayOptionLabel = document.createElement("p");
+  perDayOptionLabel.setAttribute("class","inputName-close");
+  perDayOptionLabel.textContent = "Has Limited Uses Per Day";
+  let perDayZone = document.createElement("input");
+  perDayZone.setAttribute("type","checkbox");
+  perDayZone.setAttribute("id",`perDayZone${choice}Option`);
+  perDayZone.setAttribute("placeholder","toggle");
+  perDayZone.setAttribute("onclick",`toggle('perDayZone${choice}')`);
+  perDayOptionLabel.appendChild(perDayZone);
+
+
+  let damageDiv = document.createElement("div");
+  damageDiv.setAttribute("id",`damageDiv${choice}`);
+  let saveDiv = document.createElement("div");
+  saveDiv.setAttribute("id",`saveDiv${choice}`);
+  saveDiv.setAttribute("style","display:none");
+  let attackDiv = document.createElement("div");
+  attackDiv.setAttribute("id",`attackDiv${choice}`);
+  attackDiv.appendChild(AtLabel);
+  attackDiv.appendChild(dropdownCore);
+  DLabel.appendChild(ADice)
+  DCLabel.appendChild(dcStat);
+  container.appendChild(choices);
+  addBreak(container)
+  addBreak(container)
+  saveDiv.appendChild(savingThrowTypeLabel)
+    throwLabel.appendChild(throwType);
+    saveDiv.appendChild(throwLabel);
+    container.appendChild(attackDiv);
+    saveDiv.appendChild(DCLabel);
+    saveDiv.appendChild(perDayOptionLabel);
+    saveDiv.appendChild(perDayLabel);
+    container.appendChild(saveDiv)
+    
+    damageDiv.appendChild(DLabel);
+    addBreak(damageDiv)
+    damageDiv.appendChild(ALabel);
+    damageDiv.appendChild(dmgDice);
+    container.appendChild(damageDiv)
+  button.textContent = `Delete Special Attack`;
+  div.appendChild(input)
+    div.appendChild(specialAttackZoneLabel);
+    div.appendChild(container);
+  div.appendChild(button);
+  document.getElementById("forum").querySelector(`.specialAttack`).appendChild(div);
+  createVariableArrayListener(`choicesSpecial${choice}`,`change`,specialAttackOptions,[getElementPointer(`choicesSpecial${choice}`),getElementPointer(`specialAttackZone${choice}`)]);
+  arrayToDropdown(getAttacksSpecial(),`specialAttackAttackList${choice}`,[getAttacks()[0]],false,[],false,false,true);
+  document.getElementById(`dropdownspecialAttackAttackList${choice}`).querySelector("li").classList.add("active")
+  createVariableListener(`dropdownspecialAttackAttackList${choice}`,'click',dropdownInteraction,getElementPointer(`dropdownspecialAttackAttackList${choice}`),true);
+  createVariableArrayListener(`dropdownspecialAttackAttackList${choice}`,'keyup',searchDrop,[getElementPointer(`dropdownspecialAttackAttackList${choice}`),getElementPointer(`searchfeat`)]);
+  selectionCreation(`dropdownspecialAttackAttackList${choice}`);
+  addSpecialAttackListeners(choice)
+
+}
+
+function specialAttackOptions(selectionElement,element){
+  let selection = selectionElement.value;
+  let id = element.id.replace("specialAttackZone","");
+  console.log(selection)
+  console.log(id)
+//  console.log(element.getElementById(`attackDiv${id}`))
+  switch(selection){
+    case "Attack":
+      element.querySelector(`#saveDiv${id}`).setAttribute("style","display:none");
+      element.querySelector(`#attackDiv${id}`).setAttribute("style","display:block");
+      element.querySelector(`#damageDiv${id}`).setAttribute("style","display:block");
+      break;
+    case "Save":
+      element.querySelector(`#saveDiv${id}`).setAttribute("style","display:block");
+      element.querySelector(`#attackDiv${id}`).setAttribute("style","display:none");
+      element.querySelector(`#damageDiv${id}`).setAttribute("style","display:block");
+      break;
+    case "Bonus Damage":
+      element.querySelector(`#saveDiv${id}`).setAttribute("style","display:none");
+      element.querySelector(`#attackDiv${id}`).setAttribute("style","display:none");
+      element.querySelector(`#damageDiv${id}`).setAttribute("style","display:block");
+      break;
+    case "Save Only":      
+      element.querySelector(`#saveDiv${id}`).setAttribute("style","display:block");
+      element.querySelector(`#attackDiv${id}`).setAttribute("style","display:none");
+      element.querySelector(`#damageDiv${id}`).setAttribute("style","display:none");
+      break;
+      
   }
 }
 
 function createElementSetup(elementTag,element,item,listName,labelID){
+  labelID = labelID.replaceAll(" ","");
+  // console.log(elementTag)
+  // console.log(labelID)
+  // console.log(element)
+  // console.log(item)
+  // console.log(listName)
+  labelID = labelID.trim();
   let newEl = document.createElement(elementTag);
   switch(elementTag.toLocaleLowerCase()){
     case "label":
@@ -1864,7 +2482,7 @@ function createElementSetup(elementTag,element,item,listName,labelID){
       newEl.setAttribute("name",`monsterAbilityDice${item}`);
       newEl.setAttribute("id",`monsterAbilityDice${item}Select${labelID}`);
       for(let i = 0; i<element.options.length;i++){
-        var option = document.createElement("option");
+        let option = document.createElement("option");
         option.value = element.options[i].value;
         option.text = element.options[i].value;
         if(element.options[i].value==element.value){
@@ -1878,7 +2496,7 @@ function createElementSetup(elementTag,element,item,listName,labelID){
       let divlabel = document.createElement("label");
       divlabel.className="inputName";
       divlabel.setAttribute("for",`${listName}${item}`);
-     divlabel.textContent = element.querySelector("label").textContent;
+      divlabel.textContent = element.querySelector("label").textContent;
       let newEl2 = document.createElement("div");
       newEl2.setAttribute("id",`attackSection${item}Area`);
       newEl.appendChild(divlabel);
@@ -1888,14 +2506,13 @@ function createElementSetup(elementTag,element,item,listName,labelID){
       newEl.setAttribute("name",`textArea${listName}${item}`);
       newEl.setAttribute("placeholder",element.getAttributeNode("placeholder").value);
       newEl.setAttribute("title","textArea"+element.getAttributeNode("title").value);
-      newEl.setAttribute("id",`textarea${listName}${item}`);
+      newEl.setAttribute("id",`textarea${listName}${item}${labelID}`);
       newEl.setAttribute("class","searchBarCreation");
       newEl.value=element.value;
       break;
   }
   return newEl;
 }
-
 
 function addEasylist(element,entry,listValue){
   console.log(listValue);
@@ -1950,10 +2567,12 @@ function addDropdownchoice(listName,secondaryInput=false,placeholder="something"
   val = capitalizedCaseCharacter(val.toLocaleLowerCase());
   if(additionalValidation!=false){
     additionalValidation = checkIsInList(listName,val);
-    if(additionalValidation==false){
+    if(additionalValidation==false&&listName=="sphere"){
       additionalValidation = checkIfInTalents(val);
+
     }
   }
+          
 
   if(listName=="classes"&&additionalValidation!=false){
     additionalValidation=checkSecondaryDropdown(val);
@@ -1967,11 +2586,15 @@ function addDropdownchoice(listName,secondaryInput=false,placeholder="something"
       //     additionalValidation=false;
       //    }
       // }
+  
   if(val!=""&&additionalValidation){
-    var textSelected = document.createElement("label");
+    let textSelected = document.createElement("label");
     textSelected.textContent = val;
     if(val.includes("\'")){
       val=val.replace("\'","");
+    }
+    if(val.includes(" ")){
+      val=val.replace(" ","");
     }
     val=val.toLocaleLowerCase();
     textSelected.className = "inputName"
@@ -2028,8 +2651,8 @@ function addDropdownchoice(listName,secondaryInput=false,placeholder="something"
       }
       if(secondaryInput==false &&subDropdown==true){
         arrayToDropdown(arr,val,`Search ${spacelessCapitalizedCaseCharacter(val)} talent`);
-        createVariableListener(`dropdown${val}`,'click',dropdownInteraction,`dropdown${val}`,true);
-        createVariableArrayListener(`dropdown${val}`,'keyup',searchDrop,[`dropdown${val}`,`search${val}`]);
+        createVariableListener(`dropdown${val}`,'click',dropdownInteraction,getElementPointer(`dropdown${val}`),true);
+        createVariableArrayListener(`dropdown${val}`,'keyup',searchDrop,[getElementPointer(`dropdown${val}`),getElementPointer(`search${val}`)]);
         selectionCreation(`dropdown${val}`);
       }
     if(listName=="classes"){
@@ -2038,17 +2661,24 @@ function addDropdownchoice(listName,secondaryInput=false,placeholder="something"
       createListeners(`classes${val}`,`input`,updateFeatDetails);
     }
     if(secondaryInputType=="number"){
-      createVariableListener(`${listName}${val}`,`input`,setProperMinLevel,`${listName}${val}`);
-      createVariableListener(`${listName}${val}`,`focusout`,setProperMinLevel,`${listName}${val}`);
-      createVariableListener(`${listName}${val}`,`focusout`,enforceMinLevel,`${listName}${val}`);
-      createVariableListener(`${listName}${val}`,`keyup`,setProperMinLevel,`${listName}${val}`);
+      if(document.getElementById(`${listName}${val}`)!=null){
+        createVariableListener(`${listName}${val}`,`input`,setProperMinLevel,getElementPointer(`${listName}${val}`));
+        createVariableListener(`${listName}${val}`,`focusout`,setProperMinLevel,getElementPointer(`${listName}${val}`));
+        createVariableListener(`${listName}${val}`,`focusout`,enforceMinLevel,getElementPointer(`${listName}${val}`));
+        createVariableListener(`${listName}${val}`,`keyup`,setProperMinLevel,getElementPointer(`${listName}${val}`));
+      }
     }
 
     if(listName=="monsterAbilities"){
-      createVariableListener(`monsterAbilities${val}`,`input`,setProperMinLevel,`monsterAbilities${val}`);
+      createVariableListener(`monsterAbilities${val}`,`input`,setProperMinLevel,getElementPointer(`monsterAbilities${val}`));
     }
     }
+    
     modifyList(listName);
+    if(listName=="monsterAbilities"||listName=="sense"){
+    modifyList("monsterAbilities")
+    modifyList("sense")
+  }
 }
 
 function createNewArea(selection){
@@ -2102,7 +2732,7 @@ function createInputSection(listName,divZone,selection,placeholderText,inputType
 }
 
 function checkIfNPC(className){
-  var isNPCClass= false;
+  let isNPCClass= false;
   npcClassList.forEach(classlower=>{
     if(classlower.toLocaleLowerCase().trim()===className.toLocaleLowerCase().trim()){
       isNPCClass= true;
@@ -2115,18 +2745,81 @@ function checkIfNPC(className){
 }
 
 function deleteChoice(id,list){
+  if(document.getElementById(id).nextElementSibling!=null){
+    if(document.getElementById(id).nextElementSibling.outerHTML=="<br>"){
+      document.getElementById(id).nextElementSibling.remove();
+    }
+  }
   document.getElementById(id).remove();
   modifyList(list)
+  if(list=="monsterAbilities"||list=="sense"){
+    modifyList("monsterAbilities")
+    modifyList("sense")
+  }
 }
 
 function deleteObject(id){
   document.getElementById(id).remove();
 }
 
+function dynamicModifyList(list){
+  // console.log(list)
+  let arr = []
+  let isDropDown;
+  let currentSelection = "";
+  if(document.getElementById(`SpecialAbilityName0`)!=null){
+  for(let i=0;i<document.getElementById(`${list}Area`).childElementCount;i++){
+    if(document.getElementById(`dropdown${list}bonusAttackDamage${i}`)){
+    isDropDown = document.getElementById(`dropdown${list}bonusAttackDamage${i}`).querySelector("ul");
+    // setTimeout(() => {
+    // console.log(isDropDown);
+    // console.log(isDropDown.children);
+    //   isDropDown.querySelectorAll(".dropdown-item").forEach(elem=>{
+    //   if(elem.className.includes("active")){
+    //     currentSelection = elem.textContent;
+    //   }})
+    // },0)
+    isDropDown.innerHTML="";
+    arr=getSpecialAbilities();
+    console.log(arr);
+    if(arr){
+    arr.forEach(name=>{
+      if(document.getElementById(`${spacelessCapitalizedCaseCharacter(name)}Choice`)==null&&document.getElementById(`${spacelessCapitalizedCaseCharacter(name).toLocaleLowerCase()}Choice`)==null){
+        if(displayedInOtherList(name)){
+          return;
+        }
+        let option = document.createElement("li");
+        option.dataset.value = name;
+        option.textContent = getName(list,name);
+        if(name==currentSelection){
+          option.className="dropdown-item active";
+        }else{
+          option.className="dropdown-item";
+        }
+        isDropDown.appendChild(option);
+      }
+    })
+//     createVariableListener(`dropdown${list}bonusAttackDamage${i}`,'click',dropdownInteraction,`dropdown${list}bonusAttackDamage${i}`,true);
+//     createVariableArrayListener(`dropdown${list}bonusAttackDamage${i}`,'keyup',searchDrop,[`dropdown${list}bonusAttackDamage${i}`,`searchbonusdamage`]);
+// //    dynamicSelectionCreation(`dropdown${list}bonusAttackDamage`,i);
+//     multiChoice(`dropdown${list}bonusAttackDamage${i}`)
+  }
+  }
+}
+}
+}
+
 function modifyList(list){
-  var arr = []
-  var isDropDown;
+  let arr = []
+  let isDropDown;
+  let currentSelection = "";
   isDropDown = document.getElementById(`dropdown${list}`).querySelector("ul");
+  if(list=="monsterAbilities")
+    isDropDown.querySelectorAll(".dropdown-item").forEach(elem=>{
+  if(elem.className.includes("active")){
+    currentSelection = elem.textContent;
+  }
+  });
   isDropDown.innerHTML="";
   switch(list){
     case "language":
@@ -2166,27 +2859,56 @@ function modifyList(list){
     // isDropDown.innerHTML;
     // console.log(isDropDown);
     arr.forEach(name=>{
-      if(document.getElementById(`${spacelessCapitalizedCaseCharacter(name)}Choice`)==null&&document.getElementById(`${name.toLocaleLowerCase()}Choice`)==null){
-        var option = document.createElement("li");
+      if(document.getElementById(`${spacelessCapitalizedCaseCharacter(name)}Choice`)==null&&document.getElementById(`${spacelessCapitalizedCaseCharacter(name).toLocaleLowerCase()}Choice`)==null){
+        if(displayedInOtherList(name)){
+          return;
+        }
+        let option = document.createElement("li");
         option.dataset.value = name;
         option.textContent = getName(list,name);
-        option.className="dropdown-item";
+        if(name==currentSelection){
+          option.className="dropdown-item active";
+        }else{
+          option.className="dropdown-item";
+        }
         isDropDown.appendChild(option);
       }
     })
     selectionCreation(`dropdown${list}`);
   }
 
+
+function displayedInOtherList(name){
+  let checkZones = ['sense','monsterAbilities']
+  let itemList = []
+  if(senseList.includes(name)||monsterAbilitiesList.includes(name)){
+    checkZones.forEach(zone=>{
+      let text = document.getElementById(`${zone}Choice`).querySelectorAll("label")
+      if(text!=null){
+        text.forEach(item=>{
+
+          let itemValue = item.textContent.replace(":","")
+          itemList.push(itemValue);
+        })
+        if(itemList.includes(name)){
+          return true;
+        }
+      }
+    })
+  }
+  return false;
+}
+
 function createDatalist(arr,element,listName,sort=true){
   if(sort){
     console.log(sort);
     arr.sort();
   }
-    var customDalist = document.createElement("div");
+    let customDalist = document.createElement("div");
   customDalist.className="dropdown-box";
   customDalist.setAttribute("id",`dropdown${listName}`);
-  var inputVeiw = document.createElement("div");
-  var inputText = document.createElement("input");
+  let inputVeiw = document.createElement("div");
+  let inputText = document.createElement("input");
   inputVeiw.className="selected-item";
   inputText.setAttribute("id",`dropdownSelection${listName}`);
   inputText.type="text";
@@ -2195,19 +2917,19 @@ function createDatalist(arr,element,listName,sort=true){
   inputText.readOnly=true;
   inputVeiw.appendChild(inputText);
   customDalist.appendChild(inputVeiw)
-  var dropdownContext = document.createElement("div");
+  let dropdownContext = document.createElement("div");
   dropdownContext.setAttribute("class","dropdown-content");
-  var inputSection = document.createElement("div");
+  let inputSection = document.createElement("div");
   inputSection.className="search-input";
-  var usersinput = document.createElement("input");
+  let usersinput = document.createElement("input");
   usersinput.setAttribute("id",`search${listName}`);
   usersinput.className="searchBarCreation";
   inputSection.appendChild(usersinput);
   dropdownContext.appendChild(inputSection);
-  var ulElement = document.createElement("ul");
+  let ulElement = document.createElement("ul");
   arr.forEach(name=>{
     if(document.getElementById(`${capitalizedCaseCharacter(name)}Choice`)==null){
-        var option = document.createElement("li");
+        let option = document.createElement("li");
         option.dataset.value = name;
         option.textContent = getName(listName,name);
         option.className="dropdown-item";
@@ -2219,7 +2941,7 @@ function createDatalist(arr,element,listName,sort=true){
     })
     dropdownContext.appendChild(ulElement);
 
-  // var searchDropdown = document.createElement("input");
+  // let searchDropdown = document.createElement("input");
   // searchDropdown.setAttribute("list",listName);
   // searchDropdown.setAttribute("id",`${listName}List`);
   // searchDropdown.setAttribute("class","searchBarCreation");
@@ -2228,14 +2950,16 @@ function createDatalist(arr,element,listName,sort=true){
   element.appendChild(customDalist);
 }
 //Insert ${listName} type here
-function arrayToDropdown(arr,listName,placeHoldertext,enableOnCreation=false,enablerList=[]){
+function arrayToDropdown(arr,listName,placeHoldertext,enableOnCreation=false,enablerList=[],edit=false,varyNames=false,dualArray=false){
+//   console.log(listName)
   const targetArea = document.getElementById(`${listName}Area`);
+  // console.log(targetArea.innerHTML)
   targetArea.innerHTML="";
-  var customDalist = document.createElement("div");
+  let customDalist = document.createElement("div");
   customDalist.className="dropdown-box";
   customDalist.setAttribute("id",`dropdown${listName}`);
-  var inputVeiw = document.createElement("div");
-  var inputText = document.createElement("input");
+  let inputVeiw = document.createElement("div");
+  let inputText = document.createElement("input");
   inputVeiw.className="selected-item";
   inputText.setAttribute("id",`dropdownSelection${listName}`);
   inputText.type="text";
@@ -2244,55 +2968,95 @@ function arrayToDropdown(arr,listName,placeHoldertext,enableOnCreation=false,ena
   inputText.readOnly=true;
   inputVeiw.appendChild(inputText);
   customDalist.appendChild(inputVeiw)
-  var dropdownContext = document.createElement("div");
+  let dropdownContext = document.createElement("div");
   dropdownContext.setAttribute("class","dropdown-content");
-  var inputSection = document.createElement("div");
+  let inputSection = document.createElement("div");
   inputSection.className="search-input";
-  var usersinput = document.createElement("input");
+  let usersinput = document.createElement("input");
   usersinput.setAttribute("id",`search${listName}`);
   usersinput.className="searchBarCreation";
   inputSection.appendChild(usersinput);
   dropdownContext.appendChild(inputSection);
-  var ulElement = document.createElement("ul");
-  arr.forEach(name=>{
-    if(document.getElementById(`${capitalizedCaseCharacter(name)}Choice`)==null||listName=="chosenClasses"){
-        var option = document.createElement("li");
-        option.dataset.value = name;
-        option.textContent = getName(listName,name);
-        option.className="dropdown-item";
-        if(listName=="curse"){
-          option.id=`${name}cursesList`;
-        }
-        if(enableOnCreation){
-          enablerList.forEach(e=>{
-            if(e.className.includes("active") && name==e.dataset.value){
-              option.classList.add("active");
-            }
+  let ulElement = document.createElement("ul");
+  if(arr.length==0){
+    arr=['empty']
+  }
+  let typeArray =[]
 
-          })
-        }
-        ulElement.appendChild(option);
+  if(dualArray&& Array.isArray(arr)){
+    typeArray = arr[1];
+    arr = arr[0];
+  }
+  let onlySingleInstance = true;
+  let o=0;
+  Array.from(arr).forEach(name=>{
+    if(document.getElementById(`${capitalizedCaseCharacter(name)}Choice`)==null||listName=="chosenClasses"){
+      let option = document.createElement("li");
+      if(dualArray){
+        option.dataset.value = typeArray[o];
+      }else{
+        option.dataset.value = name;
       }
-    })
+      option.textContent = getName(listName,name);
+      option.className="dropdown-item";
+      if(listName=="curse"){
+        option.id=`${name}cursesList`;
+      }
+      if(enableOnCreation){
+        if(!varyNames){
+        if(!edit){
+          enablerList.forEach(e=>{
+              if(e.className.includes("active") && name==e.dataset.value){
+                option.classList.add("active");
+              }
+
+            });
+          }else{
+            enablerList.forEach(e=>{
+              if(e==name){
+                option.classList.add("active");
+              }
+
+            });
+          }
+        }else{
+          let classId= enablerList[o];
+          if(classId!=null){
+          if(classId.className.includes("active")){
+            option.classList.add("active");
+          }
+        }
+          
+        }
+        
+      }
+        ulElement.appendChild(option);
+        o++;
+      }
+    });
     dropdownContext.appendChild(ulElement);
 
-  // var searchDropdown = document.createElement("input");
+  // let searchDropdown = document.createElement("input");
   // searchDropdown.setAttribute("list",listName);
   // searchDropdown.setAttribute("id",`${listName}List`);
   // searchDropdown.setAttribute("class","searchBarCreation");
   // searchDropdown.setAttribute("placeholder",`${placeHoldertext}`);
   customDalist.appendChild(dropdownContext);
-  document.getElementById(`${listName}Area`).appendChild(customDalist);
+  // console.log(customDalist)
+  // console.log(document.getElementById(`${listName}Area`))
+    document.getElementById(`${listName}Area`).appendChild(customDalist);
 }
+
+
 function arrayToDropdownSub(arr,listName,placeHolderText,target,archetypeSelected=""){
   listName = listName.toLocaleLowerCase();
   // const targetArea = document.getElementById(`${target}`);
   // targetArea.innerHTML="";
-  var customDalist = document.createElement("div");
+  let customDalist = document.createElement("div");
   customDalist.className="dropdown-box";
   customDalist.setAttribute("id",`dropdown${target}`);
-  var inputVeiw = document.createElement("div");
-  var inputText = document.createElement("input");
+  let inputVeiw = document.createElement("div");
+  let inputText = document.createElement("input");
   inputVeiw.className="selected-item";
   inputText.setAttribute("id",`dropdownSelection${target}`);
   inputText.type="text";
@@ -2301,26 +3065,26 @@ function arrayToDropdownSub(arr,listName,placeHolderText,target,archetypeSelecte
   inputText.readOnly=true;
   inputVeiw.appendChild(inputText);
   customDalist.appendChild(inputVeiw)
-  var dropdownContext = document.createElement("div");
+  let dropdownContext = document.createElement("div");
   dropdownContext.setAttribute("class","dropdown-content");
-  var inputSection = document.createElement("div");
+  let inputSection = document.createElement("div");
   inputSection.className="search-input";
-  var usersinput = document.createElement("input");
+  let usersinput = document.createElement("input");
   usersinput.setAttribute("id",`search${target}`);
   usersinput.className="searchBarCreation";
   inputSection.appendChild(usersinput);
   dropdownContext.appendChild(inputSection);
-  var ulElement = document.createElement("ul");
+  let ulElement = document.createElement("ul");
 //  isDropDown.setAttribute("autocomplete","off");
   arr.forEach(name=>{
-    var option = document.createElement("li");
+    let option = document.createElement("li");
     option.dataset.value = name;
     option.textContent = name;
     option.className="dropdown-item";
     ulElement.appendChild(option);
   })
   dropdownContext.appendChild(ulElement);
-  // var searchDropdown = document.createElement("input");
+  // let searchDropdown = document.createElement("input");
   // searchDropdown.setAttribute("list",`${listName}sub`);
   // searchDropdown.setAttribute("id",`${listName}subList`);
   // searchDropdown.setAttribute("class","searchBarCreation");
@@ -2333,11 +3097,11 @@ function arrayToDropdownSub(arr,listName,placeHolderText,target,archetypeSelecte
     index = getListIndex(target,archetypeSelected);
     document.getElementById(`dropdown${target}`).querySelectorAll("li")[index].classList.add("active");
   }
-  createVariableListener(`dropdown${target}`,'click',dropdownInteraction,`dropdown${target}`,true);
-  createVariableArrayListener(`dropdown${target}`,'keyup',searchDrop,[`dropdown${target}`,`search${target}`]);
+  createVariableListener(`dropdown${target}`,'click',dropdownInteraction,getElementPointer(`dropdown${target}`),true);
+  createVariableArrayListener(`dropdown${target}`,'keyup',searchDrop,[getElementPointer(`dropdown${target}`),getElementPointer(`search${target}`)]);
   selectionCreation(`dropdown${target}`);
   // if(listName.includes("archetype")){
-  //   var name=listName.replace("archetype","").trim();
+  //   let name=listName.replace("archetype","").trim();
   //  //   createVariableListener(`${listName}subList`,`input`,constrainedDropdown,name);
   // }
 }
@@ -2345,7 +3109,7 @@ function arrayToDropdownSub(arr,listName,placeHolderText,target,archetypeSelecte
 
 
 function constrainedDropdown(item){
-  var list = [];
+  let list = [];
   list = getArchetypeList(item);
   let text;
   let inputPointer = document.getElementById(`archetype${item}subList`);
@@ -2382,7 +3146,7 @@ function extraArgs(inputType){
 
 function createSelection(arrary,element,selected=""){
     arrary.forEach(arr=>{
-    var option = document.createElement("option");
+    let option = document.createElement("option");
     option.value = arr;
     option.text = arr;
     if(selected!=""){
@@ -2407,7 +3171,7 @@ function resetSkills(){
 
 
 function NPCDisplay(doDisplay){
-  document.getElementById("classButton").style.display = doDisplay==true?"block":"none";
+  document.getElementById("classChoicesButton").style.display = doDisplay==true?"block":"none";
   document.getElementById("monsterHD").style.display = doDisplay==false?"block":"none";
   document.getElementById("monsterProgression").style.display = doDisplay==false?"block":"none";
   document.getElementById("choiceTabs").style.display = doDisplay==false?"block":"none";
@@ -2416,11 +3180,13 @@ function NPCDisplay(doDisplay){
 function doSkills(cSkills,skills,isJustEnable=false){
   cSkills.forEach(element=>{
                 element = consistentElement(element);
+
                 if(!element.includes("Knowledge")){
                     // let skill = element.substring(0,element.lastIndexOf(" ")).trim();
                     // let skillVal = element.substring(element.lastIndexOf(" ")).trim()
                     // skill = skill.replace(" ", "");
-                    i=0;
+
+                    let i=0;
                         document.getElementById(element+"Option").checked = true;
                         document.getElementById(element).style.display = "block";
                         if(element==="Profession"){
@@ -2455,15 +3221,15 @@ function doSkills(cSkills,skills,isJustEnable=false){
                               //   createDualInformation('Craft','Name','Value','Craft','Craft Name','Craft Value','text','number');
                               //     createListeners(`deleteCraft${i}`,'click',refreshList);
                               // }
-                              }else{
+                          }else{
                           if(!isJustEnable)
                           {
+                            
                             document.getElementById(element).value = Number(skills[element]);
                           }
                         }
 
                 }
-                
                 if(element.includes("Knowledge")){
                     document.getElementById("skillsKnowledgeOption").checked = true;
 //                    let skillVal = element.substring(element.lastIndexOf(" ")).trim();
@@ -2471,19 +3237,22 @@ function doSkills(cSkills,skills,isJustEnable=false){
                       let skill = element.replace("Knowledge(","");
                       skill = skill.substring(0,skill.lastIndexOf(")")).trim();
                       document.getElementById(skill+"Option").checked = true;
+
                       if(skill!="All"){
                       document.getElementById(skill).style.display = "block";
                       if(!isJustEnable){
                         document.getElementById(skill).value = Number(skills[element]);
                       }
-                      arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
+  //                    arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
                     }else{
                       arr = ['Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion'];
-                      toggleArray(arr)
+//                      toggleArray(arr)
                     }
                     }
                 }
-            })
+
+              })
+
 }
 
 
@@ -2496,7 +3265,7 @@ function showObtainableFeats(feats){
 
 function clearDropDowns(list){
   list.forEach(name=>{
-    var languageVar = document.getElementById(`${name}Choice`);
+    let languageVar = document.getElementById(`${name}Choice`);
         while(languageVar.hasChildNodes()){
           languageVar.removeChild(languageVar.firstElementChild);
         }
@@ -2541,36 +3310,50 @@ function createStatListeners(){
 function createDropDownChoices(arr){
     arr.forEach(element=>{
         arrayToDropdown(element[0],element[1],element[2]);
-          createVariableListener(`dropdown${element[1]}`,'click',dropdownInteraction,`dropdown${element[1]}`,true);
-          createVariableArrayListener(`dropdown${element[1]}`,'keyup',searchDrop,[`dropdown${element[1]}`,`search${element[1]}`]);
-          let elementID=`dropdown${element[1]}`;
-          selectionCreation(elementID);
+          createVariableListener(`dropdown${element[1]}`,'click',dropdownInteraction,getElementPointer(`dropdown${element[1]}`),true);
+          createVariableArrayListener(`dropdown${element[1]}`,'keyup',searchDrop,[getElementPointer(`dropdown${element[1]}`),getElementPointer(`search${element[1]}`)]);
+          selectionCreation(`dropdown${element[1]}`);
     })
 }
 
+function dynamicSelectionCreation(elementID,i){
+  selectionCreation(`${elementID}${i}`);
+}
+
 function selectionCreation(elementID){
-  const dropdown = document.getElementById(elementID);
-  const dropdownItems = document.getElementById(elementID).querySelectorAll(".dropdown-item");
+  const dropdown = getElementPointer(elementID);
+  // console.log(elementID);
+  // console.log(dropdown);
+  const dropdownItems = getElementPointer(elementID).querySelectorAll(".dropdown-item");
   dropdownItems.forEach(dropdownItem=>{
-  dropdownItem.addEventListener("click",(e)=>{
+  const listenerObject = (e)=>{
     e.stopPropagation();
     dropdownItems.forEach(innerDropdownItem=>{
     innerDropdownItem.classList.remove("active");
   })
   dropdownItem.classList.add("active");
-  const selectedItemInput = document.getElementById(elementID).querySelector(".selected-item input");
+  const selectedItemInput = getElementPointer(elementID).querySelector(".selected-item input");
+  console.log(document.getElementById(elementID))
   selectedItemInput.value = dropdownItem.dataset.value;
   const changeEvent = new Event('change',{bubbles:true});
   selectedItemInput.dispatchEvent(changeEvent);
   closeAllDropdowns();
-    })
+    }
+    dropdownItem.addEventListener("click",listenerObject);
   })
+}
+
+function deleteSelection(element){
+  let registryKey = `${elementID}selectionDropdown`;
+  if(listener){
+    element.removeEventListener(eventType,listener);
+  }
 }
 
 
 function additionalClick(elementID,functionName){
-  const dropdown = document.getElementById(elementID);
-  const dropdownItems = document.getElementById(elementID).querySelectorAll(".dropdown-item");
+  const dropdown = getElementPointer(elementID);
+  const dropdownItems = getElementPointer(elementID).querySelectorAll(".dropdown-item");
   dropdownItems.forEach(dropdownItem=>{
   dropdownItem.addEventListener("click",(e)=>{
     e.stopPropagation();
@@ -2580,8 +3363,8 @@ function additionalClick(elementID,functionName){
 }
 
 function multiChoice(elementID){
-  const dropdown = document.getElementById(elementID);
-  const dropdownItems = document.getElementById(elementID).querySelectorAll(".dropdown-item");
+  const dropdown = getElementPointer(elementID);
+  const dropdownItems = getElementPointer(elementID).querySelectorAll(".dropdown-item");
   dropdownItems.forEach(dropdownItem=>{
   dropdownItem.addEventListener("click",(e)=>{
     e.stopPropagation();
@@ -2596,7 +3379,15 @@ function multiChoice(elementID){
 
 
 
-
+function checkQuery(elementID){
+  if(document.getElementById(elementID)!=null){
+  const dropdown = document.getElementById(elementID);
+  const dropdownItems = document.getElementById(elementID).querySelectorAll(".dropdown-item");
+  dropdownItems.forEach(dropdownItem=>{
+    console.log(dropdownItem)
+  })
+}
+}
 
 // Array.prototype.combineArray = function(array){
 //     array.forEach(element=>{
@@ -2634,7 +3425,7 @@ function objectToArray(entity,param){
 function generalListCreation(element,arr){
     arr.forEach(name=>{
     if(document.getElementById(`${spacelessCapitalizedCaseCharacter(name)}Choice`)==null&&document.getElementById(`${name.toLocaleLowerCase()}Choice`)==null){
-      var option = document.createElement("li");
+      let option = document.createElement("li");
       option.dataset.value = name;
       option.textContent = getName("classes",name);
       option.className="dropdown-item";
@@ -2644,6 +3435,18 @@ function generalListCreation(element,arr){
 }
 
 
+/**
+ * 
+ * @param {string} elementID 
+ * returns element object
+ */
+function getElementPointer(elementID){
+  if(elementID instanceof Element){
+    return elementID;
+  }
+  let cleanedID = String(elementID).replace(/[)]/g, '').trim();
+  return document.getElementById(`${cleanedID}`);
+}
 
 
 
@@ -2653,10 +3456,10 @@ function listenersSetup(){
   createListeners("MonsterLevel",'input',setFeatsAvailable);
   createListeners("NPCType",`change`,NPCTypeListener);  
   createListeners("NPCChoice",`change`,NPCTypeListener);
-  createVariableListener("MonsterLevel",'keyup',setProperMinLevel,'MonsterLevel');
-  createVariableListener("classesTemp",'keyup',setProperMinLevel,'classesTemp');
-  createVariableListener("MonsterLevel",'focusout',enforceMinLevel,'MonsterLevel');
-  createVariableListener("classesTemp",'focusout',enforceMinLevel,'classesTemp');
+  createVariableListener("MonsterLevel",'keyup',setProperMinLevel,getElementPointer('MonsterLevel'));
+  createVariableListener("classesTemp",'keyup',setProperMinLevel,getElementPointer('classesTemp'));
+  createVariableListener("MonsterLevel",'focusout',enforceMinLevel,getElementPointer('MonsterLevel'));
+  createVariableListener("classesTemp",'focusout',enforceMinLevel,getElementPointer('classesTemp'));
   // createVariableListener("monsterAbilitiesTemp",'focusout',enforceMinLevel,'monsterAbilitiesTemp');
   // createVariableListener("monsterAbilitiesTemp",'keyup',enforceMinLevel,'monsterAbilitiesTemp');
   // createVariableListener("monsterAbilitiesTemp",'change',enforceMinLevel,'monsterAbilitiesTemp');
@@ -2676,10 +3479,10 @@ function listenersSetup(){
   createListeners("usesSphereOption","change",validTab);
   NPCTypeListener();
   createDropDownChoices(dropDownArray);
-  createToggleDisplayListener('dropdownsense','change',toggleInput,'senseInput');
-  createToggleDisplayListener('dropdownspeed','change',toggleInput,'ManeuverabilitySection');
-  createToggleDisplayListener('dropdownfeat','change',toggleInput,'featInput');
- createVariableArrayListener('dropdownmonsterAbilities','change',dynamicInputs,['dropdownSelectionmonsterAbilities',monsterAbilitiesJson,'monsterAbilitiesInput']);
+  createToggleDisplayListener('dropdownsense','change',toggleInput,getElementPointer('senseInput'));
+  createToggleDisplayListener('dropdownspeed','change',toggleInput,getElementPointer('ManeuverabilitySection'));
+  createToggleDisplayListener('dropdownfeat','change',toggleInput,getElementPointer('featInput'));
+ createVariableArrayListener('dropdownmonsterAbilities','change',dynamicInputs,[getElementPointer('dropdownSelectionmonsterAbilities'),monsterAbilitiesJson,getElementPointer('monsterAbilitiesInput')]);
   const targetNode = document.getElementById('featChoice');
   const config = {attributes:true,childList:true,subtree:true,CharacterData:true};
   observer.observe(targetNode,config);
@@ -2692,44 +3495,47 @@ function listenersSetup(){
   const rangeNode = document.getElementById("rangeAttackArea");
   const rangeConfig = {attributes:true,childList:true,subtree:true,CharacterData:true};
   observer.observe(rangeNode,rangeConfig);
+  const specialAttackNode = document.getElementById("specialAbilityArea");
+  const specialAttackConfig = {attributes:true,childList:true,subtree:true,CharacterData:true};
+  observeAbilities.observe(specialAttackNode,specialAttackConfig);
   sizeListener();
   createStatListeners();
-  var skillHTML = document.createElement("div");
-  var featHTML = document.createElement("div");
-  var healthHTML = document.createElement("div");
+  let skillHTML = document.createElement("div");
+  let featHTML = document.createElement("div");
+  let healthHTML = document.createElement("div");
   let skillCont = document.getElementById("skillsContainer");
   let skillList = skillCont.getElementsByClassName("searchBarCreation")
-  var skillDisplay = document.getElementById("skillPoints");
-  var healthDisplay = document.getElementById("calcHealth");
-  var featDisplay = document.getElementById("featCount");
-  var babDisplay = document.getElementById("bab");
-  var strDisplay = document.getElementById("str");
-  var dexDisplay = document.getElementById("dex");
-  var conDisplay = document.getElementById("con");
-  var intDisplay = document.getElementById("int");
-  var wisDisplay = document.getElementById("wis");
-  var chaDisplay = document.getElementById("cha");
-  var tlevelDisplay = document.getElementById("tlevel");
-  var clevelDisplay = document.getElementById("clevel");
-  var raceDisplay = document.getElementById("race");
-  var alignmentDisplay = document.getElementById("alignment");
-  var fortDisplay = document.getElementById("fortsave");
-  var willDisplay = document.getElementById("refsave");
-  var refDisplay = document.getElementById("willsave");
-  var babHTML = document.createElement("div")
-  var strHTML = document.createElement("div")
-  var dexHTML = document.createElement("div")
-  var conHTML = document.createElement("div")
-  var intHTML = document.createElement("div")
-  var wisHTML = document.createElement("div")
-  var chaHTML = document.createElement("div")
-  var tlevelHTML = document.createElement("div")
-  var clevelHTML = document.createElement("div")
-  var raceHTML = document.createElement("div")
-  var alignmentHTML = document.createElement("div")
-  var fortHTML = document.createElement("div")
-  var refHTML = document.createElement("div")
-  var willHTML = document.createElement("div")
+  let skillDisplay = document.getElementById("skillPoints");
+  let healthDisplay = document.getElementById("calcHealth");
+  let featDisplay = document.getElementById("featCount");
+  let babDisplay = document.getElementById("bab");
+  let strDisplay = document.getElementById("str");
+  let dexDisplay = document.getElementById("dex");
+  let conDisplay = document.getElementById("con");
+  let intDisplay = document.getElementById("int");
+  let wisDisplay = document.getElementById("wis");
+  let chaDisplay = document.getElementById("cha");
+  let tlevelDisplay = document.getElementById("tlevel");
+  let clevelDisplay = document.getElementById("clevel");
+  let raceDisplay = document.getElementById("race");
+  let alignmentDisplay = document.getElementById("alignment");
+  let fortDisplay = document.getElementById("fortsave");
+  let willDisplay = document.getElementById("refsave");
+  let refDisplay = document.getElementById("willsave");
+  let babHTML = document.createElement("div")
+  let strHTML = document.createElement("div")
+  let dexHTML = document.createElement("div")
+  let conHTML = document.createElement("div")
+  let intHTML = document.createElement("div")
+  let wisHTML = document.createElement("div")
+  let chaHTML = document.createElement("div")
+  let tlevelHTML = document.createElement("div")
+  let clevelHTML = document.createElement("div")
+  let raceHTML = document.createElement("div")
+  let alignmentHTML = document.createElement("div")
+  let fortHTML = document.createElement("div")
+  let refHTML = document.createElement("div")
+  let willHTML = document.createElement("div")
   featHTML.innerHTML = `<p class="inputName" id="featAmountDisplay">Remaining Feats: ${setFeatsAvailable()}</p>`;
   skillHTML.innerHTML = `<p class="inputName" id="skillPointsDisplay">Remaining Ranks: ${setSkillPoints()}</p>`;
   healthHTML.innerHTML = `<p class="inputName" id="calculateHealth">Health: ${getforumHPMonster()}</p>`;

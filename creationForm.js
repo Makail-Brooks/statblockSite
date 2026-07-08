@@ -1,1 +1,1 @@
-generateForum();
+generateForum("");

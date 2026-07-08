@@ -11,14 +11,15 @@ function editCurNPC(listInformation){
 let id = sessionStorage.getItem("NPC");
 let param = new URLSearchParams(window.location.search);
 id = param.get("NPC");
-var NPCInfo = listInformation.NPCs[id];
+let NPCInfo = listInformation.NPCs[id];
 let system;
 system = sessionStorage.getItem("system");
+let page = sessionStorage.getItem("state").toLocaleLowerCase();
+page = param.get("Doc")
+generateForum(page);
 
-generateForum();
-
-var resetButtonDisplay = document.getElementById("resetButton");
-var resetButton = document.createElement("button");
+let resetButtonDisplay = document.getElementById("resetButton");
+let resetButton = document.createElement("button");
 resetButton.setAttribute("class","button");
 resetButton.setAttribute("onClick",`resetEdit(${JSON.stringify(NPCInfo)},'${system}')`);
 resetButton.textContent = "Reset";
@@ -28,6 +29,16 @@ updateSaveValues()
 updateClasses();
 updateMiscDropdown();
 checkSpells();
+setTimeout(() => {
+    if(NPCInfo.special_attacks!=null){
+        NPCInfo.special_attacks.forEach(specialAttack=>{
+            if(specialAttack.variation=="Attack"){
+                doSpecialAttackAddition(specialAttack)
+            }
+        }
+    )};
+}, 0);
+
 }
 
 /**
@@ -428,7 +439,7 @@ function readJsonData(NPCInfo,sys){
         i=0;
         if(NPCInfo.special_abilities!=null){
             NPCInfo.special_abilities.forEach(element => {
-                createDualInformation('SpecialAbility','Name','Details','Special Ability','Special Ability Name','Special Ability Details','text','text',true,true,true,true);
+                createDualInformation('SpecialAbility','Name','Details','Special Ability','Special Ability Name','Special Ability Details','text','text',true,true,true,true,false,true);
                 document.getElementById(`SpecialAbilityName${i}`).value = element.abilityName;
                 document.getElementById(`SpecialAbilityDetails${i}`).value= element.ability_desc;
                 if(element.dcStat){
@@ -459,6 +470,85 @@ function readJsonData(NPCInfo,sys){
                 i++;
             })
         }
+    i=0;
+    if(NPCInfo.special_attacks!=null){
+        NPCInfo.special_attacks.forEach(specialAttack=>{
+            createSpecialAttackSetup()
+            document.getElementById(`specialAttack${i}`).value = specialAttack.name;
+            if(specialAttack.displayAttributes==true){
+                document.getElementById(`specialAttackZone${i}Option`).checked=true;
+                document.getElementById(`specialAttackZone${i}`).setAttribute("style","display:block")
+                document.getElementById(`choicesSpecial${i}`)[getChoiceSelection(['Attack','Save','Bonus Damage','Save Only'],specialAttack.variation)].selected=true;
+                switch(specialAttack.variation){
+                        case "Attack":
+                            document.getElementById(`specialAttackToHitBonus${i}`).value=specialAttack.toHit;
+                            document.getElementById(`specialAttackdiceCount${i}`).value=specialAttack.diceCount;
+                            document.getElementById(`damageDicespecialAttack${i}`)[getChoiceSelection(['d4','d6','d8','d10','d12'],specialAttack.damageDice)].selected=true;
+                            document.getElementById(`saveDiv${i}`).setAttribute("style","display:none");
+                            document.getElementById(`attackDiv${i}`).setAttribute("style","display:block");
+                            document.getElementById(`damageDiv${i}`).setAttribute("style","display:block");
+                            break;
+                        case "Save":
+                            document.getElementById(`savingThrowTypeZone${i}Option`).checked=specialAttack.saveThrowCheck;
+                            if(specialAttack.saveThrowCheck){
+                                document.getElementById(`savingThrowTypeZone${i}`).setAttribute("style","display:block");
+                                document.getElementById(`throwTypespecialAttack${i}`)[getChoiceSelection(['Ref','Fort','Will'],specialAttack.saveThrow)].selected=true;
+                            }
+                            document.getElementById(`dcStatspecialAttack${i}`)[getChoiceSelection(['Str','Dex','Con','Int','Wis','Cha'],specialAttack.saveStat)].selected=true
+                            document.getElementById(`specialAttackdiceCount${i}`).value=specialAttack.diceCount;
+                            document.getElementById(`damageDicespecialAttack${i}`)[getChoiceSelection(['d4','d6','d8','d10','d12'],specialAttack.damageDice)].selected=true;
+                            if(specialAttack.perDayChecked){
+                                document.getElementById(`perDayZone${i}Option`).checked=true;
+                                document.getElementById(`perDayZone${i}`).setAttribute("style","display:block");
+                                document.getElementById(`specialAttackperDay${i}`).value=specialAttack.perDaySpecial;
+                            }
+                            document.getElementById(`saveDiv${i}`).setAttribute("style","display:block");
+                            document.getElementById(`attackDiv${i}`).setAttribute("style","display:none");
+                            document.getElementById(`damageDiv${i}`).setAttribute("style","display:block");
+                            break;
+                        case "Bonus Damage":
+                            document.getElementById(`specialAttackdiceCount${i}`).value=specialAttack.diceCount;
+                            document.getElementById(`damageDicespecialAttack${i}`)[getChoiceSelection(['d4','d6','d8','d10','d12'],specialAttack.damageDice)].selected=true;
+                            document.getElementById(`attackDiv${i}`).setAttribute("style","display:none");
+                            document.getElementById(`saveDiv${i}`).setAttribute("style","display:none");
+                            document.getElementById(`damageDiv${i}`).setAttribute("style","display:block");
+                            break;
+                        case "Save Only":      
+                            document.getElementById(`savingThrowTypeZone${i}Option`).checked=specialAttack.saveThrowCheck;
+                            if(specialAttack.saveThrowCheck){
+                                document.getElementById(`savingThrowTypeZone${i}`).setAttribute("style","display:block");
+                                document.getElementById(`throwTypespecialAttack${i}`)[getChoiceSelection(['Ref','Fort','Will'],specialAttack.saveThrow)].selected=true;
+                            }
+                            document.getElementById(`dcStatspecialAttack${i}`)[getChoiceSelection(['Str','Dex','Con','Int','Wis','Cha'],specialAttack.saveStat)].selected=true
+                            if(specialAttack.perDayChecked){
+                                document.getElementById(`perDayZone${i}Option`).checked=true;
+                                document.getElementById(`perDayZone${i}`).setAttribute("style","display:block");
+                                document.getElementById(`specialAttackperDay${i}`).value=specialAttack.perDaySpecial;
+                            }
+                            document.getElementById(`attackDiv${i}`).setAttribute("style","display:none");
+                            document.getElementById(`damageDiv${i}`).setAttribute("style","display:none");
+                            document.getElementById(`saveDiv${i}`).setAttribute("style","display:block");
+                            break;
+
+                }
+                // const selectedItemInput = document.getElementById(`dropdownSelectionspecialAttackAttackList0`).value="s";
+
+//                selectedItemInput.value = "test";
+            }
+                i++;
+        })
+    }
+    if(NPCInfo.monsterAbilities){
+        let abilities = NPCInfo.monsterAbilities;
+        abilities.forEach(el=>{
+            let id = Object.keys(el)[0]
+            monsterAbilitiesEdit("monsterAbilities",id,el)
+            modifyList("monsterAbilities")
+            modifyList("sense")
+        })
+    }
+
+doMeleeInsertion(NPCInfo)
     // arrayToggle('bonusAC',['Container','Armor','Deflection','Dodge','Shield','Natural','Extra']);
     // arrayToggle('defensiveTraits',['Container','DA','DR','Immune','Resist','SR']);
     // arrayToggle('spells',['Container','InnateOption','PreparedOption']);
@@ -481,9 +571,10 @@ function readJsonData(NPCInfo,sys){
     toggle('xDay');
     arrayToggle('spellsPrepared',['Container','Ninth','Eighth','Seventh','Sixth','Fifth','Fourth','Third','Second','First','Zeroth']);
     // arrayToggle('skills',['Container','Acrobatics','Appraise','Bluff','Climb','Craft','Diplomacy','DisableDevice','Disguise','EscapeArtist','Fly','HandleAnimal','Heal','Intimidate','KnowledgeOption','Linguistics','Perception','Perform','Profession','Ride','SenseMotive','SleightofHand','Spellcraft','Stealth','Survival','Swim','UseMagicDevice']);
-    arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
+    // arrayToggle('skillsKnowledge',['Container','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion']);
     toggle('setHPInformation');
     updateHealthDisplay();
+    
     break;
         
         case "5e":
@@ -626,6 +717,99 @@ function readJsonData(NPCInfo,sys){
 }
 
 
+function updateForumValues(id,i){
+    let array = []
+     
+//    NPCInfo
+    for(let i=0;i<document.getElementById("meleeAttackArea").childElementCount;i++){
+        switch(id){
+         case "meleeAttack":
+            array = document.getElementById("specialAbilityArea").children
+         }
+         console.log(array)
+         let k = 0;
+         let nameArray = []
+         Array.from(array).forEach(element=>{
+            console.log(k)
+            nameArray.push(element.querySelector(`#SpecialAbilityName${k}`).value);
+            k++;
+         })
+         console.log(nameArray);
+         let selection = document.getElementById(`dropdown${id}bonusAttackDamage${i}`);
+         if(selection!=null){
+            let dropdownArea = selection.querySelector("ul");
+                nameArray.forEach(name=>{
+    //   if(document.getElementById(`${spacelessCapitalizedCaseCharacter(name)}Choice`)==null&&document.getElementById(`${spacelessCapitalizedCaseCharacter(name).toLocaleLowerCase()}Choice`)==null){
+    //     if(displayedInOtherList(name)){
+    //       return;
+    //     }
+            console.log(name);
+            console.log(dropdownArea);
+            if(name!=""&&dropdownArea!=""){
+                let option = document.createElement("li");
+                option.dataset.value = name;
+                option.className="dropdown-item";
+                option.textContent = name;
+                console.log(option);
+                dropdownArea.appendChild(option);
+            }
+    //     option.textContent = getName(list,name);
+    //     if(name==currentSelection){
+    //       option.className="dropdown-item active";
+    //     }else{
+    //       option.className="dropdown-item";
+    //     }
+    //     isDropDown.appendChild(option);
+    //   }
+    })
+         }
+    }
+}
+
+
+function doSpecialAttackAddition(specialAttack){
+    for(let i=0;i<document.getElementById("specialAttacksOption").childElementCount-1;i++){
+        const selectedItemInput = document.getElementById(`dropdownspecialAttackAttackList${i}`)
+        selectedItemInput.querySelector(".selected-item input").value = specialAttack.attack;
+       selectedItemInput.querySelectorAll("li")[specialAttack.attackIndex].classList.add("active");
+    }
+
+}
+
+function updateLateValues(id,NPCInfo){
+    let array = []
+//    NPCInfo
+    for(let i=0;i<document.getElementById("meleeAttackArea").childElementCount;i++){
+        switch(id){
+         case "meleeAttack":
+            array = NPCInfo.melee[i].uniqueDamageBonus
+         }
+         if(array==null){
+            array=[]
+         }
+         if(document.getElementById("SpecialAbilityName0")!=null&&document.getElementById(`dropdown${id}bonusAttackDamage${i}`)!=null){
+             dropdownList = document.getElementById(`dropdown${id}bonusAttackDamage${i}`).querySelector("ul").querySelectorAll("li");
+             dropdownList.forEach(element=>{
+            if(array.includes(element.textContent)){
+                element.className ="dropdown-item active";
+        }
+        })
+    }
+    }
+}
+
+function doMeleeInsertion(NPCInfo){
+    let area = document.getElementById("melee").childElementCount
+    dynamicModifyList("meleeAttack");
+    updateLateValues("meleeAttack",NPCInfo);
+    for(let i=0;i<area;i++){
+        if(document.getElementById(`meleeAttackbonusAttackDamage${i}Area`)!=null){
+            multiChoice(`dropdownmeleeAttackbonusAttackDamage${i}`)
+        }
+    }
+
+}
+
 /**
  * sets elements for inputted attack
  * @param {string} attackPath 
@@ -634,9 +818,14 @@ function readJsonData(NPCInfo,sys){
 function getAttackInformation(attackPath,attackName){
     let i =0;
                 attackPath.forEach(attackData=>{
-                    createAttackInformation(`${attackName}Attack`,`${attackName} Attack Name`,`${attackName} Attack Dice Count`);
+                    createAttackInformation(`${attackName}Attack`,`${attackName} Attack Name`,`${attackName} Attack Dice Count`,attackData.weaponType);
                     document.getElementById(`${attackName}AttackName${i}`).value=attackData.name;
-                    document.getElementById(`${attackName}AttackdiceCount${i}`).value=attackData.diceCount;
+                    if(document.getElementById(`${attackName}AttackdiceCount${i}`)!=null){
+                        document.getElementById(`${attackName}AttackdiceCount${i}`).value=attackData.diceCount;
+                    }
+                    if(document.getElementById(`meleeAttackfullAttack${i}`)!=null){
+                        document.getElementById(`meleeAttackfullAttack${i}`).value=attackData.fullRoundAttackCount;
+                    }
                     let selectID = 0;
                     switch(attackData.damageDice){
                         case "d6":
@@ -651,10 +840,17 @@ function getAttackInformation(attackPath,attackName){
                         case "d12":
                             selectID = 4;
                             break;
+                        case "None":
+                            selectID = 5;
+                            break;
                     }
                     if(attackData.toHitModifier){
                         document.getElementById(`${attackName}AttacktoHitModifier${i}`).value=attackData.toHitModifier;
                     }
+                    if(attackData.weaponType=="Weapon"){
+                        document.getElementById(`meleeMaterial${i}`).value = attackData.material;
+                    }
+                    if(attackData.weaponType!="Weapon"){
                     document.getElementById(`damageDice${attackName}Attack${i}`)[selectID].selected = true;
                     if(attackData.critRange||attackData.critMultiplier){
                         document.getElementById(`critStats${attackName}Attack${i}Option`).checked = true;
@@ -672,11 +868,6 @@ function getAttackInformation(attackPath,attackName){
                             document.getElementById(`critMultiplier${attackName}Attack${i}`).value=attackData.critMultiplier;
                         }
                     }
-                    if(attackData.uniqueDamage){
-                        document.getElementById(`extraDmg${attackName}Attack${i}Option`).checked = true;
-                        document.getElementById(`extraDmg${attackName}Attack${i}`).style.display = "block";
-                        document.getElementById(`extraDmg${attackName}Attack${i}`).value=attackData.uniqueDamage;                        
-                    }
                     if(attackData.multiAttack){
                         
                         document.getElementById(`multiAttack${attackName}Attack${i}Option`).checked = true;
@@ -691,8 +882,11 @@ function getAttackInformation(attackPath,attackName){
                             j++;
                         })
                     }
-                    document.getElementById(`isAlternative${attackName}Attack${i}Option`).checked=attackData.isAlternative;
-                    document.getElementById(`isAdditive${attackName}Attack${i}Option`).checked=attackData.isAdditive;
+                    if(i>0){
+                        document.getElementById(`isAlternative${attackName}Attack${i}Option`).checked=attackData.isAlternative;
+                        document.getElementById(`isAdditive${attackName}Attack${i}Option`).checked=attackData.isAdditive;
+                    }
+                }
                     i++;
                 })
 
@@ -713,7 +907,7 @@ function getDropDownSelection(item,group,infoVal=[]){
     var textSelected = document.createElement("label");
     textSelected.textContent = val;
     textSelected.className = "inputName"
-    textSelected.setAttribute("for",`${group}${val.toLocaleLowerCase()}`);
+    // textSelected.setAttribute("for",`${group}${val.toLocaleLowerCase()}`);
     var button = document.createElement("button");
     button.setAttribute("class","formButton");
     button.setAttribute("id",`delete${val}`);
@@ -721,6 +915,9 @@ function getDropDownSelection(item,group,infoVal=[]){
     button.setAttribute("onClick",`deleteChoice('${val}Choice','${group}')`);
     button.textContent = `Delete`;
     let divZone = document.createElement("div");
+    if(group=="speed"){
+        textSelected.setAttribute("for",`${group}${val.toLocaleLowerCase()}`);
+    }
     divZone.setAttribute("id",`${val}Choice`);
     divZone.appendChild(textSelected);
     if(group=="sense"){
@@ -735,6 +932,10 @@ function getDropDownSelection(item,group,infoVal=[]){
             input.setAttribute("placeholder",`Insert Vision Range Here`);
             input.value=inputval;
             divZone.appendChild(input);
+            let ftLabel = document.createElement("span");
+            ftLabel.textContent = "ft."
+            ftLabel.className = "inputName";
+            divZone.appendChild(ftLabel);
             document.getElementById(`${group}Temp`).value = "";
         }
         
@@ -769,6 +970,7 @@ function getDropDownSelection(item,group,infoVal=[]){
     }
     if(group=="feat"){
         let inputval = infoVal[val];
+
         if(inputval!=""){
             let input = document.createElement("input");
             input.setAttribute("type","text");
@@ -777,9 +979,10 @@ function getDropDownSelection(item,group,infoVal=[]){
             input.setAttribute("id",`feat${val}`);
             input.setAttribute("title",`feat${val}`);
             input.setAttribute("placeholder",`Insert Feat Details Here`);
+            
             input.value=inputval;
             divZone.appendChild(input);
-            document.getElementById(`${group}List`).value = "";
+            document.getElementById(`${group}Temp`).value = "";
         }
     }
     if(group=="classes"){
@@ -817,13 +1020,17 @@ function getDropDownSelection(item,group,infoVal=[]){
     divZone.setAttribute("class","dropDownChoice");
   document.getElementById(`${group}Choice`).appendChild(divZone);
   modifyList(group);
+  if(group=="monsterAbilities"||group=="sense"){
+    modifyList("monsterAbilities")
+    modifyList("sense")
+  }
 }
 
 function classListenerSetup(val){
-    createVariableListener(`classes${val}`,`input`,setProperMinLevel,`classes${val}`);
-    createVariableListener(`classes${val}`,`focusout`,setProperMinLevel,`classes${val}`);
-    createVariableListener(`classes${val}`,`focusout`,enforceMinLevel,`classes${val}`);
-    createVariableListener(`classes${val}`,`keyup`,setProperMinLevel,`classes${val}`);
+    createVariableListener(`classes${val}`,`input`,setProperMinLevel,getElementPointer(`classes${val}`));
+    createVariableListener(`classes${val}`,`focusout`,setProperMinLevel,getElementPointer(`classes${val}`));
+    createVariableListener(`classes${val}`,`focusout`,enforceMinLevel,getElementPointer(`classes${val}`));
+    createVariableListener(`classes${val}`,`keyup`,setProperMinLevel,getElementPointer(`classes${val}`));
     createListeners(`classes${val}`,`input`,classListener);
     createListeners(`classes${val}`,`focusout`,classListener);
     createListeners(`classes${val}`,`keyup`,classListener);
@@ -832,6 +1039,419 @@ function classListenerSetup(val){
     createListeners(`classes${val}`,`input`,updateFeatDetails);
 
     modifyList("classes");
+}
+
+
+
+
+
+
+
+function monsterAbilitiesEdit(listName,entityName,json){
+    let forumArea = document.getElementById(`${listName}Choice`);
+    let mainSection = document.createElement("div");
+    mainSection.id = `${entityName}Choice`;
+    console.log("l")
+    let entityLabel = document.createElement("label");
+    entityLabel.setAttribute("class","inputName");
+    let name = addSpaces(entityName);
+//    console.log(name)
+    entityLabel.textContent=name+":";
+    mainSection.append(entityLabel);
+    if(!json[entityName].empty){
+        addBreak(mainSection);
+    }
+    let subSection = createMonsterAbilitiesElementSetup(entityName,json,mainSection);
+    addDeleteButton(mainSection,entityName,listName);
+    forumArea.appendChild(mainSection);
+    addBreak(forumArea);
+    if(json[entityName].attacks!=null || json[entityName].contact!=null){
+        let activeList = json[entityName].attacks!=null?getActiveSelection(json[entityName].attacks):getActiveSelection(json[entityName].contact);
+        arrayToDropdown(getAttacks(),`attackSection${entityName}`,"Select",true,activeList,true);
+        createVariableListener(`dropdownattackSection${entityName}`,'click',dropdownInteraction,getElementPointer(`dropdownattackSection${entityName}`),true);
+        createVariableArrayListener(`dropdownattackSection${entityName}`,'keyup',searchDrop,[getElementPointer(`dropdownattackSection${entityName}`),getElementPointer(`searchattackSection${entityName}`)]);      
+        multiChoice(`dropdownattackSection${entityName}`);
+    }
+//    console.log(entityName);
+
+    // createVariableListener(`dropdownattackSection${entityName}`,'click',dropdownInteraction,`dropdownattackSection${entityName}`,true);
+//    createVariableArrayListener(`dropdownattackSection${entityName}`,'keyup',searchDrop,[`dropdownattackSection${item}`,`searchattackSection${item}`]);
+//    multiChoice(`dropdownattackSection${item}`);
+
+}
+
+function getActiveSelection(list){
+    let activeList = [];
+    list.forEach(el=>{
+        if(el.active){
+            activeList.push(el.name);
+        }
+    })
+    return activeList;
+
+}
+
+function createMonsterAbilitiesElementSetup(entity,json,area){
+    let JSONObject = json[entity]
+    let jsonKeys = Object.keys(JSONObject)
+    let listName = "monsterAbilities";
+    let diceArray = ['d2','d4','d6','d8','d10','d12'];
+    let abilityTypeArray = ["Ex","Su","SP"];
+    let rangeArray = ["Line","Cone"];
+    let savesArray = ["Fort","Reflex","Will"];
+    let rangeArray2 = ["Aura","Cone","Ray"];
+    let abilityScore = ["Str","Dex","Con","Int","Wis","Cha"];
+//    console.log(jsonKeys);
+    switch(entity){
+        case "AbilityDamage":
+        case "AbilityDrain":
+            area.append(createElementSetupEdit("label","Damage "));
+            area.append(createElementSetupEdit("input","Damage",entity,listName,entity,"number","Insert Value Here",parseInt(JSONObject[jsonKeys[0]])));
+            area.append(createElementSetupEdit("select","",entity,listName,"Damage","","",JSONObject[jsonKeys[1]],diceArray));
+            addBreak(area);
+            area.append(createElementSetupEdit("div","Attack(Can Select Multiple) ",entity,listName));
+            let abilityTypeLabel = document.createElement("label");
+            area.append(createElementSetupEdit("label","Effected Ability Score "));
+            area.append(createElementSetupEdit("select","EffectedAbilityScore",entity,listName,"EffectedAbilityScore","","",JSONObject[jsonKeys[3]],abilityScore));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Save Type "));
+            area.append(createElementSetupEdit("select","",entity,listName,"SaveType","","",JSONObject[jsonKeys[5]],savesArray));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Ability Type "));
+            area.append(createElementSetupEdit("select","",entity,listName,"AbilityType","","",JSONObject[jsonKeys[4]],abilityTypeArray));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Save Ability Score "));
+            area.append(createElementSetupEdit("select","",entity,listName,"SaveAbilityScore","","",JSONObject[jsonKeys[6]],abilityScore));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Display Save DC "));
+            area.append(createElementSetupEdit("input","DisplaySaveDC",entity,listName,"DisplaySaveDC","checkbox","",JSONObject[jsonKeys[7]]));
+            break;
+        case "ArchdevilTraits":
+        case "DemonLordTraits":
+        case "EmpyrealLordTraits":
+        case "HorsemanTraits":
+        case "QlippothLordTraits":
+            area.append(createElementSetupEdit("label","Ability Type "));
+            area.append(createElementSetupEdit("select","",entity,listName,"AbilityType","","",JSONObject[jsonKeys[1]],abilityTypeArray));
+            break;
+        case "FormianTraits":
+            area.append(createElementSetupEdit("label","Ability Type "));
+            area.append(createElementSetupEdit("select","",entity,listName,"AbilityType","","",JSONObject[jsonKeys[1]],["Ex","Su"]));
+            break;
+        case "Attach":
+        case "Grab":
+        case "PowerfulBlows":
+        case "Trip":
+            area.append(createElementSetupEdit("div","Attack(Can Select Multiple) ",entity,listName));
+            break;
+        case "Bleed":
+        case "Burn":
+        case "Rend":
+            area.append(createElementSetupEdit("label","Damage "));
+            area.append(createElementSetupEdit("input","Damage",entity,listName,"Damage","number","Insert Value Here",parseInt(JSONObject[jsonKeys[0]])));
+            area.append(createElementSetupEdit("select","",entity,listName,"Damage","","",JSONObject[jsonKeys[1]],diceArray));
+            area.append(createElementSetupEdit("div","Attack(Can Select Multiple) ",entity,listName));
+            break;
+        case "BloodDrain":
+        case "Constrict":
+        case "Trample":
+            area.append(createElementSetupEdit("label","Damage "));
+            area.append(createElementSetupEdit("input","Damage",entity,listName,"Damage","number","Insert Value Here",parseInt(JSONObject[jsonKeys[0]])));
+            area.append(createElementSetupEdit("select","",entity,listName,"Damage","","",JSONObject[jsonKeys[1]],diceArray));
+            break;
+        case "BreathWeapon":
+            area.append(createElementSetupEdit("label","Damage "));
+            area.append(createElementSetupEdit("input","Damage",entity,listName,"Damage","number","Insert Value Here",parseInt(JSONObject[jsonKeys[0]])));
+            area.append(createElementSetupEdit("select","",entity,listName,"Damage","","",JSONObject[jsonKeys[1]],diceArray));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Recharge Time "));
+            area.append(createElementSetupEdit("input","RechargeTime",entity,listName,"RechargeTime","number","Insert Dice Count Here",parseInt(JSONObject[jsonKeys[2]])));
+            area.append(createElementSetupEdit("select","",entity,listName,"RechargeTime","","",JSONObject[jsonKeys[3]],diceArray));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Range "));
+            area.append(createElementSetupEdit("input","Range",entity,listName,"Range","number","Insert Dice Count Here",parseInt(JSONObject[jsonKeys[4]])));
+            area.append(createElementSetupEdit("label","ft."));
+            area.append(createElementSetupEdit("select","",entity,listName,"Range","","",JSONObject[jsonKeys[5]],rangeArray));            
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Save Type"));
+            area.append(createElementSetupEdit("select","",entity,listName,"SaveType","","",JSONObject[jsonKeys[6]],savesArray));
+            break;    
+        case "ChangeShape":
+            area.append(createElementSetupEdit("label","Shape "));
+            area.append(createElementSetupEdit("input","Shape",entity,listName,"Shape","text","Insert Value Here",JSONObject[jsonKeys[0]]));
+            break;
+        case "ChannelResistance":
+        case "PsychicResilience":
+            area.append(createElementSetupEdit("label","Resisted Amount "));
+            area.append(createElementSetupEdit("input","ResistedAmount",entity,listName,"ResistedAmount","number","Insert Value Here",parseInt(JSONObject[jsonKeys[0]])));
+            break;
+        case "Disease":
+        case "Poison":
+            area.append(createElementSetupEdit("label","Ability Type "));
+            area.append(createElementSetupEdit("select","",entity,listName,"AbilityType","","",JSONObject[jsonKeys[0]],abilityTypeArray));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Name "));
+            area.append(createElementSetupEdit("input","Name",entity,listName,entity,"text","Insert Value Here",JSONObject[jsonKeys[1]]));
+            addBreak(area);
+            area.append(createElementSetupEdit("div","Attack(Can Select Multiple) ",entity,listName));
+            area.append(createElementSetupEdit("label","Infliction Flavor"));
+            area.append(createElementSetupEdit("input","InflictionFlavor",entity,listName,entity,"text","Insert Contact Flavor Here",JSONObject[jsonKeys[3]]));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Onset "));
+            area.append(createElementSetupEdit("input","Onset",entity,listName,entity,"text","Insert Onset Here",JSONObject[jsonKeys[4]]));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Frequency "));
+            area.append(createElementSetupEdit("input","Frequency",entity,listName,entity,"text","Insert Frequency Here",JSONObject[jsonKeys[5]]));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Effect "));
+            area.append(createElementSetupEdit("textarea","Effect",entity,listName,entity,"textarea","Insert Effect Here",JSONObject[jsonKeys[6]],[],"monsterAbilityTemp"));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Cure "));
+            area.append(createElementSetupEdit("textarea","Cure",entity,listName,entity,"textarea","Insert Cure Here",JSONObject[jsonKeys[7]],[],"monsterAbilityTemp"));
+            break;
+        case "Curse":
+            area.append(createElementSetupEdit("label","Name "));
+            area.append(createElementSetupEdit("input","Name",entity,listName,entity,"text","Insert Value Here",JSONObject[jsonKeys[0]]));
+            addBreak(area);
+            area.append(createElementSetupEdit("div","Attack(Can Select Multiple) ",entity,listName));
+            area.append(createElementSetupEdit("label","Infliction Flavor"));
+            area.append(createElementSetupEdit("input","InflictionFlavor",entity,listName,entity,"text","Insert Contact Flavor Here",JSONObject[jsonKeys[2]]));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Onset "));
+            area.append(createElementSetupEdit("input","Onset",entity,listName,entity,"text","Insert Onset Here",JSONObject[jsonKeys[3]]));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Frequency "));
+            area.append(createElementSetupEdit("input","Frequency",entity,listName,entity,"text","Insert Frequency Here",JSONObject[jsonKeys[4]]));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Effect "));
+            area.append(createElementSetupEdit("textarea","Effect",entity,listName,entity,"textarea","Insert Effect Here",JSONObject[jsonKeys[5]],[],"monsterAbilityTemp"));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Cure "));
+            area.append(createElementSetupEdit("textarea","Cure",entity,listName,entity,"textarea","Insert Cure Here",JSONObject[jsonKeys[6]],[],"monsterAbilityTemp"));
+            break;
+        case "CurseofLycanthropy":
+            area.append(createElementSetupEdit("div","Attack(Can Select Multiple) ",entity,listName));
+            area.append(createElementSetupEdit("label","Infliction Flavor"));
+            area.append(createElementSetupEdit("input","InflictionFlavor",entity,listName,entity,"text","Insert Contact Flavor Here",JSONObject[jsonKeys[1]]));
+            break;
+        case "EnergyDrain":
+            area.append(createElementSetupEdit("label","Levels Drained "));
+            area.append(createElementSetupEdit("input","LevelsDrained",entity,listName,"LevelsDrained","number","Insert Value Here",parseInt(JSONObject[jsonKeys[0]])));
+            area.append(createElementSetupEdit("div","Attack(Can Select Multiple)",entity,listName));
+            break;
+        case "Engulf":
+            area.append(createElementSetupEdit("label","Damage "));
+            area.append(createElementSetupEdit("input","Damage",entity,listName,entity,"number","Insert Value Here",parseInt(JSONObject[jsonKeys[0]])));
+            area.append(createElementSetupEdit("select","",entity,listName,"Damage","","",JSONObject[jsonKeys[1]],diceArray));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Damage type and Effects "));
+            area.append(createElementSetupEdit("textarea","DamagetypeandEffects",entity,listName,entity,"textarea","Insert Here",JSONObject[jsonKeys[2]],[],"monsterAbilityTemp"));
+            break;
+        case "Entrap":
+            area.append(createElementSetupEdit("label","Duration "));
+            area.append(createElementSetupEdit("input","Duration",entity,listName,entity,"number","Insert Value Here",parseInt(JSONObject[jsonKeys[0]])));
+            area.append(createElementSetupEdit("select","Duration",entity,listName,"Duration","","",JSONObject[jsonKeys[1]],diceArray));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Hardness "));
+            area.append(createElementSetupEdit("input","Hardness",entity,listName,entity,"number","Insert Value Here",parseInt(JSONObject[jsonKeys[2]])));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","HP "));
+            area.append(createElementSetupEdit("input","HP",entity,listName,entity,"number","Insert Value Here",parseInt(JSONObject[jsonKeys[3]])));
+            break;
+        case "Web":
+            area.append(createElementSetupEdit("label","HP "));
+            area.append(createElementSetupEdit("input","HP",entity,listName,entity,"number","Insert Value Here",parseInt(JSONObject[jsonKeys[0]])));
+            break;
+        case "FastHealing":
+            area.append(createElementSetupEdit("label","Healing "));
+            area.append(createElementSetupEdit("input","Healing",entity,listName,entity,"number","Insert Value Here",parseInt(JSONObject[jsonKeys[0]])));
+            break;
+        case "Fear":
+            area.append(createElementSetupEdit("label","Range "));
+            area.append(createElementSetupEdit("input","Range",entity,listName,"Range","number","Insert Dice Count Here",parseInt(JSONObject[jsonKeys[0]])));
+            area.append(createElementSetupEdit("label"," ft. "));
+            area.append(createElementSetupEdit("select","",entity,listName,"Range","","",JSONObject[jsonKeys[1]],rangeArray2));
+            break;
+        case "RockThrowing":
+        case "Telepathy":
+        case "UnnaturalAura":
+            area.append(createElementSetupEdit("label","ft. "));
+            area.append(createElementSetupEdit("select","",entity,listName,"Range","","",JSONObject[jsonKeys[0]],rangeArray2));
+            break;
+        case "FrightfulPresence":
+            area.append(createElementSetupEdit("label","Aura Range "));
+            area.append(createElementSetupEdit("input","AuraRange",entity,listName,"AuraRange","number","Insert Dice Count Here",parseInt(JSONObject[jsonKeys[0]])));
+            break;
+        case "Split":
+            area.append(createElementSetupEdit("label","Split Condition "));
+            area.append(createElementSetupEdit("input","SplitCondition",entity,listName,entity,"text","Insert Value Here",JSONObject[jsonKeys[0]]));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Damage "));
+            area.append(createElementSetupEdit("input","Damage",entity,listName,entity,"number","Insert Here",parseInt(JSONObject[jsonKeys[1]])));
+            break;
+        case "Heat":
+        case "Stench":
+        case "MentalStaticAura":
+            area.append(createElementSetupEdit("label","Damage "));
+            area.append(createElementSetupEdit("input","Damage",entity,listName,entity,"number","Insert Value Here",parseInt(JSONObject[jsonKeys[0]])));
+            break;
+        case "Jet":
+            area.append(createElementSetupEdit("label","Distance "));
+            area.append(createElementSetupEdit("input","Distance",entity,listName,entity,"number","Insert Value Here",parseInt(JSONObject[jsonKeys[0]])));
+            break;
+        case "LycanthropicEmpathy":
+            area.append(createElementSetupEdit("label","Animals "));
+            area.append(createElementSetupEdit("input","Animals",entity,listName,entity,"text","Insert Value Here",JSONObject[jsonKeys[0]]));
+            break;
+        case "MythicPower":
+            area.append(createElementSetupEdit("label","Amount "));
+            area.append(createElementSetupEdit("input","Amount",entity,listName,entity,"number","Insert Value Here",parseInt(JSONObject[jsonKeys[1]])));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Duration Limit(Day) "));
+            area.append(createElementSetupEdit("input","DurationLimit(Day)",entity,listName,entity,"text","Insert Value Here",JSONObject[jsonKeys[2]]));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Power "));
+            area.append(createElementSetupEdit("textarea","Power",entity,listName,entity,"textarea","Insert Power Here",JSONObject[jsonKeys[0]],[],"monsterAbilityTemp"));
+            break;
+        case "MythicMagic":
+            area.append(createElementSetupEdit("label","Amount "));
+            area.append(createElementSetupEdit("input","Amount",entity,listName,entity,"number","Insert Value Here",parseInt(JSONObject[jsonKeys[0]])));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Duration Limit(Day) "));
+            area.append(createElementSetupEdit("input","DurationLimit(Day)",entity,listName,entity,"text","Insert Value Here",JSONObject[jsonKeys[1]]));
+            break;
+        case "Paralysis":
+            area.append(createElementSetupEdit("label","Duration "));
+            area.append(createElementSetupEdit("input","Duration",entity,listName,"Duration","number","Insert Value Here",parseInt(JSONObject[jsonKeys[0]])));
+            area.append(createElementSetupEdit("select","",entity,listName,"Duration","","",JSONObject[jsonKeys[1]],diceArray));
+            area.append(createElementSetupEdit("div","Attack(Can Select Multiple)",entity,listName));
+            break;
+        case "PoisonousBlood":
+            area.append(createElementSetupEdit("label","Shape "));
+            area.append(createElementSetupEdit("input","Shape",entity,listName,"Shape","text","Insert Value Here",JSONObject[jsonKeys[0]]));
+            break;
+        case "Pull":
+            area.append(createElementSetupEdit("label","Duration "));
+            area.append(createElementSetupEdit("input","Duration",entity,listName,"Duration","number","Insert Value Here",parseInt(JSONObject[jsonKeys[0]])));
+            area.append(createElementSetupEdit("select","",entity,listName,"Duration","","",JSONObject[jsonKeys[1]],diceArray));
+            area.append(createElementSetupEdit("div","Attack(Can Select Multiple)",entity,listName));
+            break;
+        case "Push":
+            area.append(createElementSetupEdit("label","Duration "));
+            area.append(createElementSetupEdit("input","Duration",entity,listName,"Duration","number","Insert Value Here",parseInt(JSONObject[jsonKeys[0]])));
+            area.append(createElementSetupEdit("select","",entity,listName,"Duration","","",JSONObject[jsonKeys[1]],diceArray));
+            area.append(createElementSetupEdit("div","Attack(Can Select Multiple)",entity,listName));
+            break;
+        case "Regeneration":
+            area.append(createElementSetupEdit("label","Rate "));
+            area.append(createElementSetupEdit("input","Rate",entity,listName,entity,"number","Insert Value Here",parseInt(JSONObject[jsonKeys[0]])));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","How to Disable "));
+            area.append(createElementSetupEdit("input","HowtoDisable",entity,listName,entity,"text","Insert Value Here",JSONObject[jsonKeys[1]]));
+            break;
+        case "Summon":
+            area.append(createElementSetupEdit("label","Creature Name "));
+            area.append(createElementSetupEdit("input","CreatureName",entity,listName,"CreatureName","text","Insert Value Here",JSONObject[jsonKeys[0]]));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Level "));
+            area.append(createElementSetupEdit("input","Level",entity,listName,"Level","number","Insert Value Here",parseInt(JSONObject[jsonKeys[1]])));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Amount "));
+            area.append(createElementSetupEdit("input","Amount",entity,listName,"Amount","number","Insert Value Here",parseInt(JSONObject[jsonKeys[2]])));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Duration Limit(Day) "));
+            area.append(createElementSetupEdit("input","DurationLimit(Day)",entity,listName,"DurationLimit(Day)","number","Insert Value Here",parseInt(JSONObject[jsonKeys[3]])));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Chance "));
+            area.append(createElementSetupEdit("input","Chance",entity,listName,"Chance","number","Insert Value Here",parseInt(JSONObject[jsonKeys[4]])));
+            area.append(createElementSetupEdit("label","%"));
+            break;
+        case "SwallowWhole":
+            area.append(createElementSetupEdit("label","Damage "));
+            area.append(createElementSetupEdit("input","Damage",entity,listName,"Damage","number","Insert Value Here",parseInt(JSONObject[jsonKeys[2]])));
+            area.append(createElementSetupEdit("select","",entity,listName,"Damage","","",JSONObject[jsonKeys[3]],diceArray));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Damage Type "));
+            area.append(createElementSetupEdit("input","DamageType",entity,listName,"DamageType","text","Insert Value Here",JSONObject[jsonKeys[4]]));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Hardness "));
+            area.append(createElementSetupEdit("input","Hardness",entity,listName,"Hardness","number","Insert Value Here",parseInt(JSONObject[jsonKeys[0]])));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","HP "));
+            area.append(createElementSetupEdit("input","HP",entity,listName,"HP","number","Insert Value Here",parseInt(JSONObject[jsonKeys[1]])));
+            break;
+        case "Whirlwind":
+            area.append(createElementSetupEdit("label","Damage "));
+            area.append(createElementSetupEdit("input","Damage",entity,listName,"Damage","number","Insert Value Here",parseInt(JSONObject[jsonKeys[0]])));
+            area.append(createElementSetupEdit("select","",entity,listName,"Damage","","",JSONObject[jsonKeys[1]],diceArray));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Max Height "));
+            area.append(createElementSetupEdit("input","MaxHeight",entity,listName,"MaxHeight","number","Insert Value Here",parseInt(JSONObject[jsonKeys[2]])));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Amount "));
+            area.append(createElementSetupEdit("input","Amount",entity,listName,"Amount","number","Insert Value Here",parseInt(JSONObject[jsonKeys[3]])));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Duration Limit(Day) "));
+            area.append(createElementSetupEdit("input","DurationLimit(Day)",entity,listName,"DurationLimit(Day)","number","Insert Value Here",parseInt(JSONObject[jsonKeys[4]])));
+            break;
+        }
+}
+
+
+function createElementSetupEdit(elementTag,contentText,item="",listName="",labelID=0,type="",placeHolderText="Placeholder",inputValue="",arr=[],title=""){
+//    console.log(inputValue)
+  let newEl = document.createElement(elementTag);
+  switch(elementTag.toLocaleLowerCase()){
+    case "label":
+      newEl.setAttribute("class","inputName");
+      newEl.textContent = contentText;
+      break;
+    case "input":
+      newEl.setAttribute("type",type);
+      newEl.setAttribute("placeholder",placeHolderText);
+      newEl.setAttribute("id",`${listName}${item}${contentText}`);
+      newEl.setAttribute("class","searchBarCreation");
+      if(type!="checkbox"){
+          newEl.value=inputValue;
+      }else{
+        newEl.checked=inputValue;
+      }
+      break;
+    case "select":
+      newEl.setAttribute("class","searchBarCreation");
+      newEl.setAttribute("name",`monsterAbilityDice${item}`);
+      newEl.setAttribute("id",`monsterAbilityDice${item}Select${labelID}`);
+      for(let i = 0; i<arr.length;i++){
+        let option = document.createElement("option");
+        option.value = arr[i];
+        option.text = arr[i];
+        if(inputValue==arr[i]){
+          option.selected=true;
+        }
+        newEl.appendChild(option);
+      }
+      break;
+    case "div":
+      newEl.setAttribute("style","display:flex");
+      let divlabel = document.createElement("label");
+      divlabel.className="inputName";
+      divlabel.setAttribute("for",`${listName}${item}`);
+      divlabel.textContent = contentText;
+      let newEl2 = document.createElement("div");
+      newEl2.setAttribute("id",`attackSection${item}Area`);
+      newEl.appendChild(divlabel);
+      newEl.appendChild(newEl2);
+      break;
+    case "textarea":
+      newEl.setAttribute("name",`textArea${listName}${item}`);
+      newEl.setAttribute("placeholder",placeHolderText);
+      newEl.setAttribute("title","textArea"+title);
+      newEl.setAttribute("id",`textarea${listName}${item}${labelID}`);
+      newEl.setAttribute("class","searchBarCreation");
+      newEl.value=inputValue;
+      break;
+  }
+  return newEl;
 }
 
 //put checked at the end of an input type checkbox for it to start off as checked

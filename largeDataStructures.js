@@ -7364,14 +7364,22 @@ var monsterAbilitiesInputs = `{
         "default":"d4",
         "VariableSpecialType":true,
         "usesAttacks":true,
-        "availableVariable":["Ex","Su"]
+        "abilityScore":"str",
+        "saveType":"fort",
+        "availableVariable":["Ex","Su"],
+        "saveStat":"cha",
+        "displaySave":true
     },
     "ability drain":{
         "input":"dice",
         "default":"d4",
         "VariableSpecialType":true,
         "usesAttacks":true,
-        "availableVariable":["Ex","Su"]
+        "abilityScore":"str",
+        "saveType":"fort",
+        "availableVariable":["Ex","Su"],
+        "saveStat":"cha",
+        "displaySave":true
     },
     "archdevil traits":{
         "VariableSpecialType":true,
@@ -7412,7 +7420,7 @@ var monsterAbilitiesInputs = `{
         "VariableSpecialType":true,
         "noBaseInput":true
     },
-    "formain traits":{
+    "formian traits":{
         "VariableSpecialType":true,
         "noBaseInput":true,
         "availableVariable":["Ex","Su"]
@@ -7536,6 +7544,11 @@ var monsterAbilitiesInputs = `{
     "rend":{
         "input":"dice",
         "default":"d6",
+        "usesAttacks":true
+    },
+    "rake":{
+        "input":"dice",
+        "default":"d4",
         "usesAttacks":true
     },
     "split":{

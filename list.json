@@ -100,7 +100,7 @@
       "size": "Medium",
       "sizeType": false,
       "type": "Humanoid",
-      "NPCType": "NPC",
+      "NPCType": "Monster",
       "ac": {
         "armor": "12",
         "touch": "12",
@@ -124,13 +124,15 @@
           "diceCount": "1",
           "damageDice": "d6",
           "critRange": "18",
-          "isAlternative": false
+          "isAlternative": false,
+          "weaponType": "Custom"
         },
         {
           "name": "sap",
           "diceCount": "1",
           "damageDice": "d6",
-          "isAlternative": true
+          "isAlternative": true,
+          "weaponType": "Custom"
         }
       ],
       "ranged": [
@@ -139,7 +141,8 @@
           "diceCount": "1",
           "damageDice": "d8",
           "critMultiplier": "3",
-          "isAlternative": false
+          "isAlternative": false,
+          "weaponType": "Custom"
         }
       ],
       "str": "13",
@@ -177,9 +180,9 @@
       "alignment": "CN",
       "size": "Large",
       "sizeType": false,
+      "NPCType": "Monster",
       "type": "Aberration",
       "subtype": "Void",
-      "NPCType": "Monster",
       "senses": {
         "blindsight": "60",
         "darkvision": "60"
@@ -197,7 +200,6 @@
       "level": "24",
       "hitDice": "d10",
       "rate": "Monster",
-      "hp_traits": "Regeneration 5(Force)",
       "fort": "Good",
       "ref": "Bad",
       "will": "Good",
@@ -217,17 +219,26 @@
       },
       "melee": [
         {
-          "name": "2 claws",
+          "name": "claw",
           "diceCount": "2",
-          "damageDice": "d10",
+          "damageDice": "d6",
           "critRange": "19",
-          "isAlternative": false,
-          "isAdditive": false
+          "uniqueDamageBonus": [],
+          "fullRoundAttackCount": "2",
+          "weaponType": "Custom"
         }
       ],
-      "space": "10 ft",
-      "reach": "10 ft",
-      "special_attacks": "Oblivion Wail",
+      "ranged": [],
+      "special_attacks": [
+        {
+          "name": "Oblivion Wail",
+          "displayAttributes": true,
+          "variation": "Save Only",
+          "saveThrowCheck": false,
+          "saveStat": "Cha",
+          "perDayChecked": false
+        }
+      ],
       "str": "34",
       "dex": "18",
       "con": "28",
@@ -256,7 +267,6 @@
         "Cleave": "",
         "Great Cleave": "",
         "Critical Focus": "",
-        "Bleeding Critical": "",
         "Power Attack": ""
       },
       "skills": {
@@ -273,8 +283,8 @@
         "Swim": "10"
       },
       "racialModifiers": {
-        "Intimidate": 6,
-        "Stealth": 4
+        "Intimidate": "6",
+        "Stealth": "4"
       },
       "languages": [
         "Aboleth"
@@ -320,7 +330,16 @@
           "ability_desc": "This Creature does not get exhausted or fatigued.",
           "abilityType": "Ex(Extraordinary)"
         }
-      ]
+      ],
+      "monsterAbilities": [
+        {
+          "Regeneration": {
+            "rate": "5",
+            "howtoDisable": "Force"
+          }
+        }
+      ],
+      "spheres": false
     },
     {
       "path": "./NPCDisplay.html",
@@ -356,14 +375,16 @@
           "name": "short sword",
           "diceCount": "1",
           "damageDice": "d6",
-          "isAlternative": false
+          "isAlternative": false,
+          "weaponType": "Custom"
         },
         {
           "name": "sap",
           "diceCount": "1",
           "damageDice": "d6",
           "uniqueDamage": "nonlethal",
-          "isAlternative": true
+          "isAlternative": true,
+          "weaponType": "Custom"
         }
       ],
       "ranged": [
@@ -372,7 +393,8 @@
           "diceCount": "1",
           "damageDice": "d4",
           "critRange": "19",
-          "isAlternative": false
+          "isAlternative": false,
+          "weaponType": "Custom"
         }
       ],
       "str": "14",
@@ -408,8 +430,8 @@
       "alignment": "LN",
       "size": "Large",
       "sizeType": false,
-      "type": "Aberration",
       "NPCType": "Monster",
+      "type": "Aberration",
       "senses": {
         "blindsight": "60",
         "scent": ""
@@ -445,17 +467,22 @@
           "name": "2 claws",
           "diceCount": "1",
           "damageDice": "d6",
-          "isAlternative": false,
-          "isAdditive": false
+          "uniqueDamageBonus": [],
+          "fullRoundAttackCount": "",
+          "weaponType": "Custom"
         },
         {
           "name": "bite",
           "diceCount": "1",
           "damageDice": "d8",
+          "uniqueDamageBonus": [],
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "fullRoundAttackCount": "",
+          "weaponType": "Custom"
         }
       ],
+      "ranged": [],
       "str": "20",
       "dex": "13",
       "con": "14",
@@ -483,14 +510,14 @@
         "Intimidate": "2",
         "Perception": "4",
         "SenseMotive": "2",
-        "Spellcraft": "",
+        "Spellcraft": "0",
         "Stealth": "2",
         "Survival": "1",
         "Swim": "1"
       },
       "racialModifiers": {
-        "Disguise (when mimicking other NPCs)": 20,
-        "Survival (when using scent)": 10
+        "Disguise (when mimicking other NPCs)": "20",
+        "Survival (when using scent)": "10"
       },
       "languages": [
         "Celestial",
@@ -545,7 +572,8 @@
           "ability_desc": "Any ally currently affected by one of your shouts or tactics may spend a move action to restore your martial focus. The NPC spending a move action must have an Intelligence of at least 3 and possess a number of Hit Dice at least equal to 1/2 your total Hit Dice.",
           "abilityType": "Ex(Extraordinary)"
         }
-      ]
+      ],
+      "spheres": false
     },
     {
       "path": "./NPCDisplay.html",
@@ -597,7 +625,8 @@
             "Keen"
           ],
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "weaponType": "Custom"
         }
       ],
       "ranged": [
@@ -607,10 +636,13 @@
           "damageDice": "d10",
           "critMultiplier": "4",
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "weaponType": "Custom"
         }
       ],
-      "special_attacks": "Deadly Shot",
+      "special_attacks": [
+        "Deadly Shot"
+      ],
       "str": "16",
       "dex": "24",
       "con": "14",
@@ -900,13 +932,15 @@
           "name": "Bite",
           "diceCount": "1",
           "damageDice": "d8",
-          "isAlternative": false
+          "isAlternative": false,
+          "weaponType": "Custom"
         },
         {
           "name": "2 Claw",
           "diceCount": "1",
           "damageDice": "d6",
-          "isAlternative": false
+          "isAlternative": false,
+          "weaponType": "Custom"
         }
       ],
       "str": "16",
@@ -973,13 +1007,15 @@
           "name": "Bite",
           "diceCount": "1",
           "damageDice": "d6",
-          "isAlternative": false
+          "isAlternative": false,
+          "weaponType": "Custom"
         },
         {
           "name": "2 Claws",
           "diceCount": "1",
           "damageDice": "d4",
-          "isAlternative": false
+          "isAlternative": false,
+          "weaponType": "Custom"
         }
       ],
       "str": "15",
@@ -1047,7 +1083,8 @@
           "name": "Slam",
           "diceCount": "1",
           "damageDice": "d4",
-          "isAlternative": false
+          "isAlternative": false,
+          "weaponType": "Custom"
         }
       ],
       "ranged": [
@@ -1056,7 +1093,8 @@
           "diceCount": "2",
           "damageDice": "d4",
           "uniqueDamage": "does acid",
-          "isAlternative": false
+          "isAlternative": false,
+          "weaponType": "Custom"
         }
       ],
       "str": "10",
@@ -1120,7 +1158,8 @@
           "damageDice": "d4",
           "critRange": "19",
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "weaponType": "Custom"
         }
       ],
       "ranged": [
@@ -1130,7 +1169,8 @@
           "damageDice": "d4",
           "critMultiplier": "3",
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "weaponType": "Custom"
         }
       ],
       "str": "11",
@@ -1202,20 +1242,23 @@
           "diceCount": "1",
           "damageDice": "d6",
           "toHitModifier": "-2",
-          "isAlternative": false
+          "isAlternative": false,
+          "weaponType": "Custom"
         },
         {
           "name": "claw",
           "diceCount": "1",
           "damageDice": "d4",
           "toHitModifier": "-5",
-          "isAlternative": false
+          "isAlternative": false,
+          "weaponType": "Custom"
         },
         {
           "name": "2 claw",
           "diceCount": "1",
           "damageDice": "d4",
-          "isAlternative": true
+          "isAlternative": true,
+          "weaponType": "Custom"
         }
       ],
       "str": "15",
@@ -1273,10 +1316,13 @@
           "name": "2 slams",
           "diceCount": "1",
           "damageDice": "d6",
-          "isAlternative": false
+          "isAlternative": false,
+          "weaponType": "Custom"
         }
       ],
-      "special_attacks": "quick strikes",
+      "special_attacks": [
+        "quick strikes"
+      ],
       "str": "17",
       "dex": "14",
       "con": "-1",
@@ -1346,21 +1392,24 @@
           "critMultiplier": "3",
           "multiAttack": "2",
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "weaponType": "Custom"
         },
         {
           "name": "gore",
           "diceCount": "1",
           "damageDice": "d8",
           "isAlternative": false,
-          "isAdditive": true
+          "isAdditive": true,
+          "weaponType": "Custom"
         },
         {
           "name": "Unarmed Strike",
           "diceCount": "1",
           "damageDice": "d8",
           "isAlternative": true,
-          "isAdditive": false
+          "isAdditive": false,
+          "weaponType": "Custom"
         }
       ],
       "ranged": [
@@ -1369,12 +1418,15 @@
           "diceCount": "1",
           "damageDice": "d12",
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "weaponType": "Custom"
         }
       ],
       "space": "30 ft",
       "reach": "30 ft",
-      "special_attacks": "powerful charge (gore +17, 2d6+6)",
+      "special_attacks": [
+        "powerful charge (gore +17, 2d6+6)"
+      ],
       "str": "24",
       "dex": "16",
       "con": "26",
@@ -1472,7 +1524,7 @@
       "title": "Kora",
       "cr": "1/8",
       "alignment": "N",
-      "size": "Medium",      
+      "size": "Medium",
       "NPCType": "Monster",
       "sizeType": false,
       "type": "Custom",
@@ -1501,7 +1553,8 @@
           "diceCount": "1",
           "damageDice": "d4",
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "weaponType": "Custom"
         }
       ],
       "ranged": [
@@ -1510,7 +1563,8 @@
           "diceCount": "1",
           "damageDice": "d4",
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "weaponType": "Custom"
         }
       ],
       "str": "12",
@@ -1611,14 +1665,16 @@
           "uniqueDamage": "plus corruption",
           "toHitModifier": "-3",
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "weaponType": "Custom"
         },
         {
           "name": "Bite",
           "diceCount": "1",
           "damageDice": "d4",
           "isAlternative": false,
-          "isAdditive": true
+          "isAdditive": true,
+          "weaponType": "Custom"
         }
       ],
       "str": "16",
@@ -1702,11 +1758,14 @@
           "damageDice": "d6",
           "uniqueDamage": "plus poison",
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "weaponType": "Custom"
         }
       ],
       "space": "10 ft",
-      "special_attacks": "web (+5 ranged, DC 12, hp 2)",
+      "special_attacks": [
+        "web (+5 ranged, DC 12, hp 2)"
+      ],
       "str": "11",
       "dex": "17",
       "con": "12",
@@ -1779,7 +1838,8 @@
           "uniqueDamage": "plus corruption",
           "toHitModifier": "-5",
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "weaponType": "Custom"
         }
       ],
       "ranged": [
@@ -1788,7 +1848,8 @@
           "diceCount": "2",
           "damageDice": "d10",
           "isAlternative": true,
-          "isAdditive": false
+          "isAdditive": false,
+          "weaponType": "Custom"
         }
       ],
       "str": "19",
@@ -1868,7 +1929,8 @@
           "damageDice": "d6",
           "uniqueDamage": "plus corruption",
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "weaponType": "Custom"
         }
       ],
       "str": "16",
@@ -1946,7 +2008,8 @@
           "damageDice": "d4",
           "toHitModifier": "1",
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "weaponType": "Custom"
         }
       ],
       "str": "11",
@@ -2039,7 +2102,9 @@
           "isAdditive": true
         }
       ],
-      "special_attacks": "FORMAT Malfunction_Zone",
+      "special_attacks": [
+        "FORMAT Malfunction_Zone"
+      ],
       "str": "14",
       "dex": "14",
       "con": "10",
@@ -2228,7 +2293,8 @@
           "diceCount": "1",
           "damageDice": "d10",
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "weaponType": "Custom"
         },
         {
           "name": "Oblivions Edge(Only at 10% or less health)",
@@ -2238,7 +2304,8 @@
           "critMultiplier": "3",
           "toHitModifier": "-2",
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "weaponType": "Custom"
         }
       ],
       "str": "24",
@@ -2691,10 +2758,20 @@
           "diceCount": "1",
           "damageDice": "d8",
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "weaponType": "Custom"
         }
       ],
-      "special_attacks": "Lunge, Explode",
+      "special_attacks": [
+        {
+          "name": "Lunge",
+          "displayAttributes": false
+        },
+        {
+          "name": "Explode",
+          "displayAttributes": false
+        }
+      ],
       "str": "16",
       "dex": "12",
       "con": "14",
@@ -2786,7 +2863,8 @@
           "damageDice": "d6",
           "toHitModifier": "3",
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "weaponType": "Custom"
         },
         {
           "name": "2 Claws",
@@ -2794,7 +2872,8 @@
           "damageDice": "d4",
           "toHitModifier": "3",
           "isAlternative": false,
-          "isAdditive": true
+          "isAdditive": true,
+          "weaponType": "Custom"
         }
       ],
       "str": "14",
@@ -2892,7 +2971,8 @@
           "diceCount": "1",
           "damageDice": "d4",
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "weaponType": "Custom"
         }
       ],
       "spell_abilities": {
@@ -2988,17 +3068,28 @@
           "diceCount": "1",
           "damageDice": "d10",
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "weaponType": "Custom"
         },
         {
           "name": "Bite of the Depths",
           "diceCount": "1",
           "damageDice": "d12",
           "isAlternative": false,
-          "isAdditive": true
+          "isAdditive": true,
+          "weaponType": "Custom"
         }
       ],
-      "special_attacks": "Absolver's Will, Beam of Sinulence",
+      "special_attacks": [
+        {
+          "name": "Absolver's Will",
+          "displayAttributes": false
+        },
+        {
+          "name": "Beam of Sinulence",
+          "displayAttributes": false
+        }
+      ],
       "str": "22",
       "dex": "18",
       "con": "24",
@@ -3065,9 +3156,9 @@
       "alignment": "N",
       "size": "Huge",
       "sizeType": false,
+      "NPCType": "Monster",
       "type": "Dragon",
       "subtype": "Sinulence",
-      "NPCType": "Monster",
       "senses": {
         "darkvision": "120",
         "Blindsight": "60"
@@ -3109,32 +3200,48 @@
           "name": "Bite",
           "diceCount": "2",
           "damageDice": "d8",
-          "isAlternative": false,
-          "isAdditive": false
+          "uniqueDamageBonus": [],
+          "fullRoundAttackCount": "",
+          "weaponType": "Custom"
         },
         {
           "name": "2 Claws",
           "diceCount": "2",
           "damageDice": "d6",
+          "uniqueDamageBonus": [],
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "fullRoundAttackCount": "",
+          "weaponType": "Custom"
         },
         {
           "name": "2 wings",
           "diceCount": "1",
           "damageDice": "d8",
+          "uniqueDamageBonus": [],
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "fullRoundAttackCount": "",
+          "weaponType": "Custom"
         },
         {
           "name": "tail slap",
           "diceCount": "2",
           "damageDice": "d6",
+          "uniqueDamageBonus": [],
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "fullRoundAttackCount": "",
+          "weaponType": "Custom"
         }
       ],
-      "special_attacks": "Breath Weapon (170-ft. cone, DC 26, 10d10 sonic)(Recharge 6)",
+      "ranged": [],
+      "special_attacks": [
+        {
+          "name": "Breath Weapon (170-ft. cone, DC 18, 3d10 sonic)(Recharge 6)",
+          "displayAttributes": false
+        }
+      ],
       "str": "25",
       "dex": "14",
       "con": "28",
@@ -3155,6 +3262,7 @@
         "Toughness": ""
       },
       "skills": {
+        "Acrobatics": "0",
         "Appraise": "12",
         "Bluff": "4",
         "Climb": "14",
@@ -3165,6 +3273,7 @@
           }
         ],
         "Diplomacy": "14",
+        "EscapeArtist": "0",
         "Fly": "14",
         "Heal": "12",
         "Intimidate": "14",
@@ -3200,7 +3309,21 @@
           "ability_desc": "All NPCs within the aura take 1d6 cold damage.",
           "abilityType": "Su(Supernatural)"
         }
-      ]
+      ],
+      "monsterAbilities": [
+        {
+          "BreathWeapon": {
+            "damage": "3",
+            "dice": "d10",
+            "recharge": "1",
+            "diceRecharge": "d6",
+            "rangeAmount": "170",
+            "rangeType": "Cone",
+            "saveType": "Reflex"
+          }
+        }
+      ],
+      "spheres": false
     },
     {
       "path": "./NPCDisplay.html",
@@ -3251,17 +3374,24 @@
           "diceCount": "1",
           "damageDice": "d4",
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "weaponType": "Custom"
         },
         {
           "name": "2 Pincer",
           "diceCount": "2",
           "damageDice": "d8",
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "weaponType": "Custom"
         }
       ],
-      "special_attacks": "Fiddler Crab Strike(+7 3d12+9)x3",
+      "special_attacks": [
+        {
+          "name": "Fiddler Crab Strike(+7 3d12+9)x3",
+          "displayAttributes": true
+        }
+      ],
       "str": "20",
       "dex": "6",
       "con": "26",
@@ -3347,10 +3477,16 @@
           "damageDice": "d10",
           "critMultiplier": "3",
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "weaponType": "Custom"
         }
       ],
-      "special_attacks": "Aircannon",
+      "special_attacks": [
+        {
+          "name": "Aircannon",
+          "displayAttributes": false
+        }
+      ],
       "str": "25",
       "dex": "14",
       "con": "22",
@@ -3499,7 +3635,8 @@
           "damageDice": "d8",
           "multiAttack": "2",
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "weaponType": "Custom"
         }
       ],
       "str": "26",
@@ -3578,7 +3715,12 @@
         "walk": "20",
         "swim": "40"
       },
-      "special_attacks": "Contaminate Mind +9",
+      "special_attacks": [
+        {
+          "name": "Contaminate Mind +9",
+          "displayAttributes": false
+        }
+      ],
       "str": "14",
       "dex": "16",
       "con": "16",
@@ -4068,7 +4210,8 @@
           "uniqueDamage": "Applies 1 stack of Collapse",
           "multiAttack": "1",
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "weaponType": "Custom"
         }
       ],
       "ranged": [
@@ -4078,10 +4221,13 @@
           "damageDice": "d4",
           "uniqueDamage": "applies 2 collapse stacks",
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "weaponType": "Custom"
         }
       ],
-      "special_attacks": "Collapse Detonation",
+      "special_attacks": [
+        "Collapse Detonation"
+      ],
       "str": "24",
       "dex": "14",
       "con": "10",
@@ -4164,7 +4310,8 @@
           "damageDice": "d10",
           "critRange": "19",
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "weaponType": "Custom"
         }
       ],
       "ranged": [
@@ -4173,7 +4320,8 @@
           "diceCount": "2",
           "damageDice": "d8",
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "weaponType": "Custom"
         }
       ],
       "str": "22",
@@ -4427,23 +4575,23 @@
       "alignment": "NE",
       "size": "Small",
       "sizeType": false,
-      "type": "Aberration",
       "NPCType": "Monster",
+      "type": "Aberration",
       "senses": {
         "darkvision": "120",
         "blindsight": "10"
       },
       "ac": {
-        "armor": "22",
+        "armor": "18",
         "touch": "13",
-        "flat_foot": "22",
+        "flat_foot": "18",
         "bonuses": {
-          "armor": "5",
+          "armor": "3",
           "deflection": "2",
-          "natural": "4"
+          "natural": "2"
         }
       },
-      "level": "2",
+      "level": "4",
       "hitDice": "d8",
       "rate": "Monster",
       "fort": "Bad",
@@ -4462,9 +4610,11 @@
           "diceCount": "1",
           "damageDice": "d4",
           "isAlternative": false,
-          "isAdditive": false
+          "isAdditive": false,
+          "weaponType": "Custom"
         }
       ],
+      "ranged": [],
       "str": "8",
       "dex": "10",
       "con": "12",
@@ -4473,30 +4623,38 @@
       "cha": "18",
       "bab": "Slow",
       "skillProgression": "Middle",
-      "cmb": "-1",
-      "cmd": "9",
+      "cmb": "0",
+      "cmd": "10",
       "feats": {
-        "skill focus": "Disguise",
+        "skillfocus": "Disguise",
         "toughness": ""
       },
       "skills": {
         "Acrobatics": "1",
-        "Bluff": "2",
+        "Bluff": "4",
         "Climb": "0",
-        "Disguise": "2",
-        "EscapeArtist": "0",
+        "Disguise": "4",
+        "EscapeArtist": "2",
         "Fly": "0",
-        "Intimidate": "2",
-        "Perception": "2",
+        "Intimidate": "4",
+        "Perception": "4",
         "Spellcraft": "0",
-        "Stealth": "2",
+        "Stealth": "4",
         "Survival": "1",
         "Swim": "0"
       },
       "racialModifiers": {
         "disguise": "20",
         "bluff": "10"
-      }
+      },
+      "special_abilities": [
+        {
+          "abilityName": "Mimic Others",
+          "ability_desc": "Is Able to Mimic Other creatures and gains some of their abilities, however it's health and AC remains the same as it normally does and does not copy the creature it transforms into. It does copy the strength stat of the creature it has copied.",
+          "abilityType": "Ex(Extraordinary)"
+        }
+      ],
+      "spheres": false
     },
     {
       "path": "./NPCDisplay.html",
@@ -4523,8 +4681,40 @@
       "fort": "Bad",
       "ref": "Bad",
       "will": "Good",
-      "melee": [],
+      "melee": [
+        {
+          "name": "Dagger",
+          "diceCount": 1,
+          "damageDice": 0,
+          "toHitModifier": "1",
+          "material": "silver",
+          "weaponType": "Weapon"
+        },
+        {
+          "name": "Dagger",
+          "diceCount": 1,
+          "damageDice": 0,
+          "material": "w",
+          "weaponType": "Weapon"
+        },
+        {
+          "name": "",
+          "diceCount": "1",
+          "damageDice": "d4",
+          "uniqueDamageBonus": [],
+          "isAlternative": false,
+          "isAdditive": false,
+          "fullRoundAttackCount": "1",
+          "weaponType": "Custom"
+        }
+      ],
       "ranged": [],
+      "special_attacks": [
+        {
+          "name": "Custom attacks still will work here",
+          "displayAttributes": false
+        }
+      ],
       "str": "19",
       "dex": "12",
       "con": "17",
@@ -4535,12 +4725,23 @@
       "skillProgression": "Middle",
       "cmb": "5",
       "cmd": "16",
-      "skills": {},
+      "skills": {
+        "Acrobatics": "0",
+        "Climb": "0",
+        "EscapeArtist": "0",
+        "Fly": "0",
+        "Intimidate": "0",
+        "Perception": "0",
+        "Spellcraft": "0",
+        "Stealth": "0",
+        "Survival": "0",
+        "Swim": "0"
+      },
       "class": [
         {
           "name": "Barbarian",
           "level": "1",
-          "archetype": "Beastkin Berserker"
+          "archetype": "None"
         },
         {
           "name": "Adept",
@@ -4548,7 +4749,324 @@
           "archetype": "None"
         }
       ],
+      "monsterAbilities": [
+        {
+          "Bleed": {
+            "damage": "1",
+            "dice": "d6",
+            "attacks": [
+              {
+                "name": "Dagger(silver)",
+                "active": true
+              },
+              {
+                "name": "Dagger(w)",
+                "active": false
+              },
+              {
+                "name": "Custom attacks still will work here",
+                "active": false
+              }
+            ]
+          }
+        },
+        {
+          "Rend": {
+            "damage": "1",
+            "dice": "d6",
+            "attacks": [
+              {
+                "name": "Dagger(silver)",
+                "active": false
+              },
+              {
+                "name": "Dagger(w)",
+                "active": true
+              },
+              {
+                "name": "Custom attacks still will work here",
+                "active": false
+              }
+            ]
+          }
+        }
+      ],
       "spheres": true
+    },
+    {
+      "path": "./NPCDisplay.html",
+      "system": "pathfinder",
+      "name": "Nulvistator",
+      "title": "Nulvistator",
+      "cr": "4",
+      "alignment": "N",
+      "size": "Large",
+      "sizeType": false,
+      "NPCType": "Monster",
+      "type": "Aberration",
+      "subtype": "Null",
+      "ac": {
+        "armor": "22",
+        "touch": "12",
+        "flat_foot": "22",
+        "bonuses": {
+          "armor": "4",
+          "deflection": "4",
+          "dex": "-1",
+          "natural": "6"
+        }
+      },
+      "level": "11",
+      "hitDice": "d8",
+      "rate": "Monster",
+      "fort": "Bad",
+      "ref": "Bad",
+      "will": "Good",
+      "melee": [
+        {
+          "name": "Claw",
+          "diceCount": "1",
+          "damageDice": "d8",
+          "isAlternative": false,
+          "isAdditive": false,
+          "weaponType": "Custom"
+        }
+      ],
+      "ranged": [
+        {
+          "name": "Null Cannon",
+          "diceCount": "2",
+          "damageDice": "d12",
+          "toHitModifier": "3",
+          "isAlternative": false,
+          "isAdditive": false,
+          "weaponType": "Custom"
+        }
+      ],
+      "str": "25",
+      "dex": "8",
+      "con": "18",
+      "int": "12",
+      "wis": "12",
+      "cha": "12",
+      "bab": "Medium",
+      "skillProgression": "Middle",
+      "cmb": "16",
+      "cmd": "25",
+      "feats": {
+        "Toughness": ""
+      },
+      "skills": {
+        "Acrobatics": "4",
+        "Climb": "4",
+        "EscapeArtist": "3",
+        "Fly": "8",
+        "Intimidate": "11",
+        "Perception": "10",
+        "Spellcraft": "0",
+        "Stealth": "4",
+        "Survival": "5",
+        "Swim": "6"
+      },
+      "spheres": false
+    },
+    {
+      "path": "./NPCDisplay.html",
+      "system": "pathfinder",
+      "name": "Abyssal Piercer",
+      "title": "Abyssal Piercer",
+      "cr": "6",
+      "alignment": "N",
+      "size": "Medium",
+      "sizeType": false,
+      "NPCType": "Monster",
+      "type": "Aberration",
+      "subtype": "Void",
+      "senses": {
+        "Blindsense": "",
+        "Thermalsense": ""
+      },
+      "ac": {
+        "armor": "24",
+        "touch": "15",
+        "flat_foot": "21",
+        "bonuses": {
+          "armor": "2",
+          "deflection": "2",
+          "dex": "2",
+          "dodge": "1",
+          "natural": "7"
+        }
+      },
+      "level": "10",
+      "hitDice": "d10",
+      "rate": "Monster",
+      "fort": "Bad",
+      "ref": "Bad",
+      "will": "Good",
+      "speed": {
+        "Walk": "20",
+        "Swim": "30"
+      },
+      "melee": [
+        {
+          "name": "Piercing Blade",
+          "diceCount": "3",
+          "damageDice": "d4",
+          "critMultiplier": "3",
+          "isAlternative": false,
+          "isAdditive": false,
+          "weaponType": "Custom"
+        },
+        {
+          "name": "Slashing Blade",
+          "diceCount": "2",
+          "damageDice": "d8",
+          "isAlternative": false,
+          "isAdditive": false,
+          "weaponType": "Custom"
+        }
+      ],
+      "ranged": [],
+      "str": "30",
+      "dex": "14",
+      "con": "14",
+      "int": "16",
+      "wis": "14",
+      "cha": "12",
+      "bab": "Medium",
+      "skillProgression": "Middle",
+      "cmb": "17",
+      "cmd": "29",
+      "feats": {
+        "Toughness": "",
+        "Bleeding Critical": "",
+        "Critical Focus": "",
+        "Critical Mastery": "",
+        "Crippling Critical": ""
+      },
+      "skills": {
+        "Acrobatics": "10",
+        "Climb": "8",
+        "EscapeArtist": "0",
+        "Fly": "9",
+        "Intimidate": "9",
+        "Perception": "10",
+        "Spellcraft": "0",
+        "Stealth": "6",
+        "Survival": "8",
+        "Swim": "10"
+      },
+      "special_abilities": [
+        {
+          "abilityName": "Flash Warp",
+          "ability_desc": "As part of a move action [NPCName] can move 50 ft. in a straight line ignoring all terrain. If a point would intersect with a structure then move back until this no longer is an issue.",
+          "abilityType": "Su(Supernatural)"
+        }
+      ],
+      "spheres": false
+    },
+    {
+      "path": "./NPCDisplay.html",
+      "system": "pathfinder",
+      "name": "Null Reaver",
+      "title": "Mimic",
+      "cr": "4",
+      "alignment": "N",
+      "size": "Medium",
+      "sizeType": false,
+      "NPCType": "Monster",
+      "type": "Aberration",
+      "ac": {
+        "armor": "11",
+        "touch": "11",
+        "flat_foot": "10",
+        "bonuses": {
+          "dex": "1"
+        }
+      },
+      "level": "6",
+      "hitDice": "d8",
+      "rate": "Monster",
+      "fort": "Bad",
+      "ref": "Bad",
+      "will": "Good",
+      "melee": [],
+      "ranged": [],
+      "str": "19",
+      "dex": "12",
+      "con": "17",
+      "int": "10",
+      "wis": "13",
+      "cha": "10",
+      "bab": "Medium",
+      "skillProgression": "Middle",
+      "cmb": "8",
+      "cmd": "19",
+      "skills": {
+        "Acrobatics": "",
+        "Climb": "",
+        "EscapeArtist": "",
+        "Fly": "",
+        "Intimidate": "",
+        "Perception": "",
+        "Spellcraft": "",
+        "Stealth": "",
+        "Survival": "",
+        "Swim": ""
+      },
+      "spheres": false
+    },
+    {
+      "path": "./NPCDisplay.html",
+      "system": "pathfinder",
+      "name": "Void Surveyor",
+      "title": "Mimic",
+      "cr": "4",
+      "alignment": "N",
+      "size": "Medium",
+      "sizeType": false,
+      "NPCType": "Monster",
+      "type": "Aberration",
+      "ac": {
+        "armor": "11",
+        "touch": "11",
+        "flat_foot": "10",
+        "bonuses": {
+          "dex": "1"
+        }
+      },
+      "level": "4",
+      "hitDice": "d8",
+      "rate": "Monster",
+      "fort": "Bad",
+      "ref": "Bad",
+      "will": "Good",
+      "melee": [],
+      "ranged": [],
+      "str": "14",
+      "dex": "12",
+      "con": "17",
+      "int": "10",
+      "wis": "13",
+      "cha": "10",
+      "bab": "Medium",
+      "skillProgression": "Middle",
+      "cmb": "5",
+      "cmd": "16",
+      "skills": {
+        "Acrobatics": "",
+        "Climb": "",
+        "EscapeArtist": "",
+        "Fly": "",
+        "Intimidate": "",
+        "Perception": "",
+        "Spellcraft": "",
+        "Stealth": "",
+        "Survival": "",
+        "Swim": ""
+      },
+      "spheres": false
     }
   ]
 }

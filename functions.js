@@ -27,10 +27,23 @@ function capitalizedCaseCharacter(text,illegalcharacters=[]){
   let upperCased;
   textArray.forEach(textString=>{
     if(!illegalcharacters.includes(textString)){
-      upperCased = textString.replace(textString[0], textString[0].toUpperCase());
-      text = text.replace(textString,upperCased);
+      if(textString[0]!=null){
+        upperCased = textString.replace(textString[0], textString[0].toUpperCase());
+        text = text.replace(textString,upperCased);
+      }
     }
   })
+  if(text.includes("-")){
+    textArray = text.split("-")
+    textArray.forEach(textString=>{
+      if(!illegalcharacters.includes(textString)){
+        if(textString[0]!=null){
+        upperCased = textString.replace(textString[0], textString[0].toUpperCase());
+        text = text.replace(textString,upperCased);
+        }
+      }
+    })
+  }
   return text;
 }
 
@@ -503,7 +516,13 @@ function getAttackDetails(attackPath,NPCInfo,enchantedGear,type){
             }
             toHit = multiAttack;
         }
-        attackString+= `${attackData.name} ${toHit}`;
+        let sAdd = "";
+        let attacksPer ="";
+        if(attackData.fullRoundAttackCount>1){
+          sAdd="s";
+          attacksPer=`${attackData.fullRoundAttackCount} `;
+        }
+        attackString+= `${attacksPer}${attackData.name}${sAdd} ${toHit}`;
         let damageBonus = 0;
         viableForStrength =['dagger','composite longbow'];
         if(viableForStrength.includes(attackData.name)||type==="melee"){
@@ -519,6 +538,9 @@ function getAttackDetails(attackPath,NPCInfo,enchantedGear,type){
         }else{
             damageBonus = damageBonus;
         }
+        
+
+        if(attackData.damageDice!="None"){
         let damageString = `(${attackData.diceCount}${attackData.damageDice}${damageBonus})`;
         let cr = 20;
         if(attackData.critRange){
@@ -537,10 +559,31 @@ function getAttackDetails(attackPath,NPCInfo,enchantedGear,type){
         if(attackData.uniqueDamage){
             damageString=damageString.replace(")",` ${attackData.uniqueDamage})`);
         }
+                        console.log(damageString)
+
+        if(checkAttackMonsterAbilities(NPCInfo,"attack")){
+          damageString=damageString.replace(")",`${displayAbilityAttacks(NPCInfo)})`)
+        }
+
+        if(displayUniqueAttacks(NPCInfo,k)!=null){
+          damageString=damageString.replace(")",`${displayUniqueAttacks(NPCInfo,k)})`)
+        }
         attackString = `${attackString} ${damageString}`
+      }else{
+        if(checkAttackMonsterAbilities(NPCInfo,"attack")){
+          attackString+=`(${displayAbilityAttacks(NPCInfo,true)})`
+        }
+        if(displayUniqueAttacks(NPCInfo,k,true)!=null){
+          attackString+=displayUniqueAttacks(NPCInfo,k,true);          
+        }
+      }
         
     })
     return attackString;
+}
+
+function getMonsterKeys(obj){
+  return Object.keys(obj)[0]
 }
 
 function findSaveType(description,trueSaveType){
@@ -641,8 +684,6 @@ function checkStatVal(stat){
   }
   return stat;
 }
-
-
 
 
 
@@ -784,8 +825,10 @@ function getFeatBonuses(skill,feats,ranks,NPC,extra=""){
         val*=2;
         totalBonuses+=val;
       }
+      break;
     case "Low Profile":
       if(skill==="armor"||skill==="touch"||skill==="dodge")
+        console.log(feat)
         totalBonuses+=1;
       break;
     case "Defensive Combat Training":
@@ -802,6 +845,7 @@ function getFeatBonuses(skill,feats,ranks,NPC,extra=""){
       break;
     case "Artful Dodge":
       if(skill==="armor"||skill==="touch"||skill==="dodge")
+        console.log(feat)
         totalBonuses+=1;
       break;
     case "Athletic":
@@ -872,18 +916,18 @@ function getMagicBonuses(value,Enchantments,ranks,NPC,strBonus,dexBonus){
 
 
 function getIndex(json,objectName){
-    var index = json.findIndex(obj=>obj.name==objectName);
+    let index = json.findIndex(obj=>obj.name==objectName);
     return index;
 }
 
 function getClassIndexDisplay(NPCInfo,className){
-  var index = NPCInfo.class.findIndex(obj=>obj.name==className);
+  let index = NPCInfo.class.findIndex(obj=>obj.name==className);
   return index;
 }
 
 function getArchetypeIndex(className,archetypeName){
-    var classInformation = classJson.class[getIndex(classJson.class,className.toLocaleLowerCase())];
-    var archetypeIndex = -1;
+    let classInformation = classJson.class[getIndex(classJson.class,className.toLocaleLowerCase())];
+    let archetypeIndex = -1;
     if(archetypeName!="None"){
       archetypeIndex = classInformation.archetype.findIndex(obj=>obj.name==archetypeName);
     }
@@ -891,8 +935,8 @@ function getArchetypeIndex(className,archetypeName){
 }
 
 function getSaveBonus(saveName){
-  var rate = "Bad";
-  var level = 0;
+  let rate = "Bad";
+  let level = 0;
   let saveBonus = 0;
   if(document.getElementById("NPCChoice").value=="Monster"){
     rate = document.getElementById(`NPC${saveName}`).value;
@@ -915,7 +959,7 @@ function getSaveBonus(saveName){
       classArchetype="None";
     }
     classData = classJson.class[getIndex(classJson.class,className)];
-    var archetypeIndex = -1; 
+    let archetypeIndex = -1; 
     if(classArchetype!="None"){
       archetypeIndex = getArchetypeIndex(className,classArchetype);
     }
@@ -1083,8 +1127,8 @@ function getJsonObject(json,item){
 }
 
 function getClassList(){
-  var classItems = classList;
-  var archetypeList;
+  let classItems = classList;
+  let archetypeList;
   let currentArchetype;
   let id;
   if(classItems.includes("Custom")){
@@ -1100,43 +1144,42 @@ function getClassList(){
   })
   if(document.getElementById("usesSphereOption").checked){
     sphereClassArchetype.sphereArchetypeList.forEach(element=>{
-      var updatedArchetypeID = document.getElementById(`archetype${element.name}subArea`);
+      let updatedArchetypeID = document.getElementById(`archetype${element.name}subArea`);
       if(document.getElementById(`dropdownSelectionarchetype${element.name}`)!=null){
         let item = document.getElementById(`dropdownSelectionarchetype${element.name}`).value;
       }
       if(updatedArchetypeID!=null){
         updatedArchetypeID.innerHTML="";
         archetypeList = getArchetypeName(classJson.class,element.name);
-        var sphereArchetypeList = getArchetypeName(sphereClassArchetype.sphereArchetypeList,element.name,true);
-        var joinedArchetypes=[...archetypeList,...sphereArchetypeList];
+        let sphereArchetypeList = getArchetypeName(sphereClassArchetype.sphereArchetypeList,element.name,true);
+        let joinedArchetypes=[...archetypeList,...sphereArchetypeList];
         createDatalist(joinedArchetypes,updatedArchetypeID,`archetype${element.name}`,false);
-        createVariableListener(`dropdownarchetype${element.name}`,'click',dropdownInteraction,`dropdownarchetype${element.name}`,true);
-        createVariableArrayListener(`dropdownarchetype${element.name}`,'keyup',searchDrop,[`dropdownarchetype${element.name}`,`searcharchetype${element.name}`]);
+        createVariableListener(`dropdownarchetype${element.name}`,'click',dropdownInteraction,getElementPointer(`dropdownarchetype${element.name}`),true);
+        createVariableArrayListener(`dropdownarchetype${element.name}`,'keyup',searchDrop,[getElementPointer(`dropdownarchetype${element.name}`),getElementPointer(`searcharchetype${element.name}`)]);
         selectionCreation(`dropdownarchetype${element.name}`);
       }
     })
     classItems = classItems.concat(sphereClassList);
   }else{
-    console.log("hi");
     classJson = JSON.parse(classes);
     classJson.class.forEach(element=>{
-      var updatedArchetypeContent = ""; 
+      let updatedArchetypeContent = ""; 
       if(document.getElementById(`dropdownSelectionarchetype${element.name}`)){
         updatedArchetypeContent = document.getElementById(`dropdownSelectionarchetype${element.name}`).value;
         console.log(updatedArchetypeContent);
       }
-      var list = getArchetypeName(sphereClassArchetype.sphereArchetypeList,element.name);
+      let list = getArchetypeName(sphereClassArchetype.sphereArchetypeList,element.name);
       if(list.includes(updatedArchetypeContent)){
         document.getElementById(`dropdownSelectionarchetype${element.name}`).value="Selection";
       }
-      var updatedArchetypeID = document.getElementById(`archetype${element.name}subArea`);
+      let updatedArchetypeID = document.getElementById(`archetype${element.name}subArea`);
       if(updatedArchetypeID!=null){
         updatedArchetypeID.innerHTML="";
         archetypeList = getArchetypeName(classJson.class,element.name);
         console.log(archetypeList);
         createDatalist(archetypeList,updatedArchetypeID,`archetype${element.name}`,false);
-        createVariableListener(`dropdownarchetype${element.name}`,'click',dropdownInteraction,`dropdownarchetype${element.name}`,true);
-        createVariableArrayListener(`dropdownarchetype${element.name}`,'keyup',searchDrop,[`dropdownarchetype${element.name}`,`searcharchetype${element.name}`]);
+        createVariableListener(`dropdownarchetype${element.name}`,'click',dropdownInteraction,getElementPointer(`dropdownarchetype${element.name}`),true);
+        createVariableArrayListener(`dropdownarchetype${element.name}`,'keyup',searchDrop,[getElementPointer(`dropdownarchetype${element.name}`),getElementPointer(`searcharchetype${element.name}`)]);
         selectionCreation(`dropdownarchetype${element.name}`);
       }
     })
@@ -1153,9 +1196,9 @@ function getClassList(){
 
 
 function getClassListWithLevel(){
-  var cList = getClassesData();
-  var cDataString = "";
-  var i=0;
+  let cList = getClassesData();
+  let cDataString = "";
+  let i=0;
   cList.forEach(element=>{
     if(i>0){
       cDataString+=", "
@@ -1173,8 +1216,8 @@ function getClassListWithLevel(){
 
 
 function getTotalBAB(){
-  var cList =  getClassesData();
-  var totalBAB = 0;
+  let cList =  getClassesData();
+  let totalBAB = 0;
   let classArchetype ="";
   cList.forEach(className=>{
       classArchetype="";
@@ -1195,9 +1238,9 @@ function getHitDice(className,archetype="None"){
   if(className.toLocaleLowerCase()=="custom"){
     return 4;
   }
-  var classIndex = getIndex(classJson.class,className.toLocaleLowerCase());
-  var classData = classJson.class[classIndex];
-  var archetypeIndex = getArchetypeIndex(className,archetype);
+  let classIndex = getIndex(classJson.class,className.toLocaleLowerCase());
+  let classData = classJson.class[classIndex];
+  let archetypeIndex = getArchetypeIndex(className,archetype);
   if(archetypeIndex!=-1){
     if(archetype!="None"&&classData.archetype[archetypeIndex].HD!=null){
       return classData.archetype[archetypeIndex].HD;
@@ -1210,10 +1253,10 @@ function getClassBaB(className,archetype="None"){
   if(className.toLocaleLowerCase()=="custom"){
     return getBaB("Slow",getClassLevels(className));
   }
-  var classIndex = getIndex(classJson.class,className.toLocaleLowerCase());
-  var classData = classJson.class[classIndex];
+  let classIndex = getIndex(classJson.class,className.toLocaleLowerCase());
+  let classData = classJson.class[classIndex];
   let BABSpeed = "";
-  var archetypeIndex = getArchetypeIndex(className,archetype);
+  let archetypeIndex = getArchetypeIndex(className,archetype);
   if(archetype=="None"||archetypeIndex==-1||classData.archetype[archetypeIndex].babSpeed==null){
     BABSpeed= classData.babSpeed;
   }else{
@@ -1223,7 +1266,7 @@ function getClassBaB(className,archetype="None"){
 }
 
 function getSkillPointsByClass(classList,intMod){
-  var totalSKills = 0;
+  let totalSKills = 0;
   let classArchetype = "";
   let skillRate = "Low";
   let classData="";
@@ -1237,7 +1280,7 @@ function getSkillPointsByClass(classList,intMod){
       classArchetype="None";
     }
     classData = classJson.class[getIndex(classJson.class,name)];
-    var archetypeIndex = getArchetypeIndex(name,classArchetype);
+    let archetypeIndex = getArchetypeIndex(name,classArchetype);
     classArchetype="";
     if(document.getElementById(`archetype${name}subList`)!=null){
       classArchetype = document.getElementById(`archetype${name}subList`).value;
@@ -1276,7 +1319,7 @@ function getMaxSkillPoints(NPCType,intMod){
 }
 
 function getSkillPoints(skillProgression,intModifier,level){
-      var skillPointsPerLevel = 0;
+      let skillPointsPerLevel = 0;
       switch(skillProgression){
       case "Low":
         skillPointsPerLevel = (2+intModifier);//have alternative based on classLevels
@@ -1302,7 +1345,7 @@ function getSkillPoints(skillProgression,intModifier,level){
 
 
 function getFeats(){
-  var feats = 0;
+  let feats = 0;
   switch(document.getElementById("NPCChoice").value){
     case "Monster":
       return Math.floor((Number(document.getElementById("MonsterLevel").value)-1)/2)+1;
@@ -1332,8 +1375,14 @@ function getHotbar(system,forumType,variableList=false){
       hotBar = `<div class="leveler">
   <div></div>
     <div>
-      <button class="button" onclick="displayChange('main')">Core</button>
-      <button class="button-violet" id="classButton" style="display:none" onclick="displayChange('class')">Class</button>
+      <button class="button" onclick="displayChange('main')">Core</button><br>
+      <div class="dropdown">
+      <button type="button" class="button-violet" id="classChoicesButton" onclick="dropdownOptions('classChoices')">Class</button>
+      <div id="classChoicesOptions" class="dropdown-classChoices">
+      <a class="object-classChoices" onclick="displayChange('class')">Classes</a>
+      <a class="object-classChoices" onclick="displayChange('chosenClasses')">Class Archetypes</a>
+      </div>
+      </div>
     </div>
     <div>
       <button class="button-red" onclick="displayChange('combatTraits')">Combat</button>
@@ -1353,7 +1402,7 @@ function getHotbar(system,forumType,variableList=false){
       <a class="object" onclick="displayChange('racialModSection')">Racial Modifiers</a>
       <a class="object" onclick="displayChange('SQSection')">Special Qualities</a>
       <a class="object" onclick="displayChange('gearSection')">Gear</a>
-      <a class="object" onclick="displayChange('MonsterAbilitiesSection')">Monster Abilities</a>
+      <a class="object" onclick="displayChange('MonsterAbilitiesSection')">Universal Monster Rules</a>
       </div>
       </div>
       </div>
@@ -1390,7 +1439,7 @@ function getForumFeats(){
     let len = document.getElementById(`featChoice`).childElementCount;
     let val = ""
     let arrayFeats = [];
-    for(var i = 0;i<len;i++){
+    for(let i = 0;i<len;i++){
       let entry = document.getElementById(`featChoice`).children.item(i).getElementsByTagName("label").item(0).textContent.trim();
       arrayFeats.push(entry);
     }
@@ -1399,7 +1448,7 @@ function getForumFeats(){
 }
 
 function getArchetypeList(item,noSelect=false){
-    var list = [];
+    let list = [];
   list = getArchetypeName(classJson.class,item,noSelect);
     if(document.getElementById("usesSphereOption").checked){
       list.push(...getArchetypeName(sphereClassArchetype.sphereArchetypeList,item));
@@ -1446,11 +1495,63 @@ function getName(list,text){
   return updateText;
 }
 
+function getSpecialAbilities(){
+  let specialAbilitiesArray = [];
+    for(let i=0;i<document.getElementById("specialAbilityArea").childElementCount;i++){
+    let name = document.getElementById(`SpecialAbilityName${i}`).value;
+    if(name!=""){
+      specialAbilitiesArray.push(name);
+    }
+  }
+  if(document.getElementById("specialAbilityArea").childElementCount==0){
+    return false
+  }
+  return specialAbilitiesArray;
+}
 
-function getAttacks(){
+
+function getAttacksSpecial(){
+  let attacksArray = [];
+  let typeArray = [];
+  let dualArray =[]
+  for(let i=0;i<document.getElementById("meleeAttackArea").childElementCount;i++){
+    let name = document.getElementById(`meleeAttackName${i}`).value;
+    if(document.getElementById(`meleeMaterial${i}`)!=null){
+      if(document.getElementById(`meleeMaterial${i}`).value!=""){
+        name = `${name}(${document.getElementById(`meleeMaterial${i}`).value})`
+      }
+    }
+    if(name!=""){
+      attacksArray.push(name);
+      typeArray.push("melee");
+    }
+  }
+  for(let i=0;i<document.getElementById("rangeAttackArea").childElementCount;i++){
+    let name = document.getElementById(`rangeAttackName${i}`).value;
+    if(name!=""){
+      attacksArray.push(name);
+      typeArray.push("ranged");
+    }
+  }
+  if(attacksArray.length<1){
+    attacksArray.push("Slam");
+    typeArray.push("melee");
+  }
+  dualArray.push(attacksArray);
+  dualArray.push(typeArray);
+  return dualArray;
+}
+
+function getAttacks(extra=""){
+  console.log(extra);
   let attacksArray = [];
   for(let i=0;i<document.getElementById("meleeAttackArea").childElementCount;i++){
     let name = document.getElementById(`meleeAttackName${i}`).value;
+    if(document.getElementById(`meleeMaterial${i}`)!=null){
+      if(document.getElementById(`meleeMaterial${i}`).value!=""){
+        name = `${name}(${document.getElementById(`meleeMaterial${i}`).value})`
+      }
+    }
     if(name!=""){
       attacksArray.push(name);
     }
@@ -1461,8 +1562,17 @@ function getAttacks(){
       attacksArray.push(name);
     }
   }
+    for(let i=0;i<document.getElementById("specialAttackArea").childElementCount;i++){
+      let name = document.getElementById(`specialAttack${i}`).value;
+      if(name!=""){
+        attacksArray.push(name);
+      }
+    }
   if(attacksArray.length<1){
     attacksArray.push("Slam");
+  }
+  if(!attacksArray.includes("Claw") && extra=="Rake"){
+      attacksArray.push("Claw(Not full implemented)");
   }
   return attacksArray;
 }
@@ -1493,7 +1603,9 @@ function getAttackLabel(item){
 function getCustomPlaceholder(type){
   switch(type){
     case "Frightful Presence":
-      return "Range"
+      return "Range";
+    case "Split Condition":
+      return "Condition";
   }
   return "Value";
 }
@@ -1530,6 +1642,8 @@ function getProperty(type){
       return "Poison Name"
     case "Pull":
       return "Distance Pulled"
+    case "Push":
+      return "Distance Pushed"
     case "Frightful Presence":
       return "Aura Range";
     case "Jet":
@@ -1595,7 +1709,6 @@ function consistentElement(string){
   string = capitalizedCaseCharacter(string,["of"]);
   string = removeSpaces(string);
   return string;
-
 }
 
 function convertToUppercase(arr){
@@ -1642,7 +1755,7 @@ function addArchetype(className){
   newLabel.setAttribute("onClick",`displayHiddenArchetypeDetails('${spacelessCapitalizedCaseCharacter(archetype)}Selected')`);
   newLabel.setAttribute("class","archetypeClick")
   nonDetails.appendChild(newLabel);
-  var button = document.createElement("button");
+  let button = document.createElement("button");
   button.setAttribute("class","formButton");
   button.setAttribute("id",`delete${archetype}`);
   button.setAttribute("type","button");
@@ -1686,4 +1799,228 @@ function displayArchetypesList(className){
 
 function hi(){
   console.log("hi");
+}
+
+function shortHandToFull(text){
+  text = text.toLocaleLowerCase();
+  switch(text){
+    case "str":
+      return "strength";
+    case "dex":
+      return "dexterity";
+    case "con":
+      return "constitution";
+    case "wis":
+      return "wisdom";
+    case "int":
+      return "intelligence";
+    case "cha":
+      return "charisma";
+  }
+}
+
+function getAttacksList(section){
+  console.log(section);
+  let array = []
+  let check = document.getElementById(`${section}Choice`).querySelector(".dropdown-content").querySelectorAll("li")
+  check.forEach(el=>{
+    let JSONObject = {
+      "name":el.textContent,
+      "active":el.className.includes(" active")?true:false
+    }
+    array.push(JSONObject);
+  })
+  return array;
+}
+
+
+function getMultiDropdownSelectionList(section){
+  let array = []
+  let check = document.getElementById(`${section}`).querySelector(".dropdown-content").querySelectorAll("li")
+  check.forEach(el=>{
+    if(el.className.includes("active")){
+      array.push(el.textContent);
+    }
+  })
+  return array;
+}
+
+function addSpaces(text){
+  return text.replace(/([A-Z])/g," $1").replace("- ","-").trim()
+}
+
+function createMiniMonsterAbilityJson(abilityName,JSONObject){
+  // console.log(JSON.stringify(JSONObject))
+  let tempJSon = {}
+  console.log(abilityName)
+  switch(abilityName){
+    case "AbilityDamage":
+    case "AbilityDrain":
+      tempJSon["damage"]= document.getElementById(`monsterAbilities${abilityName}Damage`).value;
+      tempJSon["dice"] = document.getElementById(`monsterAbilityDice${abilityName}SelectDamage`).value;
+      tempJSon["attacks"]=getAttacksList(abilityName);
+      tempJSon["stat"] = document.getElementById(`monsterAbilityDice${abilityName}SelectEffectedAbilityScore`).value;
+      tempJSon["abilityType"] = document.getElementById(`monsterAbilityDice${abilityName}SelectAbilityType`).value;
+      tempJSon["saveType"] = document.getElementById(`monsterAbilityDice${abilityName}SelectSaveType`).value;
+      tempJSon["saveAbilityScore"] = document.getElementById(`monsterAbilityDice${abilityName}SelectSaveAbilityScore`).value;
+      tempJSon["displaySaveDC"] = document.getElementById(`monsterAbilities${abilityName}DisplaySaveDC`).checked;
+      break;
+    case "ArchdevilTraits":
+    case "DemonLordTraits":
+    case "EmpyrealLordTraits":
+    case "FormianTraits":
+    case "HorsemanTraits":
+    case "QlippothLordTraits":
+      tempJSon["abilityType"] = document.getElementById(`monsterAbilityDice${abilityName}SelectAbilityType`).value;
+      break;
+    case "Attach":
+    case "Grab":
+    case "PowerfulBlows":
+    case "Trip":
+      tempJSon["attacks"]=getAttacksList(abilityName);
+      break;
+    case "Bleed":
+    case "Burn":
+    case "Rend":
+      tempJSon["damage"]= document.getElementById(`monsterAbilities${abilityName}Damage`).value;
+      tempJSon["dice"] = document.getElementById(`monsterAbilityDice${abilityName}SelectDamage`).value;
+      tempJSon["attacks"]=getAttacksList(abilityName);
+      break;
+    case "BloodDrain":
+    case "Constrict":
+    case "Trample":
+      tempJSon["damage"]= document.getElementById(`monsterAbilities${abilityName}Damage`).value;
+      tempJSon["dice"] = document.getElementById(`monsterAbilityDice${abilityName}SelectDamage`).value;
+      break;
+    case "BreathWeapon":
+      tempJSon["damage"]= document.getElementById(`monsterAbilities${abilityName}Damage`).value;
+      tempJSon["dice"] = document.getElementById(`monsterAbilityDice${abilityName}SelectDamage`).value;
+      tempJSon["recharge"]= document.getElementById(`monsterAbilities${abilityName}RechargeTime`).value;
+      tempJSon["diceRecharge"] = document.getElementById(`monsterAbilityDice${abilityName}SelectRechargeTime`).value;
+      tempJSon["rangeAmount"]= document.getElementById(`monsterAbilities${abilityName}Range`).value;
+      tempJSon["rangeType"] = document.getElementById(`monsterAbilityDice${abilityName}Selectft.`).value;
+      tempJSon["saveType"] = document.getElementById(`monsterAbilityDice${abilityName}SelectSaveType`).value;
+      break;    
+    case "ChangeShape":
+        tempJSon["details"]=document.getElementById(`monsterAbilities${abilityName}Shape`).value;
+        break;
+    case "ChannelResistance":
+    case "PsychicResilience":
+      tempJSon["resist"]= document.getElementById(`monsterAbilities${abilityName}ResistedAmount`).value;
+        break;
+    case "Disease":
+    case "Poison":
+      tempJSon["abilityType"] = document.getElementById(`monsterAbilityDice${abilityName}SelectAbilityType`).value;
+    case "Curse":
+      tempJSon["name"]=document.getElementById(`monsterAbilities${abilityName}Name`).value;
+      tempJSon["contact"]=getAttacksList(abilityName);
+      tempJSon["infliction"]=document.getElementById(`monsterAbilities${abilityName}InflictionFlavor`).value==null?"":document.getElementById(`monsterAbilities${abilityName}InflictionFlavor`).value;
+      tempJSon["onset"]=document.getElementById(`monsterAbilities${abilityName}Onset`).value==null?"":document.getElementById(`monsterAbilities${abilityName}Onset`).value;
+      tempJSon["frequency"]=document.getElementById(`monsterAbilities${abilityName}Frequency`).value==null?"":document.getElementById(`monsterAbilities${abilityName}Frequency`).value;
+      tempJSon["effect"]=document.getElementById(`textareamonsterAbilities${abilityName}Effect`).value==null?"":document.getElementById(`textareamonsterAbilities${abilityName}Effect`).value;
+      tempJSon["cure"]=document.getElementById(`textareamonsterAbilities${abilityName}Cure`).value==null?"":document.getElementById(`textareamonsterAbilities${abilityName}Cure`).value;
+      break;
+    case "CurseofLycanthropy":
+      tempJSon["contact"]=getAttacksList(abilityName);
+      tempJSon["infliction"]=document.getElementById(`monsterAbilities${abilityName}InflictionFlavor`).value==null?"":document.getElementById(`monsterAbilities${abilityName}InflictionFlavor`).value;
+      break;
+    case "EnergyDrain":
+      tempJSon["levelsDrained"]= document.getElementById(`monsterAbilities${abilityName}LevelsDrained`).value;
+      tempJSon["attacks"]=getAttacksList(abilityName);
+      break;
+    case "Engulf":
+      tempJSon["damage"]= document.getElementById(`monsterAbilities${abilityName}Damage`).value;
+      tempJSon["dice"] = document.getElementById(`monsterAbilityDice${abilityName}SelectDamage`).value;
+      tempJSon["damageTypeandEffects"]=document.getElementById(`textareamonsterAbilities${abilityName}DamagetypeandEffects`).value;
+      break;
+    case "Entrap":
+      tempJSon["duration"]= document.getElementById(`monsterAbilities${abilityName}Duration`).value;
+      tempJSon["dice"] = document.getElementById(`monsterAbilityDice${abilityName}SelectDuration`).value;
+      tempJSon["hardness"]= document.getElementById(`monsterAbilities${abilityName}Hardness`).value;
+    case "Web":
+      tempJSon["hp"] = document.getElementById(`monsterAbilities${abilityName}HP`).value;
+      break;
+    case "FastHealing":
+      tempJSon["rate"] = document.getElementById(`monsterAbilities${abilityName}Healing`).value;
+      break;
+    case "Fear":
+      tempJSon["area"] = document.getElementById(`monsterAbilityDice${abilityName}Selectft.`).value;
+    case "RockThrowing":
+    case "Telepathy":
+    case "UnnaturalAura":
+      tempJSon["range"] = document.getElementById(`monsterAbilities${abilityName}Range`).value;
+      break;
+    case "FrightfulPresence":
+      tempJSon["auraRange"] = document.getElementById(`monsterAbilities${abilityName}AuraRange`).value;
+      break;
+    case "Split":
+      tempJSon["condition"]= document.getElementById(`monsterAbilities${abilityName}SplitCondition`).value;
+    case "Heat":
+    case "Stench":
+      tempJSon["damage"]= document.getElementById(`monsterAbilities${abilityName}Damage`).value;
+      break;
+    case "Jet":
+      tempJSon["distance"]= document.getElementById(`monsterAbilities${abilityName}Distance`).value;
+      break;
+    case "LycanthropicEmpathy":
+      tempJSon["animals"]= document.getElementById(`monsterAbilities${abilityName}Animals`).value;
+      break;
+    case "MentalStaticAura":
+      tempJSon["damage"]= document.getElementById(`monsterAbilities${abilityName}Damage`).value;
+      break;
+    case "MythicPower":
+      tempJSon["power"]=document.getElementById(`textareamonsterAbilities${abilityName}Power`).value;
+    case "MythicMagic":
+      tempJSon["amount"]= document.getElementById(`monsterAbilities${abilityName}Amount`).value;
+      tempJSon["durationLimit"]= document.getElementById(`monsterAbilities${abilityName}DurationLimit(Day)`).value;
+      break;
+    case "Paralysis":
+      tempJSon["duration"]= document.getElementById(`monsterAbilities${abilityName}Duration`).value;
+      tempJSon["dice"] = document.getElementById(`monsterAbilityDice${abilityName}SelectDuration`).value;
+      tempJSon["attacks"]=getAttacksList(abilityName);
+      break;
+    case "PoisonousBlood":
+        tempJSon["poisonName"]=document.getElementById(`monsterAbilities${abilityName}PoisonName`).value;
+        break;
+    case "Pull":
+      tempJSon["distancePulled"]=document.getElementById(`monsterAbilities${abilityName}DistancePulled`).value;
+      tempJSon["attack"]=getAttacksList(abilityName);
+      break;
+    case "Push":
+      tempJSon["distancePushed"]=document.getElementById(`monsterAbilities${abilityName}DistancePushed`).value;
+      tempJSon["attack"]=getAttacksList(abilityName);
+      break;
+    case "Regeneration":
+      tempJSon["rate"]= document.getElementById(`monsterAbilities${abilityName}Rate`).value;
+      tempJSon["howtoDisable"]= document.getElementById(`monsterAbilities${abilityName}HowtoDisable`).value;
+      break;
+    case "Summon":
+      tempJSon["creatureName"]= document.getElementById(`monsterAbilities${abilityName}CreatureName`).value;
+      tempJSon["level"]= document.getElementById(`monsterAbilities${abilityName}Level`).value;
+      tempJSon["summonAmount"]= document.getElementById(`monsterAbilities${abilityName}Amount`).value;
+      tempJSon["durationLimit"]= document.getElementById(`monsterAbilities${abilityName}DurationLimit(Day)`).value;
+      tempJSon["chance"]= document.getElementById(`monsterAbilities${abilityName}Chance`).value;
+      break;
+    case "SwallowWhole":
+      tempJSon["hardness"]= document.getElementById(`monsterAbilities${abilityName}Hardness`).value;
+      tempJSon["hp"] = document.getElementById(`monsterAbilities${abilityName}HP`).value;
+      tempJSon["damage"]= document.getElementById(`monsterAbilities${abilityName}Damage`).value;
+      tempJSon["dice"] = document.getElementById(`monsterAbilityDice${abilityName}SelectDamage`).value;
+      tempJSon["damageType"]=document.getElementById(`monsterAbilities${abilityName}DamageType`).value;
+      break;
+    case "Whirlwind":
+      tempJSon["damage"]= document.getElementById(`monsterAbilities${abilityName}Damage`).value;
+      tempJSon["dice"] = document.getElementById(`monsterAbilityDice${abilityName}SelectDamage`).value;
+      tempJSon["maxHeight"]= document.getElementById(`monsterAbilities${abilityName}MaxHeight`).value;
+      tempJSon["amount"]= document.getElementById(`monsterAbilities${abilityName}Amount`).value;
+      tempJSon["durationLimit"]= document.getElementById(`monsterAbilities${abilityName}DurationLimit(Day)`).value;
+      break;
+    default:
+      tempJSon["empty"]=true
+  }
+  return tempJSon
+}
+
+function addBreak(element){
+  element.append(document.createElement("br"))
 }

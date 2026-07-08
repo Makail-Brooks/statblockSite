@@ -1,3 +1,34 @@
+:root{
+  --button-darkMode: rgb(124, 4, 204);
+  --button-darkMode-dropdown: rgb(101, 1, 167);
+  --button-red:rgb(204, 4, 4);
+  --button-blue: rgb(0, 68, 255);
+  --button-red-dropdown:rgb(160, 3, 3);
+  --button-blue-dropdown: rgb(4, 57, 201);
+  --button-green: rgb(34, 204, 4);
+  --button-orange:rgb(204, 87, 4);
+  --button-violet:rgb(204, 4, 201);
+  --button-violet-dropdown:rgb(138, 5, 135);
+  --button-yellow:rgb(204, 201, 4);
+  --button-cyan:rgb(4, 204, 181);
+  --button-darkMode-hover: rgb(69, 3, 112);
+  --button-red-hover:rgb(112, 3, 3);
+  --button-blue-hover: rgb(3, 39, 160);
+  --button-green-hover: rgb(23, 112, 3);
+  --button-orange-hover:rgb(112, 70, 3);
+  --button-violet-hover:rgb(112, 3, 103);
+  --button-yellow-hover:rgb(112, 105, 3);
+  --button-cyan-hover:rgb(3, 112, 112);
+}
+ul{
+  font-size: 20px;
+}
+
+ul li::marker{
+  color:#a52a8a;
+  font-size: 1.5em;
+}
+
 .sidenav {
   height: 100%; /* 100% Full-height */
   width: 0; /* 0 width - change this with JavaScript */
@@ -19,7 +50,21 @@
 .archetype-item.active {
   grid-template-rows: 1fr;
 }
+
+.content-item {
+  display:none;
+}
+
+.content-item.active {
+  font-size: 25px;
+  text-transform: capitalize;
+  display:block;
+}
+
 .archetype-item > div{
+  overflow: hidden;
+}
+.content-item > div{
   overflow: hidden;
 }
 
@@ -80,7 +125,7 @@
 .button {
   background-color: black; /* Green */
   border: 1px solid black;
-  color: rgb(124, 4, 204);
+  color: var(--button-darkMode);
   padding: 0px;
   text-align: center;
   text-decoration: none;
@@ -91,14 +136,14 @@
 }
 
 .button:hover, .button:focus {
-  color: rgb(69, 3, 112);
+  color: var(--button-darkMode-hover);
 }
 
 
 .button-red {
   background-color: black; /* Green */
   border: 1px solid black;
-  color: rgb(204, 4, 4);
+  color: var(--button-red);
   padding: 0px;
   text-align: center;
   text-decoration: none;
@@ -109,13 +154,13 @@
 }
 
 .button-red:hover, .button-red:focus {
-  color: rgb(112, 3, 3);
+  color: var(--button-red-hover);
 }
 
 .button-blue {
   background-color: black; /* Green */
   border: 1px solid black;
-  color: rgb(0, 68, 255);
+  color: var(--button-blue);
   padding: 0px;
   text-align: center;
   text-decoration: none;
@@ -126,14 +171,14 @@
 }
 
 .button-blue:hover, .button-blue:focus {
-  color: rgb(3, 39, 160);
+  color: var(--button-blue-hover);
 }
 
 
 .button-green {
   background-color: black; /* Green */
   border: 1px solid black;
-  color: rgb(34, 204, 4);
+  color: var(--button-green);
   padding: 0px;
   text-align: center;
   text-decoration: none;
@@ -144,14 +189,14 @@
 }
 
 .button-green:hover, .button-green:focus {
-  color: rgb(23, 112, 3);
+  color: var(--button-green-hover);
 }
 
 
 .button-orange {
   background-color: black; /* Green */
   border: 1px solid black;
-  color: rgb(204, 87, 4);
+  color: var(--button-orange);
   padding: 0px;
   text-align: center;
   text-decoration: none;
@@ -162,7 +207,7 @@
 }
 
 .button-orange:hover, .button-orange:focus {
-  color: rgb(112, 70, 3);
+  color: var(--button-orange-hover);
 }
 
 
@@ -170,7 +215,7 @@
 .button-violet {
   background-color: black; /* Green */
   border: 1px solid black;
-  color: rgb(204, 4, 201);
+  color: var(--button-violet);
   padding: 0px;
   text-align: center;
   text-decoration: none;
@@ -181,13 +226,13 @@
 }
 
 .button-violet:hover, .button-violet:focus {
-  color: rgb(112, 3, 103);
+  color: var(--button-violet-hover);
 }
 
 .button-yellow {
   background-color: black; /* Green */
   border: 1px solid black;
-  color: rgb(204, 201, 4);
+  color: var(--button-yellow);
   padding: 0px;
   text-align: center;
   text-decoration: none;
@@ -198,13 +243,13 @@
 }
 
 .button-yellow:hover, .button-yellow:focus {
-  color: rgb(112, 105, 3);
+  color: var(--button-yellow-hover);
 }
 
 .button-cyan {
   background-color: black; /* Green */
   border: 1px solid black;
-  color: rgb(4, 204, 181);
+  color: var(--button-cyan);
   padding: 0px;
   text-align: center;
   text-decoration: none;
@@ -215,7 +260,7 @@
 }
 
 .button-cyan:hover, .button-cyan:focus {
-  color: rgb(3, 112, 112);
+  color: var(--button-cyan-hover);
 }
 
 .title{
@@ -223,6 +268,17 @@
     font-weight: bold;
     background-color:rgb(90, 12, 129);
     padding: 3px;
+}
+
+
+.specialAbilities{
+    font-size: 35px;
+    font-weight: bold;
+    background-color:rgb(90, 12, 129);
+    padding: 3px;
+    margin: 0;
+    cursor: pointer;
+    
 }
 
 .pageTitle{
@@ -374,10 +430,18 @@ hr{
   vertical-align: bottom;
 }
 
+
 .inputName{
   font-size: 25px;
   white-space: pre;
 }
+
+.inputName-close{
+  font-size: 25px;
+  white-space: pre;
+  margin: 0;
+}
+
 
 .infoTitle{
   font-size: 15px;
@@ -495,6 +559,11 @@ hr{
 .stairCase{
   margin-left: 50px;
 }
+.stairCase-normalText{
+  font-size: 25px;
+  white-space: pre;
+  margin-left: 50px;
+}
 
 .stairCase-yellow{
   color:rgb(204, 201, 4);
@@ -595,15 +664,22 @@ hr{
   display: inline-block;
 }
 
-
+.dropdown-classChoices,
 .dropdown-offensive,
-.dropdown-defensive,
 .dropdown-misc,
 .dropdown-base{
   display: none;
   align-content: center;
   position: absolute;
-  background-color: rgb(101, 5, 165);
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  cursor: pointer;
+}
+.dropdown-defensive{
+  display: none;
+  align-content: center;
+  position: absolute;
   overflow: auto;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
@@ -611,14 +687,40 @@ hr{
 }
 
 
+
 .object{
-    background-color: rgb(101, 5, 165);
+    background-color: var(--button-darkMode-dropdown);
 }
 
 .object:hover, .object:focus {
-  background-color: rgb(69, 3, 112);
+  background-color: var(--button-darkMode-hover);
 }
 
+.object-offensive{
+    background-color: var(--button-red-dropdown);
+}
+
+.object-offensive:hover, .object-offensive:focus {
+  background-color: var(--button-red-hover);
+}
+
+
+.object-defensive{
+    background-color: var(--button-blue-dropdown);
+}
+
+.object-defensive:hover, .object-defensive:focus {
+  background-color: var(--button-blue-hover);
+}
+.object-classChoices{
+    background-color: var(--button-violet-dropdown);
+}
+
+.object-classChoices:hover, .object-classChoices:focus {
+  background-color: var(--button-violet-hover);
+}
+
+.dropdown-classChoices a,
 .dropdown-offensive a,
 .dropdown-defensive a,
 .dropdown-misc a,
@@ -627,6 +729,7 @@ hr{
   text-decoration: none;
   display: block;
 }
+
 
 .show {display: block;}
 

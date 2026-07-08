@@ -7,7 +7,8 @@ window.onclick = function(event) {
   var miscArray = ["#miscButton","dropdown-misc"]
   var dtArray = ["#defensiveButton","dropdown-defensive"]
   var otArray = ["#offensiveButton","dropdown-offensive"]
-  var dropDownArrayList = [miscArray,dtArray,otArray];
+  var ccArray = ["#classChoicesButton","dropdown-classChoices"]
+  var dropDownArrayList = [miscArray,dtArray,otArray,ccArray];
   dropDownArrayList.forEach(element=>{
     if (!(event.target.closest(element[0]))) {
       var dropdowns = document.getElementsByClassName(element[1]);
@@ -27,11 +28,11 @@ let playerClassList = ['Barbarian','Bard','Cleric','Druid','Fighter','Monk','Pal
 let npcClassList = ['Adept','Aristocrat','Commoner','Expert','Warrior'];
 let spherePlayerClassList = ['Incanter'];
 var lanList = ['Common','Abyssal','Celestial','Aboleth','Aklo','Aquan','Auran','Boggard','Cyclops','Dark Folk','Draconic','Drow Sign Language','Druidic','Dwarven','D\'ziriak','Elven','Giant','Gnoll','Gnome','Goblin','Grippli','Halfling','Ignan','Infernal','Necril','Orc','Protean','Rougarou','Sphinx','Sylvan','Tengu','Terran','Treant','Undercommon','Vegepygmy'];
-var senseList = ['Darkvision','Blindsight','Low-light vision','Blindsense','Scent','Tremorsense','Greensight','Keen Scent','Lifesense','Mistsight','See In Darkness','Thoughtsense','X-ray Vision','Thermalsense','Spirit Sense','Touchsight'];
+var senseList = ['Darkvision','Blindsight','Low-light Vision','Blindsense','Scent','Tremorsense','Greensight','Keen Scent','Lifesense','Mistsight','See In Darkness','Thoughtsense','X-ray Vision','Thermalsense','Spirit Sense','Touchsight','All-Around Vision'];
 //put a space after value in a datalist option allows for the text to be displayed along with the value text
 var classList = ['Adept','Alchemist','Antipaladin','Arcanist','Aristocrat','Barbarian','Bard','Bloodrager','Brawler','Cavalier','Cleric','Commoner','Druid','Expert','Fighter','Gunslinger','Hunter','Inquisitor','Investigator','Kineticist','Magus','Medium','Mesmerist','Monk','Ninja','Occultist','Omdura','Oracle','Paladin','Psychic','Ranger','Rogue','Samurai','Shaman','Shifter','Skald','Slayer','Sorcerer','Spiritualist','Summoner','Swashbuckler','Vampire Hunter','Vigilante','Warpriest','Warrior','Witch','Wizard']
 var sphereClassList = ["Armorist","Incanter","Elementalist","Eliciter","Fey Adept","Hedgewitch","Mageknight","Shifter","Soul Weaver","Symbiat","Thaumaturge","Wraith","Agent","Courser","Envoy","Genius","Mastermind","Professional","Advisor","Conduit","Armiger","Blacksmith","Commander","Conscript","Savant","Scholar","Sentinel","Striker","Technician","Bravo","Crimson Dancer","Dissident","Prodigy","Sage","Theorist","Troubadour","Warden","Dragoon","Mountebank","Necros","Raveler","Reaper"];
-var rangelessSense = ['scent','low-light vision','keen scent','lifesense','mistsight','see in darkness','x-ray vision'];
+var rangelessSense = ['scent','low-light vision','keen scent','lifesense','mistsight','see in darkness','x-ray vision','all-around vision'];
 var movementList = ['Burrow','Climb','Walk','Fly','Swim'];
 var featsWithInput=['Skill Focus','Weapon Focus'];
 var racialModifiersList = ['Acrobatics','Appraise','Bluff','Climb','Craft','Diplomacy','Disable Device','Disguise','Escape Artist','Fly','HandleAnimal','Heal','Intimidate','Arcana','Dungeoneering','Engineering','Geography','History','Local','Nature','Nobility','Planes','Religion','Linguistics','Perception','Perform','Profession','Ride','Sense Motive','Sleight of Hand','Spellcraft','Stealth','Survival','Swim','Use Magic Device'];
@@ -43,7 +44,7 @@ var destructionList = ['Admixture','Cascade Failure','Clinging Blast'];
 var monsterAbilitiesList = ['Regeneration','Rend','Absurd Reactions','Ability Damage','Bleed','Blood Drain','Breath Weapon','Frightful Presence','Ability Drain','All-Around Vision','All-Knowing','All-Sensing','Amazing Initative','Amorphous','Amphibious','Apocalyptic Resurrection','Archdevil Traits','Attach','Block Sensing','Blood Rage','Burn','Capsize','Channel Resistance','Change Shape','Compression','Constrict','Curse','Curse of Lycanthropy','Demon Lord Traits','Disease','Display of Strength','Distraction','Dual Initiative',
   'Dragon Senses','Earth Glide','Echosense/Echosight','Emotion Aura','Empyreal Lord Traits','Energy Drain','Engulf','Entrap','Expanding Blindsense','Fast Healing','Fast Swallow','Fear','Ferocity','Fight Through Restriction','Formian Traits','Fortification','Freeze','Gaze','Grab','Heat','Hold Breath','Horseman Traits','Incorporeal','Instant Action','Jet','Legendary Concentration','Legendary Saving Throw','Light Blindness','Light Sensitivity','Lycanthropic Empathy','Material sense','Mental Static Aura',
   'Mythic Durability','Mythic Immortality','Mythic Magic','Mythic Power','Multiweapon Mastery','Natural Invisibility','Negative Energy Affinity','No Breath','Outside Time','Paralysis','Planar Knowledge','Plantbringer','Plant Traits','Poison','Poisonous Blood','Pounce','Powerful Blows','Powerful Charge','Primed Action','Psychic Magic','Psychic Resilience','Pull','Push','Qlippoth Lord Traits','Rake','Recuperation','Rock Catching','Rock Throwing','Smother','Sound Mimicry','Split','Stench','Strangle','Summon','Sunlight Powerlessness',
-  'Superior Scent','Surge','Swallow Whole','Telepathy','Trample','Trip','Unbound Action','Undead Traits','Undersized Weapons','Unnatural Aura','Unstoppable','Water Breathing','Water Dependency','Web','Whirlwind'];
+  'Superior Scent','Surge','Swallow Whole','Telepathy','Trample','Trip','Unbound Action','Undead Traits','Construct Traits','Ooze Traits','Undersized Weapons','Unnatural Aura','Unstoppable','Water Breathing','Water Dependency','Web','Whirlwind'];
 var meleeWeaponList = ['Morningstar','Dagger'];
 var rangedWeaponList = ['Bow','Shortbow'];
 meleeWeaponList.sort();
@@ -157,11 +158,13 @@ function createNPC(){
 
 }
 //editNPCstuff
-  function completeNPCEdit(){
+function completeNPCEdit(){
   let cinfo ={"path":"./NPCDisplay.html"};
   let cname = document.getElementById("NPCName").value;
   let system = sessionStorage.getItem("system");
+  sessionStorage.setItem("state","");
   createNPCJson(cinfo);
+  console.log(cinfo)
   let entry = sessionStorage.getItem("NPC");
   let param = new URLSearchParams(window.location.search);
   entry = param.get("NPC");
@@ -178,6 +181,7 @@ function createNPC(){
 
 function completeEdit(id,name,system){
   callFetch(id,name,system);
+  sessionStorage.setItem("state","");
   window.location.href = `./NPCDisplay.html?NPC=${id}`;
 }
 
@@ -186,6 +190,7 @@ function switchToCreation(list,cname){
   sessionStorage.setItem("NPC",len);
   let system = sessionStorage.getItem("system");
   callFetch(len,cname,system);
+  sessionStorage.setItem("state","");
   window.location.href = `./NPCDisplay.html?NPC=${len}`;
 
 }
@@ -268,7 +273,7 @@ function create(){
 }
 
 function createNPCForm(){
-  window.location.href = "./creationNPC.html";
+  window.location.href = "./creationNPC.html?Doc=edit";
 }
 
 function createCharacter(){
@@ -309,7 +314,7 @@ function display(){
  * gets json to be used in editing
  */
 function editNPC(){
-
+  sessionStorage.setItem("state","edit");
   fetch("./list.json")
   .then(response=>response.json())
   .then(givenRes=>switchToEdit(givenRes))
@@ -324,7 +329,7 @@ function switchToEdit(json){
   id = param.get("NPC");
   let sys = json.NPCs[id].system;
  sessionStorage.setItem("system",sys);
- window.location.href = `./NPCEdit.html?NPC=${id}`;
+ window.location.href = `./NPCEdit.html?NPC=${id}&Doc=edit`;
 
 }
 /**
@@ -338,6 +343,7 @@ function goToInformation(){
 function returnToNPC(){
   let param = new URLSearchParams(window.location.search);
   id = param.get("NPC");
+  sessionStorage.setItem("state","");
   window.location.href = `./NPCDisplay.html?NPC=${id}`;
 }
 var last_combat = "defensiveTraits"
@@ -412,15 +418,25 @@ function getChoiceDrop(system){
 const observer = new MutationObserver(function(MutationList,config){
   for(const mutation of MutationList){
     if(mutation.type==='childList'){
-     setFeatsAvailable();
-     updateFeatDetails();
-     classListener();
-     setSkillPoints();
-     doAttacksDropdown();
+      setFeatsAvailable();
+      updateFeatDetails();
+      classListener();
+      setSkillPoints();
+      doAttacksDropdown();
+      doSpecialAttacksDropdown();
     }
   }
 })
 
+const observeAbilities = new MutationObserver(function(MutationList,config){
+  for(const mutation of MutationList){
+    if(mutation.type==='childList'){
+      updateSpecialAbilities("listener");
+      
+    }
+//    console.log(mutation)
+  }
+})
 
 function notInputFeat(input){
   let inputlessFeat = featList.filter(item=>!featsWithInput.includes(item));
@@ -467,19 +483,19 @@ function createMainForm(sys){
         <div class="dropdown">
         <button type="button" class="button-blue" id="defensiveButton" onclick="dropdownOptions('DT')">Defensive Abilities</button>
         <div id="DTOptions" class="dropdown-defensive">
-        <a class="object" onclick="displayChange('bonusACOption')">Armor</a>
-        <a class="object" onclick="displayChange('resistanceOption')">Resistance</a>
-        <a class="object" onclick="displayChange('defensiveBonusOption')">Defensive Bonuses</a>
+        <a class="object-defensive" onclick="displayChange('bonusACOption')">Armor</a>
+        <a class="object-defensive" onclick="displayChange('resistanceOption')">Resistance</a>
+        <a class="object-defensive" onclick="displayChange('defensiveBonusOption')">Defensive Bonuses</a>
         </div>
         </div>
         <div class="dropdown">
         <button type="button" class="button-red" id="offensiveButton" onclick="dropdownOptions('OT')">Offensive Abilities</button>
         <div id="OTOptions" class="dropdown-offensive">
-        <a class="object" onclick="displayChange('specialAttacksOption')">Special Attack</a>
-        <a class="object" onclick="displayChange('meleeOption')">Melee Attack</a>
-        <a class="object" onclick="displayChange('rangeOption')">Ranged Attack</a>
-        <a class="object" onclick="displayChange('auraOption')">Aura</a>
-        <a class="object" onclick="displayChange('specialAbilityOption')">Special Ability</a>
+        <a class="object-offensive" onclick="displayChange('meleeOption')">Melee Attack</a>
+        <a class="object-offensive" onclick="displayChange('rangeOption')">Ranged Attack</a>
+        <a class="object-offensive" onclick="displayChange('auraOption')">Aura</a>
+        <a class="object-offensive" onclick="displayChange('specialAttacksOption')">Special Attack</a>
+        <a class="object-offensive" onclick="displayChange('specialAbilityOption')">Special Ability</a>
         </div>
         </div>
         `;
@@ -493,7 +509,7 @@ function createMainForm(sys){
  */
 function getForum(sys,forumType){
   let submitButton = "createNPC()";
-  if(forumType==="edit"){
+  if(forumType=="edit"){
     submitButton = "completeNPCEdit()";
   }
   let forum = ""
@@ -770,10 +786,11 @@ function getForum(sys,forumType){
 
         <div class="creationSetup">
         <div id="specialAttacksOption" style="display:none;">
-        <textarea class="searchBarCreation" name="special_attacks" id="special_attacks" style="display: block;" placeholder="Special Attacks" title="special_attacks"></textarea>
+        <button type="button" class="formButton" onclick="createSpecialAttackSetup()">Add Special Attacks</button>
+        <div class="specialAttack" id="specialAttackArea"></div>
         </div>
         <div id="specialAbilityOption" style="display:none;">
-        <button type="button" class="formButton" onclick="createDualInformation('SpecialAbility','Name','Details','Special Ability','Special Ability Name','Special Ability Details','text','text',true,true,true,true)">Add Special Ability</button>
+        <button type="button" class="formButton" onclick="createDualInformation('SpecialAbility','Name','Details','Special Ability','Special Ability Name','Special Ability Details','text','text',true,true,true,true,false,true)">Add Special Ability</button>
         <div class="SpecialAbility" id="specialAbilityArea"></div>
         </div>
         <div id="auraOption" style="display:none;">
@@ -816,7 +833,7 @@ function getForum(sys,forumType){
         <button type="button" class="formButton" onclick="addDropdownchoice('sense',true,'Vision Range','number')">Add sense</button>
         </div>
         <div id="senseInput" style="display:block;">
-        <input type="number" min="1" class="searchBarCreation" name="senseTemp" id="senseTemp" placeholder="Insert Vision Range Here" title="SenseTemp"> <label class="inputName">ft.</label>
+        <input type="number" min="1" class="searchBarCreation" name="senseTemp" id="senseTemp" placeholder="Insert Vision Range Here" title="SenseTemp"> <label class="inputName" for="senseTemp">ft.</label>
         </div>
         <div id="senseChoice"></div>
         </div>
@@ -891,7 +908,7 @@ function getForum(sys,forumType){
         </div>
         </div>
         <div id="classDisplay">
-        <label class="inputName">Classes:</label>
+        <span class="inputName">Classes:</span>
         <button class="button classFeatureButton" type="button" onClick="features('abilities')">Class Feature Options</button>
         <br>
         <div id="classesChoice"></div>
@@ -1339,7 +1356,7 @@ function getForum(sys,forumType){
 
 
 
-function generateForum(){
+function generateForum(forumType){
     var creationDisplay = document.getElementById("creationDis");
     var creationHTML = document.createElement("div");
     var hotbarDisplay = document.getElementById("hotBar");
@@ -1348,9 +1365,9 @@ function generateForum(){
     var choiceHTML = document.createElement("div");
     let system;
     system = sessionStorage.getItem("system");
-    hotbarHTML.innerHTML+=getHotbar(system);
+    hotbarHTML.innerHTML+=getHotbar(system,forumType);
     choiceHTML.innerHTML+=getChoiceDrop(system);
-    creationHTML.innerHTML+=getForum(system);
+    creationHTML.innerHTML+=getForum(system,forumType);
     hotbarDisplay.appendChild(hotbarHTML);
     choiceDisplay.appendChild(choiceHTML);
     creationDisplay.appendChild(creationHTML);
@@ -1378,9 +1395,6 @@ function getMiscdropdown(){
       <a class="object" onclick="displayChange('racialModSection')">Racial Modifiers</a>
       <a class="object" onclick="displayChange('SQSection')">Special Qualities</a>
       <a class="object" onclick="displayChange('gearSection')">Gear</a>
-      <a class="object" onclick="displayChange('MonsterAbilitiesSection')">Monster Abilities</a>`
-      if(document.getElementById("NPCChoice").value=="NPC"){
-        drop+=`<a class="object" onclick="displayChange('chosenClasses')">Class Archetypes</a>`
-      }
+      <a class="object" onclick="displayChange('MonsterAbilitiesSection')">Universal Monster Rules</a>`
   return drop;
 }

@@ -10,12 +10,15 @@ function loadsData(list){
     NPCId = param.get("NPC");
     let sys = list.NPCs[NPCId].system;
     let NPCInfo = list.NPCs[NPCId];
-    var NPCDisplay = document.getElementById("display");
-    var NPC = document.createElement("div");
+    let NPCDisplay = document.getElementById("display");
+    let NPC = document.createElement("div");
     document.title = NPCInfo.name;
     let senseString="";
     switch(sys){
     case "pathfinder":
+        if(NPCInfo.monsterAbilities){
+            var monsterAbilities = NPCInfo.monsterAbilities;
+        }
         if(NPCInfo.senses!=null){
             Object.keys(NPCInfo.senses).forEach(senses=>{
                 if(NPCInfo.senses[senses]!=""){
@@ -27,7 +30,7 @@ function loadsData(list){
             })
             }
             senseString+= `Perception ${getSkill(NPCInfo,'Perception')}`;
-            let senseTitle = " <b>Sense</b>";
+            let senseTitle = " <b>Senses</b>";
             if(senseString!=''){
                 senseString=senseTitle.concat(" ",senseString);
             }
@@ -45,7 +48,7 @@ function loadsData(list){
                 let auraDC = "";
                 let auraDmg = "";
                 if(aura.dcStat){
-                    let dc = 10+Math.floor(NPCInfo.level/2)+getSaveMod(aura.dcStat,NPCInfo);
+                    let dc = getSaveDC(NPCInfo,aura.dcStat);
                    auraDC = ", DC " + dc
                 }
                 if(aura.auraDmg){
@@ -63,7 +66,7 @@ function loadsData(list){
                     }else{
                         senseString+=", ";
                     }
-                    let dc = 10+Math.floor(NPCInfo.level/2)+getSaveMod(element.dcStat,NPCInfo);
+                    let dc = getSaveDC(NPCInfo,element.dcStat);
                     auraDC = ", DC " + dc
                     let showDC = "";
                     if(element.saveType!=null){
@@ -167,8 +170,9 @@ function loadsData(list){
             hpInformation=getNPChitDiceDisplay(NPCInfo);
         }
         let hpNode = `${trueHp}(${hpInformation})`;
-        if(NPCInfo.hp_traits){
-            hpNode += "; " + NPCInfo.hp_traits;
+        if(getMonsterAbility("Regeneration",monsterAbilities)!=""){
+            
+            hpNode += "; " + displayMonsterAbility(getMonsterAbility("Regeneration",monsterAbilities),NPCInfo);
         }
         let saves =""
         saves = `<b> Fort </b>`
@@ -249,6 +253,9 @@ function loadsData(list){
                 let skill = DT[ex];
                 ex = ex.replace("_"," ")
                 defensiveTraits += `<b>${ex}</b>` +" " + skill;
+                if(checkAttackMonsterAbilities(NPCInfo,ex)){
+                    defensiveTraits+=`, ${displayDefenses(monsterAbilities,ex)}`;
+                }
             })
         }
         let featsList="";
@@ -344,10 +351,15 @@ function loadsData(list){
                 SQlist+=element;
             })
         }
+        if(checkAttackMonsterAbilities(NPCInfo,"SQ")){
+            if(SQlist!=""){
+                SQlist+=", "
+            }
+            SQlist+=displayMonsterAbility(getMonsterAbility("PowerfulBlows",monsterAbilities),NPCInfo);
+        }
         let spellListPrepared = "";
         let spellListInnate = "";
         if(NPCInfo.spell_abilities){
-
             let NPCSpellInfo = NPCInfo.spell_abilities;
             if(NPCSpellInfo.innate){
                 let innate =NPCSpellInfo.innate;
@@ -416,6 +428,7 @@ function loadsData(list){
             speed += `${NPCInfo.speed['walk']} ft.`
         
         i=1;
+
         Object.keys(NPCInfo.speed).forEach(speedVal=>{
             if(i>1){
                 speed+=", "
@@ -458,12 +471,16 @@ function loadsData(list){
         let j =0;
         let enchantedGear = [];
         if(NPCInfo.melee){
-        
-        NPC.innerHTML+=`<p class="information"><b>Melee</b> ${getAttackDetails(NPCInfo.melee,NPCInfo,enchantedGear,"melee")}</p>`
-    }
+            if(NPCInfo.melee.length>0){
+            
+            NPC.innerHTML+=`<p class="information"><b>Melee</b> ${getAttackDetails(NPCInfo.melee,NPCInfo,enchantedGear,"melee")}</p>`
+        }
+        }
         j=0;
         if(NPCInfo.ranged){
-            NPC.innerHTML+=`<p class="information"><b>Ranged</b> ${getAttackDetails(NPCInfo.ranged,NPCInfo,enchantedGear,"ranged")}</p>`
+            if(NPCInfo.ranged.length>0){
+                NPC.innerHTML+=`<p class="information"><b>Ranged</b> ${getAttackDetails(NPCInfo.ranged,NPCInfo,enchantedGear,"ranged")}</p>`
+            }
         }
         let reachBonusEffect ="";
         if(NPCInfo.reach_bonus_effects){
@@ -475,7 +492,20 @@ function loadsData(list){
             NPC.innerHTML+=`<p class="information"><b>Space</b> ${space} <b>Reach</b> ${reach} ${reachBonusEffect}</p>`
         }
         if(NPCInfo.special_attacks){
-            NPC.innerHTML+=`<p class="information"><b>Special Attacks</b> ${NPCInfo.special_attacks}</p>`
+            let special_attacks = ""
+            let k = 0;
+            NPCInfo.special_attacks.forEach(attack=>{
+                if(k>0){
+                    special_attacks += ", "
+                }
+                special_attacks+=createSpecialAttackDisplay(attack,NPCInfo);
+                k++;
+            })
+            if(special_attacks!=""){
+                special_attacks+=", "
+            }
+            special_attacks+=getSpecialAttacks(NPCInfo,monsterAbilities);
+            NPC.innerHTML+=`<p class="information"><b>Special Attacks</b> ${special_attacks}</p>`
         }
         if(NPCInfo.spell_abilities!=null){
             let spellAbilities =NPCInfo.spell_abilities;
@@ -541,17 +571,25 @@ function loadsData(list){
         // if(NPCInfo.melee.enchantments||NPCInfo.ranged.enchantments){
         //     console.log("hi");
         // }
-        if(NPCInfo.special_qualities){
+        if(SQlist!=""){
             NPC.innerHTML+=`<p class="information"><b>SQ</b> ${SQlist}</p>`
         }
         if(NPCInfo.special_abilities!=null){
         NPC.innerHTML +=`<p class = "divider">SPECIAL ABILITIES</p>`
+        if(monsterAbilities!=null){
+                    monsterAbilities.forEach(ability=>{
+                if((getMonsterKeys(ability).toLocaleLowerCase()).includes("trait")){
+                    let informationArray = displayMonsterAbility(ability,NPCInfo)
+                    NPC.innerHTML+=`<p class="title">${informationArray[0]} (${informationArray[1]})</p>\n<p class="information">${informationArray[2]}</p>`
+                }
+            })
+        }
             NPCInfo.special_abilities.forEach(element => {
                 let special_abilities_desc = element.ability_desc;
                 if(element.dcStat){
 //                    console.log(element.ability_desc.indexOf(findSaveType(element.ability_desc)));
                     let trueSaveType=""
-                    let trueSave = 10+Math.floor(NPCInfo.level/2)+getSaveMod(element.dcStat,NPCInfo);
+                    let trueSave = getSaveDC(NPCInfo,element.dcStat);
                     let condensedString = special_abilities_desc;
                     while(special_abilities_desc.includes("[saveDC]")){
                         special_abilities_desc = special_abilities_desc.replace("[saveDC]",`${trueSave} ${element.saveType}`)
@@ -603,7 +641,8 @@ function loadsData(list){
                     special_abilities_desc = special_abilities_desc.replace(special_abilities_desc.substring(special_abilities_desc.indexOf("["),special_abilities_desc.indexOf("]")+1),`${specialStatText} (${value})`)
                 }
                 let abilityType= element.abilityType.split("(")[0];
-                NPC.innerHTML+= `<p class="title">${element.abilityName} (${abilityType})</p>\n<p class="information">${special_abilities_desc}</p>`
+                NPC.innerHTML+= `<p class="specialAbilities" onclick="toggleHidableElements('${spacelessCapitalizedCaseCharacter(element.abilityName)}','content-item')">${element.abilityName} (${abilityType})</p>`
+                NPC.innerHTML+=`\n<div class="content-item active"id=${spacelessCapitalizedCaseCharacter(element.abilityName)}> <p> ${special_abilities_desc}</p></div>`
                 
             });
         }
@@ -914,10 +953,10 @@ function getStatDisplay(stat){
 }
 
 
-function getClassDisplayList(NPCinfo){
-  var cList = NPCinfo.class;
-  var cDataString = "";
-  var i=0;
+function getClassDisplayList(NPCInfo){
+  let cList = NPCInfo.class;
+  let cDataString = "";
+  let i=0;
   cList.forEach(element=>{
     if(i>0){
       cDataString+="/"
@@ -933,9 +972,9 @@ function getClassDisplayList(NPCinfo){
 }
 
 function getNPChitDiceDisplay(NPCInfo){
-    var classDetails = NPCInfo.class;
+    let classDetails = NPCInfo.class;
     let hpInfo="";
-    var l=0;
+    let l=0;
     classDetails.forEach(classdetails=>{
         let details = `${classdetails.level}d${getHitDice(classdetails.name,classdetails.archetype)}`
         if(l>0){
@@ -947,4 +986,479 @@ function getNPChitDiceDisplay(NPCInfo){
     let con = getModifier(NPCInfo.con)*Number(NPCInfo.level)+getFeatBonuses("con",NPCInfo.feats,NPCInfo.level,NPCInfo);
     hpInfo+= `+${con}`
     return hpInfo;
+}
+
+function getDrainOrDamageDisplay(ability,id,NPCInfo){
+    console.log(ability);
+    id = id.toLocaleLowerCase().replace("ability","");
+    console.log(id)
+    let returnText = `${ability.damage}${ability.dice} ${shortHandToFull(ability.stat)} ${id}`;
+    if(ability.displaySaveDC){
+        returnText += `, DC ${getSaveDC(NPCInfo,ability.saveAbilityScore)}`;
+    }
+    return returnText;
+}
+
+function getTraitsDisplay(ability,json){
+    console.log(ability)
+    switch(ability){
+        case "ArchdevilTraits":
+            return [addSpaces(ability),json.abilityType,`An archdevil rules a domain in Hell. Archdevils are lawful evil outsiders with a minimum CR of 26. Archdevils share the following traits and have the devil subtype (unless otherwise noted in a creature's entry)\n.
+                <ul>
+<li>An archdevil can grant spells as if it were a deity. Each archdevil has a favored weapon and grants the Evil and Law domains, plus two other domains and four subdomains.</li>
+<li>An archdevil's natural weapons, as well as any weapons it wields, are treated as epic, evil, and lawful for the purpose of overcoming damage reduction.</li>
+<li><b>Frightful Presence (Su)</b>: An archdevil can activate its frightful presence as a free action as part of any attack, special attack, or spell-like ability, or by speaking aloud.</li>
+<li><b>Infernal Resurrection (Ex)</b>: If an archdevil is killed, its body crumbles into ashes, leaving behind any gear it held or carried, while it is immediately restored to life (as per true resurrection) in a location of its choosing in its domain. An archdevil can't use this ability again for 1 year, and it avoids direct combat if possible until that year has passed. If slain again or killed by unusual methods (such as by a true deity or an artifact created for this purpose), an archdevil is slain forever. An archdevil who does not control a domain does not gain this ability (and is technically an infernal duke rather than a true archdevil).</li>
+<li><b>Immunities</b>: Ability damage, ability drain, charm, compulsion, death effects, energy drain, and petrification.</li>
+<li><b>Language Mastery (Ex)</b>: An archdevil knows all languages, as though using a tongues spell, although this ability is not supernatural and cannot be dispelled. Linguistics is always a class skill for an archdevil.</li>
+<li><b>Regeneration (Ex)</b>: Only mythic damage or damage from a creature of equal or greater standing (such as another archdevil, deity, empyreal lord, Great Old One, Horseman, or qlippoth lord) interrupts an archdevil's regeneration.</li>
+<li><b>Resistance</b> acid/cold 30.</li>
+<li><b>Summon Devils (Sp)</b>: Three times per day as a swift action, an archdevil can summon any devil or combination of devils whose total combined CR is 20 or lower. This otherwise works like the summon universal monster rule with a 100% chance of success, and it counts as a 9th-level spell effect.</li>
+<li>Telepathy 300 feet.</li>
+</ul>
+`]
+        case "DemonLordTraits":
+            return [addSpaces(ability),json.abilityType,`A demon lord is a powerful, unique demon that rules a layer of the Abyss. All demon lords are chaotic evil outsiders that are, at a minimum, CR 26. Demon lords have a particular suite of traits (unless otherwise noted in a creature's entry) as summarized here.
+<ul>
+<li>A demon lord can grant spells to its worshipers as if it were a deity. A demon lord's domains are Chaos, Evil, and two other domains relevant to its theme and interests. Like a deity, a demon lord has a favored weapon.<l/i>
+<li>A demon lord's natural weapons, as well as any weapons it wields, are treated as chaotic, epic, and evil for the purpose of overcoming damage reduction.<l/i>
+<li><b>Abyssal Resurrection (Ex)</b>: A demon lord rules an Abyssal realm, a vast world that not only serves as its home but provides it with power. If a demon lord is slain, its body rapidly melts into corruption (leaving behind any gear it held or carried), its soul returns to a hidden location within its realm, and it is immediately restored to life (as true resurrection) at that location. Once this occurs, a demon lord can't use this ability again until a full year has passed. A demon lord realizes it is vulnerable during this time and usually doesn't risk further battles for the remainder of that year, relying on the defenses of its realm and its legions of minions to protect it. A demon lord that is slain again during this year or is killed by unusual methods (such as by a true deity or an artifact created for this purpose) is slain forever—its remains appearing somewhere deep in the Abyss among other dead demon lords from the ages. A demon lord who does not control a domain does not gain this ability.<l/i>
+<li><b>Frightful Presence (Su)</b>: A demon lord can activate its frightful presence as a free action as part of any attack, spell-like ability, special attack, or by speaking aloud.<l/i>
+<li>Immunity to ability damage, ability drain, charm effects, compulsion effects, death effects, energy drain, and petrification.<l/i>
+<li><b>Regeneration (Ex)</b>: Only epic and good damage, or damage from a creature of equal or greater power (such as an archdevil, deity, demon lord, or protean lord) interrupts a demon lord's regeneration.<l/i>
+<li><b>Resistance</b> Demon lords have resistance to acid 30, cold 30, and fire 30.<l/i>
+<li><b>Summon Demons (Sp)</b>: Three times per day as a swift action, a demon lord can summon any demon or combination of demons whose total combined CR is 20 or lower. This otherwise works like the summon universal monster rule with a 100% chance of success, and counts as a 9th-level spell effect.<l/i>
+<li>Telepathy 300 feet.<l/i>
+</ul>`]
+        case "EmpyrealLordTraits":
+            return [addSpaces(ability),json.abilityType,`Empyreal lords are the greatest members of the agathion, angel, archon, and azata races, and are sometimes worshiped as if they were deities. All empyreal lords are good outsiders that are, at a minimum, CR 21. In addition to having agathion, angel, archon, or azata traits, Empyreal lords have a particular suite of traits (unless otherwise noted in a creature's entry) as summarized here.
+<ul>
+<li>An empyreal lord's natural weapons, as well as any weapons he or she wields, are treated as epic and good for the purpose of overcoming damage reduction. If the empyreal lord is chaotic or lawful, these attacks also count as that alignment for the purpose of overcoming damage reduction.</li>
+<li>Agathion, angel, archon, or azata energy resistances are increased to 30.</li>
+<li>An empyreal lord can grant spells to its worshipers as if it were a deity. An empyreal lord's domains are Chaos (if chaotic), Good, Law (if lawful), and two other domains relevant to its theme and interests (or three if it is neither chaotic nor lawful). Like a deity, an empyreal lord has a favored weapon.</li>
+<li>Blindsense 60 feet.</li>
+<li><b>Greater Teleport (Sp)</b>: An empyreal lord can use greater teleport at will (caster level 20th).</li>
+<li>Immunity to ability damage, ability drain, charm effects, compulsion effects, death effects, energy drain, and petrification.</li>
+<li><b>Primal Aura (Su)</b>: An aura of primeval power surrounds every empyreal lord. The effects of this aura are unique to each empyreal lord.</li>
+<li><b>Regeneration (Ex)</b>: Only epic and evil damage, or damage from a creature of equal or greater power (such as an archdevil, deity, demon lord, or protean lord) interrupts an empyreal lord's regeneration.</li>
+<li><b>Seed of Life (Sp)</b>: An empyreal lord can touch a willing creature and imbue it with magical healing power. The target radiates an aura of good as if it were an outsider and gains a +2 insight bonus on all saving throws against negative energy and death effects. As a standard action, the target can release this energy, turning it inward as a heal spell upon itself or outward as a mass cure serious wounds spell on allies within 30 feet (caster level 15th). If not released, the energy dissipates harmlessly after 24 hours. The empyreal lord can use this ability 5 times per day, but only on other creatures.</li>
+</ul>`]
+        case "FormianTraits":
+            return [addSpaces(ability),json.abilityType,`Formians are a spacefaring race of insectlike creatures from a forest world that aggressively colonize other worlds. A formian possesses the following traits (unless otherwise noted in a creature's entry).
+<ul>
+<li>Darkvision 60 feet and blindsense 30 feet.<l/i>
+<li><b>Hive Mind (Ex)</b>: Formians share a telepathic bond with other members of their hive that enhances their hive mates' perception. As long as a formian is within telepathic range of at least one hive mate, it gains a +4 racial bonus on initiative checks and Perception checks. If at least one formian disbelieves an illusion, all formians within its telepathic range are also considered to disbelieve that illusion. If one formian is aware of combatants, all other hive mates within the range of its telepathy are also aware of those combatants.<l/i>
+<li>Resistance to sonic 10.<l/i>
+<li><b>Telepathic Caster (Ex)</b>: Due to a formian's telepathic nature, if it casts spells it does so as spell-like abilities.<l/i>
+<li>Telepathy 60 ft.<l/i>
+</ul>`]
+        case "HorsemanTraits":
+            return [addSpaces(ability),json.abilityType,`A Horseman is a powerful, unique daemon that rules a major portion of Abaddon and personifies Death, Famine, Pestilence, or War. All Horsemen are evil outsiders that are, at a minimum, CR 27. Horsemen have a particular suite of traits (unless otherwise noted in a creature's entry) as summarized here.
+<ul>
+<li>A Horseman can grant spells to its worshipers as if it were a deity. A Horseman's domains are Evil and three other domains and four subdomains relevant to its theme and interests. Like a deity, a Horseman has a favored weapon.</li>
+<li>A Horseman's natural weapons, as well as any weapons it wields, are treated as epic and evil for the purpose of overcoming damage reduction.</li>
+</ul>`]
+        case "QlippothLordTraits":
+            return [addSpaces(ability),json.abilityType,`A qlippoth lord is a powerful, unique qlippoth that once ruled a region of the Abyss but has been forced to retreat to forgotten corners of reality deep in the Abyss. At the dawn of creation, qlippoth lords were powerful creatures, perhaps even on par with deities, but today they have dwindled to a pale shadow of that power. Still, they remain potent dangers to mortal life in the rare instances when they are encountered. All qlippoth lords are chaotic evil qlippoth in the range of CR 21 to CR 25. Qlippoth lords have a particular suite of traits (unless otherwise noted in a creature's entry), as summarized here.
+<ul>
+<li>A qlippoth lord can grant spells to its worshipers as if it were a deity. A qlippoth lord's domains are Chaotic and Evil, plus two other domains and four subdomains relevant to its theme and interests. Like a deity, a qlippoth lord has a favored weapon.</li>
+<li>A qlippoth lord's natural weapons, as well as any weapons it wields, are treated as chaotic, epic, and evil for the purpose of overcoming damage reduction.</li>
+<li><b>Horrific Appearance (Su)</b>: This ability functions similarly to the typical qlippoth ability, save that a qlippoth lord's horrific appearance creates physical effects and changes in its victims. Despite these physical effects, a qlippoth lord's horrific appearance remains a mind-affecting effect.</li>
+<li>Immunity to cold, death effects, mind-affecting effects, and poison.</li>
+</ul>`]
+        default:
+            return ['Default','Ex','No matching instance']
+    }
+    
+}
+
+function displayBlows(id,ability){
+    let i =0;
+    let text = addSpaces(id)+"(";
+    ability.attacks.forEach(attack=>{
+        let name = attack.name
+        if(i>0){
+            text+=`, `
+        }
+        if(attack.active){
+            text+=name
+            i++;
+        }
+        // let numRay =[0,1,2,3,4,5,6,7,8,9];
+        // console.log(!isNaN(name[0]));
+        // let stopLoop = false;
+        // Array.from(name).forEach(element=>{
+        //     if(stopLoop){
+        //         return
+        //     }
+        //     console.log(element);
+        //     console.log(isNaN(element));
+        //     if(isNaN(element)){
+        //         stopLoop = true;
+        //     }
+        //     console.log(name)
+        //     console.log(name[i+1])
+        //     if(element==" "&&isNaN(name[i+1])){
+        //        name=name.replace(/[0-9] /g, '') 
+        //        stopLoop=true;
+        //         if(name[name.length-1].toLocaleLowerCase()=='s'){
+        //             name = name.slice(0,-1)
+        //         }
+        //     }
+        //     i++;
+        // })
+        // console.log(name);
+        // if(!isNaN(name[0])){
+        //     name=name.replace(/[0-9] /g, '')
+        // }
+        // if(name[name.length-1].toLocaleLowerCase()=='s'){
+        //     name[name.length-1]
+        // }
+    })
+    text+=")"
+    return text
+}
+
+function displayRakeAndRend(NPCInfo,ability){
+    let number = 1;
+    ability.attacks.forEach(attack=>{
+        if(attack.active){
+            console.log(attack.name)
+        }
+    })
+    return `Rend()`
+}
+
+function displayMonsterAbility(ability,NPCInfo){
+    let id = Object.keys(ability)[0]
+    ability = ability[id]
+    console.log("DisplayMonster Entry")
+    console.log(id)
+    switch(id){            
+        case "AbilityDamage":
+        case "AbilityDrain":
+            return getDrainOrDamageDisplay(ability,id,NPCInfo);
+        case "ArchdevilTraits":
+        case "DemonLordTraits":
+        case "EmpyrealLordTraits":
+        case "FormianTraits":
+        case "HorsemanTraits":
+        case "QlippothLordTraits":
+            return getTraitsDisplay(id,ability);
+        case "Attach":
+        case "Grab":
+        case "Trip":
+            return id
+        case "PowerfulBlows":
+            return displayBlows(id,ability);
+        case "Bleed":
+        case "Burn":
+            return id
+        case "Rend":
+        case "Rake":
+            return displayRakeAndRend(NPCInfo,ability);
+        case "BloodDrain":
+        case "Constrict":
+        case "Trample":
+            return "Has not been Implemented"
+        case "BreathWeapon":
+            return "Has not been Implemented"    
+        case "ChangeShape":
+            return "Has not been Implemented"
+        case "ChannelResistance":
+        case "PsychicResilience":
+            return "Has not been Implemented"
+        case "Disease":
+        case "Poison":
+            return "Has not been Implemented"
+        case "Curse":
+            return "Has not been Implemented"
+        case "CurseofLycanthropy":
+            return "Has not been Implemented"
+        case "EnergyDrain":
+            return "Has not been Implemented"
+        case "Engulf":
+            return "Has not been Implemented"
+        case "Entrap":
+            return "Has not been Implemented"
+        case "Web":
+            return "Has not been Implemented"
+        case "FastHealing":
+            return "Has not been Implemented"
+        case "Fear":
+            return "Has not been Implemented"
+        case "RockThrowing":
+        case "Telepathy":
+        case "UnnaturalAura":
+            return "Has not been Implemented"
+        case "FrightfulPresence":
+            return "Has not been Implemented"
+        case "Split":
+            return "Has not been Implemented"
+        case "Heat":
+        case "Stench":
+        case "MentalStaticAura":
+            return "Has not been Implemented"
+        case "Jet":
+            return "Has not been Implemented"
+        case "LycanthropicEmpathy":
+            return "Has not been Implemented"
+        case "MythicPower":
+            return "Has not been Implemented"
+        case "MythicMagic":
+            return "Has not been Implemented"
+        case "Paralysis":
+            return "Has not been Implemented"
+        case "PoisonousBlood":
+            return "Has not been Implemented"
+        case "Pull":
+            return "Has not been Implemented"
+        case "Push":
+            return "Has not been Implemented"
+        case "Regeneration":
+            return `${id} ${ability.rate}(${ability.howtoDisable})`
+        case "Summon":
+            return "Has not been Implemented"
+        case "SwallowWhole":
+            return "Has not been Implemented"
+        case "Whirlwind":
+            return "Has not been Implemented"
+        default:
+            return " Value Was not defined"
+    }
+}
+
+
+function getMonsterAbility(id,json){
+    let idReturn = ""
+    if(json==null){
+        return "";
+    }
+    json.forEach(element=>{
+        if(getMonsterKeys(element)==id)
+        idReturn = element
+        
+    });
+    return idReturn;
+}
+
+function displayDefenses(abilities,section){
+    let text = "";
+    let i = 0;
+    i=0;
+    console.log(section);
+    switch(section){
+        case "Defensive Abilities":
+            abilities.forEach(element=>{
+                if(defenseAbilities.includes(getMonsterKeys(element))){
+                    if(i>0){
+                        text+=', '
+                    }
+                    text += addSpaces(getMonsterKeys(element));
+                    i++;
+                }
+            })
+            break;
+        case "Immune":
+            abilities.forEach(element=>{
+                console.log(element);
+                if(immuneAbilities.includes(getMonsterKeys(element))){
+                if(immuneAbilities.includes(getMonsterKeys(element))){
+                    if(i>0){
+                        text+=', '
+                    }
+                    text += addSpaces(getMonsterKeys(element));
+                    i++;
+                }
+                }
+            })
+            break;
+    }
+    if(section=="Defensive Abilities")
+        console.log(text);
+    return text;
+}
+
+function displayAbilityAttacks(NPCInfo,noDamage=false){
+  let attackAbilities = ["AbilityDamage","AbilityDrain","Attach","Bleed","Burn","Curse","CurseofLycanthropy","Disease","EnergyDrain","Entrap","Grab","Paralysis","Poison","Pull","Push","Trip"]
+    let selectedAbilitiesArray =[]
+  let text = ""
+  let listLength = 0
+  selectedAbilitiesArray = getAbilityList(NPCInfo)
+    selectedAbilitiesArray.forEach(element=>{
+      if(attackAbilities.includes(element)){
+        if(!noDamage){
+            if(listLength>0){
+              text+=` and ${displayMonsterAbility(getMonsterAbility(element,NPCInfo.monsterAbilities),NPCInfo)}`
+            }else{
+              text+=` plus ${displayMonsterAbility(getMonsterAbility(element,NPCInfo.monsterAbilities),NPCInfo)}`
+            }
+            listLength++;
+        }else{
+            
+            if(listLength>0){
+              text+=` and ${displayMonsterAbility(getMonsterAbility(element,NPCInfo.monsterAbilities),NPCInfo)}`
+            }else{
+              text+=`${displayMonsterAbility(getMonsterAbility(element,NPCInfo.monsterAbilities),NPCInfo)}`
+            }
+            listLength++;
+        }
+      }
+    })
+    return text;
+}
+function displayUniqueAttacks(NPCInfo,i,noDamage=false){
+    let text=""
+    let listLength = 0;
+    selectedAbilitiesArray = NPCInfo.melee[i-1].uniqueDamageBonus
+    if(selectedAbilitiesArray!=null){
+    selectedAbilitiesArray.forEach(element=>{
+        console.log(element);
+        if(!noDamage){
+            if(listLength==selectedAbilitiesArray.length-1&&listLength>0){
+              text+=` and ${element}`
+            }else if(listLength>0 &&listLength<selectedAbilitiesArray.length){
+                text+=`, ${element}`
+            }else{
+              text+=` plus ${element}`
+            }
+            listLength++;
+        }else{
+            
+            if(listLength==selectedAbilitiesArray.length-1&&listLength>0){
+              text+=` and ${element}`
+            }else if(listLength>0 &&listLength<selectedAbilitiesArray.length){
+                text+=`, ${element}`
+            }else{
+              text+=` plus ${element}`
+            }
+            listLength++;
+        }
+      
+    })
+    }
+  return text;
+}
+
+
+function getAbilityList(NPCInfo){
+  let monsterAbilities = NPCInfo.monsterAbilities;
+  let selectedAbilitiesArray =[]
+  monsterAbilities.forEach(el=>{
+            selectedAbilitiesArray.push(getMonsterKeys(el))
+        })
+    return selectedAbilitiesArray;
+}
+
+let attackAbilities = ["AbilityDamage","AbilityDrain","Attach","Bleed","Burn","Curse","CurseofLycanthropy","Disease","EnergyDrain","Entrap","Grab","Paralysis","Poison","Pull","Push","Trip"]
+let defenseAbilities = ["All-AroundVision","Amorphous","ChannelResistance","DamageReduction","Ferocity","Fortification","Incorporeal","Natural Invisibility","Negative Energy Affinity","Poisonous Blood","Psychic Resilience","Rock Catching","Split","Unstoppable"]
+let immuneAbilities = ["UndeadTraits","ConstructTraits","OozeTraits","PlantTraits"]
+let SQAbilities = ["PowerfulBlows"]
+let specialAttacksList = ["Rend","Breath Weapon"]
+
+function checkAttackMonsterAbilities(NPCInfo,section){
+  let monsterAbilities = NPCInfo.monsterAbilities;
+  if(monsterAbilities==null){
+    return false;
+  }
+  let selectedAbilitiesArray =[]
+  let abilitiesArray; 
+  switch(section){
+    case "attack":
+      abilitiesArray = attackAbilities;
+      break;
+    case "Defensive Abilities":
+        abilitiesArray = defenseAbilities;
+        break;
+    case "Immune":
+        abilitiesArray=immuneAbilities;
+        break;
+    case "SQ":
+        abilitiesArray=SQAbilities;
+  }
+  if(abilitiesArray==null){
+    return false
+  }
+  let hasAbility = false;
+  selectedAbilitiesArray = getAbilityList(NPCInfo)
+    selectedAbilitiesArray.forEach(element=>{
+        if(abilitiesArray.includes(element)){
+        hasAbility = true;
+      }
+    })
+  return hasAbility;
+}
+
+function createSpecialAttackDisplay(item,NPCInfo){
+    console.log(item)
+    if(item.variation){
+        switch(item.variation){
+            case "Attack":
+                let dataInfo = getSingleAttackToHit(item,NPCInfo)
+                let toHit = dataInfo[0];
+                let bonusDamageString = "";
+                if(dataInfo[1]!=0){
+                    let bonusDamage = dataInfo[1];
+                    if(bonusDamage>0){
+                        bonusDamageString = `+${bonusDamage}`;
+                    }else{
+                        bonusDamage = `${bonusDamage}`;
+                    }
+                }
+                return `${item.name}(${item.attack} ${toHit}, ${item.diceCount}${item.damageDice}${bonusDamageString})`
+            case "Save":   
+                let saveTypeDisplay = "";
+                if(item.saveThrowCheck){
+                    saveTypeDisplay = ` ${item.saveThrow} Save`
+                }
+                return `${item.name}(DC ${getSaveDC(NPCInfo,item.saveThrow)}${saveTypeDisplay}, ${item.diceCount}${item.damageDice})`
+            case "Bonus Damage":
+                return `${item.name} +${item.diceCount}${item.damageDice}`
+            case "Save Only":
+                return `${item.name} (DC ${getSaveDC(NPCInfo,item.saveStat)})`
+        }
+    }else{
+        return item.name;
+    }
+}
+
+function getSaveDC(NPCInfo,saveStat){
+    return 10+Math.floor(NPCInfo.level/2)+getSaveMod(saveStat,NPCInfo)
+}
+
+function getSingleAttackToHit(id,NPCInfo){
+    console.log(id)
+        let bab=0;
+        bab = getBaB(NPCInfo.bab,NPCInfo.level);
+        let abilityBonus = getModifier(NPCInfo.dex);
+        console.log(id.attackType)
+        if(id.attackType==="melee"){
+            abilityBonus=getModifier(NPCInfo.str);
+        }
+        let toHit = abilityBonus+(bab)+getFeatBonuses(id.attackType+"attack",NPCInfo.feats,bab,NPCInfo,id.name);
+        if(id.toHitModifier){
+            toHit+=Number(id.toHitModifier);
+        }
+        if(toHit>=0){
+            toHit = "+"+toHit;
+        }
+        let dataInfo =[]
+        dataInfo.push(toHit)
+        dataInfo.push(abilityBonus);
+        return dataInfo
+}
+
+
+function getSpecialAttacks(NPCInfo,monsterAbilities){
+    let text = ""
+    let ability = "";
+    if(monsterAbilities!=null){
+        monsterAbilities.forEach(item=>{
+            ability = getMonsterKeys(item)
+            if(specialAttacksList.includes(ability)){
+              text = displayMonsterAbility(item,NPCInfo)
+            }
+        })
+    }
+    return text;
 }

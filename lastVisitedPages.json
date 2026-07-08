@@ -1,8 +1,33 @@
 {
   "pages": [
     {
-      "name": "Kora",
-      "index": "14",
+      "name": "Mimic",
+      "index": "48",
+      "system": "pathfinder"
+    },
+    {
+      "name": "Sinulence Leviathan",
+      "index": "31",
+      "system": "pathfinder"
+    },
+    {
+      "name": "Sinulence Absolver",
+      "index": "30",
+      "system": "pathfinder"
+    },
+    {
+      "name": "Sinulence Stormcaller",
+      "index": "29",
+      "system": "pathfinder"
+    },
+    {
+      "name": "Sinulence Runner",
+      "index": "28",
+      "system": "pathfinder"
+    },
+    {
+      "name": "Sinulence Drone",
+      "index": "27",
       "system": "pathfinder"
     },
     {
@@ -11,44 +36,19 @@
       "system": "pathfinder"
     },
     {
-      "name": "Sinulence Envisel",
-      "index": "38",
-      "system": "5e"
-    },
-    {
-      "name": "Bandit",
-      "index": "1",
-      "system": "pathfinder"
-    },
-    {
-      "name": "Mimic",
-      "index": "48",
-      "system": "pathfinder"
-    },
-    {
       "name": "Null Hound",
       "index": "4",
       "system": "pathfinder"
     },
     {
+      "name": "Emilia Nelythes",
+      "index": "6",
+      "system": "5e"
+    },
+    {
       "name": "5e Template",
       "index": "0",
       "system": "5e"
-    },
-    {
-      "name": "Minions of Krampus",
-      "index": "46",
-      "system": "5e"
-    },
-    {
-      "name": "Krampus",
-      "index": "45",
-      "system": "5e"
-    },
-    {
-      "name": "Paraselene",
-      "index": "7",
-      "system": "pathfinder"
     }
   ]
 }

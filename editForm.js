@@ -6,7 +6,10 @@ fetch("./list.json")
  * @param {Array} listInformation 
  */
 
-
+/**
+ * 
+ * @param {json} listInformation json
+ */
 function editCurNPC(listInformation){
 let id = sessionStorage.getItem("NPC");
 let param = new URLSearchParams(window.location.search);
@@ -30,6 +33,15 @@ updateClasses();
 updateMiscDropdown();
 checkSpells();
 setTimeout(() => {
+    if(NPCInfo.monsterAbilities){
+        let abilities = NPCInfo.monsterAbilities;
+        abilities.forEach(el=>{
+            let id = Object.keys(el)[0]
+            monsterAbilitiesEdit("monsterAbilities",id,el)
+            modifyList("monsterAbilities")
+            modifyList("sense")
+        })
+    }
     if(NPCInfo.special_attacks!=null){
         NPCInfo.special_attacks.forEach(specialAttack=>{
             if(specialAttack.variation=="Attack"){
@@ -538,17 +550,10 @@ function readJsonData(NPCInfo,sys){
                 i++;
         })
     }
-    if(NPCInfo.monsterAbilities){
-        let abilities = NPCInfo.monsterAbilities;
-        abilities.forEach(el=>{
-            let id = Object.keys(el)[0]
-            monsterAbilitiesEdit("monsterAbilities",id,el)
-            modifyList("monsterAbilities")
-            modifyList("sense")
-        })
-    }
+    
+    doMeleeInsertion(NPCInfo)
+    
 
-doMeleeInsertion(NPCInfo)
     // arrayToggle('bonusAC',['Container','Armor','Deflection','Dodge','Shield','Natural','Extra']);
     // arrayToggle('defensiveTraits',['Container','DA','DR','Immune','Resist','SR']);
     // arrayToggle('spells',['Container','InnateOption','PreparedOption']);
@@ -716,7 +721,11 @@ doMeleeInsertion(NPCInfo)
 
 }
 
-
+/**
+ * 
+ * @param {String} id type("melee attack")
+ * @param {int} i index
+ */
 function updateForumValues(id,i){
     let array = []
      
@@ -1024,6 +1033,7 @@ function getDropDownSelection(item,group,infoVal=[]){
     modifyList("monsterAbilities")
     modifyList("sense")
   }
+  
 }
 
 function classListenerSetup(val){
@@ -1051,7 +1061,6 @@ function monsterAbilitiesEdit(listName,entityName,json){
     let forumArea = document.getElementById(`${listName}Choice`);
     let mainSection = document.createElement("div");
     mainSection.id = `${entityName}Choice`;
-    console.log("l")
     let entityLabel = document.createElement("label");
     entityLabel.setAttribute("class","inputName");
     let name = addSpaces(entityName);
@@ -1067,17 +1076,11 @@ function monsterAbilitiesEdit(listName,entityName,json){
     addBreak(forumArea);
     if(json[entityName].attacks!=null || json[entityName].contact!=null){
         let activeList = json[entityName].attacks!=null?getActiveSelection(json[entityName].attacks):getActiveSelection(json[entityName].contact);
-        arrayToDropdown(getAttacks(),`attackSection${entityName}`,"Select",true,activeList,true);
+        arrayToDropdown(getAttacks(),`attackSection${entityName}`,"Select",true,activeList,true,false,true);
         createVariableListener(`dropdownattackSection${entityName}`,'click',dropdownInteraction,getElementPointer(`dropdownattackSection${entityName}`),true);
         createVariableArrayListener(`dropdownattackSection${entityName}`,'keyup',searchDrop,[getElementPointer(`dropdownattackSection${entityName}`),getElementPointer(`searchattackSection${entityName}`)]);      
         multiChoice(`dropdownattackSection${entityName}`);
     }
-//    console.log(entityName);
-
-    // createVariableListener(`dropdownattackSection${entityName}`,'click',dropdownInteraction,`dropdownattackSection${entityName}`,true);
-//    createVariableArrayListener(`dropdownattackSection${entityName}`,'keyup',searchDrop,[`dropdownattackSection${item}`,`searchattackSection${item}`]);
-//    multiChoice(`dropdownattackSection${item}`);
-
 }
 
 function getActiveSelection(list){
@@ -1147,6 +1150,7 @@ function createMonsterAbilitiesElementSetup(entity,json,area){
         case "Bleed":
         case "Burn":
         case "Rend":
+        case "Rake":
             area.append(createElementSetupEdit("label","Damage "));
             area.append(createElementSetupEdit("input","Damage",entity,listName,"Damage","number","Insert Value Here",parseInt(JSONObject[jsonKeys[0]])));
             area.append(createElementSetupEdit("select","",entity,listName,"Damage","","",JSONObject[jsonKeys[1]],diceArray));
@@ -1181,58 +1185,52 @@ function createMonsterAbilitiesElementSetup(entity,json,area){
             area.append(createElementSetupEdit("input","Shape",entity,listName,"Shape","text","Insert Value Here",JSONObject[jsonKeys[0]]));
             break;
         case "ChannelResistance":
-        case "PsychicResilience":
             area.append(createElementSetupEdit("label","Resisted Amount "));
             area.append(createElementSetupEdit("input","ResistedAmount",entity,listName,"ResistedAmount","number","Insert Value Here",parseInt(JSONObject[jsonKeys[0]])));
             break;
         case "Disease":
         case "Poison":
-            area.append(createElementSetupEdit("label","Ability Type "));
-            area.append(createElementSetupEdit("select","",entity,listName,"AbilityType","","",JSONObject[jsonKeys[0]],abilityTypeArray));
-            addBreak(area);
             area.append(createElementSetupEdit("label","Name "));
-            area.append(createElementSetupEdit("input","Name",entity,listName,entity,"text","Insert Value Here",JSONObject[jsonKeys[1]]));
+            area.append(createElementSetupEdit("input","Name",entity,listName,entity,"text","Insert Value Here",JSONObject[jsonKeys[3]]));
             addBreak(area);
             area.append(createElementSetupEdit("div","Attack(Can Select Multiple) ",entity,listName));
-            area.append(createElementSetupEdit("label","Infliction Flavor"));
-            area.append(createElementSetupEdit("input","InflictionFlavor",entity,listName,entity,"text","Insert Contact Flavor Here",JSONObject[jsonKeys[3]]));
+            area.append(createElementSetupEdit("label","Infliction Type"));
+            area.append(createElementSetupEdit("input","InflictionType",entity,listName,entity,"text","Insert Contact Type Here",JSONObject[jsonKeys[5]]));
             addBreak(area);
             area.append(createElementSetupEdit("label","Onset "));
-            area.append(createElementSetupEdit("input","Onset",entity,listName,entity,"text","Insert Onset Here",JSONObject[jsonKeys[4]]));
+            area.append(createElementSetupEdit("input","Onset",entity,listName,entity,"text","Insert Onset Here",JSONObject[jsonKeys[2]]));
             addBreak(area);
             area.append(createElementSetupEdit("label","Frequency "));
-            area.append(createElementSetupEdit("input","Frequency",entity,listName,entity,"text","Insert Frequency Here",JSONObject[jsonKeys[5]]));
+            area.append(createElementSetupEdit("input","Frequency",entity,listName,entity,"text","Insert Frequency Here",JSONObject[jsonKeys[6]]));
             addBreak(area);
             area.append(createElementSetupEdit("label","Effect "));
-            area.append(createElementSetupEdit("textarea","Effect",entity,listName,entity,"textarea","Insert Effect Here",JSONObject[jsonKeys[6]],[],"monsterAbilityTemp"));
+            area.append(createElementSetupEdit("textarea","Effect",entity,listName,entity,"textarea","Insert Effect Here",JSONObject[jsonKeys[7]],[],"monsterAbilityTemp"));
             addBreak(area);
             area.append(createElementSetupEdit("label","Cure "));
-            area.append(createElementSetupEdit("textarea","Cure",entity,listName,entity,"textarea","Insert Cure Here",JSONObject[jsonKeys[7]],[],"monsterAbilityTemp"));
+            area.append(createElementSetupEdit("textarea","Cure",entity,listName,entity,"textarea","Insert Cure Here",JSONObject[jsonKeys[1]],[],"monsterAbilityTemp"));
+            addBreak(area);
+            area.append(createElementSetupEdit("label","Ability Type "));
+            area.append(createElementSetupEdit("select","",entity,listName,"AbilityType","","",JSONObject[jsonKeys[0]],abilityTypeArray));
+
             break;
         case "Curse":
             area.append(createElementSetupEdit("label","Name "));
             area.append(createElementSetupEdit("input","Name",entity,listName,entity,"text","Insert Value Here",JSONObject[jsonKeys[0]]));
             addBreak(area);
-            area.append(createElementSetupEdit("div","Attack(Can Select Multiple) ",entity,listName));
-            area.append(createElementSetupEdit("label","Infliction Flavor"));
-            area.append(createElementSetupEdit("input","InflictionFlavor",entity,listName,entity,"text","Insert Contact Flavor Here",JSONObject[jsonKeys[2]]));
-            addBreak(area);
-            area.append(createElementSetupEdit("label","Onset "));
-            area.append(createElementSetupEdit("input","Onset",entity,listName,entity,"text","Insert Onset Here",JSONObject[jsonKeys[3]]));
-            addBreak(area);
-            area.append(createElementSetupEdit("label","Frequency "));
-            area.append(createElementSetupEdit("input","Frequency",entity,listName,entity,"text","Insert Frequency Here",JSONObject[jsonKeys[4]]));
-            addBreak(area);
+            area.append(createElementSetupEdit("div","Contact(Can Select Multiple) ",entity,listName));
+            // area.append(createElementSetupEdit("label","Infliction Type"));
+            // area.append(createElementSetupEdit("input","InflictionType",entity,listName,entity,"text","Insert Contact Type Here",JSONObject[jsonKeys[2]]));
+            // addBreak(area);
+            // area.append(createElementSetupEdit("label","Frequency "));
+            // area.append(createElementSetupEdit("input","Frequency",entity,listName,entity,"text","Insert Frequency Here",JSONObject[jsonKeys[4]]));
+            // addBreak(area);
             area.append(createElementSetupEdit("label","Effect "));
-            area.append(createElementSetupEdit("textarea","Effect",entity,listName,entity,"textarea","Insert Effect Here",JSONObject[jsonKeys[5]],[],"monsterAbilityTemp"));
-            addBreak(area);
-            area.append(createElementSetupEdit("label","Cure "));
-            area.append(createElementSetupEdit("textarea","Cure",entity,listName,entity,"textarea","Insert Cure Here",JSONObject[jsonKeys[6]],[],"monsterAbilityTemp"));
+            area.append(createElementSetupEdit("textarea","Effect",entity,listName,entity,"textarea","Insert Effect Here",JSONObject[jsonKeys[2]],[],"monsterAbilityTemp"));
             break;
         case "CurseofLycanthropy":
             area.append(createElementSetupEdit("div","Attack(Can Select Multiple) ",entity,listName));
-            area.append(createElementSetupEdit("label","Infliction Flavor"));
-            area.append(createElementSetupEdit("input","InflictionFlavor",entity,listName,entity,"text","Insert Contact Flavor Here",JSONObject[jsonKeys[1]]));
+            area.append(createElementSetupEdit("label","Infliction Type"));
+            area.append(createElementSetupEdit("input","InflictionType",entity,listName,entity,"text","Insert Contact Type Here",JSONObject[jsonKeys[1]]));
             break;
         case "EnergyDrain":
             area.append(createElementSetupEdit("label","Levels Drained "));
@@ -1257,6 +1255,7 @@ function createMonsterAbilitiesElementSetup(entity,json,area){
             addBreak(area);
             area.append(createElementSetupEdit("label","HP "));
             area.append(createElementSetupEdit("input","HP",entity,listName,entity,"number","Insert Value Here",parseInt(JSONObject[jsonKeys[3]])));
+            area.append(createElementSetupEdit("div","Attack(Can Select Multiple)",entity,listName));
             break;
         case "Web":
             area.append(createElementSetupEdit("label","HP "));
@@ -1268,15 +1267,16 @@ function createMonsterAbilitiesElementSetup(entity,json,area){
             break;
         case "Fear":
             area.append(createElementSetupEdit("label","Range "));
-            area.append(createElementSetupEdit("input","Range",entity,listName,"Range","number","Insert Dice Count Here",parseInt(JSONObject[jsonKeys[0]])));
+            area.append(createElementSetupEdit("input","Range",entity,listName,"Range","number","Insert Dice Count Here",parseInt(JSONObject[jsonKeys[1]])));
             area.append(createElementSetupEdit("label"," ft. "));
-            area.append(createElementSetupEdit("select","",entity,listName,"Range","","",JSONObject[jsonKeys[1]],rangeArray2));
+            area.append(createElementSetupEdit("select","",entity,listName,"ft.","","",JSONObject[jsonKeys[0]],rangeArray2));
             break;
         case "RockThrowing":
         case "Telepathy":
         case "UnnaturalAura":
-            area.append(createElementSetupEdit("label","ft. "));
-            area.append(createElementSetupEdit("select","",entity,listName,"Range","","",JSONObject[jsonKeys[0]],rangeArray2));
+            area.append(createElementSetupEdit("label","Range "));
+            area.append(createElementSetupEdit("input","Range",entity,listName,"Range","number","Insert Value Here",parseInt(JSONObject[jsonKeys[0]])));
+            area.append(createElementSetupEdit("label"," ft."));
             break;
         case "FrightfulPresence":
             area.append(createElementSetupEdit("label","Aura Range "));
@@ -1286,8 +1286,8 @@ function createMonsterAbilitiesElementSetup(entity,json,area){
             area.append(createElementSetupEdit("label","Split Condition "));
             area.append(createElementSetupEdit("input","SplitCondition",entity,listName,entity,"text","Insert Value Here",JSONObject[jsonKeys[0]]));
             addBreak(area);
-            area.append(createElementSetupEdit("label","Damage "));
-            area.append(createElementSetupEdit("input","Damage",entity,listName,entity,"number","Insert Here",parseInt(JSONObject[jsonKeys[1]])));
+            area.append(createElementSetupEdit("label","Minimum HP "));
+            area.append(createElementSetupEdit("input","MinimumHP",entity,listName,entity,"number","Insert Here",parseInt(JSONObject[jsonKeys[1]])));
             break;
         case "Heat":
         case "Stench":
@@ -1396,7 +1396,20 @@ function createMonsterAbilitiesElementSetup(entity,json,area){
             break;
         }
 }
-
+/**
+ * 
+ * @param {*} elementTag type of element
+ * @param {*} contentText textContent
+ * @param {*} item section name
+ * @param {*} listName
+ * @param {*} labelID 
+ * @param {*} type 
+ * @param {*} placeHolderText 
+ * @param {*} inputValue 
+ * @param {*} arr 
+ * @param {*} title 
+ * @returns 
+ */
 
 function createElementSetupEdit(elementTag,contentText,item="",listName="",labelID=0,type="",placeHolderText="Placeholder",inputValue="",arr=[],title=""){
 //    console.log(inputValue)
@@ -1446,7 +1459,7 @@ function createElementSetupEdit(elementTag,contentText,item="",listName="",label
       newEl.setAttribute("name",`textArea${listName}${item}`);
       newEl.setAttribute("placeholder",placeHolderText);
       newEl.setAttribute("title","textArea"+title);
-      newEl.setAttribute("id",`textarea${listName}${item}${labelID}`);
+      newEl.setAttribute("id",`textarea${listName}${item}${contentText}`);
       newEl.setAttribute("class","searchBarCreation");
       newEl.value=inputValue;
       break;

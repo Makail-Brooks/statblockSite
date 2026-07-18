@@ -4698,23 +4698,17 @@
           "weaponType": "Weapon"
         },
         {
-          "name": "",
+          "name": "Claw",
           "diceCount": "1",
           "damageDice": "d4",
           "uniqueDamageBonus": [],
           "isAlternative": false,
           "isAdditive": false,
-          "fullRoundAttackCount": "1",
+          "fullRoundAttackCount": "2",
           "weaponType": "Custom"
         }
       ],
       "ranged": [],
-      "special_attacks": [
-        {
-          "name": "Custom attacks still will work here",
-          "displayAttributes": false
-        }
-      ],
       "str": "19",
       "dex": "12",
       "con": "17",
@@ -4737,6 +4731,9 @@
         "Survival": "0",
         "Swim": "0"
       },
+      "languages": [
+        "Aboleth"
+      ],
       "class": [
         {
           "name": "Barbarian",
@@ -4751,43 +4748,18 @@
       ],
       "monsterAbilities": [
         {
-          "Bleed": {
-            "damage": "1",
-            "dice": "d6",
-            "attacks": [
-              {
-                "name": "Dagger(silver)",
-                "active": true
-              },
-              {
-                "name": "Dagger(w)",
-                "active": false
-              },
-              {
-                "name": "Custom attacks still will work here",
-                "active": false
-              }
-            ]
+          "Heat": {
+            "damage": "5"
           }
         },
         {
-          "Rend": {
-            "damage": "1",
-            "dice": "d6",
-            "attacks": [
-              {
-                "name": "Dagger(silver)",
-                "active": false
-              },
-              {
-                "name": "Dagger(w)",
-                "active": true
-              },
-              {
-                "name": "Custom attacks still will work here",
-                "active": false
-              }
-            ]
+          "Stench": {
+            "damage": "5"
+          }
+        },
+        {
+          "MentalStaticAura": {
+            "damage": "5"
           }
         }
       ],

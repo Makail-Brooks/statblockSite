@@ -6,6 +6,11 @@
       "system": "pathfinder"
     },
     {
+      "name": "Void Envoy",
+      "index": "2",
+      "system": "pathfinder"
+    },
+    {
       "name": "Sinulence Leviathan",
       "index": "31",
       "system": "pathfinder"
@@ -28,11 +33,6 @@
     {
       "name": "Sinulence Drone",
       "index": "27",
-      "system": "pathfinder"
-    },
-    {
-      "name": "Void Envoy",
-      "index": "2",
       "system": "pathfinder"
     },
     {

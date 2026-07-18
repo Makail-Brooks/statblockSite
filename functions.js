@@ -539,7 +539,7 @@ function getAttackDetails(attackPath,NPCInfo,enchantedGear,type){
             damageBonus = damageBonus;
         }
         
-
+        let multiDamage=false;
         if(attackData.damageDice!="None"){
         let damageString = `(${attackData.diceCount}${attackData.damageDice}${damageBonus})`;
         let cr = 20;
@@ -559,28 +559,31 @@ function getAttackDetails(attackPath,NPCInfo,enchantedGear,type){
         if(attackData.uniqueDamage){
             damageString=damageString.replace(")",` ${attackData.uniqueDamage})`);
         }
-                        console.log(damageString)
 
-        if(checkAttackMonsterAbilities(NPCInfo,"attack")){
-          damageString=damageString.replace(")",`${displayAbilityAttacks(NPCInfo)})`)
+        if(checkMonsterAbilities(NPCInfo,"attack")){
+            damageString=damageString.replace(")",`${displayAbilityAttacks(NPCInfo,k)})`)
+            multiDamage=true;
         }
 
         if(displayUniqueAttacks(NPCInfo,k)!=null){
-          damageString=damageString.replace(")",`${displayUniqueAttacks(NPCInfo,k)})`)
+          damageString=damageString.replace(")",`${displayUniqueAttacks(NPCInfo,k,false,multiDamage)})`)
         }
         attackString = `${attackString} ${damageString}`
       }else{
-        if(checkAttackMonsterAbilities(NPCInfo,"attack")){
-          attackString+=`(${displayAbilityAttacks(NPCInfo,true)})`
+        if(checkMonsterAbilities(NPCInfo,"attack")){
+
+          attackString+=`(${displayAbilityAttacks(NPCInfo,k,true)})`
+          multiDamage=true;
         }
         if(displayUniqueAttacks(NPCInfo,k,true)!=null){
-          attackString+=displayUniqueAttacks(NPCInfo,k,true);          
+          attackString+=displayUniqueAttacks(NPCInfo,k,true,multiDamage);          
         }
       }
         
     })
     return attackString;
 }
+
 
 function getMonsterKeys(obj){
   return Object.keys(obj)[0]
@@ -1543,8 +1546,8 @@ function getAttacksSpecial(){
 }
 
 function getAttacks(extra=""){
-  console.log(extra);
   let attacksArray = [];
+  let typeArray = [];
   for(let i=0;i<document.getElementById("meleeAttackArea").childElementCount;i++){
     let name = document.getElementById(`meleeAttackName${i}`).value;
     if(document.getElementById(`meleeMaterial${i}`)!=null){
@@ -1554,27 +1557,43 @@ function getAttacks(extra=""){
     }
     if(name!=""){
       attacksArray.push(name);
+      typeArray.push("melee");
     }
   }
   for(let i=0;i<document.getElementById("rangeAttackArea").childElementCount;i++){
     let name = document.getElementById(`rangeAttackName${i}`).value;
     if(name!=""){
       attacksArray.push(name);
+      typeArray.push("ranged");
     }
   }
     for(let i=0;i<document.getElementById("specialAttackArea").childElementCount;i++){
       let name = document.getElementById(`specialAttack${i}`).value;
       if(name!=""){
         attacksArray.push(name);
+        typeArray.push("Special");
       }
     }
   if(attacksArray.length<1){
     attacksArray.push("Slam");
+    typeArray.push("melee")
   }
   if(!attacksArray.includes("Claw") && extra=="Rake"){
       attacksArray.push("Claw(Not full implemented)");
+      typeArray.push("melee");
   }
-  return attacksArray;
+  if(extra=="Disease"||extra=="Poison"){
+    if(document.getElementById("BreathWeaponChoice")!=null){
+        console.log(extra)
+      attacksArray.push("Breath Weapon");
+      typeArray.push("MonsterAbility")
+      console.log("oh")
+    }
+  }
+  let absoluteArray = [];
+  absoluteArray.push(attacksArray);
+  absoluteArray.push(typeArray);
+  return absoluteArray;
 }
 
 function getArchetypeName(json,item,spheres=false){
@@ -1684,8 +1703,8 @@ function getProperty(type){
       return "Sound(s) Mimiced";
     case "Split":
       return "Split Condition"; 
-    case "Split":
-      return "Distance";
+    case "Split2":
+      return "Minimum HP";
     case "Swallow Whole2":
       return "Damage Type";
     case "Whirlwind2":
@@ -1822,13 +1841,17 @@ function shortHandToFull(text){
 function getAttacksList(section){
   console.log(section);
   let array = []
+  let i=0;
   let check = document.getElementById(`${section}Choice`).querySelector(".dropdown-content").querySelectorAll("li")
   check.forEach(el=>{
     let JSONObject = {
       "name":el.textContent,
+      "attackType":el.dataset.value,
+      "index":i,
       "active":el.className.includes(" active")?true:false
     }
     array.push(JSONObject);
+    i++;
   })
   return array;
 }
@@ -1882,6 +1905,7 @@ function createMiniMonsterAbilityJson(abilityName,JSONObject){
     case "Bleed":
     case "Burn":
     case "Rend":
+    case "Rake":
       tempJSon["damage"]= document.getElementById(`monsterAbilities${abilityName}Damage`).value;
       tempJSon["dice"] = document.getElementById(`monsterAbilityDice${abilityName}SelectDamage`).value;
       tempJSon["attacks"]=getAttacksList(abilityName);
@@ -1905,24 +1929,21 @@ function createMiniMonsterAbilityJson(abilityName,JSONObject){
         tempJSon["details"]=document.getElementById(`monsterAbilities${abilityName}Shape`).value;
         break;
     case "ChannelResistance":
-    case "PsychicResilience":
       tempJSon["resist"]= document.getElementById(`monsterAbilities${abilityName}ResistedAmount`).value;
         break;
     case "Disease":
     case "Poison":
       tempJSon["abilityType"] = document.getElementById(`monsterAbilityDice${abilityName}SelectAbilityType`).value;
+      tempJSon["cure"]=document.getElementById(`textareamonsterAbilities${abilityName}Cure`).value==null?"":document.getElementById(`textareamonsterAbilities${abilityName}Cure`).value;
+      tempJSon["onset"]=document.getElementById(`monsterAbilities${abilityName}Onset`).value==null?"":document.getElementById(`monsterAbilities${abilityName}Onset`).value;
     case "Curse":
       tempJSon["name"]=document.getElementById(`monsterAbilities${abilityName}Name`).value;
       tempJSon["contact"]=getAttacksList(abilityName);
-      tempJSon["infliction"]=document.getElementById(`monsterAbilities${abilityName}InflictionFlavor`).value==null?"":document.getElementById(`monsterAbilities${abilityName}InflictionFlavor`).value;
-      tempJSon["onset"]=document.getElementById(`monsterAbilities${abilityName}Onset`).value==null?"":document.getElementById(`monsterAbilities${abilityName}Onset`).value;
-      tempJSon["frequency"]=document.getElementById(`monsterAbilities${abilityName}Frequency`).value==null?"":document.getElementById(`monsterAbilities${abilityName}Frequency`).value;
       tempJSon["effect"]=document.getElementById(`textareamonsterAbilities${abilityName}Effect`).value==null?"":document.getElementById(`textareamonsterAbilities${abilityName}Effect`).value;
-      tempJSon["cure"]=document.getElementById(`textareamonsterAbilities${abilityName}Cure`).value==null?"":document.getElementById(`textareamonsterAbilities${abilityName}Cure`).value;
       break;
     case "CurseofLycanthropy":
       tempJSon["contact"]=getAttacksList(abilityName);
-      tempJSon["infliction"]=document.getElementById(`monsterAbilities${abilityName}InflictionFlavor`).value==null?"":document.getElementById(`monsterAbilities${abilityName}InflictionFlavor`).value;
+      tempJSon["infliction"]=document.getElementById(`monsterAbilities${abilityName}InflictionType`).value==null?"":document.getElementById(`monsterAbilities${abilityName}InflictionType`).value;
       break;
     case "EnergyDrain":
       tempJSon["levelsDrained"]= document.getElementById(`monsterAbilities${abilityName}LevelsDrained`).value;
@@ -1937,6 +1958,7 @@ function createMiniMonsterAbilityJson(abilityName,JSONObject){
       tempJSon["duration"]= document.getElementById(`monsterAbilities${abilityName}Duration`).value;
       tempJSon["dice"] = document.getElementById(`monsterAbilityDice${abilityName}SelectDuration`).value;
       tempJSon["hardness"]= document.getElementById(`monsterAbilities${abilityName}Hardness`).value;
+      tempJSon["attacks"]=getAttacksList(abilityName);
     case "Web":
       tempJSon["hp"] = document.getElementById(`monsterAbilities${abilityName}HP`).value;
       break;
@@ -1955,6 +1977,8 @@ function createMiniMonsterAbilityJson(abilityName,JSONObject){
       break;
     case "Split":
       tempJSon["condition"]= document.getElementById(`monsterAbilities${abilityName}SplitCondition`).value;
+      tempJSon["hp"]= document.getElementById(`monsterAbilities${abilityName}MinimumHP`).value;
+      break;
     case "Heat":
     case "Stench":
       tempJSon["damage"]= document.getElementById(`monsterAbilities${abilityName}Damage`).value;
@@ -2014,6 +2038,9 @@ function createMiniMonsterAbilityJson(abilityName,JSONObject){
       tempJSon["maxHeight"]= document.getElementById(`monsterAbilities${abilityName}MaxHeight`).value;
       tempJSon["amount"]= document.getElementById(`monsterAbilities${abilityName}Amount`).value;
       tempJSon["durationLimit"]= document.getElementById(`monsterAbilities${abilityName}DurationLimit(Day)`).value;
+      break;
+    case "PsychicResilience":
+      tempJSon["constantValue"]=4;
       break;
     default:
       tempJSon["empty"]=true

@@ -438,6 +438,17 @@ const observeAbilities = new MutationObserver(function(MutationList,config){
   }
 })
 
+const variableAttackChoices = new MutationObserver(function(MutationList,config){
+  for(const mutation of MutationList){
+    if(mutation.type==='childList'){
+      console.log(Array.from(mutation.removedNodes))
+      if(Array.from(mutation.addedNodes).some(node=>node.id=="BreathWeaponChoice")||Array.from(mutation.removedNodes).some(node=>node.id=="BreathWeaponChoice")){
+        doAttacksDropdown();
+      }
+    }
+  }
+})
+
 function notInputFeat(input){
   let inputlessFeat = featList.filter(item=>!featsWithInput.includes(item));
   inputlessFeat = inputlessFeat.map(element=>element.toLocaleLowerCase());

@@ -594,6 +594,7 @@ function dynamicInputs(elementID,itemList,inputAreaID){
   let hasRecharge = false;
   let hasVariableArea = false;
   let baseCurse = false;
+  let baseSickness = false;
   let noBaseInput = false;
   let usesAttacks = false;
   let secondaryInput = false;
@@ -602,10 +603,10 @@ function dynamicInputs(elementID,itemList,inputAreaID){
   let justHealth = false;
   let chance = false;
   let usesDistance = false;
-  console.log(inputVal);
   if(itemList[inputVal.toLocaleLowerCase()]!=null){
     inputType=itemList[inputVal.toLocaleLowerCase()].input;
     baseCurse=itemList[inputVal.toLocaleLowerCase()].baseCurse;
+    baseSickness=itemList[inputVal.toLocaleLowerCase()].baseSickness;
     secondaryInput=itemList[inputVal.toLocaleLowerCase()].secondaryInput;
     usesAttacks=itemList[inputVal.toLocaleLowerCase()].usesAttacks;
     noBaseInput=itemList[inputVal.toLocaleLowerCase()].noBaseInput;
@@ -677,12 +678,23 @@ function dynamicInputs(elementID,itemList,inputAreaID){
     }
       inner+=`
       <div style="display:flex"><label class="inputName" for="monsterAbilityCurseTemp">${getAttackLabel(inputVal)}(Can Select Multiple) </label><div id="curseArea"></div></div>`
-      if(inputType=="curse"){
-        inner+=`<label class="inputName" for="monsterAbilityContactTemp">Infliction Flavor </label>
-        <input type="text" class="searchBarCreation" name="monsterAbilityContactTemp" id="monsterAbilityContactTemp" placeholder="Insert Contact Flavor Here" title="monsterAbilityTemp"><br>`
+      if(inputType=="infliction"){
+        inner+=`<label class="inputName" for="monsterAbilityContactTemp">Infliction Type </label>
+        <input type="text" class="searchBarCreation" name="monsterAbilityContactTemp" id="monsterAbilityContactTemp" placeholder="Insert Contact Type Here" title="monsterAbilityTemp"><br>`
       }
     }
     if(baseCurse){
+      // inner+=`<label class="inputName" for="monsterAbilityCurseTemp">Frequency</label>
+      // <input type="text" class="searchBarCreation" name="monsterAbilityCurseTemp" id="monsterAbilityCurseFrequencyTemp" placeholder="Insert Frequency Here" title="monsterAbilityTemp">
+      // <br><label class="inputName" for="monsterAbilityCurseTemp">Effect</label>
+      // <textarea class="searchBarCreation" name="monsterAbilityCurseTemp" id="monsterAbilityCurseEffectTemp" placeholder="Insert Effect Here" title="monsterAbilityTemp"></textarea>
+      // `
+      inner+=`
+      <label class="inputName" for="monsterAbilityCurseTemp">Effect</label>
+      <textarea class="searchBarCreation" name="monsterAbilityCurseTemp" id="monsterAbilityCurseEffectTemp" placeholder="Insert Effect Here" title="monsterAbilityTemp"></textarea>
+      `
+    }
+    if(baseSickness){
       inner+=`<label class="inputName" for="monsterAbilityCurseTemp">Onset</label>
       <input type="text" class="searchBarCreation" name="monsterAbilityCurseTemp" id="monsterAbilityCurseOnsetTemp" placeholder="Insert Onset Here" title="monsterAbilityTemp">
       <br><label class="inputName" for="monsterAbilityCurseTemp">Frequency</label>
@@ -972,15 +984,15 @@ function createWindowListener(functionName,variableArray){
 
 /**updates attack section and attack dropdown */
 function doAttacksDropdown(uid=""){
-  console.log(uid)
-  if(uid.length==0){
-    console.log("update")
-  }
+  // console.log(uid)
+  // if(uid.length==0){
+  //   console.log("update")
+  // }
 
   if(document.getElementById("curseArea")!=null){
     let node = document.getElementById('dropdownSelectionmonsterAbilities').value;
     document.getElementById("curseArea").innerHTML="";
-    arrayToDropdown(getAttacks(node),"curse","Select");
+    arrayToDropdown(getAttacks(node),"curse","Select",false,[],false,false,true);
     createVariableListener(`dropdowncurse`,'click',dropdownInteraction,getElementPointer(`dropdowncurse`),true);
     createVariableArrayListener(`dropdowncurse`,'keyup',searchDrop,[getElementPointer(`dropdowncurse`),getElementPointer(`searchcurse`)]);
     multiChoice(`dropdowncurse`);
@@ -990,17 +1002,21 @@ function doAttacksDropdown(uid=""){
 
 
       document.querySelectorAll("#monsterAbilitiesChoice > div").forEach(element=>{
+        console.log(element)
+        if(element.querySelector(".dropdown-box")!=null){
         let id = element.querySelector(".dropdown-box").id.replace("dropdown","");
         let node = id.replace("attackSection","")
+        console.log(node);
         let activeList = document.getElementById("monsterAbilitiesChoice").querySelector(".dropdown-box");
         document.getElementById(`${id}Area`).innerHTML="";
-        arrayToDropdown(getAttacks(node),id,"Select",true,activeList.querySelectorAll("li"));
+        arrayToDropdown(getAttacks(node),id,"Select",true,activeList.querySelectorAll("li"),false,false,true);
         createVariableListener(`dropdown${id}`,'click',dropdownInteraction,getElementPointer(`dropdown${id}`),true);
         createVariableArrayListener(`dropdown${id}`,'keyup',searchDrop,[getElementPointer(`dropdown${id}`),getElementPointer(`search${id}`)]);
         multiChoice(`dropdown${id}`);
         if(!hasSelected(`dropdown${id}`)){
           document.getElementById(`dropdown${id}`).querySelector("li").classList.add("active");
         }
+      }
       })
 
 

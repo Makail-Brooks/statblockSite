@@ -1,4 +1,12 @@
-{"sources":[
-    {"Angelfire_Apostle":"Healer's Handbook pg. 7"},
-    {"Demonic Apostle":"Advanced Race Guide pg. 104"}
+{"sources_and_flavors":[
+    {"Aerochemist_source":"Blood of the Ancients pg. 25"},
+    {"Aerochemist_flavor":"Although the specifics of the Aeromantic Infadibulum are lost to time, aerochemists are able to emulate and replicate aspects of this lost magic. Aerochemists use scraps of Shory’s magic in their concoctions to gain personal powers of flight."},
+    {"Alchemical_Sapper_source":"Ultimate Intrigue pg. 18"},
+    {"Alchemical_Sapper_flavor":"Alchemical sappers are trained to create explosives."},
+    {"Alchemical_Trapper_source":"Monster Codex pg. 128"},
+    {"Alchemical_Trapper_flavor":"Because kobolds rely on traps to soften up enemies, kobold alchemists learn to turn bombs into traps. When such alchemists are preparing defenses against larger creatures that might enter their tunnels and attempt to exterminate them, their skills mean the difference between life and death."},
+    {"Aquachymist_source":"Aquatic Adventures pg. 49"},
+    {"Aquachymist_flavor":"The principles of alchemy work equally well underwater and on land, but mixing solutions and keeping them pure is a tougher task beneath the waves. Aquachymists are those rare few alchemists of land-dwelling and aquatic races alike who strive to unlock new and fantastic secrets of alchemy that can be discovered only in the water’s depths."},
+    {"Beastmorph_source":"Ultimate Combat pg. 25"},
+    {"Beastmorph_flavor":"Beastmorphs study the anatomy of monsters, learning how they achieve their strange powers. They use their knowledge to duplicate these abilities, but at the cost of taking on inhuman shapes when they use mutagens."},
 ]}

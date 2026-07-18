@@ -186,7 +186,7 @@ function populateSpecialAttack(arr){
             json["attackIndex"]=getIndexOfSelected(document.getElementById(`dropdownspecialAttackAttackList${i}`))
             json["attackType"]=getSecondaryData(getIndexOfSelected(document.getElementById(`dropdownspecialAttackAttackList${i}`)),document.getElementById(`dropdownspecialAttackAttackList${i}`));
           }else{
-            json["attack"]=getAttacks()[0];
+            json["attack"]=getAttacks()[1][0];
             json["attackIndex"]=0
             json["attackType"]=getSecondaryData(0,);
           }
@@ -2084,29 +2084,39 @@ function hasSelected(id){
 
 
 
-function canBeEmpty(id){
-  let noInputList = ["onset","cure"]
+function canBeEmpty(id,noInputList){
   let beEmpty = false;
+  console.log(id);
   noInputList.forEach(element=>{
     if(id.toLocaleLowerCase().includes(element)){
       beEmpty = true;
     }
   });
+  
   return beEmpty;
 }
 
-function validInformation(informationName,children){
+function validInformation(informationName,children,item){
   let childrenCount = children.length;
   let validInputs = true;
   let input;
+  let optionalAttacks = ["disease","curse","entrap"]
   let didSelect = true;
+  noInputList = ["onset","cure"]
+  console.log(item)
+  if(item.toLocaleLowerCase()=="disease"){
+    noInputList=["temp"]
+  }
   if(childrenCount>0){
   Array.from(children).forEach(child=>{
+    if(!validInputs){
+      return false;
+    }
     if(child.tagName.toLocaleLowerCase()=="input"){
       input = document.getElementById(child.id).value
       if(input==""||input==null){
         validInputs=false;
-        validInputs=canBeEmpty(child.id);
+        validInputs=canBeEmpty(child.id,noInputList);
       }
     }
     if(child.tagName.toLocaleLowerCase()=="textarea"){
@@ -2116,11 +2126,10 @@ function validInformation(informationName,children){
         validInputs=canBeEmpty(child.id);
       }
     }
-    if(child.tagName.toLocaleLowerCase()=="div"){
+    if(child.tagName.toLocaleLowerCase()=="div"&&(!optionalAttacks.includes(item.toLocaleLowerCase()))){
       didSelect = hasSelected(child.querySelector(".dropdown-box").id);
     }
   })
-
   if(validInputs&&didSelect){
     return true;
   }
@@ -2136,7 +2145,7 @@ function addVariableDropdownchoice(listName){
   let item = document.getElementById(`dropdownSelection${listName}`).value;
   let itemBlock = item.replaceAll(" ","");
   let inputList = document.getElementById(`${listName}Input`).children;
-  if(validInformation(item,inputList)){
+  if(validInformation(item,inputList,item)){
     let divZone = document.createElement("div");
     divZone.setAttribute("id",`${itemBlock}Choice`);
     let itemName = document.createElement("label");
@@ -2164,7 +2173,7 @@ function addVariableDropdownchoice(listName){
     document.getElementById(`${listName}Choice`).appendChild(divZone);
     addBreak(document.getElementById(`${listName}Choice`));
     if(isThereDiv){
-      arrayToDropdown(getAttacks(),`attackSection${itemBlock}`,"Select",true,document.getElementById("curseArea").querySelectorAll("li"));
+      arrayToDropdown(getAttacks(),`attackSection${itemBlock}`,"Select",true,document.getElementById("curseArea").querySelectorAll("li"),false,false,true);
       createVariableListener(`dropdownattackSection${itemBlock}`,'click',dropdownInteraction,getElementPointer(`dropdownattackSection${itemBlock}`),true);
       createVariableArrayListener(`dropdownattackSection${itemBlock}`,'keyup',searchDrop,[getElementPointer(`dropdownattackSection${itemBlock}`),getElementPointer(`searchattackSection${itemBlock}`)]);
       multiChoice(`dropdownattackSection${itemBlock}`);
@@ -2188,10 +2197,13 @@ function addVariableDropdownchoice(listName){
     document.getElementById("monsterAbilitiesInput").innerHTML="";
     document.getElementById("searchmonsterAbilities").value="";
     document.getElementById(`dropdownSelection${listName}`).value = "Select";
-    modifyList(listName);
+    modifyList(listName,[],true);
     if(listName=="monsterAbilities"||listName=="sense"){
       modifyList("monsterAbilities")
       modifyList("sense")
+    if((item=="Disease"||item=="Poison")&&document.querySelector(`BreathWeaponChoice`)!=null){
+      modifyList(listName,["Breath Weapon"])
+    }
   }
   }
 }
@@ -2674,7 +2686,7 @@ function addDropdownchoice(listName,secondaryInput=false,placeholder="something"
     }
     }
     
-    modifyList(listName);
+    modifyList(listName,[],true);
     if(listName=="monsterAbilities"||listName=="sense"){
     modifyList("monsterAbilities")
     modifyList("sense")
@@ -2809,8 +2821,10 @@ function dynamicModifyList(list){
 }
 }
 
-function modifyList(list){
+
+function modifyList(list,AdditionalOptions=[],addedOption=false){
   let arr = []
+  let multiSelectable = ["Curse"]
   let isDropDown;
   let currentSelection = "";
   isDropDown = document.getElementById(`dropdown${list}`).querySelector("ul");
@@ -2858,15 +2872,16 @@ function modifyList(list){
       }
     // isDropDown.innerHTML;
     // console.log(isDropDown);
+    arr.sort();
     arr.forEach(name=>{
-      if(document.getElementById(`${spacelessCapitalizedCaseCharacter(name)}Choice`)==null&&document.getElementById(`${spacelessCapitalizedCaseCharacter(name).toLocaleLowerCase()}Choice`)==null){
+      if((document.getElementById(`${spacelessCapitalizedCaseCharacter(name)}Choice`)==null&&document.getElementById(`${spacelessCapitalizedCaseCharacter(name).toLocaleLowerCase()}Choice`)==null)||multiSelectable.includes(name)){
         if(displayedInOtherList(name)){
           return;
         }
         let option = document.createElement("li");
         option.dataset.value = name;
         option.textContent = getName(list,name);
-        if(name==currentSelection){
+        if(name==currentSelection&&!addedOption){
           option.className="dropdown-item active";
         }else{
           option.className="dropdown-item";
@@ -2901,7 +2916,6 @@ function displayedInOtherList(name){
 
 function createDatalist(arr,element,listName,sort=true){
   if(sort){
-    console.log(sort);
     arr.sort();
   }
     let customDalist = document.createElement("div");
@@ -2951,7 +2965,11 @@ function createDatalist(arr,element,listName,sort=true){
 }
 //Insert ${listName} type here
 function arrayToDropdown(arr,listName,placeHoldertext,enableOnCreation=false,enablerList=[],edit=false,varyNames=false,dualArray=false){
-//   console.log(listName)
+  // console.log(listName)
+  let bonustext = "";
+  if(document.getElementById(`${listName}Area`)!=null){
+    bonustext = document.querySelectorAll(`#${listName}Area`).length;
+  }
   const targetArea = document.getElementById(`${listName}Area`);
   // console.log(targetArea.innerHTML)
   targetArea.innerHTML="";
@@ -2982,7 +3000,7 @@ function arrayToDropdown(arr,listName,placeHoldertext,enableOnCreation=false,ena
     arr=['empty']
   }
   let typeArray =[]
-
+  // console.log(arr)
   if(dualArray&& Array.isArray(arr)){
     typeArray = arr[1];
     arr = arr[0];
@@ -3003,11 +3021,12 @@ function arrayToDropdown(arr,listName,placeHoldertext,enableOnCreation=false,ena
         option.id=`${name}cursesList`;
       }
       if(enableOnCreation){
+        
         if(!varyNames){
-        if(!edit){
-          enablerList.forEach(e=>{
-              if(e.className.includes("active") && name==e.dataset.value){
-                option.classList.add("active");
+          if(!edit){
+            enablerList.forEach(e=>{
+              if(e.className.includes("active") && name==e.textContent){
+                option.classList.add("active");        
               }
 
             });
@@ -3030,11 +3049,13 @@ function arrayToDropdown(arr,listName,placeHoldertext,enableOnCreation=false,ena
         }
         
       }
+
         ulElement.appendChild(option);
         o++;
       }
     });
     dropdownContext.appendChild(ulElement);
+  //  console.log(dropdownContext)
 
   // let searchDropdown = document.createElement("input");
   // searchDropdown.setAttribute("list",listName);
@@ -3042,7 +3063,7 @@ function arrayToDropdown(arr,listName,placeHoldertext,enableOnCreation=false,ena
   // searchDropdown.setAttribute("class","searchBarCreation");
   // searchDropdown.setAttribute("placeholder",`${placeHoldertext}`);
   customDalist.appendChild(dropdownContext);
-  // console.log(customDalist)
+ // console.log(customDalist)
   // console.log(document.getElementById(`${listName}Area`))
     document.getElementById(`${listName}Area`).appendChild(customDalist);
 }
@@ -3333,7 +3354,6 @@ function selectionCreation(elementID){
   })
   dropdownItem.classList.add("active");
   const selectedItemInput = getElementPointer(elementID).querySelector(".selected-item input");
-  console.log(document.getElementById(elementID))
   selectedItemInput.value = dropdownItem.dataset.value;
   const changeEvent = new Event('change',{bubbles:true});
   selectedItemInput.dispatchEvent(changeEvent);
@@ -3498,6 +3518,11 @@ function listenersSetup(){
   const specialAttackNode = document.getElementById("specialAbilityArea");
   const specialAttackConfig = {attributes:true,childList:true,subtree:true,CharacterData:true};
   observeAbilities.observe(specialAttackNode,specialAttackConfig);
+  if(document.getElementById("monsterAbilitiesChoice")!=null){
+    const monsterAbilitiesChoiceNode = document.getElementById("monsterAbilitiesChoice");
+    const monsterAbilitiesChoiceConfig = {attributes:true,childList:true,subtree:true,CharacterData:true};
+    variableAttackChoices.observe(monsterAbilitiesChoiceNode,monsterAbilitiesChoiceConfig);
+  }
   sizeListener();
   createStatListeners();
   let skillHTML = document.createElement("div");

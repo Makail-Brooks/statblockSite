@@ -7454,15 +7454,15 @@ var monsterAbilitiesInputs = `{
         "usesAttacks":true
     },
     "disease":{
-        "input":"curse",
-        "baseCurse":true,
+        "input":"infliction",
+        "baseSickness":true,
         "usesAttacks":true,
         "VariableSpecialType":true,
         "availableVariable":["Ex","Su"]
     },
     "poison":{
-        "input":"curse",
-        "baseCurse":true,
+        "input":"infliction",
+        "baseSickness":true,
         "usesAttacks":true,
         "VariableSpecialType":true,
         "availableVariable":["Ex","Su"]
@@ -7475,7 +7475,7 @@ var monsterAbilitiesInputs = `{
         "usesAttacks":true
     },
     "curse of lycanthropy":{
-        "input":"curse",
+        "input":"infliction",
         "baseCurse":false,
         "noBaseInput":true,
         "usesAttacks":true
@@ -7484,9 +7484,6 @@ var monsterAbilitiesInputs = `{
         "input":"text"
     },
     "channel resistance":{
-        "input":"number"
-    },
-    "psychic resilience":{
         "input":"number"
     },
     "engulf":{
@@ -7503,7 +7500,8 @@ var monsterAbilitiesInputs = `{
     "entrap":{
         "input":"dice",
         "default":"d10",
-        "durability":true
+        "durability":true,
+        "usesAttacks":true
     },
     "fast healing":{
         "input":"number"

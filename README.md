@@ -6,16 +6,16 @@ Project created mostly out of javascript that is meant to be a easy use for prog
 #Project Progress
 Monsters Pathfinder
 
-|==========        | 60%
+|======&nbsp;&nbsp;&nbsp;&nbsp;| 60%
 
 Players Pathfinder
 
-|========          | 40%
+|====&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 40%
 
 Monsters 5e
 
-|=                 | 10%
+|=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 10%
 
 Players 5e
 
-|                 | 0%
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 0%

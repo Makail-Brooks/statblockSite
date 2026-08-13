@@ -584,9 +584,9 @@
       "alignment": "N",
       "size": "Medium",
       "sizeType": false,
+      "NPCType": "Monster",
       "type": "Humanoid",
       "subtype": "Elf",
-      "NPCType": "Monster",
       "senses": {
         "Low-Light Vision": ""
       },
@@ -619,29 +619,31 @@
           "diceCount": "1",
           "damageDice": "d6",
           "critRange": "18",
+          "uniqueDamageBonus": [],
           "multiAttack": "2",
           "enchantments": [
             "Agile",
             "Keen"
           ],
-          "isAlternative": false,
-          "isAdditive": false,
+          "fullRoundAttackCount": "",
           "weaponType": "Custom"
         }
       ],
       "ranged": [
         {
-          "name": "+3 Arcane Rifle(300 ft)",
+          "name": "Arcane Rifle(300 ft)",
           "diceCount": "1",
           "damageDice": "d10",
-          "critMultiplier": "4",
-          "isAlternative": false,
-          "isAdditive": false,
+          "critMultiplier": "3",
+          "fullRoundAttackCount": "",
           "weaponType": "Custom"
         }
       ],
       "special_attacks": [
-        "Deadly Shot"
+        {
+          "name": "Deadly Shot",
+          "displayAttributes": false
+        }
       ],
       "str": "16",
       "dex": "24",
@@ -658,7 +660,8 @@
         "Skill Focus": "",
         "Dodge": "",
         "Improved Initiative": "",
-        "Tough": ""
+        "Tough": "",
+        "Far Shot": ""
       },
       "skills": {
         "Acrobatics": "14",
@@ -670,8 +673,11 @@
             "Ranks": "8"
           }
         ],
+        "EscapeArtist": "0",
+        "Fly": "0",
         "HandleAnimal": "1",
         "Heal": "4",
+        "Intimidate": "0",
         "Knowledge(Local)": "8",
         "Perception": "14",
         "Profession": [
@@ -681,6 +687,7 @@
           }
         ],
         "Ride": "0",
+        "Spellcraft": "0",
         "Stealth": "14",
         "Survival": "8",
         "Swim": "1"
@@ -718,7 +725,7 @@
         },
         {
           "abilityName": "Deadly Shot",
-          "ability_desc": "As a special attack action, you may make an attack with a ranged weapon. You may add any one (snipe) talent you know to this attack.  In addition, you may expend your martial focus to increase the damage dealt by the attack by 1d10, or 1d6 if the attack targets touch AC or is made with a scatter weapon. You must choose whether or not to use this ability before making your attack roll. These extra damage dice are not multiplied on a critical hit, but are added to the total. For every 4 points of base attack bonus you possess, You deal an additional 1d10 damage, or an additional 1d6 if the attack targets touch AC or is made with a scatter weapon.",
+          "ability_desc": "As a special attack action, you may make an attack with a ranged weapon. You may add any one (snipe) talent you know to this attack.  In addition, you may expend your martial focus to increase the damage dealt by the attack by 1d10, or 1d6 if the attack targets touch AC or is made with a scatter weapon. You must choose whether or not to use this ability before making your attack roll. These extra damage dice are not multiplied on a critical hit, but are added to the total. For every 4 points of base attack bonus you possess, You deal an additional 1d10 damage, or an additional 1d6 if the attack targets touch AC or is made with a scatter weapon.(Current bonus is 3d6/3d10)",
           "abilityType": "Ex(Extraordinary)"
         },
         {
@@ -811,7 +818,8 @@
           "ability_desc": "At 1st level, a conscript gains proficiency with all martial weapons, and with medium armor and shields (except tower shields). At 6th level, the conscript also gains proficiency with heavy armor and tower shields.",
           "abilityType": "Su(Supernatural)"
         }
-      ]
+      ],
+      "spheres": false
     },
     {
       "path": "./NPCDisplay.html",
@@ -1525,8 +1533,8 @@
       "cr": "1/8",
       "alignment": "N",
       "size": "Medium",
-      "NPCType": "Monster",
       "sizeType": false,
+      "NPCType": "Monster",
       "type": "Custom",
       "customType": "System Avatar",
       "ac": {
@@ -1538,7 +1546,7 @@
           "dex": "2"
         }
       },
-      "level": "3",
+      "level": "4",
       "hitDice": "d6",
       "rate": "Player",
       "fort": "Bad",
@@ -1552,8 +1560,8 @@
           "name": "Touch Attack",
           "diceCount": "1",
           "damageDice": "d4",
-          "isAlternative": false,
-          "isAdditive": false,
+          "uniqueDamageBonus": [],
+          "fullRoundAttackCount": "",
           "weaponType": "Custom"
         }
       ],
@@ -1562,8 +1570,7 @@
           "name": "Ranged Touch",
           "diceCount": "1",
           "damageDice": "d4",
-          "isAlternative": false,
-          "isAdditive": false,
+          "fullRoundAttackCount": "",
           "weaponType": "Custom"
         }
       ],
@@ -1575,26 +1582,33 @@
       "cha": "12",
       "bab": "Slow",
       "skillProgression": "Middle",
-      "cmb": "2",
-      "cmd": "14",
+      "cmb": "3",
+      "cmd": "15",
       "skills": {
+        "Acrobatics": "3",
         "Appraise": "3",
+        "Climb": "2",
         "Craft": [
           {
             "Name": "Rock",
             "Ranks": "3"
           }
         ],
+        "EscapeArtist": "0",
         "Fly": "3",
-        "Knowledge(All)": "3",
-        "Linguistics": "3",
+        "Intimidate": "0",
+        "Linguistics": "4",
+        "Perception": "2",
         "Profession": [
           {
             "Name": "System",
-            "Ranks": "3"
+            "Ranks": "4"
           }
         ],
-        "Spellcraft": "3"
+        "Spellcraft": "4",
+        "Stealth": "0",
+        "Survival": "0",
+        "Swim": "0"
       },
       "special_qualities": [
         "All Hostile Enemies ignore her",
@@ -1614,7 +1628,8 @@
           "ability_desc": "Has access to every sphere effect, advanced and not. Kora is able to give an ally a none advanced sphere effect as an action, if the sphere effect has a cost to activate such as a spell point or martial focus she uses one spell point or gains a stack of entropy as per Systems Administrator Self-Imposed Limitation. While not in combat Kora may give multiple sphere effects at the same time as a free action but inquiring all the costs for doing so, during this time she may also hold concentration to keep the effects going indefinitely but only for one target a time. At 5th level she make give herself a sphere effect as a free action.",
           "abilityType": "Ex(Extraordinary)"
         }
-      ]
+      ],
+      "spheres": false
     },
     {
       "path": "./NPCDisplay.html",

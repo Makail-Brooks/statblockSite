@@ -556,11 +556,11 @@ function loadsData(list){
                     special_attacks+=createSpecialAttackDisplay(attack,NPCInfo);
                     k++;
                 })
+            }
+            if(checkMonsterAbilities(NPCInfo,"specialAttacks")){
                 if(special_attacks!=""){
                     special_attacks+=", "
                 }
-            }
-            if(checkMonsterAbilities(NPCInfo,"specialAttacks")){
                 special_attacks+=getSpecialAttacks(NPCInfo,monsterAbilities);
             }
             if(special_attacks!=""){
@@ -635,12 +635,14 @@ function loadsData(list){
             NPC.innerHTML+=`<p class="information"><b>SQ</b> ${SQlist}</p>`
         }
         let monsterSpecial = false;
-        monsterAbilities.forEach(ability=>{
-
-                if(checkMonsterAbilitiesLocation(getMonsterKeys(ability),"specialAbilities")){
-                    monsterSpecial = true;
-                }
-            })
+        if(monsterAbilities!=null){
+            monsterAbilities.forEach(ability=>{
+    
+                    if(checkMonsterAbilitiesLocation(getMonsterKeys(ability),"specialAbilities")){
+                        monsterSpecial = true;
+                    }
+                })
+        }
         
         if(NPCInfo.special_abilities!=null||monsterSpecial){
         NPC.innerHTML +=`<p class = "divider">SPECIAL ABILITIES</p>`

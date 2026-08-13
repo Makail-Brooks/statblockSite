@@ -1,0 +1,13 @@
+'Aerochemist', 'Alchemical Sapper', 'Alchemical Trapper', 
+'Aquachymist', 'Beastmorph', 'Blazing Torchbearer', 'Blightseeker', 
+'Blood Alchemist', 'Bogborn Alchemist', 'Bramble Brewer', 'Chirurgeon', 
+'Clone Master', 'Concocter', 'Construct Rider', 'Crimson Chymist', 'Cruorchymist', 
+'Crypt Breaker', 'Deep Bomber', 'Dimensional Excavator', 'Dragonblood Chymist', 'Ectochymist', 
+'Ectoplasm Master', 'Eldritch Poisoner', 'Energist', 'Energy Scientist', 'Fermenter', 'Fire Bomber', 
+'First World Innovator', 'Gloom Chymist', 'Grenadier', 'Grenadier [MC]', 'Gun Chemist', 'Herbalist', 
+'Homunculist', 'Horticulturist', 'Ice Chemist', 'Inspired Chemist', 'Internal Alchemist', 'Interrogator', 
+'Mad Scientist', 'Metamorph', 'Mindchemist', 'Mixologist', 'Mnemostiller', 'Oenopion Researcher', 
+'Oozemaster', 'Perfumer', 'Plague Bringer', 'Preservationist', 'Promethean Alchemist', 'Psychonaut', 
+'Ragechemist', 'Reanimator', 'Royal Alchemist', 'Saboteur', 'Sacrament Alchemist', 'Tinkerer', 'Toxicant', 
+'Trap Breaker', 'Vaultbreaker', 'Vivisectionist', 'Wasteland Blightbreaker', 'Winged Marauder','Metallurgist',
+'Mutator (Blue)','Mutator'

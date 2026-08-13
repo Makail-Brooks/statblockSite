@@ -878,8 +878,7 @@ function getAttackInformation(attackPath,attackName){
                         }
                     }
                     if(attackData.multiAttack){
-                        
-                        document.getElementById(`multiAttack${attackName}Attack${i}Option`).checked = true;
+                        document.getElementById(`multiAttack${attackName}Attack${i}DivOption`).checked = true;
                         document.getElementById(`multiAttack${attackName}Attack${i}`).style.display = "block";
                         document.getElementById(`multiAttack${attackName}Attack${i}`).value=attackData.multiAttack;
                     }
